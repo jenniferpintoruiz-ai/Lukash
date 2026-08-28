@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es" style=""><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>Ruleta de Premios - LUKA$H</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&amp;family=Roboto+Flex:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container": "#231f15",
+                        "on-primary-fixed": "#231b00",
+                        "background": "#16130a",
+                        "outline": "#999079",
+                        "on-tertiary-fixed-variant": "#004c6a",
+                        "surface-container-low": "#1f1b11",
+                        "surface-container-highest": "#383429",
+                        "surface-container-high": "#2d2a1f",
+                        "primary-fixed": "#ffe178",
+                        "tertiary-fixed-dim": "#7ed0ff",
+                        "on-primary-container": "#614f00",
+                        "on-tertiary-container": "#005778",
+                        "surface-variant": "#383429",
+                        "on-primary-fixed-variant": "#554500",
+                        "inverse-surface": "#eae2d1",
+                        "error-container": "#93000a",
+                        "on-error-container": "#ffdad6",
+                        "primary-fixed-dim": "#e9c322",
+                        "secondary-fixed": "#acf845",
+                        "on-primary": "#3b2f00",
+                        "on-surface-variant": "#d0c6ad",
+                        "on-secondary": "#203700",
+                        "tertiary-fixed": "#c5e7ff",
+                        "primary-container": "#e7c11f",
+                        "surface": "#16130a",
+                        "secondary-fixed-dim": "#92db27",
+                        "tertiary": "#c0e5ff",
+                        "surface-bright": "#3d392d",
+                        "on-error": "#690005",
+                        "on-secondary-container": "#2d4b00",
+                        "on-background": "#eae2d1",
+                        "inverse-primary": "#715d00",
+                        "surface-container-lowest": "#110e06",
+                        "on-tertiary": "#00344a",
+                        "tertiary-container": "#78ceff",
+                        "surface-dim": "#16130a",
+                        "on-secondary-fixed": "#102000",
+                        "error": "#ffb4ab",
+                        "on-secondary-fixed-variant": "#304f00",
+                        "on-surface": "#eae2d1",
+                        "on-tertiary-fixed": "#001e2d",
+                        "primary": "#ffde68",
+                        "outline-variant": "#4d4633",
+                        "surface-tint": "#e9c322",
+                        "secondary": "#97e02d",
+                        "inverse-on-surface": "#343025",
+                        "secondary-container": "#7dc400",
+                        "fuchsia-btn": "#EE4599",
+                        "drawer-bg": "#180F43",
+                        "drawer-accent": "#91DA26"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "lg": "40px",
+                        "xl": "64px",
+                        "sm": "12px",
+                        "container-max": "1280px",
+                        "xs": "4px",
+                        "gutter": "24px",
+                        "base": "8px",
+                        "md": "24px",
+                        "safe": "env(safe-area-inset-bottom)"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["Roboto Flex"],
+                        "display-md": ["Bricolage Grotesque"],
+                        "body-lg": ["Roboto Flex"],
+                        "body-md": ["Roboto Flex"],
+                        "label-lg": ["Roboto Flex"],
+                        "headline-lg": ["Bricolage Grotesque"],
+                        "headline-lg-mobile": ["Bricolage Grotesque"],
+                        "display-lg": ["Bricolage Grotesque"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                        "display-md": ["36px", {"lineHeight": "44px", "fontWeight": "800"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "headline-lg": ["28px", {"lineHeight": "34px", "fontWeight": "700"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "30px", "fontWeight": "700"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .clay-btn {
+            box-shadow: 0 8px 0 0 rgba(0,0,0,0.8), inset 0 4px 10px rgba(255,255,255,0.4);
+            transition: all 0.1s ease;
+        }
+        .clay-btn:active {
+            transform: translateY(8px);
+            box-shadow: 0 0px 0 0 rgba(0,0,0,0.8), inset 0 2px 5px rgba(255,255,255,0.4);
+        }
+        .wheel-container {
+            perspective: 1000px;
+        }
+        .wheel-3d {
+            transition: transform 4s cubic-bezier(0.1, 0, 0, 1);
+            filter: drop-shadow(0 20px 30px rgba(0,0,0,0.5));
+        }
+        .bg-wave-gradient {
+            background: linear-gradient(135deg, #F2C500 0%, #F2984A 50%, #EE4599 100%);
+        }
+        
+        /* Drawer Animations */
+        #nav-drawer {
+            transition: transform 0.3s ease-in-out;
+            transform: translateX(-100%);
+        }
+        #nav-drawer.open {
+            transform: translateX(0);
+        }
+        #drawer-overlay {
+            transition: opacity 0.3s ease-in-out;
+            opacity: 0;
+            pointer-events: none;
+        }
+        #drawer-overlay.open {
+            opacity: 0.5;
+            pointer-events: auto;
+        }
+
+        /* Chat Animations */
+        .chat-window {
+            transform-origin: bottom right;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 40px -10px rgba(0,0,0,0.5);
+        }
+        
+        .hidden-chat {
+            opacity: 0;
+            transform: scale(0.5) translateY(50px);
+            pointer-events: none;
+        }
+        
+        .active-chat {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            pointer-events: auto;
+        }
+        
+        .chat-msg {
+            animation: slideIn 0.3s ease forwards;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fab-btn {
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .fab-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        .fab-btn.exploding {
+            transform: scale(0);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #EE4599;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        @keyframes explode {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; }
+        }
+    </style>
+</head>
+<body class="text-on-surface font-body-md overflow-hidden flex flex-col h-screen relative" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC9KT3TCJwio6bVBC8LOsNg2ODrEsGN7qkPINwkXzu-h-73akFJLbZnqVtXOR0OzVl6BnYZXh28orgRFDAU3og1UId4vF8dqKlhUh3GLsPmHK0p0T79YHpko4WoBvCjeNNTwtbbfEY_PZ4_8iXb40-4omGEUjExa_Xqe13pl2ltg2nZfOFPVQkQATrjLG-d6ZFOAYirwdh9pc70Dz3Gi-1STyXbPtwtQDSDBuopmHR2-7SGzAnzSHvFVHTvh4T_ZhdiOQ"); background-size: cover; background-position: center center; background-attachment: fixed; background-repeat: no-repeat;'>
+<div id="particle-container" style="position: fixed; inset: 0; pointer-events: none; z-index: 9999;"></div>
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-40 relative">
+<div class="relative">
+<img alt="Navigation Bar" class="w-full h-auto block" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-fJthihNr_xTeLFhdVwjBA9zHiiNnpa-zAoszSxuan6jIngsBVI7wTBJfN_6MhMb6oB1UAb7Z4wHWrKxNwPRAwApyNfPdxi_LKxGn22Vw3R0PWxrRglgqpgX7VEIg9SdaC7uPUIaEsA3sbhHFo7C-3wa40-e_3e-5xIxEhrP_Hdxjbq1KoqoaYccmdNdtNhFjJduoQdgZcuc826fSUbBygIKm2a9_AmcBkTrDHTcrBJGb6fL3pxAcyOnfqHGWCQ08-Q"/>
+<button aria-label="Abrir menú" class="absolute top-0 left-0 w-1/4 h-full bg-transparent z-50 cursor-pointer" id="menu-toggle-btn"></button>
+</div>
+</header>
+<!-- Navigation Drawer -->
+<div class="fixed inset-0 bg-black z-50" id="drawer-overlay"></div>
+<nav class="fixed top-0 left-0 h-full w-4/5 max-w-sm bg-drawer-bg z-50 rounded-r-2xl shadow-2xl flex flex-col" id="nav-drawer">
+<div class="p-6 border-b border-white/10 flex justify-between items-center">
+<div class="text-drawer-accent font-display-md text-2xl">LUKA$H</div>
+<button class="text-white hover:text-drawer-accent transition-colors" id="close-menu-btn">
+<span class="material-symbols-outlined text-3xl">close</span>
+</button>
+</div>
+<div class="flex-grow overflow-y-auto py-4">
+<ul class="flex flex-col space-y-2 px-4">
+<li class="">
+<a class="flex items-center space-x-4 p-4 text-white hover:bg-white/5 rounded-xl transition-colors group" href="#">
+<span class="material-symbols-outlined text-drawer-accent group-hover:scale-110 transition-transform">home</span>
+<span class="font-headline-lg-mobile text-xl">Inicio</span>
+</a>
+</li>
+<li class="">
+<a class="flex items-center space-x-4 p-4 text-white hover:bg-white/5 rounded-xl transition-colors group" href="#">
+<span class="material-symbols-outlined text-drawer-accent group-hover:scale-110 transition-transform">savings</span>
+<span class="font-headline-lg-mobile text-xl">Modo Ahorro</span>
+</a>
+</li>
+<li class="">
+<a class="flex items-center space-x-4 p-4 text-white hover:bg-white/5 rounded-xl transition-colors group" href="#">
+<span class="material-symbols-outlined text-drawer-accent group-hover:scale-110 transition-transform">monitoring</span>
+<span class="font-headline-lg-mobile text-xl">Instrumentos</span>
+</a>
+</li>
+<li class="">
+<a class="flex items-center space-x-4 p-4 text-white hover:bg-white/5 rounded-xl transition-colors group" href="#">
+<span class="material-symbols-outlined text-drawer-accent group-hover:scale-110 transition-transform">person</span>
+<span class="font-headline-lg-mobile text-xl">Mi Perfil</span>
+</a>
+</li>
+<li class="">
+<a class="flex items-center space-x-4 p-4 text-white hover:bg-white/5 rounded-xl transition-colors group" href="#">
+<span class="material-symbols-outlined text-drawer-accent group-hover:scale-110 transition-transform">settings</span>
+<span class="font-headline-lg-mobile text-xl">Configuración</span>
+</a>
+</li>
+</ul>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-grow flex flex-col items-center justify-center pt-24 pb-32 relative z-10 w-full max-w-container-max mx-auto px-4">
+<!-- 3D Wheel Illustration (Placeholder for the actual 3D asset/image) -->
+<div class="wheel-container relative w-full max-w-sm aspect-square mb-8"><img alt="Ruleta de la fortuna" class="w-full h-full object-contain wheel-3d" id="fortuneWheel" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBMIAL5npsChrX_QoFdi9sjPGxlhV_ExFehPC3fY8kDA41xLk_FAzBHcDA_KGw0YxtDBIb7mINpyIJnorG4WqEx4sksk2ZTVMVBvOEMuOQQQ08YRhOjH8IoJttmjnaHYv9VRlTOZk4bKLhnpaD7-HBOr7cIyA3Nr4hJnGX5RS7bcN_ullmmw70gu66kHuiGheqKK5ezA5b93rZ45Jk-ONd5J6rzitPX24eZ0DPDxzcETn6985fzVekhGSkhqZrjDwMMOg"/><img alt="Aguja" class="absolute inset-0 m-auto w-1/4 h-auto z-30 pointer-events-none" id="starNeedle" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCLckNXbYTpGxD2f2WCp225yoNr2TiOS_cCXzy3076hHGOesyXrA3Mw_Lyvv2ry3mw0HljGGoUsgP3pcUwkb_X_BKWjSWs7xhGxnKwdTvIwBYf673b2uO1frlz9OyxXCZEtZwNoTYR_4TBWDkcofFWmpnxANHN__rBvALVocWGMBAjoE3h7QPj3Stqd8w4xKAYeNAf5vPbQwg7ARTLOROxQEYiciyEVPZPqdugJJ8VN1j7M5gNeIj58V--mlxt3j8T8Hg" style="transform: translateY(-25%) rotate(9513deg); transition: transform 4s cubic-bezier(0.1, 0, 0, 1);"/></div>
+<!-- Action Button -->
+<button class="bg-fuchsia-btn text-white text-display-md font-display-md px-12 py-4 rounded-full clay-btn uppercase tracking-wide z-20" id="spinButton" style="opacity: 1;">
+            Gira
+        </button>
+</main>
+<!-- Bottom Decorative Wave -->
+<!-- Floating Action Button (Mascot) -->
+<div class="fixed bottom-24 right-4 w-[calc(100%-2rem)] md:w-80 h-96 bg-surface-container rounded-2xl z-40 chat-window hidden-chat flex flex-col border border-outline/20" id="chat-container">
+<!-- Chat Header -->
+<div class="bg-fuchsia-btn p-4 rounded-t-2xl flex justify-between items-center text-white shrink-0">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-white/20 p-1">
+<img alt="Mascot avatar" class="w-full h-full object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQ_AEtVRAaESaowtYS8dd6KOctLhtfH9BwWgw2JTmlvp2_6C7YyoPBhStTRAeFb9lZcOqvXQHLnMqXQVnZ9vz9c7Kqwu8_tcIdzflKpAAzL5ltuV_HfqtkqDT7tZmefzWoit6nA7-4ss9nOqs4qVsb2lEXksjgPFdWvgGGpYLvDksfiZ4iZD-m9lFIjq6aDLLmCuFZH8DKOjebYstE2Qy3wDfIDkr_-0-dWPqtNB1zk07UDwgljEK9J3pLSHUxzLMs9g"/>
+</div>
+<div>
+<h3 class="font-headline-lg-mobile text-lg">Soy LUKASH</h3>
+<p class="text-xs opacity-80">En línea</p>
+</div>
+</div>
+<button class="p-2 hover:bg-white/20 rounded-full transition-colors" id="close-chat">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<!-- Chat Messages -->
+<div class="flex-grow p-4 overflow-y-auto flex flex-col gap-4 bg-background" id="chat-messages">
+<!-- Bot Message -->
+<div class="flex gap-2 max-w-[85%] chat-msg">
+<div class="w-8 h-8 rounded-full bg-surface-container-high p-1 shrink-0 mt-auto">
+<img alt="Bot" class="w-full h-full object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQ_AEtVRAaESaowtYS8dd6KOctLhtfH9BwWgw2JTmlvp2_6C7YyoPBhStTRAeFb9lZcOqvXQHLnMqXQVnZ9vz9c7Kqwu8_tcIdzflKpAAzL5ltuV_HfqtkqDT7tZmefzWoit6nA7-4ss9nOqs4qVsb2lEXksjgPFdWvgGGpYLvDksfiZ4iZD-m9lFIjq6aDLLmCuFZH8DKOjebYstE2Qy3wDfIDkr_-0-dWPqtNB1zk07UDwgljEK9J3pLSHUxzLMs9g"/>
+</div>
+<div class="bg-surface-container-high p-3 rounded-2xl rounded-bl-sm text-sm text-on-surface">
+                ¡Hola! ¿En qué te puedo ayudar hoy con tus ahorros e inversiones?
+            </div>
+</div>
+</div>
+<!-- Chat Input -->
+<form class="p-3 bg-surface-container border-t border-outline/20 rounded-b-2xl flex gap-2 shrink-0" id="chat-form">
+<input class="flex-grow bg-background border border-outline/30 rounded-full px-4 py-2 text-sm text-on-surface focus:outline-none focus:border-fuchsia-btn focus:ring-1 focus:ring-fuchsia-btn transition-colors" id="chat-input" placeholder="Escribe un mensaje..." type="text"/>
+<button class="w-10 h-10 rounded-full bg-fuchsia-btn text-white flex items-center justify-center shrink-0 hover:bg-fuchsia-btn/90 transition-colors" type="submit">
+<span class="material-symbols-outlined text-lg">send</span>
+</button>
+</form>
+</div>
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const spinBtn = document.getElementById('spinButton');
+            const wheel = document.getElementById('fortuneWheel');
+            const starNeedle = document.getElementById('starNeedle');
+            let starRotation = 0;
+
+            if(spinBtn) {
+                spinBtn.addEventListener('click', () => {
+                    if (spinBtn.disabled) return;
+                    
+                    spinBtn.disabled = true;
+                    spinBtn.style.opacity = '0.7';
+                    spinBtn.style.transform = 'translateY(8px)';
+                    spinBtn.style.boxShadow = '0 0px 0 0 rgba(0,0,0,0.8), inset 0 2px 5px rgba(255,255,255,0.4)';
+
+                    // Random rotation between 1800 (5 spins) and 3600 (10 spins)
+                    const extraDegrees = Math.floor(Math.random() * 360);
+                    const spins = 1800; // 5 full spins minimum
+                    starRotation += (spins + extraDegrees); // Spin the star
+
+                    if(starNeedle) {
+                        starNeedle.style.transform = `translateY(-25%) rotate(${starRotation}deg)`;
+                    }
+
+                    // Re-enable button after animation (4s)
+                    setTimeout(() => {
+                        spinBtn.disabled = false;
+                        spinBtn.style.opacity = '1';
+                        spinBtn.style.transform = '';
+                        spinBtn.style.boxShadow = '';
+                        // Here you would typically trigger the reward modal
+                    }, 4000);
+                });
+            }
+
+            // Drawer Logic
+            const menuToggleBtn = document.getElementById('menu-toggle-btn');
+            const closeMenuBtn = document.getElementById('close-menu-btn');
+            const navDrawer = document.getElementById('nav-drawer');
+            const drawerOverlay = document.getElementById('drawer-overlay');
+
+            function toggleDrawer() {
+                navDrawer.classList.toggle('open');
+                drawerOverlay.classList.toggle('open');
+            }
+
+            if(menuToggleBtn) menuToggleBtn.addEventListener('click', toggleDrawer);
+            if(closeMenuBtn) closeMenuBtn.addEventListener('click', toggleDrawer);
+            if(drawerOverlay) drawerOverlay.addEventListener('click', toggleDrawer);
+
+            // Chat Functionality
+            const fabButton = document.getElementById('fab-button');
+            const chatContainer = document.getElementById('chat-container');
+            const closeChatBtn = document.getElementById('close-chat');
+            const particleContainer = document.getElementById('particle-container');
+            const chatForm = document.getElementById('chat-form');
+            const chatInput = document.getElementById('chat-input');
+            const chatMessages = document.getElementById('chat-messages');
+
+            function createParticles(x, y) {
+                for (let i = 0; i < 20; i++) {
+                    const particle = document.createElement('div');
+                    particle.classList.add('particle');
+                    
+                    // Random angle and distance
+                    const angle = Math.random() * Math.PI * 2;
+                    const velocity = 50 + Math.random() * 100;
+                    const tx = Math.cos(angle) * velocity;
+                    const ty = Math.sin(angle) * velocity;
+                    
+                    particle.style.left = `${x}px`;
+                    particle.style.top = `${y}px`;
+                    particle.style.setProperty('--tx', `${tx}px`);
+                    particle.style.setProperty('--ty', `${ty}px`);
+                    
+                    const duration = 0.5 + Math.random() * 0.3;
+                    particle.style.animation = `explode ${duration}s ease-out forwards`;
+                    
+                    // Random colors
+                    const colors = ['#EE4599', '#ffde68', '#78ceff'];
+                    particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    
+                    particleContainer.appendChild(particle);
+                    
+                    setTimeout(() => particle.remove(), duration * 1000);
+                }
+            }
+
+            fabButton.addEventListener('click', (e) => {
+                const rect = fabButton.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+                
+                createParticles(centerX, centerY);
+                
+                fabButton.classList.add('exploding');
+                
+                setTimeout(() => {
+                    chatContainer.classList.remove('hidden-chat');
+                    chatContainer.classList.add('active-chat');
+                }, 100);
+            });
+
+            closeChatBtn.addEventListener('click', () => {
+                chatContainer.classList.remove('active-chat');
+                chatContainer.classList.add('hidden-chat');
+                
+                setTimeout(() => {
+                    fabButton.classList.remove('exploding');
+                }, 300);
+            });
+
+            chatForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const msg = chatInput.value.trim();
+                if (!msg) return;
+
+                // Add User Message
+                const userMsgHtml = `
+                    <div class="flex gap-2 max-w-[85%] self-end chat-msg">
+                        <div class="bg-primary p-3 rounded-2xl rounded-br-sm text-sm text-on-primary">
+                            ${msg}
+                        </div>
+                    </div>
+                `;
+                chatMessages.insertAdjacentHTML('beforeend', userMsgHtml);
+                chatInput.value = '';
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+
+                // Simulate Bot Response
+                setTimeout(() => {
+                    const botMsgHtml = `
+                        <div class="flex gap-2 max-w-[85%] chat-msg">
+                            <div class="w-8 h-8 rounded-full bg-surface-container-high p-1 shrink-0 mt-auto">
+                                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQ_AEtVRAaESaowtYS8dd6KOctLhtfH9BwWgw2JTmlvp2_6C7YyoPBhStTRAeFb9lZcOqvXQHLnMqXQVnZ9vz9c7Kqwu8_tcIdzflKpAAzL5ltuV_HfqtkqDT7tZmefzWoit6nA7-4ss9nOqs4qVsb2lEXksjgPFdWvgGGpYLvDksfiZ4iZD-m9lFIjq6aDLLmCuFZH8DKOjebYstE2Qy3wDfIDkr_-0-dWPqtNB1zk07UDwgljEK9J3pLSHUxzLMs9g" alt="Bot" class="w-full h-full object-contain">
+                            </div>
+                            <div class="bg-surface-container-high p-3 rounded-2xl rounded-bl-sm text-sm text-on-surface">
+                                Interesante... ¡Seguí contándome!
+                            </div>
+                        </div>
+                    `;
+                    chatMessages.insertAdjacentHTML('beforeend', botMsgHtml);
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }, 1000);
+            });
+        });
+    </script>
+<button class="fab-btn fixed bottom-8 right-8 w-16 h-16 rounded-full shadow-2xl z-50 overflow-hidden clay-btn flex items-center justify-center bg-white/10 backdrop-blur-sm" id="fab-button"><img alt="Mascota LUKA$H" class="w-4/5 h-4/5 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQ_AEtVRAaESaowtYS8dd6KOctLhtfH9BwWgw2JTmlvp2_6C7YyoPBhStTRAeFb9lZcOqvXQHLnMqXQVnZ9vz9c7Kqwu8_tcIdzflKpAAzL5ltuV_HfqtkqDT7tZmefzWoit6nA7-4ss9nOqs4qVsb2lEXksjgPFdWvgGGpYLvDksfiZ4iZD-m9lFIjq6aDLLmCuFZH8DKOjebYstE2Qy3wDfIDkr_-0-dWPqtNB1zk07UDwgljEK9J3pLSHUxzLMs9g"/></button></body></html>

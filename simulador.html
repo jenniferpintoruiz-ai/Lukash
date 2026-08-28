@@ -1,0 +1,502 @@
+<!DOCTYPE html><html lang="es" style="scroll-behavior: smooth;"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>LUKA$H - Modo Ahorro</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&amp;family=Roboto:wght@400;500;700&amp;family=Rubik:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS v3 -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary-fuchsia": "var(--color-primary-fuchsia)",
+            "primary-pink": "var(--color-primary-pink)",
+            "primary-dark-blue": "var(--color-primary-dark-blue)",
+            "primary-yellow": "var(--color-primary-yellow)",
+            "primary-white": "var(--color-primary-white)",
+            "primary-black": "var(--color-primary-black)",
+            "card-bg": "var(--color-card-bg)",
+            "card-blue": "var(--color-card-blue)",
+            "btn-teal": "var(--color-btn-teal)",
+            "btn-pink": "var(--color-btn-pink)",
+            "bubble-yellow": "var(--color-bubble-yellow)",
+          },
+          fontFamily: {
+            fredoka: ['Fredoka', 'Bubblegum Sans', 'cursive', 'sans-serif'],
+            roboto: ['Roboto', 'sans-serif'],
+            rubik: ['Rubik', 'sans-serif'],
+          },
+          boxShadow: {
+            '3d-btn': '0 6px 0px 0px rgba(0,0,0,0.2)',
+            '3d-btn-active': '0 2px 0px 0px rgba(0,0,0,0.2)',
+            '3d-card': '0 8px 0px 0px rgba(0,0,0,0.15)',
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    :root {
+      --color-primary-fuchsia: #EE4599;
+      --color-primary-pink: #DE7A8F;
+      --color-primary-dark-blue: #180F43;
+      --color-primary-yellow: #E7C11F;
+      --color-primary-white: #EEE8E0;
+      --color-primary-black: #212121;
+      --color-card-bg: #E8E5E0;
+      --color-card-blue: #3FA9F5;
+      --color-btn-teal: #3AAFA9;
+      --color-btn-pink: #DE7A8F;
+      --color-bubble-yellow: #E8CA42;
+      --bg-gradient-main: linear-gradient(180deg, #180F43 0%, #3D1342 50%, #DE7A8F 100%);
+      --font-heading: 'Rubik', sans-serif;
+      --font-body: 'Rubik', sans-serif;
+    }
+
+    body {
+      background: var(--bg-gradient-main);
+      min-height: 100vh;
+      overflow-x: hidden;
+      margin: 0;
+      font-family: var(--font-body);
+    }
+
+    /* Floating Animations */
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+    .animate-float {
+      animation: float 4s ease-in-out infinite;
+    }
+    
+    @keyframes popIn3D {
+      0% {
+        opacity: 0;
+        transform: scale(0.92) translateY(15px);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+    .pop-in-3d {
+      animation: popIn3D 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+
+    /* 3D Button Effects */
+    .btn-3d {
+      transition: all 0.15s ease;
+      box-shadow: 0 4px 0px 0px rgba(0,0,0,0.2);
+    }
+    .btn-3d:active {
+      transform: translateY(2px);
+      box-shadow: 0 2px 0px 0px rgba(0,0,0,0.2);
+    }
+    .btn-3d.active {
+      background-color: var(--color-btn-pink);
+      color: white;
+      transform: translateY(2px);
+      box-shadow: 0 2px 0px 0px rgba(0,0,0,0.2), 0 0 15px rgba(222, 122, 143, 0.6);
+    }
+
+    /* Explanation Bubble Tail */
+    .bubble-tail::before {
+      content: '';
+      position: absolute;
+      top: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: 0 15px 15px 15px;
+      border-style: solid;
+      border-color: transparent transparent var(--color-bubble-yellow) transparent;
+    }
+    
+    @media (min-width: 1024px) {
+      .bubble-tail::before {
+        top: 3.5rem;
+        left: -18px;
+        transform: translateY(0);
+        border-width: 15px 18px 15px 0;
+        border-color: transparent var(--color-bubble-yellow) transparent transparent;
+      }
+    }
+    
+    /* Input Styling */
+    .currency-input-wrapper {
+      position: relative;
+    }
+    .currency-input-wrapper::before {
+      content: '$';
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--color-primary-black);
+      z-index: 10;
+    }
+    .currency-input {
+      padding-left: 2.5rem;
+    }
+    
+    /* Hide number arrows */
+    input[type=number]::-webkit-inner-spin-button, 
+    input[type=number]::-webkit-outer-spin-button { 
+      -webkit-appearance: none; 
+      margin: 0; 
+    }
+    input[type=number] {
+      -moz-appearance: textfield;
+    }
+</style>
+<style>
+    .instrument-btn {
+      background-color: #efe6eb !important;
+      color: #212121 !important;
+    }
+    .instrument-btn.active {
+      background-color: #b4d17b !important;
+      color: #212121 !important;
+      transform: translateY(2px);
+      box-shadow: 0 2px 0px 0px rgba(0,0,0,0.2);
+    }
+</style></head>
+<body class="text-primary-black flex flex-col items-center">
+<!-- Main Application Wrapper -->
+<div class="w-full min-h-screen flex flex-col relative pb-24 shadow-2xl overflow-x-hidden">
+<!-- BEGIN: MainHeader -->
+<header class="bg-primary-yellow w-full h-[110px] flex items-center justify-between px-6 lg:px-12 relative z-50 border-b-4 border-black/10 shrink-0 rounded-b-[2rem] lg:rounded-b-none" id="main-header">
+<div class="flex items-center">
+<!-- Menu Icon (Mobile) -->
+<button class="p-2 z-10 lg:hidden" id="menuBtn">
+<svg class="hamburger-icon" fill="none" height="32" viewBox="0 0 30 24" width="40" xmlns="http://www.w3.org/2000/svg">
+<path d="M2 2H28M2 12H28M2 22H28" stroke="black" stroke-linecap="round" stroke-width="4"></path>
+</svg>
+<svg class="close-icon hidden" fill="none" height="32" viewBox="0 0 24 24" width="32" xmlns="http://www.w3.org/2000/svg">
+<path d="M18 6L6 18M6 6L18 18" stroke="black" stroke-linecap="round" stroke-width="4"></path>
+</svg>
+</button>
+<!-- Logo -->
+<div class="absolute left-1/2 -translate-x-1/2 lg:static lg:translate-x-0">
+<img alt="LUKA$H Logo" class="h-16 drop-shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYRpEfrEAXglfH6g6bdTAiltJsJB-DrFhYXNpv6pCllmuHj7ZTXjF1qy9e06r27C5bLil8PgTWLPE-mWnWPz_8ibC0PbXo0mgx7meRO8nUsUV1qLPggd-nZBPOPjkThKh-Ou-I6nHQkWDHioMR9pUwKGZWmx0Cixdb5lqH1bSqo8ixHeoNWq9_ax4LS-cBhRHRiCd4KtV6Bz9ISa3Kd85RkHKMPOgK3YST2EQZs-TyZzikR3_DpMQVbNJtsVzgzE3r_g">
+</div>
+</div>
+<!-- Centered Nav Links (Desktop) -->
+<nav class="hidden lg:flex items-center space-x-12 absolute left-1/2 -translate-x-1/2">
+<a class="font-rubik font-bold text-xl text-primary-black hover:text-primary-pink transition-colors uppercase tracking-wider" href="#">NOSOTROS</a>
+<a class="font-rubik font-bold text-xl text-primary-black hover:text-primary-pink transition-colors uppercase tracking-wider" href="#">CONTACTANOS</a>
+</nav>
+<!-- User Icon -->
+<button class="p-2 z-10">
+<svg fill="none" height="36" viewBox="0 0 28 28" width="36" xmlns="http://www.w3.org/2000/svg">
+<circle cx="14" cy="14" r="12" stroke="black" stroke-width="2.5"></circle>
+<circle cx="14" cy="10" r="4" stroke="black" stroke-width="2.5"></circle>
+<path d="M6 22C6 18.6863 8.68629 16 12 16H16C19.3137 16 22 18.6863 22 22" stroke="black" stroke-width="2.5"></path>
+</svg>
+</button>
+</header>
+<!-- END: MainHeader -->
+<!-- BEGIN: MainContent (Adaptive 2-Column Layout for Desktop based on Wireframe) -->
+<main class="flex-1 px-4 lg:px-8 pt-6 lg:pt-12 flex flex-col items-center w-full max-w-7xl mx-auto z-20">
+<!-- Grid Container: Stacked on Mobile / Parallel Columns on Desktop -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 w-full items-start">
+<!-- LEFT COLUMN: Category Header + Calculator (38% Width on Desktop) -->
+<div class="lg:col-span-5 flex flex-col space-y-6 w-full max-w-md mx-auto lg:max-w-none">
+<!-- Category Card (Header Modo Ahorro) -->
+<!-- Central Simulator Card (Calculator) -->
+<div class="bg-card-bg rounded-[32px] p-6 w-full shadow-3d-card border-4 border-black/10 flex flex-col space-y-6 shrink-0 relative z-20">
+<!-- Input Section -->
+<div class="space-y-2">
+<label class="font-rubik font-bold text-xl text-primary-black block text-center" for="montoInput">¿Cuánto querés ahorrar?</label>
+<div class="currency-input-wrapper">
+<input class="currency-input w-full bg-white rounded-2xl py-3 px-4 font-rubik font-bold text-2xl text-primary-black border-2 border-black/20 focus:border-primary-pink focus:ring-0 text-center shadow-inner" id="montoInput" placeholder="800" type="number" value="">
+</div>
+</div>
+<!-- Total Result Box -->
+<div class="flex flex-col items-center justify-center bg-white rounded-2xl py-3 px-4 border-2 border-black/10 shadow-sm" id="montoResultadoBox">
+<span class="font-rubik text-sm text-gray-500 font-medium">Lo que ahorrarías al año:</span>
+<span class="font-rubik font-bold text-3xl text-primary-fuchsia" id="resultadoValor">$&nbsp;0</span>
+</div>
+<!-- Grid of 4 Instrument Buttons -->
+<div class="grid grid-cols-2 gap-3">
+<button class="btn-3d bg-primary-white text-primary-black font-rubik font-bold text-xs py-2 px-2 rounded-2xl flex items-center justify-center text-center h-16 instrument-btn" data-rate="0.001" data-type="banco">1. Bancos tradicionales</button>
+<button class="btn-3d bg-primary-white text-primary-black font-rubik font-bold text-xs py-2 px-2 rounded-2xl flex items-center justify-center text-center h-16 instrument-btn" data-rate="0.08" data-type="billetera">2. Billeteras digitales</button>
+<button class="btn-3d bg-primary-white text-primary-black font-rubik font-bold text-xs py-2 px-2 rounded-2xl flex items-center justify-center text-center h-16 instrument-btn leading-tight" data-rate="0.115" data-type="altorend">3. Cuentas de alto rendimiento</button>
+<button class="btn-3d bg-primary-white text-primary-black font-rubik font-bold text-xs py-2 px-2 rounded-2xl flex items-center justify-center text-center h-16 instrument-btn leading-tight" data-rate="0.095" data-type="cdt">4. CDT (Certificado a término)</button>
+</div>
+</div>
+</div>
+<!-- RIGHT COLUMN: 3D Explanation Panel (62% Width on Desktop - Matches Wireframe) -->
+<div class="lg:col-span-7 w-full max-w-md mx-auto lg:max-w-none">
+<div class="w-full relative z-10 transition-all duration-300 pop-in-3d hidden" id="explanationBubble">
+<div class="bg-bubble-yellow rounded-[32px] p-8 lg:p-10 shadow-3d-card border-4 border-black/10 bubble-tail relative flex flex-col min-h-[420px] justify-start items-center text-center">
+<!-- Instrument Pill (Positioned top-right on Desktop like Wireframe) -->
+<div class="bg-primary-pink text-white font-rubik font-bold text-sm lg:text-base py-2 px-6 rounded-2xl shadow-md self-center lg:self-end mb-6 lg:mb-4 lg:absolute lg:top-8 lg:right-8" id="bubbleTag">1. Bancos tradicionales</div>
+<!-- Body Content -->
+<div class="space-y-6 w-full pt-2 flex flex-col items-center">
+<!-- Diagnostic Header in Quotes -->
+<h3 class="font-rubik font-bold text-xl lg:text-2xl text-primary-black leading-snug" id="bubbleHeader">"Mirá pues parce... no es que esté mal, pero no es la mejor opción y te explico por qué"</h3>
+<!-- Status Banner -->
+<div class="bg-white/60 rounded-xl p-3 border-2 border-black/10 inline-block" id="statusContainer">
+<p class="font-rubik font-bold text-primary-fuchsia text-lg lg:text-xl" id="bubbleStatus">Tus lucas no crecieron</p>
+</div>
+<!-- Main Explanation Body -->
+<p class="font-rubik text-primary-black font-medium text-base lg:text-lg leading-relaxed" id="bubbleExplanation">Guardaste <strong>$&nbsp;100.000</strong> y aunque el banco te dio un poquito más (apenas <strong>+$&nbsp;100</strong> al año), no alcanzó para ganarle a la desvalorización del dinero. Eso significa que seguís viendo la plata en la cuenta, pero con el tiempo compra menos cosas.</p>
+<!-- Extra Financial Metadata -->
+<div class="bg-white/40 rounded-xl p-4 border-2 border-black/10 space-y-2 text-primary-black font-medium text-sm lg:text-base" id="extraInfo">
+<p class=""><strong class="font-bold">Crecimiento estimado:</strong> <span class="" id="bubbleGrowth">Muy bajo, prácticamente nulo (~0.1% E.A.).</span></p>
+<p class=""><strong class="font-bold">¿Le gana a la desvalorización?:</strong> <span class="" id="bubbleInflation">En la mayoría de casos, NO.</span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- END: MainContent -->
+<!-- BEGIN: FloatingActionButton -->
+<div class="fixed bottom-6 right-6 z-50">
+<div class="w-16 h-16 hover:scale-110 active:scale-95 transition-transform cursor-pointer shadow-[0_4px_15px_rgba(0,0,0,0.3)] rounded-full overflow-hidden border-2 border-white/20" id="fab-button">
+<img alt="Piggy Bank" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCpMupF3DRCHRmsBS_rUtkT1-WqHypjupX8R9iQvvGi3EG3ViEzcMziqN99zpl_HUd8NO5sDhby4NXetH82hfeb3_0-l8aro1geLpXun5UxmrxVsX3q7b8NIVzD3gDapNi5D8LUzZurdxGH51BErQKKw3E7Anf7ZhckVJailmRMUOfbepFnoCb73ze5E6xgcuwy29GeoOKK4oHK_-1D2uFGdXfFF3eU0TgY92E-fwmM2UPCqdLhfUvlgGLshBv0973Ghg">
+</div>
+</div>
+<!-- END: FloatingActionButton -->
+</div>
+<!-- Background Stars Decoration -->
+<div class="fixed inset-0 pointer-events-none z-0 overflow-hidden flex justify-center">
+<div class="w-full max-w-7xl h-full relative">
+<div class="absolute top-32 left-8 lg:left-12 w-24 h-24 animate-float" style="animation-delay: -1s;">
+<svg class="w-full h-full drop-shadow-xl fill-primary-pink opacity-80" viewBox="0 0 100 100">
+<path d="M50 0 C50 40, 60 50, 100 50 C60 50, 50 60, 50 100 C50 60, 40 50, 0 50 C40 50, 50 40, 50 0 Z"></path>
+</svg>
+</div>
+<div class="absolute bottom-40 right-8 lg:right-20 w-20 h-20 animate-float" style="animation-delay: -2s; transform: rotate(15deg);">
+<svg class="w-full h-full drop-shadow-xl fill-primary-pink opacity-80" viewBox="0 0 100 100">
+<path d="M50 0 C50 40, 60 50, 100 50 C60 50, 50 60, 50 100 C50 60, 40 50, 0 50 C40 50, 50 40, 50 0 Z"></path>
+</svg>
+</div>
+</div>
+</div>
+<!-- Mobile Menu Drawer Placeholder -->
+<div class="fixed inset-0 z-[60] pointer-events-none hidden" id="mobileMenu">
+<div class="absolute inset-0 transition-opacity duration-300 bg-black/50 pointer-events-auto opacity-0" id="mobileMenuOverlay"></div>
+<div class="absolute top-0 left-0 w-64 h-full bg-white shadow-2xl transform transition-transform duration-300 flex flex-col pointer-events-auto -translate-x-full" id="mobileMenuDrawer">
+<div class="p-6">
+<button class="text-2xl font-bold p-2" id="closeMenuBtn">X</button>
+</div>
+</div>
+</div>
+<!-- BEGIN: Scripts -->
+<script data-purpose="modal-functionality">
+  const menuBtn = document.getElementById('menuBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+  const mobileMenuDrawer = document.getElementById('mobileMenuDrawer');
+  const closeMenuBtn = document.getElementById('closeMenuBtn');
+  const menuIcon = menuBtn ? menuBtn.querySelector('.hamburger-icon') : null;
+  const closeIcon = menuBtn ? menuBtn.querySelector('.close-icon') : null;
+
+  function openMenu() {
+    mobileMenu.classList.remove('hidden');
+    if(menuIcon) menuIcon.classList.add('hidden');
+    if(closeIcon) closeIcon.classList.remove('hidden');
+    setTimeout(() => {
+      mobileMenuOverlay.classList.remove('opacity-0');
+      mobileMenuDrawer.classList.remove('-translate-x-full');
+    }, 10);
+  }
+
+  function closeMenu() {
+    mobileMenuOverlay.classList.add('opacity-0');
+    mobileMenuDrawer.classList.add('-translate-x-full');
+    setTimeout(() => {
+      mobileMenu.classList.add('hidden');
+      if(menuIcon) menuIcon.classList.remove('hidden');
+      if(closeIcon) closeIcon.classList.add('hidden');
+    }, 300);
+  }
+
+  if(menuBtn) menuBtn.addEventListener('click', () => {
+    if (mobileMenu.classList.contains('hidden')) {
+      openMenu();
+    } else {
+      closeMenu();
+    }
+  });
+  if(closeMenuBtn) closeMenuBtn.addEventListener('click', closeMenu);
+  if(mobileMenuOverlay) mobileMenuOverlay.addEventListener('click', closeMenu);
+</script>
+<script data-purpose="calculator-logic">
+  // Currency Formatting Helper
+  const formatCurrency = (value) => {
+    return new Intl.NumberFormat('es-CO', {
+      style: 'currency',
+      currency: 'COP',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0
+    }).format(value);
+  };
+
+  const parseNumber = (val) => {
+    const num = parseFloat(val);
+    return isNaN(num) ? 0 : num;
+  };
+
+  // Count-Up Animation
+  const animateValue = (obj, start, end, duration) => {
+    let startTimestamp = null;
+    const step = (timestamp) => {
+      if (!startTimestamp) startTimestamp = timestamp;
+      const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+      const easeOut = progress * (2 - progress);
+      const current = Math.floor(easeOut * (end - start) + start);
+      obj.innerHTML = formatCurrency(current);
+      if (progress < 1) {
+        window.requestAnimationFrame(step);
+      } else {
+        obj.innerHTML = formatCurrency(end);
+      }
+    };
+    window.requestAnimationFrame(step);
+  };
+
+  const montoInput = document.getElementById('montoInput');
+  const resultadoValor = document.getElementById('resultadoValor');
+  const buttons = document.querySelectorAll('.instrument-btn');
+  
+  const explanationBubble = document.getElementById('explanationBubble');
+  const bubbleTag = document.getElementById('bubbleTag');
+  const bubbleHeader = document.getElementById('bubbleHeader');
+  const bubbleExplanation = document.getElementById('bubbleExplanation');
+  const bubbleStatus = document.getElementById('bubbleStatus');
+  const statusContainer = document.getElementById('statusContainer');
+  const extraInfo = document.getElementById('extraInfo');
+  const bubbleGrowth = document.getElementById('bubbleGrowth');
+  const bubbleInflation = document.getElementById('bubbleInflation');
+
+  function updateSimulation(btnElement, animate = false) {
+    if (!btnElement) return;
+
+    let rawVal = montoInput.value.trim();
+    let montoInicial = parseNumber(rawVal);
+    if (montoInicial <= 0) {
+      montoInicial = 100000;
+    }
+
+    const rate = parseFloat(btnElement.getAttribute('data-rate'));
+    const type = btnElement.getAttribute('data-type');
+    const gananciaAnual = montoInicial * rate;
+    const montoTotal = montoInicial + gananciaAnual;
+    
+    if (animate) {
+      const currentVal = parseInt(resultadoValor.innerText.replace(/\D/g, '')) || 0;
+      animateValue(resultadoValor, currentVal, montoTotal, 700);
+    } else {
+      resultadoValor.innerHTML = formatCurrency(montoTotal);
+    }
+
+    const formattedInitial = formatCurrency(montoInicial);
+    const formattedFinal = formatCurrency(montoTotal);
+    const formattedGain = formatCurrency(gananciaAnual);
+    const btnText = btnElement.textContent.trim();
+
+    bubbleTag.textContent = btnText;
+    statusContainer.classList.remove('hidden');
+
+    switch(type) {
+      case 'banco':
+        bubbleHeader.textContent = `"Mirá pues parce... no es que esté mal, pero no es la mejor opción y te explico por qué"`;
+        bubbleStatus.textContent = "Tus lucas no crecieron";
+        bubbleExplanation.innerHTML = `Guardaste <strong>${formattedInitial}</strong> y aunque el banco te dio un poquito más (apenas <strong>+${formattedGain}</strong> al año), no alcanzó para ganarle a la desvalorización del dinero. Eso significa que seguís viendo la plata en la cuenta, pero con el tiempo compra menos cosas.`;
+        bubbleGrowth.textContent = "Muy bajo, prácticamente nulo (~0.1% E.A.).";
+        bubbleInflation.textContent = "En la mayoría de casos, NO.";
+        break;
+
+      case 'billetera':
+        bubbleHeader.textContent = `"Una opción práctica para mover tu dinero día a día"`;
+        bubbleStatus.textContent = `Ganaste aproximadamente +${formattedGain} en el año`;
+        bubbleExplanation.innerHTML = `Al dejar tus <strong>${formattedInitial}</strong> en los bolsillos o metas de tu billetera digital, tu dinero creció a un total de <strong>${formattedFinal}</strong> en 12 meses, dándote liquidez constante mientras te proteges de la inflación.`;
+        bubbleGrowth.textContent = "Moderado (~8.0% E.A.).";
+        bubbleInflation.textContent = "Casi le empata, protegiendo parcialmente tu capital.";
+        break;
+
+      case 'altorend':
+        bubbleHeader.textContent = `"¡De las mejores decisiones para hacer crecer tus ahorros!"`;
+        bubbleStatus.textContent = `¡Generaste una ganancia neta de +${formattedGain} al año!`;
+        bubbleExplanation.innerHTML = `Tu dinero creció a un total de <strong>${formattedFinal}</strong>. Le ganaste a la inflación de forma real mientras mantenés la liquidez que necesitás para mover tu plata cuando querás.`;
+        bubbleGrowth.textContent = "Alto (~11.5% E.A.).";
+        bubbleInflation.textContent = "¡SÍ, totalmente!";
+        break;
+
+      case 'cdt':
+        bubbleHeader.textContent = `"Rendimiento seguro, fijo y sin sorpresas"`;
+        bubbleStatus.textContent = `Ganancia fija asegurada de +${formattedGain} al año`;
+        bubbleExplanation.innerHTML = `Aseguraste un total de <strong>${formattedFinal}</strong> al finalizar el año. Tu plata estuvo congelada por 12 meses, pero te garantizó una tasa fija sin preocuparte por los altibajos del mercado.`;
+        bubbleGrowth.textContent = "Constante y seguro (~9.5% E.A.).";
+        bubbleInflation.textContent = "SÍ, con tasa fija asegurada.";
+        break;
+    }
+  }
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', function() {
+      // Toggle logic
+      if (this.classList.contains('active')) {
+        this.classList.remove('active', 'bg-btn-pink');
+        buttons.forEach(b => b.classList.remove('bg-btn-teal'));
+        
+        const currentVal = parseInt(resultadoValor.innerText.replace(/\D/g, '')) || 0;
+        animateValue(resultadoValor, currentVal, 0, 700);
+        
+        explanationBubble.classList.add('hidden');
+        return;
+      }
+
+      // 1. Manage Active State
+      buttons.forEach(b => b.classList.remove('active', 'bg-btn-pink'));
+      buttons.forEach(b => b.classList.add('bg-btn-teal'));
+      this.classList.remove('bg-btn-teal');
+      this.classList.add('active', 'bg-btn-pink');
+
+      updateSimulation(this, true);
+
+      // 5. Show Panel with Pop-In Animation
+      explanationBubble.classList.remove('hidden');
+      explanationBubble.classList.remove('pop-in-3d');
+      void explanationBubble.offsetWidth; // trigger reflow
+      explanationBubble.classList.add('pop-in-3d');
+      
+      // Auto-scroll on mobile
+      if(window.innerWidth < 1024) {
+        setTimeout(() => {
+          explanationBubble.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 100);
+      }
+    });
+  });
+
+  montoInput.addEventListener('input', () => {
+    const activeBtn = document.querySelector('.instrument-btn.active');
+    if (activeBtn) {
+      updateSimulation(activeBtn, false);
+    }
+  });
+
+  // Initialize with current value if active button exists
+  const initialActiveBtn = document.querySelector('.instrument-btn.active');
+  if (initialActiveBtn) {
+    updateSimulation(initialActiveBtn, false);
+  }
+</script>
+<!-- END: Scripts -->
+
+
+
+
+</body></html>
