@@ -159,16 +159,34 @@
       opacity: 0;
       pointer-events: none;
     }
+
+    /* Particle explosion */
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      animation: explode 0.6s ease-out forwards;
+    }
+    @keyframes explode {
+      0% {
+        transform: scale(0) translate(0, 0);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(1) translate(var(--tx), var(--ty));
+        opacity: 0;
+      }
+    }
   </style>
 </head>
-<body class="font-roboto text-slate-800" style="background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuD6Bn2q-8C_PPj0fcLCU8EHBi0VKcdOMY3hJTwHzDvBeITX4GPc5_lzcyokq4lIO3En4I0Mpos40BVwLnxvD1BMPB5duvacOypMUwypseYmWbekL4d8wHdev1beZCDYPwh9Xisrt_qb1iQclsZv8cs61Xny5GODYQTGH7VCToosaW7-W44lFYck_eZecLkGb3j5JnA0CQaqpbHj62cPkWLqK9gDS0xY7ki4K-NkA9kSRoRfydw1hnxzKoDYlIKAuVNEn8KpCkciwnGeAA&quot;); background-size: cover; background-position: center center; background-attachment: fixed; min-height: 100vh; margin: 0px;">
+<body class="font-roboto text-slate-800" style="min-height: 100vh; margin: 0px;">
 <!-- BEGIN: MainHeader -->
-<header class="bg-lukash-yellow w-full h-16 flex items-center justify-between px-4 relative z-50 border-b-4 border-black/10 transition-opacity duration-100" id="main-header">
+<header class="fixed top-0 left-0 right-0 bg-lukash-yellow w-full h-16 flex items-center justify-between px-4 z-50 border-b-4 border-black/10" id="main-header">
 <!-- Menu Icon -->
 <button class="p-2 lg:hidden" id="menuBtn"><svg class="hamburger-icon" fill="none" height="24" viewBox="0 0 30 24" width="30" xmlns="http://www.w3.org/2000/svg"><path d="M2 2H28M2 12H28M2 22H28" stroke="black" stroke-linecap="round" stroke-width="4"></path></svg><svg class="close-icon hidden" fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M18 6L6 18M6 6L18 18" stroke="black" stroke-linecap="round" stroke-width="3"></path></svg></button>
 <!-- Central Logo -->
 <div class="absolute left-1/2 -translate-x-1/2 lg:hidden">
-<img alt="LUKA$H Logo" class="h-12 drop-shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYRpEfrEAXglfH6g6bdTAiltJsJB-DrFhYXNpv6pCllmuHj7ZTXjF1qy9e06r27C5bLil8PgTWLPE-mWnWPz_8ibC0PbXo0mgx7meRO8nUsUV1qLPggd-nZBPOPjkThKh-Ou-I6nHQkWDHioMR9pUwKGZWmx0Cixdb5lqH1bSqo8ixHeoNWq9_ax4LS-cBhRHRiCd4KtV6Bz9ISa3Kd85RkHKMPOgK3YST2EQZs-TyZzikR3_DpMQVbNJtsVzgzE3r_g">
+<img alt="LUKA$H Logo" class="h-16 drop-shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYRpEfrEAXglfH6g6bdTAiltJsJB-DrFhYXNpv6pCllmuHj7ZTXjF1qy9e06r27C5bLil8PgTWLPE-mWnWPz_8ibC0PbXo0mgx7meRO8nUsUV1qLPggd-nZBPOPjkThKh-Ou-I6nHQkWDHioMR9pUwKGZWmx0Cixdb5lqH1bSqo8ixHeoNWq9_ax4LS-cBhRHRiCd4KtV6Bz9ISa3Kd85RkHKMPOgK3YST2EQZs-TyZzikR3_DpMQVbNJtsVzgzE3r_g">
 </div>
 <!-- User Icon -->
 <button class="p-2 lg:hidden">
@@ -178,10 +196,22 @@
 <path d="M6 22C6 18.6863 8.68629 16 12 16H16C19.3137 16 22 18.6863 22 22" stroke="black" stroke-width="2"></path>
 </svg>
 </button>
-<nav class="hidden lg:flex items-center w-full h-full px-8 font-rubik font-bold text-lukash-dark tracking-wider relative justify-between"><div class="flex items-center h-full"><img alt="LUKA$H Logo" class="h-12 drop-shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYRpEfrEAXglfH6g6bdTAiltJsJB-DrFhYXNpv6pCllmuHj7ZTXjF1qy9e06r27C5bLil8PgTWLPE-mWnWPz_8ibC0PbXo0mgx7meRO8nUsUV1qLPggd-nZBPOPjkThKh-Ou-I6nHQkWDHioMR9pUwKGZWmx0Cixdb5lqH1bSqo8ixHeoNWq9_ax4LS-cBhRHRiCd4KtV6Bz9ISa3Kd85RkHKMPOgK3YST2EQZs-TyZzikR3_DpMQVbNJtsVzgzE3r_g"></div><div class="flex items-center justify-center space-x-32 uppercase text-lg w-max flex-1">
-<span class="">NOSOTROS</span>
-<span class="">CONTACTANOS</span>
-</div><div class="flex items-center"><svg fill="none" height="32" viewBox="0 0 28 28" width="32" xmlns="http://www.w3.org/2000/svg"><circle cx="14" cy="14" r="12" stroke="currentColor" stroke-width="2"></circle><circle cx="14" cy="10" r="4" stroke="currentColor" stroke-width="2"></circle><path d="M6 22C6 18.6863 8.68629 16 12 16H16C19.3137 16 22 18.6863 22 22" stroke="currentColor" stroke-width="2"></path></svg></div></nav></header>
+<div class="mx-auto w-full max-w-[1280px] h-full"><nav class="hidden lg:flex items-center w-full h-full px-8 font-fredoka font-bold text-lukash-dark tracking-wider relative justify-between"><div class="flex items-center h-full"><img alt="LUKA$H Logo" class="h-16 drop-shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYRpEfrEAXglfH6g6bdTAiltJsJB-DrFhYXNpv6pCllmuHj7ZTXjF1qy9e06r27C5bLil8PgTWLPE-mWnWPz_8ibC0PbXo0mgx7meRO8nUsUV1qLPggd-nZBPOPjkThKh-Ou-I6nHQkWDHioMR9pUwKGZWmx0Cixdb5lqH1bSqo8ixHeoNWq9_ax4LS-cBhRHRiCd4KtV6Bz9ISa3Kd85RkHKMPOgK3YST2EQZs-TyZzikR3_DpMQVbNJtsVzgzE3r_g"></div><div class="flex items-center justify-center space-x-20 uppercase text-xl w-max flex-1">
+<div class="relative" id="desktopCategorias">
+ <button class="flex items-center gap-1 transition-colors hover:text-[#f7efd0]" id="desktopCategoriasBtn">CATEGORIAS<svg class="w-4 h-4 transition-transform duration-300" id="desktopCategoriasArrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg></button>
+ <div class="absolute left-1/2 -translate-x-1/2 top-full pt-4 hidden" id="desktopCategoriasMenu">
+ <div class="bg-lukash-bg-modal/95 backdrop-blur-md text-lukash-dark rounded-2xl shadow-2xl border-2 border-lukash-yellow p-4 w-64 flex flex-col space-y-1 font-bold text-lg">
+ <a class="hover:bg-[#eac62f] hover:text-white transition-colors rounded-lg px-4 py-2.5" href="modo-ahorro.html">MODO AHORRO</a>
+ <a class="hover:bg-[#eac62f] hover:text-white transition-colors rounded-lg px-4 py-2.5" href="rindiendo-money.html">RINDIENDO LA MONEY</a>
+ <a class="hover:bg-[#eac62f] hover:text-white transition-colors rounded-lg px-4 py-2.5" href="cuentas-claras.html">CUENTAS CLARAS</a>
+ <a class="hover:bg-[#eac62f] hover:text-white transition-colors rounded-lg px-4 py-2.5" href="cero-enredor.html">CERO ENREDOS</a>
+ </div>
+ </div>
+ </div>
+ <a href="Registro.html" class="transition-colors hover:text-[#f7efd0]">REGISTRO</a>
+ <span class="transition-colors hover:text-[#f7efd0]">NOSOTROS</span>
+ <a href="contactanos.html" class="transition-colors hover:text-[#f7efd0]">CONTACTANOS</a>
+</div><div class="flex items-center"><svg fill="none" height="32" viewBox="0 0 28 28" width="32" xmlns="http://www.w3.org/2000/svg"><circle cx="14" cy="14" r="12" stroke="currentColor" stroke-width="2"></circle><circle cx="14" cy="10" r="4" stroke="currentColor" stroke-width="2"></circle><path d="M6 22C6 18.6863 8.68629 16 12 16H16C19.3137 16 22 18.6863 22 22" stroke="currentColor" stroke-width="2"></path></svg></div></nav></div></header>
 <!-- END: MainHeader -->
 <!-- BEGIN: Mobile Menu Drawer -->
 <div class="fixed inset-0 z-[60] pointer-events-none hidden" id="mobileMenu">
@@ -193,39 +223,37 @@
 <img alt="LUKA$H Logo" class="h-10 drop-shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYRpEfrEAXglfH6g6bdTAiltJsJB-DrFhYXNpv6pCllmuHj7ZTXjF1qy9e06r27C5bLil8PgTWLPE-mWnWPz_8ibC0PbXo0mgx7meRO8nUsUV1qLPggd-nZBPOPjkThKh-Ou-I6nHQkWDHioMR9pUwKGZWmx0Cixdb5lqH1bSqo8ixHeoNWq9_ax4LS-cBhRHRiCd4KtV6Bz9ISa3Kd85RkHKMPOgK3YST2EQZs-TyZzikR3_DpMQVbNJtsVzgzE3r_g">
 <button class="text-2xl font-rubik font-bold text-lukash-dark p-2 transition-all duration-200" id="closeMenuBtn" style="opacity: 1;">X</button>
 </div>
-<nav class="flex flex-col p-8 pt-0 font-rubik font-bold text-lukash-dark space-y-8 items-start text-left">
-<a class="hover:text-lukash-pink transition-colors text-xl" href="#" style="color: rgb(24, 15, 67);">NOSOTROS</a>
-<a class="hover:text-lukash-pink transition-colors text-xl" href="#" style="color: rgb(24, 15, 67);">CONTACTANOS</a>
+<nav class="flex flex-col p-8 pt-0 font-fredoka font-bold text-lukash-dark space-y-5 items-start text-left">
+<div class="w-full">
+ <button class="flex items-center justify-between w-full text-xl hover:text-lukash-pink transition-colors" id="mobileCategoriasBtn" style="color: rgb(24, 15, 67);">CATEGORIAS<svg class="w-5 h-5 transition-transform duration-300" id="mobileCategoriasArrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg></button>
+ <div id="mobileCategoriasMenu" class="hidden mt-4 pl-4 border-l-4 border-lukash-pink/30 space-y-4 flex flex-col">
+ <a class="hover:text-lukash-pink transition-colors text-lg" href="modo-ahorro.html" style="color: rgb(24, 15, 67);">MODO AHORRO</a>
+ <a class="hover:text-lukash-pink transition-colors text-lg" href="rindiendo-money.html" style="color: rgb(24, 15, 67);">RINDIENDO LA MONEY</a>
+ <a class="hover:text-lukash-pink transition-colors text-lg" href="cuentas-claras.html" style="color: rgb(24, 15, 67);">CUENTAS CLARAS</a>
+ <a class="hover:text-lukash-pink transition-colors text-lg" href="cero-enredor.html" style="color: rgb(24, 15, 67);">CERO ENREDOS</a>
+ </div>
+ </div>
+ <a class="hover:text-lukash-pink transition-colors text-xl" href="Registro.html" style="color: rgb(24, 15, 67);">REGISTRO</a>
+ <a class="hover:text-lukash-pink transition-colors text-xl" href="#" style="color: rgb(24, 15, 67);">NOSOTROS</a>
+ <a class="hover:text-lukash-pink transition-colors text-xl" href="contactanos.html" style="color: rgb(24, 15, 67);">CONTACTANOS</a>
 </nav>
 </div>
 </div>
 <!-- END: Mobile Menu Drawer -->
 <!-- BEGIN: MainContent -->
 <main class="relative flex items-center justify-center min-h-[calc(100vh-64px)] z-20 overflow-hidden p-4">
-<!-- Floating Star Decor Left -->
-<div class="absolute top-24 left-12 w-32 h-32 md:w-48 md:h-48 z-10 animate-float" style="animation-delay: -1s;">
-<svg class="w-full h-full drop-shadow-2xl fill-[#FF6B9E] opacity-90" viewBox="0 0 100 100">
-<path d="M50 0 C50 40, 60 50, 100 50 C60 50, 50 60, 50 100 C50 60, 40 50, 0 50 C40 50, 50 40, 50 0 Z"></path>
-</svg>
-</div>
-<!-- Floating Star Decor Right -->
-<div class="absolute bottom-24 right-12 w-24 h-24 md:w-32 md:h-32 z-10 animate-float" style="animation-delay: -2s; transform: rotate(15deg);">
-<svg class="w-full h-full drop-shadow-2xl fill-[#FF6B9E] opacity-90" viewBox="0 0 100 100">
-<path d="M50 0 C50 40, 60 50, 100 50 C60 50, 50 60, 50 100 C50 60, 40 50, 0 50 C40 50, 50 40, 50 0 Z"></path>
-</svg>
-</div>
 <div class="relative max-w-7xl w-full flex flex-col lg:flex-row items-center justify-center lg:justify-between z-20 lg:gap-8 px-4 lg:px-12 gap-4"><!-- Right: Informative Yellow 3D Card (Top for Mobile) -->
 <div class="relative w-full lg:w-1/2 flex items-center justify-center order-1 lg:order-2">
 <div class="relative w-full max-w-md lg:max-w-xl rounded-2xl border-2 overflow-hidden" style="background-color: rgb(239, 236, 230); border-radius: 28px; box-shadow: rgb(198, 191, 195) 6px 10px 0px; transform: perspective(1000px) rotateY(-2deg) rotateX(1deg); border-width: medium; border-style: none; border-color: currentcolor; border-image: none;">
 <div class="flex flex-col justify-center items-start text-left p-8 md:p-12 lg:p-16 xl:p-20 space-y-4">
-<h2 class="font-rubik font-bold text-lukash-dark uppercase tracking-wide text-xl md:text-2xl lg:text-3xl leading-none text-[#180F43]">¿QUé MáS PUES? BIENVENIDO@ A LUKASH</h2>
-<p class="font-rubik text-lukash-dark leading-snug text-sm md:text-base lg:text-lg font-medium pr-4 text-slate-700">En LUKASH te enseñamos cómo ahorrar, invertir y tomar mejores decisiones financieras sin morir en el intento. La idea es que entendás la plata de forma fácil, a tu ritmo y sin sentir que estás viendo una clase aburrida.</p>
+<h2 class="font-rubik font-bold text-lukash-dark uppercase tracking-wide text-xl md:text-2xl lg:text-3xl leading-none text-[#180F43]">¿QUÉ MÁS PUES? BIENVENIDO@ A LUKASH</h2>
+<p class="font-rubik text-lukash-dark leading-snug text-sm md:text-base lg:text-lg font-medium pr-4 text-slate-700">En LUKASH te enseñamos cómo ahorrar, invertir y tomar mejores decisiones financieras sin morir en el intento. La idea es que entiendas el dinero de forma fácil, a tu ritmo y sin sentir que estás viendo una clase aburrida.</p>
 </div>
 </div>
 </div>
 <!-- Left: Piggy Bank with Money (Bottom for Mobile) -->
 <div class="relative w-full lg:w-1/2 flex items-center justify-start lg:justify-center order-2 lg:order-1">
-<img alt="Piggy Bank with Money" class="w-full max-w-[280px] md:w-[450px] lg:w-[2200px] h-auto object-contain drop-shadow-2xl animate-float" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCCpz_sAQt2wkKi6Hl-iob10QJXko3zyERrYLB4Xx0dlqcJ5jK8-0G8aRY08UZDLZ1pP255mwngWRtS2wPgRoO01eYUYrclhuFfC7Tg5XSzqZBpWSN1FTXH9eTdUM8IdvlNxPQRoMjT54ELa7ebvPW76tJK44ak3c9HcL5dYtNrr7ctghf-UfyOKWXxGHhpaGf1jSUgaNgwfppYdGn9GsaD31NHJxhW2CEolglxozGKPFMW3qvMlqEjh-Qccrdv-vjbOQ">
+<img alt="Piggy Bank with Money" class="w-full max-w-[280px] md:w-[450px] lg:w-[2200px] h-auto object-contain drop-shadow-2xl animate-float lg:max-w-[800px]" src="images/saludando.png">
 </div></div>
 </main>
 <!-- END: MainContent -->
@@ -296,12 +324,81 @@
     mobileMenuOverlay.addEventListener('click', closeMenu);
 
   </script>
+<script data-purpose="navegacion-categorias">
+  (function () {
+    const dCat = document.getElementById('desktopCategorias');
+    const dBtn = document.getElementById('desktopCategoriasBtn');
+    const dMenu = document.getElementById('desktopCategoriasMenu');
+    const dArrow = document.getElementById('desktopCategoriasArrow');
+    if (dCat && dBtn && dMenu && dArrow) {
+      const toggle = (open) => {
+        dMenu.classList.toggle('hidden', !open);
+        dArrow.classList.toggle('rotate-180', open);
+      };
+      dBtn.addEventListener('click', (e) => { e.stopPropagation(); toggle(dMenu.classList.contains('hidden')); });
+      dCat.addEventListener('mouseenter', () => toggle(true));
+      dCat.addEventListener('mouseleave', () => toggle(false));
+      document.addEventListener('click', (e) => { if (!dCat.contains(e.target)) toggle(false); });
+    }
+    const mBtn = document.getElementById('mobileCategoriasBtn');
+    const mMenu = document.getElementById('mobileCategoriasMenu');
+    const mArrow = document.getElementById('mobileCategoriasArrow');
+    if (mBtn && mMenu && mArrow) {
+      mBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isHidden = mMenu.classList.contains('hidden');
+        mMenu.classList.toggle('hidden', !isHidden);
+        mArrow.classList.toggle('rotate-180', isHidden);
+      });
+    }
+  })();
+</script>
 <script data-purpose="chat-functionality">
   const fabButton = document.getElementById('fab-button');
   const chatWindow = document.getElementById('chat-window');
   const closeChat = document.getElementById('close-chat');
   const chatForm = document.getElementById('chat-form');
   const chatMessages = document.getElementById('chat-messages');
+  const particleContainer = document.getElementById('particle-container');
+
+  const brandColors = ['#EE4599', '#180F43', '#E7C11F', '#A7EB5D'];
+
+  function createParticles(x, y) {
+    for (let i = 0; i < 30; i++) {
+      const particle = document.createElement('div');
+      particle.classList.add('particle');
+      const size = Math.random() * 10 + 5;
+      const color = brandColors[Math.floor(Math.random() * brandColors.length)];
+      particle.style.width = `${size}px`;
+      particle.style.height = `${size}px`;
+      particle.style.backgroundColor = color;
+      particle.style.left = `${x}px`;
+      particle.style.top = `${y}px`;
+      const angle = Math.random() * Math.PI * 2;
+      const velocity = 50 + Math.random() * 100;
+      const tx = Math.cos(angle) * velocity;
+      const ty = Math.sin(angle) * velocity;
+      particle.style.setProperty('--tx', `${tx}px`);
+      particle.style.setProperty('--ty', `${ty}px`);
+      particleContainer.appendChild(particle);
+      setTimeout(() => { particle.remove(); }, 600);
+    }
+  }
+
+  // Explosión automática del marranito al cargar la página:
+  // se dispara al inicio para que, mientras aparecen la imagen y el texto
+  // con recuadro, la animación de explosión ya esté terminando.
+  function triggerExplosion() {
+    const rect = fabButton.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    fabButton.classList.add('exploding');
+    createParticles(centerX, centerY);
+  }
+
+  window.addEventListener('load', () => {
+    setTimeout(triggerExplosion, 300);
+  });
 
   fabButton.addEventListener('click', (e) => {
     chatWindow.classList.remove('hidden-chat');
@@ -339,6 +436,10 @@
   });
 </script>
 <!-- END: Scripts -->
+
+
+
+
 
 
 

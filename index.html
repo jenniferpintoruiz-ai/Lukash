@@ -264,13 +264,295 @@
         pointer-events: none;
         z-index: 30;
     }
+
+    /* Carrusel Categorías - oculto inicialmente */
+    #categorias-section {
+      opacity: 0;
+      transform: translateY(60px);
+      pointer-events: none;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+      position: relative;
+      z-index: 20;
+    }
+
+    #categorias-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .carousel-container {
+      perspective: 1200px;
+      will-change: transform;
+      height: 60vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      z-index: 10;
+      margin-top: 2rem;
+    }
+
+    .carousel-item {
+      position: absolute;
+      width: 190px;
+      height: 260px;
+      cursor: pointer;
+      transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.8s ease, box-shadow 0.4s ease;
+      user-select: none;
+      perspective: 1000px;
+    }
+
+    .carousel-item.init-state {
+      transform: translate3d(0, 0, 0) scale(0.2) !important;
+      opacity: 0 !important;
+      transition: transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.7s ease !important;
+    }
+
+    @media (min-width: 640px) {
+      .carousel-item { width: 260px; height: 340px; }
+    }
+    @media (min-width: 1024px) {
+      .carousel-item { width: 320px; height: 380px; }
+    }
+
+    .card-title {
+      font-family: 'Fredoka', sans-serif;
+      font-weight: 700;
+      text-transform: uppercase;
+      line-height: 1.1;
+      transition: opacity 0.3s ease;
+      font-size: clamp(1.2rem, 4vw, 1.875rem);
+    }
+
+    .color-blue .card-front, .color-blue .card-back { background-color: rgba(58, 131, 151, 0.9); color: white; }
+    .color-light-green .card-front, .color-light-green .card-back { background-color: rgba(178, 207, 123, 0.9); color: #180F43; }
+    .color-dark-blue .card-front, .color-dark-blue .card-back { background-color: rgba(234, 206, 89, 0.9); color: #180F43; }
+    .color-medium-green .card-front, .color-medium-green .card-back { background-color: rgba(220, 121, 139, 0.9); color: #180F43; }
+
+    @media (max-width: 639px) {
+      .pos-0 { transform: translate3d(0, 0, 100px) scale(1); z-index: 10; opacity: 1; }
+      .pos-1 { transform: translate3d(75px, 0, -40px) scale(0.85) rotateY(-15deg); z-index: 5; opacity: 0.8; }
+      .pos-2 { transform: translate3d(0, 0, -100px) scale(0.7); z-index: 1; opacity: 0.5; }
+      .pos-3 { transform: translate3d(-75px, 0, -40px) scale(0.85) rotateY(15deg); z-index: 5; opacity: 0.8; }
+    }
+
+    @media (min-width: 640px) {
+      .pos-0 { transform: translate3d(0, 0, 100px) scale(1); z-index: 10; opacity: 1; }
+      .pos-1 { transform: translate3d(200px, 0, -80px) scale(0.85) rotateY(-20deg); z-index: 5; opacity: 0.8; }
+      .pos-3 { transform: translate3d(-200px, 0, -80px) scale(0.85) rotateY(20deg); z-index: 5; opacity: 0.8; }
+      .pos-2 { transform: translate3d(0, 0, -200px) scale(0.7); z-index: 1; opacity: 0.5; }
+    }
+
+    @media (min-width: 1024px) {
+      .pos-1 { transform: translate3d(300px, 0, -100px) scale(0.85) rotateY(-25deg); }
+      .pos-3 { transform: translate3d(-300px, 0, -100px) scale(0.85) rotateY(25deg); }
+      .pos-2 { transform: translate3d(0, 0, -300px) scale(0.7); }
+    }
+
+    .pos-0 .card-front, .pos-0 .card-back {
+      box-shadow: 0 25px 50px rgba(0,0,0,0.5), inset 0 2px 4px rgba(255,255,255,0.4);
+    }
+
+    .carousel-item:hover .card-front, .carousel-item:hover .card-back {
+      box-shadow: 0 30px 60px rgba(0,0,0,0.6), inset 0 2px 4px rgba(255,255,255,0.5);
+    }
+    .carousel-item:active { transform: scale(0.96) !important; }
+
+    .card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+      transform-style: preserve-3d;
+    }
+    .card-inner.is-flipped { transform: rotateY(180deg); }
+
+    .card-front, .card-back {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 30px;
+      border: 1.5px solid rgba(255,255,255,0.5);
+      backdrop-filter: blur(18px) saturate(160%);
+      -webkit-backdrop-filter: blur(18px) saturate(160%);
+      background-image: linear-gradient(135deg, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0.06) 30%, rgba(255,255,255,0) 55%, rgba(255,255,255,0.14) 100%);
+      box-shadow: 0 18px 45px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.6), inset 0 0 20px rgba(255,255,255,0.22);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      text-align: center;
+    }
+    .card-back { transform: rotateY(180deg); }
+
+    .card-btn {
+      background-color: #EFEAE4;
+      color: #180F43;
+      font-family: 'Fredoka', sans-serif;
+      font-weight: 700;
+      padding: clamp(4px, 1.5vw, 6px) clamp(12px, 3vw, 18px);
+      font-size: clamp(0.75rem, 2vw, 1rem);
+      border-radius: 12px;
+      border: none;
+      box-shadow: 0 5px 0 #D3CABB;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      margin-top: 1rem;
+      z-index: 20;
+    }
+    .card-btn:active {
+      transform: scale(0.96);
+      box-shadow: none;
+    }
+
+    .card-icon {
+      font-size: clamp(2.5rem, 6vw, 3.5rem);
+      margin-bottom: 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: auto;
+      min-height: 60px;
+    }
+
+    .card-icon img {
+      width: 140px;
+      max-width: 100%;
+      height: 140px;
+      object-fit: contain;
+      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.25));
+    }
+
+    .card-text {
+      font-size: clamp(0.75rem, 2.5vw, 1rem);
+      line-height: 1.3;
+    }
+
+    /* Indicador de scroll */
+    .scroll-hint {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: bounce 2s infinite;
+      z-index: 30;
+      transition: opacity 0.5s ease;
+    }
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+40% { transform: translateX(-50%) translateY(-12px); }
+       60% { transform: translateX(-50%) translateY(-6px); }
+     }
+   </style>
+   <!-- Transición LUKA$ -->
+   <style data-purpose="transicion-lukas">
+    /* =========================
+       TRANSICIÓN LUKA$
+    ========================= */
+
+    #transicion-lukas {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 99999;
+      display: none;
+    }
+
+    #transicion-lukas.activa {
+      display: block;
+    }
+
+    .onda {
+      position: absolute;
+      width: 140%;
+      /* La onda es más alta que la pantalla: al subir el domo queda por
+         encima del borde y la parte recta cubre TODA la pantalla. */
+      height: 260vh;
+      left: -20%;
+      bottom: -260vh;
+      border-radius: 50% 50% 0 0;
+      /* transform se anima en GPU: sin parpadeos ni repintados de layout */
+      will-change: transform;
+    }
+
+    /* Amarillo */
+    .onda-amarilla {
+      background: #E7C11F;
+      z-index: 1;
+    }
+
+    /* Rosado */
+    .onda-rosada {
+      background: #DE7A8F;
+      z-index: 2;
+    }
+
+    /* Morado */
+    .onda-morada {
+      background: #180F43;
+      z-index: 3;
+    }
+
+    /* SUBIR (rápido ~0.45s, escalonado 0/0.06/0.12s)
+       fill-mode "both": durante los retardos las ondas mantienen su
+       posición inicial oculta y jamás parpadean. */
+    #transicion-lukas.activa .onda-amarilla {
+      animation: subir 0.45s ease-out both;
+    }
+    #transicion-lukas.activa .onda-rosada {
+      animation: subir 0.45s 0.06s ease-out both;
+    }
+    #transicion-lukas.activa .onda-morada {
+      animation: subir 0.45s 0.12s ease-out both;
+    }
+
+    @keyframes subir {
+      from { transform: translate3d(0, 0, 0); }
+      to   { transform: translate3d(0, -240vh, 0); }
+    }
+
+    /* BAJAR (rápido ~0.35s, escalonado 0/0.06/0.12s)
+       fill-mode "both": durante los retardos las ondas mantienen la
+       pantalla cubierta para no "destellar" abajo. */
+    #transicion-lukas.saliendo .onda-amarilla {
+      animation: bajar 0.35s ease-out both;
+    }
+    #transicion-lukas.saliendo .onda-rosada {
+      animation: bajar 0.35s 0.06s ease-out both;
+    }
+    #transicion-lukas.saliendo .onda-morada {
+      animation: bajar 0.35s 0.12s ease-out both;
+    }
+
+    @keyframes bajar {
+      from { transform: translate3d(0, -240vh, 0); }
+      to   { transform: translate3d(0, 0, 0); }
+    }
   </style>
 </head>
-<body class="font-roboto text-slate-800" style="background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuA-ZzQkcdR0P07Pa6QOnZOJAg8REIXg6NuyQVH6njxH6ILMfxzjVynoe0rFuVrJwA7t10GjLxuHdSQqg2Zh3X0Bnp6bqTGckaybtdWawLnZwtkKVyvbpx5BDatzT3usRASebt4HpbbadgYAsiSB_sBhqxlBXqATX4Wu0kMeKVJ_ZtsW_TQAYhrJxn4u3rILQgROlCPlphztA-JLx_dn7Dy90nc0MuFI4__D310ozf6xGrjQkoajgWP26P8KdWnPzzUV-_J83QvMmR-A0Q&quot;); background-size: cover; background-position: center center; background-attachment: fixed; min-height: 100vh; margin: 0px;">
+<body class="font-roboto text-slate-800" style="background-image: url('images/fondo_.png'); background-size: cover; background-position: center center; background-attachment: fixed; min-height: 100vh; margin: 0px;">
 <!-- Flash Overlay -->
 <div class="flash-overlay" id="flash-overlay"></div>
+<!-- TRANSICIÓN LUKA$ -->
+<div id="transicion-lukas">
+  <div class="onda onda-amarilla"></div>
+  <div class="onda onda-rosada"></div>
+  <div class="onda onda-morada"></div>
+</div>
 <!-- BEGIN: MainHeader -->
-<header class="bg-lukash-yellow w-full h-16 flex items-center justify-between px-4 relative z-50 border-b-4 border-black/10 opacity-0 pointer-events-none transition-opacity duration-100 mt-12" id="main-header">
+<header class="fixed top-0 left-0 right-0 bg-lukash-yellow w-full h-16 flex items-center justify-between px-4 z-50 border-b-4 border-black/10 opacity-0 pointer-events-none transition-opacity duration-100" id="main-header">
 <!-- Menu Icon -->
 <button class="p-2 lg:hidden" id="menuBtn"><svg class="hamburger-icon" fill="none" height="24" viewBox="0 0 30 24" width="30" xmlns="http://www.w3.org/2000/svg"><path d="M2 2H28M2 12H28M2 22H28" stroke="black" stroke-linecap="round" stroke-width="4"></path></svg><svg class="close-icon hidden" fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M18 6L6 18M6 6L18 18" stroke="black" stroke-linecap="round" stroke-width="3"></path></svg></button>
 <!-- Central Logo -->
@@ -286,20 +568,20 @@
 </svg>
 </button>
 <div class="mx-auto w-full max-w-[1280px] h-full"><nav class="hidden lg:flex items-center w-full h-full px-8 font-fredoka font-bold text-lukash-dark tracking-wider relative justify-between"><div class="flex items-center h-full"><img alt="LUKA$H Logo" class="h-16 drop-shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYRpEfrEAXglfH6g6bdTAiltJsJB-DrFhYXNpv6pCllmuHj7ZTXjF1qy9e06r27C5bLil8PgTWLPE-mWnWPz_8ibC0PbXo0mgx7meRO8nUsUV1qLPggd-nZBPOPjkThKh-Ou-I6nHQkWDHioMR9pUwKGZWmx0Cixdb5lqH1bSqo8ixHeoNWq9_ax4LS-cBhRHRiCd4KtV6Bz9ISa3Kd85RkHKMPOgK3YST2EQZs-TyZzikR3_DpMQVbNJtsVzgzE3r_g"></div><div class="flex items-center justify-center space-x-20 uppercase text-xl w-max flex-1">
-<span class="transition-colors hover:text-[#f7efd0]">NOSOTROS</span>
 <div class="relative" id="desktopCategorias">
-<button class="flex items-center gap-1 transition-colors hover:text-[#f7efd0]" id="desktopCategoriasBtn">CATEGORIAS<svg class="w-4 h-4 transition-transform duration-300" id="desktopCategoriasArrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg></button>
-<div class="absolute left-1/2 -translate-x-1/2 top-full pt-4 hidden" id="desktopCategoriasMenu">
-<div class="bg-lukash-bg-modal/95 backdrop-blur-md text-lukash-dark rounded-2xl shadow-2xl border-2 border-lukash-yellow p-4 w-64 flex flex-col space-y-1 font-bold text-lg">
-<a class="hover:bg-[#eac62f] hover:text-white transition-colors rounded-lg px-4 py-2.5" href="modo-ahorro.html">MODO AHORRO</a>
-<a class="hover:bg-[#eac62f] hover:text-white transition-colors rounded-lg px-4 py-2.5" href="rindiendo-money.html">RINDIENDO LA MONEY</a>
-<a class="hover:bg-[#eac62f] hover:text-white transition-colors rounded-lg px-4 py-2.5" href="cuentas-claras.html">CUENTAS CLARAS</a>
-<a class="hover:bg-[#eac62f] hover:text-white transition-colors rounded-lg px-4 py-2.5" href="cero-enredor.html">CERO ENREDOS</a>
-</div>
-</div>
-</div>
-<span class="transition-colors hover:text-[#f7efd0]">CONTACTANOS</span>
-<a href="Registro.html" class="transition-colors hover:text-[#f7efd0]">REGISTRO</a>
+ <button class="flex items-center gap-1 transition-colors hover:text-[#f7efd0]" id="desktopCategoriasBtn">CATEGORIAS<svg class="w-4 h-4 transition-transform duration-300" id="desktopCategoriasArrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg></button>
+ <div class="absolute left-1/2 -translate-x-1/2 top-full pt-4 hidden" id="desktopCategoriasMenu">
+ <div class="bg-lukash-bg-modal/95 backdrop-blur-md text-lukash-dark rounded-2xl shadow-2xl border-2 border-lukash-yellow p-4 w-64 flex flex-col space-y-1 font-bold text-lg">
+ <a class="hover:bg-[#eac62f] hover:text-white transition-colors rounded-lg px-4 py-2.5" href="modo-ahorro.html">MODO AHORRO</a>
+ <a class="hover:bg-[#eac62f] hover:text-white transition-colors rounded-lg px-4 py-2.5" href="rindiendo-money.html">RINDIENDO LA MONEY</a>
+ <a class="hover:bg-[#eac62f] hover:text-white transition-colors rounded-lg px-4 py-2.5" href="cuentas-claras.html">CUENTAS CLARAS</a>
+ <a class="hover:bg-[#eac62f] hover:text-white transition-colors rounded-lg px-4 py-2.5" href="cero-enredor.html">CERO ENREDOS</a>
+ </div>
+ </div>
+ </div>
+ <a href="Registro.html" class="transition-colors hover:text-[#f7efd0]">REGISTRO</a>
+ <span class="transition-colors hover:text-[#f7efd0]">NOSOTROS</span>
+ <a href="contactanos.html" class="transition-colors hover:text-[#f7efd0]">CONTACTANOS</a>
 </div><div class="flex items-center"><svg fill="none" height="32" viewBox="0 0 28 28" width="32" xmlns="http://www.w3.org/2000/svg"><circle cx="14" cy="14" r="12" stroke="currentColor" stroke-width="2"></circle><circle cx="14" cy="10" r="4" stroke="currentColor" stroke-width="2"></circle><path d="M6 22C6 18.6863 8.68629 16 12 16H16C19.3137 16 22 18.6863 22 22" stroke="currentColor" stroke-width="2"></path></svg></div></nav></div></header>
 <!-- END: MainHeader -->
 <!-- BEGIN: Mobile Menu Drawer -->
@@ -313,18 +595,18 @@
 <button class="text-2xl font-fredoka font-bold text-lukash-dark p-2 transition-all duration-200" id="closeMenuBtn" style="opacity: 1;">X</button>
 </div>
 <nav class="flex flex-col p-8 pt-0 font-fredoka font-bold text-lukash-dark space-y-5 items-start text-left">
-<a class="hover:text-lukash-pink transition-colors text-xl" href="#" style="color: rgb(24, 15, 67);">NOSOTROS</a>
 <div class="w-full">
-<button class="flex items-center justify-between w-full text-xl hover:text-lukash-pink transition-colors" id="mobileCategoriasBtn" style="color: rgb(24, 15, 67);">CATEGORIAS<svg class="w-5 h-5 transition-transform duration-300" id="mobileCategoriasArrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg></button>
-<div id="mobileCategoriasMenu" class="hidden mt-4 pl-4 border-l-4 border-lukash-pink/30 space-y-4 flex flex-col">
-<a class="hover:text-lukash-pink transition-colors text-lg" href="modo-ahorro.html" style="color: rgb(24, 15, 67);">MODO AHORRO</a>
-<a class="hover:text-lukash-pink transition-colors text-lg" href="rindiendo-money.html" style="color: rgb(24, 15, 67);">RINDIENDO LA MONEY</a>
-<a class="hover:text-lukash-pink transition-colors text-lg" href="cuentas-claras.html" style="color: rgb(24, 15, 67);">CUENTAS CLARAS</a>
-<a class="hover:text-lukash-pink transition-colors text-lg" href="cero-enredor.html" style="color: rgb(24, 15, 67);">CERO ENREDOS</a>
-</div>
-</div>
-<a class="hover:text-lukash-pink transition-colors text-xl" href="#" style="color: rgb(24, 15, 67);">CONTACTANOS</a>
-<a class="hover:text-lukash-pink transition-colors text-xl" href="Registro.html" style="color: rgb(24, 15, 67);">REGISTRO</a>
+ <button class="flex items-center justify-between w-full text-xl hover:text-lukash-pink transition-colors" id="mobileCategoriasBtn" style="color: rgb(24, 15, 67);">CATEGORIAS<svg class="w-5 h-5 transition-transform duration-300" id="mobileCategoriasArrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg></button>
+ <div id="mobileCategoriasMenu" class="hidden mt-4 pl-4 border-l-4 border-lukash-pink/30 space-y-4 flex flex-col">
+ <a class="hover:text-lukash-pink transition-colors text-lg" href="modo-ahorro.html" style="color: rgb(24, 15, 67);">MODO AHORRO</a>
+ <a class="hover:text-lukash-pink transition-colors text-lg" href="rindiendo-money.html" style="color: rgb(24, 15, 67);">RINDIENDO LA MONEY</a>
+ <a class="hover:text-lukash-pink transition-colors text-lg" href="cuentas-claras.html" style="color: rgb(24, 15, 67);">CUENTAS CLARAS</a>
+ <a class="hover:text-lukash-pink transition-colors text-lg" href="cero-enredor.html" style="color: rgb(24, 15, 67);">CERO ENREDOS</a>
+ </div>
+ </div>
+ <a class="hover:text-lukash-pink transition-colors text-xl" href="Registro.html" style="color: rgb(24, 15, 67);">REGISTRO</a>
+ <a class="hover:text-lukash-pink transition-colors text-xl" href="#" style="color: rgb(24, 15, 67);">NOSOTROS</a>
+ <a class="hover:text-lukash-pink transition-colors text-xl" href="contactanos.html" style="color: rgb(24, 15, 67);">CONTACTANOS</a>
 </nav>
 </div>
 </div>
@@ -334,11 +616,95 @@
 <canvas id="explosion-canvas" width="523" height="112"></canvas>
 <div class="absolute inset-0 flex items-center justify-center overflow-hidden z-20">
 <img alt="Piggy Bank" class="w-64 md:w-96 h-auto opacity-80 animate-float drop-shadow-2xl cursor-pointer transition-opacity duration-300" id="central-piggy" src="images/gif-de-marranito.gif">
-<button class="hidden absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-lukash-pink text-white font-fredoka font-bold py-3 px-6 rounded-full btn-3d text-lg z-40 hover:bg-[#d63a8a] transition-colors" id="restore-btn">
-      Restaurar Chanchito
-  </button>
+</div>
+<!-- Card de texto e imagen de intro.html: se revelan cuando la explosión termina -->
+<div class="absolute inset-0 flex items-center justify-center z-30 opacity-0 pointer-events-none transition-opacity duration-1000 p-4" id="intro-card">
+<div class="relative w-full max-w-5xl flex flex-col lg:flex-row items-center justify-center gap-6 lg:gap-8">
+<!-- Left: Piggy Bank with Money -->
+<div class="w-full lg:w-1/2 flex items-center justify-center">
+<img alt="Marranito saludando" class="w-full max-w-[380px] md:max-w-[560px] h-auto object-contain drop-shadow-2xl animate-float" src="images/saludo.png">
+</div>
+<!-- Right: Text Card -->
+<div class="w-full lg:w-1/2 flex items-center justify-center">
+<div class="w-full max-w-xl rounded-2xl border-2 overflow-hidden" style="background-color: rgb(239, 236, 230); border-radius: 28px; box-shadow: rgb(198, 191, 195) 6px 10px 0px; border-width: medium; border-style: none; border-color: currentcolor; border-image: none;">
+<div class="flex flex-col justify-center items-start text-left p-8 md:p-12 space-y-4">
+<h2 class="font-rubik font-bold text-lukash-dark uppercase tracking-wide text-xl md:text-2xl lg:text-3xl leading-none text-[#180F43]">¿QUÉ MÁS PUES? BIENVENIDO@ A LUKASH</h2>
+<p class="font-rubik text-lukash-dark leading-snug text-sm md:text-base lg:text-lg font-medium text-slate-700">En LUKASH te enseñamos cómo ahorrar, invertir y tomar mejores decisiones financieras sin morir en el intento. La idea es que entiendas el dinero de forma fácil, a tu ritmo y sin sentir que estás viendo una clase aburrida.</p>
+</div>
+</div>
+  </div>
+</div>
+<!-- Scroll Hint Arrow -->
+<div class="scroll-hint opacity-0 pointer-events-none transition-opacity duration-500" id="scroll-hint">
+  <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#E7C11F" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
+  </svg>
+</div>
 </div>
 </main>
+<!-- BEGIN: Categorías Carrusel Section -->
+<section id="categorias-section">
+  <div class="carousel-container w-full max-w-lg lg:max-w-6xl" id="carousel">
+    <div class="carousel-item color-blue pos-0 init-state" data-action="EXPLORAR" data-index="0">
+      <div class="card-inner">
+        <div class="card-front">
+          <div class="card-icon"><img alt="Modo Ahorro" src="images/imagenes%20de%20las%20categorias/categorias-2.png"></div>
+          <h2 class="card-title text-2xl lg:text-3xl">MODO<br>AHORRO</h2>
+          <button class="card-btn ver-mas-btn">VER MÁS</button>
+        </div>
+        <div class="card-back">
+          <h2 class="card-title text-xl lg:text-2xl mb-2">MODO<br>AHORRO</h2>
+          <p class="font-rubik card-text font-medium mb-4 text-center px-2">La mayoría de jóvenes se quedan sin un peso antes del fin de semana... ¿vos sos uno de esos?</p>
+          <button class="card-btn action-btn">EXPLORAR</button>
+        </div>
+      </div>
+    </div>
+    <div class="carousel-item color-light-green pos-1 init-state" data-action="SIMULAR" data-index="1">
+      <div class="card-inner">
+        <div class="card-front">
+          <div class="card-icon"><img alt="Rindiendo la Money" src="images/imagenes%20de%20las%20categorias/categoria5.png"></div>
+          <h2 class="card-title text-2xl lg:text-3xl">RINDIENDO<br>LA MONEY</h2>
+          <button class="card-btn ver-mas-btn">VER MÁS</button>
+        </div>
+        <div class="card-back">
+          <h2 class="card-title text-xl lg:text-2xl mb-2">RINDIENDO<br>LA MONEY</h2>
+          <p class="font-rubik card-text font-medium mb-4 text-center px-2">Aprende a multiplicar tu capital y hacer que las inversiones trabajen a tu favor sin complicaciones.</p>
+          <button class="card-btn action-btn">SIMULAR</button>
+        </div>
+      </div>
+    </div>
+    <div class="carousel-item color-dark-blue pos-2 init-state" data-action="REVISAR" data-index="2">
+      <div class="card-inner">
+        <div class="card-front">
+          <div class="card-icon"><img alt="Cuentas Claras" src="images/imagenes%20de%20las%20categorias/categoria.png"></div>
+          <h2 class="card-title text-2xl lg:text-3xl">CUENTAS<br>CLARAS</h2>
+          <button class="card-btn ver-mas-btn">VER MÁS</button>
+        </div>
+        <div class="card-back">
+          <h2 class="card-title text-xl lg:text-2xl mb-2">CUENTAS<br>CLARAS</h2>
+          <p class="font-rubik card-text font-medium mb-4 text-center px-2">Lleva el control exacto de tus ingresos, gastos y presupuesto diario sin rodeos.</p>
+          <button class="card-btn action-btn">REVISAR</button>
+        </div>
+      </div>
+    </div>
+    <div class="carousel-item color-medium-green pos-3 init-state" data-action="JUGAR" data-index="3">
+      <div class="card-inner">
+        <div class="card-front">
+          <div class="card-icon"><img alt="Cero Enredos" src="images/imagenes%20de%20las%20categorias/categoria-3.png"></div>
+          <h2 class="card-title text-2xl lg:text-3xl">CERO<br>ENREDOS</h2>
+          <button class="card-btn ver-mas-btn">VER MÁS</button>
+        </div>
+        <div class="card-back">
+          <h2 class="card-title text-xl lg:text-2xl mb-2">CERO<br>ENREDOS</h2>
+          <p class="font-rubik card-text font-medium mb-4 text-center px-2">Aprende a tomar decisiones financieras inteligentes y resolver trivias sin caer en trampas.</p>
+          <button class="card-btn action-btn">JUGAR</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="text-white/90 font-rubik font-bold mt-12 z-10 text-center text-lg lg:text-xl drop-shadow-md">Toca una categoría para centrarla</p>
+</section>
+<!-- END: Categorías Carrusel Section -->
 <!-- END: MainContent -->
 <!-- BEGIN: FloatingActionButton & Chat Window -->
 <div class="fixed inset-0 pointer-events-none z-[60]" id="particle-container"></div>
@@ -533,10 +899,10 @@
     const canvas = document.getElementById('explosion-canvas');
     const ctx = canvas.getContext('2d');
     const piggy = document.getElementById('central-piggy');
-    const restoreBtn = document.getElementById('restore-btn');
     const mainHeader = document.getElementById('main-header');
     const flashOverlay = document.getElementById('flash-overlay');
     const uiFabContainer = document.getElementById('ui-fab-container');
+    const introCard = document.getElementById('intro-card');
 
     let particlesArray = [];
     let isAnimating = false;
@@ -668,7 +1034,6 @@
         } else {
             isAnimating = false;
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            restoreBtn.classList.remove('hidden');
         }
     }
 
@@ -693,6 +1058,13 @@
         
         if (uiFabContainer) {
             uiFabContainer.classList.remove('opacity-0', 'pointer-events-none');
+        }
+
+        // La card de texto aparece mientras la explosión ya está terminando
+        if (introCard) {
+            setTimeout(() => {
+                introCard.classList.remove('opacity-0', 'pointer-events-none');
+            }, 500);
         }
     });
 
@@ -719,33 +1091,259 @@
             
         }, 800); // Wait for intense shake animation
     });
+</script>
+<script data-purpose="transicion-lukas">
+  const categoriasSection = document.getElementById('categorias-section');
+  const scrollHint = document.getElementById('scroll-hint');
+  const transicion = document.getElementById('transicion-lukas');
+  const ondaMorada = transicion.querySelector('.onda-morada');
 
-    restoreBtn.addEventListener('click', () => {
-        if (mainHeader) {
-            mainHeader.classList.remove('assembled');
-            setTimeout(() => {
-                mainHeader.classList.add('opacity-0', 'pointer-events-none');
-            }, 500);
+  let introReady = false;
+  let transicionEnProceso = false;
+  let enIntro = true; // true = INTRO visible, false = CARRUSEL visible
+  let volviendoAIntro = false; // true = las ondas cubren para volver a la INTRO
+
+  // La intro está lista cuando termina la explosión y se ensambla la UI
+  document.addEventListener('onPiggyCatastrophe', () => {
+    introReady = true;
+    setTimeout(() => {
+      if (scrollHint) scrollHint.classList.remove('opacity-0', 'pointer-events-none');
+    }, 900);
+  });
+
+  // Cuando las ondas terminan de SUBIR la pantalla queda cubierta:
+  // se intercambia el contenido (carrusel <-> intro) justo detrás de las ondas.
+  ondaMorada.addEventListener('animationend', (e) => {
+    if (e.animationName === 'subir') {
+      if (volviendoAIntro) {
+        // Volvemos a la intro: restaurar la pantalla inicial bajo las ondas
+        categoriasSection.classList.remove('visible');
+        stopCarouselAutoRotate();
+        window.scrollTo({ top: 0, behavior: 'auto' });
+        enIntro = true;
+        if (scrollHint) scrollHint.classList.remove('opacity-0', 'pointer-events-none');
+        setTimeout(() => transicion.classList.add('saliendo'), 70);
+      } else {
+        // Vamos al carrusel: revelarlo justo detrás de las ondas
+        categoriasSection.classList.add('visible');
+        initCarouselOnce();
+        startCarouselAutoRotate();
+        categoriasSection.scrollIntoView({ behavior: 'auto', block: 'start' });
+        if (scrollHint) scrollHint.classList.add('opacity-0');
+        enIntro = false;
+        setTimeout(() => transicion.classList.add('saliendo'), 70);
+      }
+    } else if (e.animationName === 'bajar') {
+      // Fin total: limpiar y permitir que la transición pueda repetirse
+      transicion.classList.remove('activa', 'saliendo');
+      transicionEnProceso = false;
+    }
+  });
+
+  // Rueda del mouse: baja = ondas al carrusel, sube = ondas de vuelta a la intro
+  window.addEventListener('wheel', (event) => {
+    if (!introReady || transicionEnProceso) return;
+
+    if (event.deltaY > 0 && enIntro) {
+      irAlCarrusel();
+    } else if (event.deltaY < 0 && !enIntro) {
+      volverAIntro();
+    }
+  });
+
+  // Arrastre táctil (touch/drag): la misma transición al deslizar arriba o abajo
+  let touchStartY = null;
+  let touchStartX = null;
+  let touchActive = false;
+
+  // Scrollbar / click sostenido en el scroll: dispara la transición de ondas
+  let lastScrollY = window.scrollY;
+  window.addEventListener('scroll', () => {
+    const currentY = window.scrollY;
+    const deltaY = currentY - lastScrollY;
+    lastScrollY = currentY;
+    if (!introReady || transicionEnProceso) return;
+    if (deltaY > 5 && enIntro) {
+      irAlCarrusel();
+    } else if (deltaY < -5 && !enIntro) {
+      volverAIntro();
+    }
+  }, { passive: true });
+
+  // Las ondas suben y detrás aparece el carrusel
+  const irAlCarrusel = () => {
+    if (!introReady || transicionEnProceso) return;
+    transicionEnProceso = true;
+    volviendoAIntro = false;
+    transicion.classList.add('activa');
+  };
+
+  // Las ondas suben y detrás se restaura la intro
+  const volverAIntro = () => {
+    if (!introReady || transicionEnProceso) return;
+    transicionEnProceso = true;
+    volviendoAIntro = true;
+    transicion.classList.add('activa');
+  };
+
+  window.addEventListener('touchstart', (e) => {
+    touchActive = true;
+    touchStartY = e.touches[0].clientY;
+    touchStartX = e.touches[0].clientX;
+  }, { passive: true });
+
+  window.addEventListener('touchmove', (e) => {
+    if (!touchActive || !introReady || transicionEnProceso) return;
+    // No interferir con ventanas/zonas que requieren scroll propio (chat, menú móvil)
+    if (e.target.closest && e.target.closest('#chat-window, #mobileMenu, #desktopCategoriasMenu')) return;
+    const currentY = e.touches[0].clientY;
+    const deltaY = currentY - touchStartY;
+    // Cruza el pivote: en INTRO arrastrar arriba, en CARRUSEL arrastrar abajo
+    if ((enIntro && deltaY < -12) || (!enIntro && deltaY > 12)) {
+      // Bloquea el scroll nativo para que la transición se vea limpia
+      e.preventDefault();
+    }
+  }, { passive: false });
+
+  window.addEventListener('touchend', (e) => {
+    if (!touchActive || !introReady || transicionEnProceso) return;
+    touchActive = false;
+    const endY = e.changedTouches[0].clientY;
+    const endX = e.changedTouches[0].clientX;
+    const deltaY = endY - touchStartY;
+    const deltaX = Math.abs(endX - touchStartX);
+    // Si el gesto fue más horizontal que vertical se descarta (no interfiere con el carrusel)
+    if (deltaX > Math.abs(deltaY)) { touchStartY = null; return; }
+    if (deltaY < -60 && enIntro) {
+      irAlCarrusel();
+    } else if (deltaY > 60 && !enIntro) {
+      volverAIntro();
+    }
+    touchStartY = null;
+  }, { passive: true });
+
+  // ====== Carrusel 3D (se inicializa una sola vez al revelarse) ======
+  let carouselInit = false;
+  let carouselController = null;
+
+  // Permiten pausar/reanudar la rotación automática cuando se oculta el carrusel
+  function startCarouselAutoRotate() {
+    if (carouselController) carouselController.start();
+  }
+  function stopCarouselAutoRotate() {
+    if (carouselController) carouselController.stop();
+  }
+
+  function initCarouselOnce() {
+    if (carouselInit) return;
+    carouselInit = true;
+
+    const items = categoriasSection.querySelectorAll('.carousel-item');
+    let currentIndex = 0;
+    let isRotating = false;
+    let autoRotateInterval;
+    let resumeTimeout;
+
+    // Animación de despliegue de las cards
+    setTimeout(() => {
+      items.forEach(item => item.classList.remove('init-state'));
+    }, 50);
+
+    function updateLayout() {
+      items.forEach((item) => {
+        const relativePos = (parseInt(item.dataset.index) - currentIndex + 4) % 4;
+        let colorClass = '';
+        if (item.classList.contains('color-blue')) colorClass = 'color-blue';
+        else if (item.classList.contains('color-light-green')) colorClass = 'color-light-green';
+        else if (item.classList.contains('color-dark-blue')) colorClass = 'color-dark-blue';
+        else if (item.classList.contains('color-medium-green')) colorClass = 'color-medium-green';
+        const textWhiteClass = item.classList.contains('text-white') ? 'text-white' : '';
+        item.className = `carousel-item ${colorClass} ${textWhiteClass} pos-${relativePos}`.trim();
+        if (relativePos !== 0) {
+          const inner = item.querySelector('.card-inner');
+          if (inner) inner.classList.remove('is-flipped');
         }
-        
-        if (uiFabContainer) {
-            uiFabContainer.classList.add('opacity-0', 'pointer-events-none');
+      });
+    }
+
+    function rotateCarousel(steps) {
+      if (isRotating) return;
+      isRotating = true;
+      currentIndex = (currentIndex + steps + 4) % 4;
+      items.forEach(i => {
+        const inner = i.querySelector('.card-inner');
+        if (inner) inner.classList.remove('is-flipped');
+      });
+      updateLayout();
+      setTimeout(() => { isRotating = false; }, 800);
+    }
+
+    function startAutoRotate() {
+      clearInterval(autoRotateInterval);
+      autoRotateInterval = setInterval(() => { rotateCarousel(1); }, 4000);
+    }
+    function stopAutoRotate() { clearInterval(autoRotateInterval); }
+    function restartAutoRotateWithDelay() {
+      stopAutoRotate();
+      clearTimeout(resumeTimeout);
+      resumeTimeout = setTimeout(() => { startAutoRotate(); }, 5000);
+    }
+
+    carouselController = { start: startAutoRotate, stop: stopAutoRotate };
+
+    setTimeout(() => { startAutoRotate(); }, 1250);
+
+    items.forEach(item => {
+      item.addEventListener('click', (e) => {
+        if (isRotating) return;
+        const currentItem = e.target.closest('.carousel-item');
+        if (!currentItem) return;
+        const match = currentItem.className.match(/pos-(\d)/);
+        if (!match) return;
+        const targetPos = parseInt(match[1]);
+        const cardInner = currentItem.querySelector('.card-inner');
+
+        if (targetPos === 0) {
+          if (e.target.classList.contains('ver-mas-btn')) {
+            if (cardInner) {
+              cardInner.classList.add('is-flipped');
+              stopAutoRotate();
+              clearTimeout(resumeTimeout);
+            }
+          } else if (e.target.classList.contains('action-btn')) {
+            const selectedAction = currentItem.getAttribute('data-action');
+            if (selectedAction === 'EXPLORAR') {
+              stopAutoRotate();
+              localStorage.setItem('lukash_categoria_seleccionada', 'MODO AHORRO');
+              window.location.href = 'modoAhorrointro.html';
+              return;
+            }
+            if (cardInner) {
+              cardInner.classList.toggle('is-flipped');
+              if (cardInner.classList.contains('is-flipped')) {
+                stopAutoRotate();
+                clearTimeout(resumeTimeout);
+              } else {
+                restartAutoRotateWithDelay();
+              }
+            }
+          } else if (cardInner && cardInner.classList.contains('is-flipped')) {
+            cardInner.classList.remove('is-flipped');
+            restartAutoRotateWithDelay();
+          }
+          return;
         }
-        
-        restoreBtn.classList.add('hidden');
-        piggy.classList.remove('animate-shake');
-        piggy.style.opacity = '0.8'; // Match original opacity
-        piggy.style.pointerEvents = 'auto';
-        
-        // Small delay before restoring float to prevent jumping
-        setTimeout(() => {
-            piggy.classList.add('animate-float');
-        }, 50);
+
+        const steps = targetPos === 1 ? 1 : targetPos === 3 ? -1 : 2;
+        rotateCarousel(steps);
+        restartAutoRotateWithDelay();
+      });
     });
+  }
 </script>
 <!-- END: Scripts -->
 
 
 
 
-</body></html>
+</body></html> 

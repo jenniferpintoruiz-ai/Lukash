@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+
+<html class="stitch-anim-fade-in" lang="es" style="min-height: 100dvh; width: 100%; background-color: rgb(252, 247, 224); overflow: hidden;"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>Somos Lukash - Contactanos</title>
+<!-- Tailwind CSS v3 -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;700&amp;family=Roboto:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<style data-purpose="barra-unificada">
+    .bg-lukash-yellow { background-color: #E7C11F; }
+    .text-lukash-dark { color: #180F43; }
+    .text-lukash-pink { color: #EE4599; }
+    .hover\:text-lukash-pink:hover { color: #EE4599; }
+    .hover\:text-\[\#f7efd0\]:hover { color: #f7efd0; }
+    .hover\:bg-\[\#eac62f\]:hover { background-color: #eac62f; }
+    .bg-lukash-bg-modal\/95 { background-color: rgba(249,246,240,0.95); }
+    .border-lukash-yellow { border-color: #E7C11F; }
+    .border-lukash-pink\/30 { border-color: rgba(238,69,153,0.3); }
+    .font-fredoka { font-family: 'Fredoka', sans-serif; }
+  </style>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Chango&amp;family=Lilita+One&amp;family=Titan+One&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.cdnfonts.com/css/eating-pasta" rel="stylesheet"/>
+<!-- Tailwind Configuration -->
+<script data-purpose="tailwind-config">
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brandBg: '#FCF7E0',
+            brandDark: '#181428',
+            brandGreen: '#9DE839',
+            brandShadow: '#161426'
+          },
+          fontFamily: {
+            comic: ['"Titan One"', 'Impact', 'sans-serif'],
+            graffiti: ['"Chango"', 'cursive', 'sans-serif'],
+            pasta: ['"Eating Pasta"', '"Lilita One"', 'cursive', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+<!-- Typography and Logo custom styling -->
+<style data-purpose="typography">
+    .logo-font {
+      font-family: "Eating Pasta", "Lilita One", "Titan One", Impact, cursive, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+    }
+  </style>
+<!-- Coverflow 3D and transition styling -->
+<style data-purpose="carousel-styles">
+    .perspective-container {
+      perspective: 1200px;
+      touch-action: pan-y;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    .coverflow-card {
+      transition: transform 0.42s cubic-bezier(0.22, 1, 0.36, 1), 
+                  opacity 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+                  filter 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: transform, opacity;
+      transform-style: preserve-3d;
+      backface-visibility: hidden;
+    }
+
+    /* Subtle touch highlight disable */
+    * {
+      -webkit-tap-highlight-color: transparent;
+    }
+  </style>
+</head>
+<body class="bg-[#FCF7E0] text-[#181428] h-[100dvh] w-screen overflow-hidden flex flex-col items-center justify-between relative select-none m-0 p-0">
+<!-- BEGIN: MainHeader -->
+<header class="fixed top-0 left-0 right-0 bg-lukash-yellow w-full h-16 flex items-center justify-between px-4 z-50 border-b-4 border-black/10" id="main-header">
+<!-- Menu Icon -->
+<button class="p-2 lg:hidden" id="menuBtn"><svg class="hamburger-icon" fill="none" height="24" viewBox="0 0 30 24" width="30" xmlns="http://www.w3.org/2000/svg"><path d="M2 2H28M2 12H28M2 22H28" stroke="black" stroke-linecap="round" stroke-width="4"></path></svg><svg class="close-icon hidden" fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M18 6L6 18M6 6L18 18" stroke="black" stroke-linecap="round" stroke-width="3"></path></svg></button>
+<!-- Central Logo -->
+<div class="absolute left-1/2 -translate-x-1/2 lg:hidden">
+<img alt="LUKA$H Logo" class="h-16 drop-shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYRpEfrEAXglfH6g6bdTAiltJsJB-DrFhYXNpv6pCllmuHj7ZTXjF1qy9e06r27C5bLil8PgTWLPE-mWnWPz_8ibC0PbXo0mgx7meRO8nUsUV1qLPggd-nZBPOPjkThKh-Ou-I6nHQkWDHioMR9pUwKGZWmx0Cixdb5lqH1bSqo8ixHeoNWq9_ax4LS-cBhRHRiCd4KtV6Bz9ISa3Kd85RkHKMPOgK3YST2EQZs-TyZzikR3_DpMQVbNJtsVzgzE3r_g">
+</div>
+<!-- User Icon -->
+<button class="p-2 lg:hidden">
+<svg fill="none" height="28" viewBox="0 0 28 28" width="28" xmlns="http://www.w3.org/2000/svg">
+<circle cx="14" cy="14" r="12" stroke="black" stroke-width="2"></circle>
+<circle cx="14" cy="10" r="4" stroke="black" stroke-width="2"></circle>
+<path d="M6 22C6 18.6863 8.68629 16 12 16H16C19.3137 16 22 18.6863 22 22" stroke="black" stroke-width="2"></path>
+</svg>
+</button>
+<div class="mx-auto w-full max-w-[1280px] h-full"><nav class="hidden lg:flex items-center w-full h-full px-8 font-fredoka font-bold text-lukash-dark tracking-wider relative justify-between"><div class="flex items-center h-full"><img alt="LUKA$H Logo" class="h-16 drop-shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYRpEfrEAXglfH6g6bdTAiltJsJB-DrFhYXNpv6pCllmuHj7ZTXjF1qy9e06r27C5bLil8PgTWLPE-mWnWPz_8ibC0PbXo0mgx7meRO8nUsUV1qLPggd-nZBPOPjkThKh-Ou-I6nHQkWDHioMR9pUwKGZWmx0Cixdb5lqH1bSqo8ixHeoNWq9_ax4LS-cBhRHRiCd4KtV6Bz9ISa3Kd85RkHKMPOgK3YST2EQZs-TyZzikR3_DpMQVbNJtsVzgzE3r_g"></div><div class="flex items-center justify-center space-x-20 uppercase text-xl w-max flex-1">
+<div class="relative" id="desktopCategorias">
+ <button class="flex items-center gap-1 transition-colors hover:text-[#f7efd0]" id="desktopCategoriasBtn">CATEGORIAS<svg class="w-4 h-4 transition-transform duration-300" id="desktopCategoriasArrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg></button>
+ <div class="absolute left-1/2 -translate-x-1/2 top-full pt-4 hidden" id="desktopCategoriasMenu">
+ <div class="bg-lukash-bg-modal/95 backdrop-blur-md text-lukash-dark rounded-2xl shadow-2xl border-2 border-lukash-yellow p-4 w-64 flex flex-col space-y-1 font-bold text-lg">
+ <a class="hover:bg-[#eac62f] hover:text-white transition-colors rounded-lg px-4 py-2.5" href="modo-ahorro.html">MODO AHORRO</a>
+ <a class="hover:bg-[#eac62f] hover:text-white transition-colors rounded-lg px-4 py-2.5" href="rindiendo-money.html">RINDIENDO LA MONEY</a>
+ <a class="hover:bg-[#eac62f] hover:text-white transition-colors rounded-lg px-4 py-2.5" href="cuentas-claras.html">CUENTAS CLARAS</a>
+ <a class="hover:bg-[#eac62f] hover:text-white transition-colors rounded-lg px-4 py-2.5" href="cero-enredor.html">CERO ENREDOS</a>
+ </div>
+ </div>
+ </div>
+ <a href="Registro.html" class="transition-colors hover:text-[#f7efd0]">REGISTRO</a>
+ <span class="transition-colors hover:text-[#f7efd0]">NOSOTROS</span>
+ <a href="contactanos.html" class="transition-colors hover:text-[#f7efd0]">CONTACTANOS</a>
+</div><div class="flex items-center"><svg fill="none" height="32" viewBox="0 0 28 28" width="32" xmlns="http://www.w3.org/2000/svg"><circle cx="14" cy="14" r="12" stroke="currentColor" stroke-width="2"></circle><circle cx="14" cy="10" r="4" stroke="currentColor" stroke-width="2"></circle><path d="M6 22C6 18.6863 8.68629 16 12 16H16C19.3137 16 22 18.6863 22 22" stroke="currentColor" stroke-width="2"></path></svg></div></nav></div></header>
+<!-- END: MainHeader -->
+<!-- BEGIN: Mobile Menu Drawer -->
+<div class="fixed inset-0 z-[60] pointer-events-none hidden" id="mobileMenu">
+<!-- Overlay -->
+<div class="absolute inset-0 transition-opacity duration-300 bg-black/10 pointer-events-auto backdrop-blur-sm opacity-0" id="mobileMenuOverlay"></div>
+<!-- Drawer -->
+<div class="absolute top-6 left-6 w-64 shadow-2xl transform transition-transform duration-300 flex flex-col rounded-[45px] h-max border-none backdrop-blur-md pointer-events-auto -translate-x-[150%]" id="mobileMenuDrawer" style="background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuAeRFCguGmJAP2dmp1aYF4qsTfAyIOscChweRZXRQiHjUN1cBby8JpgZyNxGzAN7YfF65QjDHZHE-hgrwwVMMxD9k4-rpFKL-B_9GqV6IFyUHrQhxHoqlmhkmfI3JecSZ6_LW7x_9hHFFEiC6UR0OP3AGIFy4mSiGm2IddGjFf2S7w8pk5FdW73Z_0v-62A_L14O2JkuwFJodusGDaEsrG00RBvV1BalVc6XuLKTKaFJeZPdQfiEOPR6g6PH_MnnRLp8g&quot;); background-size: cover; background-position: center center; opacity: 0.95;">
+<div class="flex justify-between items-center p-6 h-max">
+<img alt="LUKA$H Logo" class="h-10 drop-shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYRpEfrEAXglfH6g6bdTAiltJsJB-DrFhYXNpv6pCllmuHj7ZTXjF1qy9e06r27C5bLil8PgTWLPE-mWnWPz_8ibC0PbXo0mgx7meRO8nUsUV1qLPggd-nZBPOPjkThKh-Ou-I6nHQkWDHioMR9pUwKGZWmx0Cixdb5lqH1bSqo8ixHeoNWq9_ax4LS-cBhRHRiCd4KtV6Bz9ISa3Kd85RkHKMPOgK3YST2EQZs-TyZzikR3_DpMQVbNJtsVzgzE3r_g">
+<button class="text-2xl font-fredoka font-bold text-lukash-dark p-2 transition-all duration-200" id="closeMenuBtn" style="opacity: 1;">X</button>
+</div>
+<nav class="flex flex-col p-8 pt-0 font-fredoka font-bold text-lukash-dark space-y-5 items-start text-left">
+<div class="w-full">
+ <button class="flex items-center justify-between w-full text-xl hover:text-lukash-pink transition-colors" id="mobileCategoriasBtn" style="color: rgb(24, 15, 67);">CATEGORIAS<svg class="w-5 h-5 transition-transform duration-300" id="mobileCategoriasArrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg></button>
+ <div id="mobileCategoriasMenu" class="hidden mt-4 pl-4 border-l-4 border-lukash-pink/30 space-y-4 flex flex-col">
+ <a class="hover:text-lukash-pink transition-colors text-lg" href="modo-ahorro.html" style="color: rgb(24, 15, 67);">MODO AHORRO</a>
+ <a class="hover:text-lukash-pink transition-colors text-lg" href="rindiendo-money.html" style="color: rgb(24, 15, 67);">RINDIENDO LA MONEY</a>
+ <a class="hover:text-lukash-pink transition-colors text-lg" href="cuentas-claras.html" style="color: rgb(24, 15, 67);">CUENTAS CLARAS</a>
+ <a class="hover:text-lukash-pink transition-colors text-lg" href="cero-enredor.html" style="color: rgb(24, 15, 67);">CERO ENREDOS</a>
+ </div>
+ </div>
+ <a class="hover:text-lukash-pink transition-colors text-xl" href="Registro.html" style="color: rgb(24, 15, 67);">REGISTRO</a>
+ <a class="hover:text-lukash-pink transition-colors text-xl" href="#" style="color: rgb(24, 15, 67);">NOSOTROS</a>
+ <a class="hover:text-lukash-pink transition-colors text-xl" href="contactanos.html" style="color: rgb(24, 15, 67);">CONTACTANOS</a>
+</nav>
+</div>
+</div>
+<!-- END: Mobile Menu Drawer -->
+<!-- BEGIN: OrganicBackgroundGraphics -->
+<!-- Recurso de fondo orgánico derecho anclado con pointer-events-none escalado armónicamente -->
+<div aria-hidden="true" class="fixed inset-0 w-screen h-screen pointer-events-none select-none overflow-hidden z-0 flex items-center justify-center"><img alt="" class="w-full h-full object-cover pointer-events-none select-none opacity-100" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD90V70XqK6sK7yCGKDXVlJLB0gHlUkQWJQzWbTjHL7tItyuQNOCiDI0-lgrndaBWEovAEvZlThrcn--4m9r-d-Hn9hlaAWw7UhF1Wi42iugYYrPV_3Bbiom4cFPUtMFmoUCZQM83lzG-vfSrN9HNfXj6hNze8BGi6zkHoiAbuHCfU6o6-ngbgtB5HLGGrj1yx2cfRvS3TSNcb9KLiJeVB-Rbu3FA7YZVe7o3stb6A0Af3jzi_uzMNqV4z7p9e6-wZZgPE"/></div>
+<!-- END: OrganicBackgroundGraphics -->
+<!-- BEGIN: MainContent -->
+<main class="relative z-10 w-full max-w-5xl h-full flex flex-col items-center box-border px-4 py-6 md:py-10 lg:py-12 select-none justify-center" style="padding-top: 7rem;">
+<!-- BEGIN: BrandHeader -->
+<header class="flex flex-col items-center justify-center text-center w-full mt-2 sm:mt-4 md:mt-6 shrink-0 mx-auto pt-6" data-purpose="brand-header" style="position: relative; z-index: 20;">
+<div class="flex flex-col items-center justify-center w-full mx-auto select-none">
+<h1 class="logo-font text-[#181428] tracking-tight mb-0.5 text-center text-2xl sm:text-3xl md:text-4xl lg:text-[42px] leading-tight" style="font-weight: 400; transform: translateY(calc(-5% - 10px));">
+        SOMOS
+      </h1>
+<div class="relative flex items-center justify-center -mt-1 md:-mt-2 mx-auto"><img alt="LUKA$H" class="h-16 md:h-24 lg:h-28 w-auto object-contain select-none pointer-events-none drop-shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3zNwRLjrspYsIyrnHJxmSNIQBNWU67lcIDLsEaAW2tOv5ntMQEK-szZOdotHC6X9awoMiAUEMPefEsX4hEUJC4RSE-z7GmHiCPrU_XsHxF68O74C9ycVQTuOEw7XcL5YlyRk71mHxmtxBnJEPQdn1v8P7FaRA3wYOJAEx-vHAtRPDI-2cHikasvy1M6Ed7UlGEOKkp0QFMLnmVz2aSPe92OyNlXYCXvmsFV6Q5IBF3ycp16fODOQaMoHwPr9qn7zXsEA" style="transform: scale(1.21); transform-origin: center center;"/></div>
+</div>
+<h2 class="logo-font text-[#181428] tracking-wide text-center text-xl sm:text-2xl md:text-3xl lg:text-[34px] mt-8 sm:mt-8 md:mt-10 lg:mt-12 w-full mx-auto" style="font-weight: 400; position: relative; z-index: 30;">
+      CONTACTANOS
+    </h2>
+</header>
+<!-- END: BrandHeader -->
+<!-- BEGIN: CoverflowSection -->
+<section class="w-full flex flex-col items-center justify-center flex-1 my-auto" data-purpose="social-coverflow-section" style="position: relative; z-index: 10; transform: translateY(-4vh);">
+<!-- 3D Carousel Viewport -->
+<div class="perspective-container relative w-full h-44 sm:h-52 md:h-64 lg:h-72 flex items-center justify-center cursor-grab active:cursor-grabbing -mt-6 sm:-mt-4 md:mt-0" id="carouselTrack" style="top: 0px;">
+<!-- Card 0: YouTube -->
+<div class="coverflow-card absolute flex flex-col items-center cursor-pointer" data-index="0" data-name="YOUTUBE" data-url="https://www.youtube.com/channel/UCdCVbmFD91-AQKYuTwhomsw" style="transform: translateX(125px) scale(0.68) rotateY(-28deg); z-index: 10; opacity: 0.88;">
+<div class="w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 lg:w-52 lg:h-52 rounded-[24px] sm:rounded-[30px] md:rounded-[36px] bg-[#FF0000] shadow-2xl flex items-center justify-center overflow-hidden border-[1.5px] border-white/20">
+<svg class="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 translate-x-0.5 fill-white" viewbox="0 0 24 24">
+<path d="M8 5v14l11-7z"></path>
+</svg>
+</div>
+</div>
+<!-- Card 1: Facebook -->
+<div class="coverflow-card absolute flex flex-col items-center cursor-pointer" data-index="1" data-name="FACEBOOK" data-url="https://web.facebook.com/profile.php?id=61593871417475&amp;locale=es_LA" style="transform: translateX(-125px) scale(0.68) rotateY(28deg); z-index: 10; opacity: 0.88;">
+<div class="w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 lg:w-52 lg:h-52 rounded-[24px] sm:rounded-[30px] md:rounded-[36px] bg-[#1877F2] shadow-2xl flex items-center justify-center overflow-hidden border-[1.5px] border-white/20">
+<svg class="w-14 h-14 sm:w-18 sm:h-18 md:w-24 md:h-24 fill-white translate-y-1.5" viewbox="0 0 24 24">
+<path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path>
+</svg>
+</div>
+</div>
+<!-- Card 2: TikTok -->
+<div class="coverflow-card absolute flex flex-col items-center cursor-pointer" data-index="2" data-name="TIK TOK" data-url="https://www.tiktok.com/@lukash4928?_r=1&amp;_t=ZS-99RZVyeuDYb" style="transform: translateX(-72px) scale(0.82) rotateY(16deg); z-index: 20; opacity: 0.95;">
+<div class="w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 lg:w-52 lg:h-52 rounded-[24px] sm:rounded-[30px] md:rounded-[36px] bg-black shadow-2xl flex items-center justify-center overflow-hidden border-[1.5px] border-white/20"><img alt="TikTok" class="w-full h-full object-contain rounded-[24px] sm:rounded-[30px] md:rounded-[36px] select-none pointer-events-none" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAMRLkHBvR0jd13JNbJ2qJu1KTR-mc4wJYGLsTiPnr7IXceNFLuXReMW2VPDmb0ji8rhimQRuGOIzNJ1wBjED50272-QbAj19lTDdF1scuL-4I88y-30yjiXohezdpSwdJy7LAclcBJTxTNe-xjZtGOSJ5JKunaOeJbvU-hI3wNw_TO0VaQDJe9Vo3Z6o2l0hpsIiSrKa5fJQipUB5KQZcQEt0IKspWlVqVHeSlLjRBrvrImhDUWFRAa61czNIq4TNTkOA"/></div>
+</div>
+<!-- Card 3: Gmail -->
+<div class="coverflow-card absolute flex flex-col items-center cursor-pointer" data-index="3" data-name="GMAIL" data-url="mailto:lukash.finanzas@gmail.com" style="transform: translateX(0px) scale(1.06) rotateY(0deg); z-index: 30; opacity: 1;">
+<div class="w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 lg:w-52 lg:h-52 rounded-[24px] sm:rounded-[30px] md:rounded-[36px] bg-white shadow-2xl flex items-center justify-center overflow-hidden border-[1.5px] border-black/5">
+<svg class="w-14 h-14 sm:w-18 sm:h-18 md:w-22 md:h-22" viewbox="0 0 24 24">
+<path d="M1.5 5.5v13a1.5 1.5 0 0 0 1.5 1.5h3v-9.5l6 4.5 6-4.5V20h3a1.5 1.5 0 0 0 1.5-1.5v-13C22.5 4.12 20.88 3.3 19.8 4.1L12 10 4.2 4.1C3.12 3.3 1.5 4.12 1.5 5.5z" fill="#4285F4"></path>
+<path d="M19.8 4.1L12 10 4.2 4.1C3.12 3.3 1.5 4.12 1.5 5.5V7l10.5 8L22.5 7V5.5c0-1.38-1.62-2.2-2.7-1.4z" fill="#EA4335"></path>
+<path d="M18 10.5V20h3a1.5 1.5 0 0 0 1.5-1.5V7z" fill="#34A853"></path>
+<path d="M1.5 7v11.5A1.5 1.5 0 0 0 3 20h3V10.5z" fill="#FBBC05"></path>
+</svg>
+</div>
+</div>
+<!-- Card 4: Instagram -->
+<div class="coverflow-card absolute flex flex-col items-center cursor-pointer" data-index="4" data-name="INSTAGRAM" data-url="https://www.instagram.com/somos.lukash?igsi=MW11Njc3OHlzdTN0NQ==" style="transform: translateX(72px) scale(0.82) rotateY(-16deg); z-index: 20; opacity: 0.95;">
+<div class="w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 lg:w-52 lg:h-52 rounded-[24px] sm:rounded-[30px] md:rounded-[36px] bg-gradient-to-tr from-[#FFDC80] via-[#F56040] via-[#FD1D1D] to-[#833AB4] shadow-2xl flex items-center justify-center overflow-hidden border-[1.5px] border-white/20">
+<svg class="w-14 h-14 sm:w-18 sm:h-18 md:w-22 md:h-22 text-white" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+<rect height="20" rx="5" ry="5" width="20" x="2" y="2"></rect>
+<path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+<line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line>
+</svg>
+</div>
+</div>
+</div>
+<!-- Synchronized central title underneath active element -->
+<div class="text-center mt-3 sm:mt-4 md:mt-6" data-purpose="active-caption-container">
+<span class="logo-font text-base sm:text-xl md:text-2xl text-[#181428] tracking-wider uppercase inline-block select-none" id="activeSocialLabel" style="font-weight: normal;">GMAIL</span>
+</div>
+</section>
+<!-- END: CoverflowSection -->
+</main>
+<!-- END: MainContent -->
+<!-- Coverflow Controller Script -->
+<script data-purpose="coverflow-controller">
+  (function () {
+    const cards = Array.from(document.querySelectorAll('.coverflow-card'));
+    const label = document.getElementById('activeSocialLabel');
+    const track = document.getElementById('carouselTrack');
+    
+    const total = cards.length;
+    // TikTok is index 2 in our DOM list, Gmail is index 3
+    let currentIndex = 3; 
+    let startX = 0;
+    let currentDeltaX = 0;
+    let isDragging = false;
+    let maxDeltaMoved = 0;
+
+    function openSocialLink(url) {
+      if (!url) return;
+      if (url.startsWith('mailto:')) {
+        window.location.href = url;
+      } else {
+        window.open(url, '_blank', 'noopener,noreferrer');
+      }
+    }
+
+    function getSpacing() {
+      const width = window.innerWidth;
+      if (width >= 1024) {
+        return { step1: 180, step2: 320 };
+      } else if (width >= 768) {
+        return { step1: 140, step2: 240 };
+      } else if (width >= 640) {
+        return { step1: 105, step2: 180 };
+      } else {
+        return { step1: 72, step2: 125 };
+      }
+    }
+
+    // Update positions based on coverflow perspective
+    function renderCoverflow() {
+      const spacing = getSpacing();
+
+      cards.forEach((card, i) => {
+        let diff = (i - currentIndex) % total;
+        if (diff > total / 2) diff -= total;
+        if (diff < -total / 2) diff += total;
+
+        let translateX = 0;
+        let scale = 1;
+        let zIndex = 10;
+        let opacity = 1;
+        let rotateY = 0;
+
+        if (diff === 0) {
+          // Active Center item
+          translateX = 0;
+          scale = 1.06;
+          zIndex = 30;
+          rotateY = 0;
+          opacity = 1;
+        } else if (diff === -1) {
+          translateX = -spacing.step1;
+          scale = 0.82;
+          zIndex = 20;
+          rotateY = 16;
+          opacity = 0.95;
+        } else if (diff === 1) {
+          translateX = spacing.step1;
+          scale = 0.82;
+          zIndex = 20;
+          rotateY = -16;
+          opacity = 0.95;
+        } else if (diff === -2) {
+          translateX = -spacing.step2;
+          scale = 0.68;
+          zIndex = 10;
+          rotateY = 28;
+          opacity = 0.88;
+        } else if (diff === 2) {
+          translateX = spacing.step2;
+          scale = 0.68;
+          zIndex = 10;
+          rotateY = -28;
+          opacity = 0.88;
+        } else {
+          translateX = diff > 0 ? (spacing.step2 + 100) : -(spacing.step2 + 100);
+          scale = 0.45;
+          zIndex = 1;
+          opacity = 0;
+        }
+
+        card.style.transform = `translateX(${translateX}px) scale(${scale}) rotateY(${rotateY}deg)`;
+        card.style.zIndex = zIndex;
+        card.style.opacity = opacity;
+      });
+
+      // Update active platform text
+      const activeCard = cards[currentIndex];
+      if (activeCard && label) {
+        label.textContent = activeCard.dataset.name;
+      }
+    }
+
+    // Move by offset (-1 or +1) with looping
+    function move(direction) {
+      currentIndex = (currentIndex + direction + total) % total;
+      renderCoverflow();
+    }
+
+    // Event Listeners for click on individual cards
+    cards.forEach((card, index) => {
+      card.addEventListener('click', (e) => {
+        if (maxDeltaMoved > 10) return;
+        if (index === currentIndex) {
+          openSocialLink(card.dataset.url);
+        } else {
+          currentIndex = index;
+          renderCoverflow();
+        }
+      });
+    });
+
+    // Label click also opens the current active platform's link
+    if (label) {
+      label.style.cursor = 'pointer';
+      label.addEventListener('click', () => {
+        const activeCard = cards[currentIndex];
+        if (activeCard) {
+          openSocialLink(activeCard.dataset.url);
+        }
+      });
+    }
+
+    // Pointer & Touch Events for Drag/Swipe
+    function handleStart(clientX) {
+      isDragging = true;
+      startX = clientX;
+      currentDeltaX = 0;
+      maxDeltaMoved = 0;
+    }
+
+    function handleMove(clientX) {
+      if (!isDragging) return;
+      currentDeltaX = clientX - startX;
+      if (Math.abs(currentDeltaX) > maxDeltaMoved) {
+        maxDeltaMoved = Math.abs(currentDeltaX);
+      }
+    }
+
+    function handleEnd() {
+      if (!isDragging) return;
+      isDragging = false;
+      const threshold = 35;
+      if (currentDeltaX > threshold) {
+        move(-1);
+      } else if (currentDeltaX < -threshold) {
+        move(1);
+      }
+      currentDeltaX = 0;
+    }
+
+    // Touch listener setup
+    track.addEventListener('touchstart', (e) => handleStart(e.touches[0].clientX), { passive: true });
+    track.addEventListener('touchmove', (e) => handleMove(e.touches[0].clientX), { passive: true });
+    track.addEventListener('touchend', handleEnd, { passive: true });
+
+    // Mouse listener setup
+    track.addEventListener('mousedown', (e) => handleStart(e.clientX));
+    window.addEventListener('mousemove', (e) => {
+      if (isDragging) handleMove(e.clientX);
+    });
+    window.addEventListener('mouseup', () => {
+      if (isDragging) handleEnd();
+    });
+
+    // Keyboard left/right arrow navigation
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') move(-1);
+      if (e.key === 'ArrowRight') move(1);
+      if (e.key === 'Enter') {
+        const activeCard = cards[currentIndex];
+        if (activeCard) openSocialLink(activeCard.dataset.url);
+      }
+    });
+
+    // Window resize handler to maintain proportional spacing
+    window.addEventListener('resize', () => {
+      renderCoverflow();
+    });
+
+    // Initial render
+    renderCoverflow();
+  })();
+</script>
+<script data-purpose="modal-functionality">
+  const menuBtn = document.getElementById('menuBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+  const mobileMenuDrawer = document.getElementById('mobileMenuDrawer');
+  const closeMenuBtn = document.getElementById('closeMenuBtn');
+  const menuIcon = menuBtn ? menuBtn.querySelector('.hamburger-icon') : null;
+
+  function openMenu() {
+    mobileMenu.classList.remove('hidden');
+    if(menuIcon) menuIcon.classList.add('hidden');
+    setTimeout(() => {
+      mobileMenuOverlay.classList.remove('opacity-0');
+      mobileMenuDrawer.classList.remove('-translate-x-[150%]');
+    }, 10);
+  }
+
+  function closeMenu() {
+    closeMenuBtn.style.opacity = '0';
+    mobileMenuOverlay.classList.add('opacity-0');
+    mobileMenuDrawer.classList.add('-translate-x-[150%]');
+    setTimeout(() => {
+      mobileMenu.classList.add('hidden');
+      closeMenuBtn.style.opacity = '1';
+      if(menuIcon) menuIcon.classList.remove('hidden');
+    }, 300);
+  }
+
+  if(menuBtn) menuBtn.addEventListener('click', openMenu);
+  if(closeMenuBtn) closeMenuBtn.addEventListener('click', closeMenu);
+  if(mobileMenuOverlay) mobileMenuOverlay.addEventListener('click', closeMenu);
+</script>
+<script data-purpose="navegacion-categorias">
+  (function () {
+    const dCat = document.getElementById('desktopCategorias');
+    const dBtn = document.getElementById('desktopCategoriasBtn');
+    const dMenu = document.getElementById('desktopCategoriasMenu');
+    const dArrow = document.getElementById('desktopCategoriasArrow');
+    if (dCat && dBtn && dMenu && dArrow) {
+      const toggle = (open) => {
+        dMenu.classList.toggle('hidden', !open);
+        dArrow.classList.toggle('rotate-180', open);
+      };
+      dBtn.addEventListener('click', (e) => { e.stopPropagation(); toggle(dMenu.classList.contains('hidden')); });
+      dCat.addEventListener('mouseenter', () => toggle(true));
+      dCat.addEventListener('mouseleave', () => toggle(false));
+      document.addEventListener('click', (e) => { if (!dCat.contains(e.target)) toggle(false); });
+    }
+    const mBtn = document.getElementById('mobileCategoriasBtn');
+    const mMenu = document.getElementById('mobileCategoriasMenu');
+    const mArrow = document.getElementById('mobileCategoriasArrow');
+    if (mBtn && mMenu && mArrow) {
+      mBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isHidden = mMenu.classList.contains('hidden');
+        mMenu.classList.toggle('hidden', !isHidden);
+        mArrow.classList.toggle('rotate-180', isHidden);
+      });
+    }
+  })();
+</script>
+</body></html>

@@ -3,6 +3,19 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <title>LUKASH - Introducción</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;700&amp;family=Roboto:wght@400;500&amp;display=swap" rel="stylesheet">
+<style data-purpose="barra-unificada">
+    .bg-lukash-yellow { background-color: #E7C11F; }
+    .text-lukash-dark { color: #180F43; }
+    .text-lukash-pink { color: #EE4599; }
+    .hover\:text-lukash-pink:hover { color: #EE4599; }
+    .hover\:text-\[\#f7efd0\]:hover { color: #f7efd0; }
+    .hover\:bg-\[\#eac62f\]:hover { background-color: #eac62f; }
+    .bg-lukash-bg-modal\/95 { background-color: rgba(249,246,240,0.95); }
+    .border-lukash-yellow { border-color: #E7C11F; }
+    .border-lukash-pink\/30 { border-color: rgba(238,69,153,0.3); }
+    .font-fredoka { font-family: 'Fredoka', sans-serif; }
+  </style>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com" rel="preconnect">
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
@@ -273,60 +286,64 @@
 </svg>
 </div>
 <!-- TopAppBar -->
-<header class="fixed top-0 left-0 w-full z-50 flex justify-center">
-<div class="w-full max-w-[1200px] flex justify-between items-center px-4 h-16 bg-tertiary bg-gradient-to-r from-tertiary via-tertiary-fixed-dim to-tertiary shadow-[0px_4px_0px_0px_rgba(85,69,0,1)]">
-<button aria-label="Menu" class="text-on-surface hover:scale-105 transition-transform" id="menu-btn">
-<img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvWVRHYrdda8sWKUtHIbWgBjge37L2cFpA0ThQ4iQqxIR-oIWHUmPyOHd-UMbSI6sDzDnj47q7bgS2xut5cDGOcEMGM-GTRryDXrAvyNry3lK-8127kD3SYwO2uHb6Dz6eu9COts0zFcKi0OocikVVF0s0CE72u8I8OwNT6kZ_pCTdZtyqwBIzjvRvTPRLQUBrAalxX45Y-8kLZZ5kneNhGvkPhqo4otHCQ91hT3v46QW_X9rhJR_sQlTr6zTrFGNUrA" alt="Menu" class="w-8 h-auto">
-</button>
-<img alt="LUKASH" class="h-10 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBEs09YFukcbC2gj-AIsO0LjxR0EM5DN8O8b0oCHq4--QEI7HFrFryIKNltOdWyNYPUE2tX5zlN_mfp-spG1L9ltdl663ObHyFkfCMu5ERuYUpUuAmF5qPXwancnpssVc2YKPhwx8hKkJBbiAKbLogxsI5NCHd4xTWmDyjusHz9psMybymIoa1s9F8bo-pDne56pKHRVRaIHIjD-VLbkVqr1940Sh3tDscYYFDXjFjL13zpvTkonIoLAVkPHDZhugPb9Q">
-<button aria-label="Profile" class="text-on-surface hover:scale-105 transition-transform flex items-center justify-center">
-<img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCPaCsF0z4tNWdiuTr26XNY-mioIjSgfNv7vtK0kC0xYMnMfND8d8maMKi8T6FxEqNYtv5aFu6FK5XFbQO3TAX6TSaqnkOGua3-B9vfNFhbgp7sRmdrUd0mHkbH8ce0086IEBGyfeZEvpaWDyK9_ZJk4VOo51wLhOzhpas9nInflYNdKXIWBQsEEhWVNvOct7SJKB9cg_A-vEMQkzQadL156L0QXLOXSs1sqPTUwtQoOIbVGHk2Itm6LPr3_8emjSF-9Q" alt="Profile" class="w-8 h-8 rounded-full object-cover">
-</button>
+<header class="fixed top-0 left-0 right-0 bg-lukash-yellow w-full h-16 flex items-center justify-between px-4 z-50 border-b-4 border-black/10" id="main-header">
+<!-- Menu Icon -->
+<button class="p-2 lg:hidden" id="menuBtn"><svg class="hamburger-icon" fill="none" height="24" viewBox="0 0 30 24" width="30" xmlns="http://www.w3.org/2000/svg"><path d="M2 2H28M2 12H28M2 22H28" stroke="black" stroke-linecap="round" stroke-width="4"></path></svg><svg class="close-icon hidden" fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M18 6L6 18M6 6L18 18" stroke="black" stroke-linecap="round" stroke-width="3"></path></svg></button>
+<!-- Central Logo -->
+<div class="absolute left-1/2 -translate-x-1/2 lg:hidden">
+<img alt="LUKA$H Logo" class="h-16 drop-shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYRpEfrEAXglfH6g6bdTAiltJsJB-DrFhYXNpv6pCllmuHj7ZTXjF1qy9e06r27C5bLil8PgTWLPE-mWnWPz_8ibC0PbXo0mgx7meRO8nUsUV1qLPggd-nZBPOPjkThKh-Ou-I6nHQkWDHioMR9pUwKGZWmx0Cixdb5lqH1bSqo8ixHeoNWq9_ax4LS-cBhRHRiCd4KtV6Bz9ISa3Kd85RkHKMPOgK3YST2EQZs-TyZzikR3_DpMQVbNJtsVzgzE3r_g">
 </div>
-</header>
+<!-- User Icon -->
+<button class="p-2 lg:hidden">
+<svg fill="none" height="28" viewBox="0 0 28 28" width="28" xmlns="http://www.w3.org/2000/svg">
+<circle cx="14" cy="14" r="12" stroke="black" stroke-width="2"></circle>
+<circle cx="14" cy="10" r="4" stroke="black" stroke-width="2"></circle>
+<path d="M6 22C6 18.6863 8.68629 16 12 16H16C19.3137 16 22 18.6863 22 22" stroke="black" stroke-width="2"></path>
+</svg>
+</button>
+<div class="mx-auto w-full max-w-[1280px] h-full"><nav class="hidden lg:flex items-center w-full h-full px-8 font-fredoka font-bold text-lukash-dark tracking-wider relative justify-between"><div class="flex items-center h-full"><img alt="LUKA$H Logo" class="h-16 drop-shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYRpEfrEAXglfH6g6bdTAiltJsJB-DrFhYXNpv6pCllmuHj7ZTXjF1qy9e06r27C5bLil8PgTWLPE-mWnWPz_8ibC0PbXo0mgx7meRO8nUsUV1qLPggd-nZBPOPjkThKh-Ou-I6nHQkWDHioMR9pUwKGZWmx0Cixdb5lqH1bSqo8ixHeoNWq9_ax4LS-cBhRHRiCd4KtV6Bz9ISa3Kd85RkHKMPOgK3YST2EQZs-TyZzikR3_DpMQVbNJtsVzgzE3r_g"></div><div class="flex items-center justify-center space-x-20 uppercase text-xl w-max flex-1">
+<div class="relative" id="desktopCategorias">
+ <button class="flex items-center gap-1 transition-colors hover:text-[#f7efd0]" id="desktopCategoriasBtn">CATEGORIAS<svg class="w-4 h-4 transition-transform duration-300" id="desktopCategoriasArrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg></button>
+ <div class="absolute left-1/2 -translate-x-1/2 top-full pt-4 hidden" id="desktopCategoriasMenu">
+ <div class="bg-lukash-bg-modal/95 backdrop-blur-md text-lukash-dark rounded-2xl shadow-2xl border-2 border-lukash-yellow p-4 w-64 flex flex-col space-y-1 font-bold text-lg">
+ <a class="hover:bg-[#eac62f] hover:text-white transition-colors rounded-lg px-4 py-2.5" href="modo-ahorro.html">MODO AHORRO</a>
+ <a class="hover:bg-[#eac62f] hover:text-white transition-colors rounded-lg px-4 py-2.5" href="rindiendo-money.html">RINDIENDO LA MONEY</a>
+ <a class="hover:bg-[#eac62f] hover:text-white transition-colors rounded-lg px-4 py-2.5" href="cuentas-claras.html">CUENTAS CLARAS</a>
+ <a class="hover:bg-[#eac62f] hover:text-white transition-colors rounded-lg px-4 py-2.5" href="cero-enredor.html">CERO ENREDOS</a>
+ </div>
+ </div>
+ </div>
+ <a href="Registro.html" class="transition-colors hover:text-[#f7efd0]">REGISTRO</a>
+ <span class="transition-colors hover:text-[#f7efd0]">NOSOTROS</span>
+ <a href="contactanos.html" class="transition-colors hover:text-[#f7efd0]">CONTACTANOS</a>
+</div><div class="flex items-center"><svg fill="none" height="32" viewBox="0 0 28 28" width="32" xmlns="http://www.w3.org/2000/svg"><circle cx="14" cy="14" r="12" stroke="currentColor" stroke-width="2"></circle><circle cx="14" cy="10" r="4" stroke="currentColor" stroke-width="2"></circle><path d="M6 22C6 18.6863 8.68629 16 12 16H16C19.3137 16 22 18.6863 22 22" stroke="currentColor" stroke-width="2"></path></svg></div></nav></div></header>
 <!-- Navigation Drawer (Hidden by default) -->
-<div class="fixed inset-0 bg-black/50 z-[55] transition-opacity duration-300 opacity-0 hidden" id="nav-overlay"></div>
-<nav class="fixed inset-y-0 left-0 z-[60] shadow-2xl bg-surface-container-high text-primary font-label-lg text-label-lg rounded-r-xl h-full w-80 border-r-4 border-on-surface transform transition-transform duration-300 ease-in-out -translate-x-full" id="nav-drawer">
-<button aria-label="Close menu" class="absolute top-4 right-4 text-on-surface hover:scale-105 transition-transform" id="close-menu-btn">
-<span class="material-symbols-outlined font-headline-lg">close</span>
-</button>
-<div class="p-6 border-b border-surface-variant flex items-center gap-4">
-<div class="w-16 h-16 rounded-full bg-primary-container flex items-center justify-center overflow-hidden border-2 border-on-surface">
-<img alt="User Profile" class="w-full h-full object-cover" data-alt="A stylized 3D avatar profile picture of a character wearing a colorful streetwear outfit, bright lighting, playful energetic mood, yellow background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAtN-RTWozJNBzpYEuK5ywIXUUVlosdJxqiuWy5SNliqMHXZ4GDUO0_GaIXpvSjinVjIZx7JcdQP8llUJV79V5az9MY7HdbexznGY50Fcp0pEJCr7WIegYhzSKaYZk1zamb_PwoUk5XDNK6sLHd8vCnw8e-nTOjqKpqHZKkIb2QayTfuUcknRNAIC6PEKkXv5AhYnq7Kd6qANMRoARTW71etWFQctG4k2xaWN9zmZIG8Pxj2U9t-QHF">
+<div class="fixed inset-0 z-[60] pointer-events-none hidden" id="mobileMenu">
+<!-- Overlay -->
+<div class="absolute inset-0 transition-opacity duration-300 bg-black/10 pointer-events-auto backdrop-blur-sm opacity-0" id="mobileMenuOverlay"></div>
+<!-- Drawer -->
+<div class="absolute top-6 left-6 w-64 shadow-2xl transform transition-transform duration-300 flex flex-col rounded-[45px] h-max border-none backdrop-blur-md pointer-events-auto -translate-x-[150%]" id="mobileMenuDrawer" style="background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuAeRFCguGmJAP2dmp1aYF4qsTfAyIOscChweRZXRQiHjUN1cBby8JpgZyNxGzAN7YfF65QjDHZHE-hgrwwVMMxD9k4-rpFKL-B_9GqV6IFyUHrQhxHoqlmhkmfI3JecSZ6_LW7x_9hHFFEiC6UR0OP3AGIFy4mSiGm2IddGjFf2S7w8pk5FdW73Z_0v-62A_L14O2JkuwFJodusGDaEsrG00RBvV1BalVc6XuLKTKaFJeZPdQfiEOPR6g6PH_MnnRLp8g&quot;); background-size: cover; background-position: center center; opacity: 0.95;">
+<div class="flex justify-between items-center p-6 h-max">
+<img alt="LUKA$H Logo" class="h-10 drop-shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYRpEfrEAXglfH6g6bdTAiltJsJB-DrFhYXNpv6pCllmuHj7ZTXjF1qy9e06r27C5bLil8PgTWLPE-mWnWPz_8ibC0PbXo0mgx7meRO8nUsUV1qLPggd-nZBPOPjkThKh-Ou-I6nHQkWDHioMR9pUwKGZWmx0Cixdb5lqH1bSqo8ixHeoNWq9_ax4LS-cBhRHRiCd4KtV6Bz9ISa3Kd85RkHKMPOgK3YST2EQZs-TyZzikR3_DpMQVbNJtsVzgzE3r_g">
+<button class="text-2xl font-fredoka font-bold text-lukash-dark p-2 transition-all duration-200" id="closeMenuBtn" style="opacity: 1;">X</button>
 </div>
-<div>
-<h2 class="font-headline-lg text-headline-lg font-black text-on-surface">Aventurero</h2>
-<p class="text-on-surface-variant text-sm">Nivel 5</p>
-<p class="text-tertiary font-bold text-sm mt-1">1,200 Monedas</p>
-</div>
-</div>
-<ul class="py-4">
-<li class="">
-<a class="flex items-center gap-4 text-on-surface-variant hover:bg-surface-variant mx-2 my-1 p-3 rounded-lg hover:translate-x-1 transition-transform nav-link" href="#">
-<span class="material-symbols-outlined" style="font-variation-settings: &quot;FILL&quot; 1;">rocket_launch</span>
-                        Modo Ahorro
-                    </a>
-</li>
-<li class="">
-<a class="flex items-center gap-4 text-on-surface-variant hover:bg-surface-variant mx-2 my-1 p-3 rounded-lg hover:translate-x-1 transition-transform nav-link" href="#">
-<span class="material-symbols-outlined" style="font-variation-settings: &quot;FILL&quot; 1;">trending_up</span>
-                        Rindiendo la Money
-                    </a>
-</li>
-<li class="">
-<a class="flex items-center gap-4 text-on-surface-variant hover:bg-surface-variant mx-2 my-1 p-3 rounded-lg hover:translate-x-1 transition-transform nav-link" href="#">
-<span class="material-symbols-outlined" style="font-variation-settings: &quot;FILL&quot; 1;">school</span>
-                        Cuentas Claras
-                    </a>
-</li>
-<li class="">
-<a class="flex items-center gap-4 text-on-surface-variant hover:bg-surface-variant mx-2 my-1 p-3 rounded-lg hover:translate-x-1 transition-transform nav-link" href="#">
-<span class="material-symbols-outlined" style="font-variation-settings: &quot;FILL&quot; 1;">settings</span>
-                        Cero Enredor
-                    </a>
-</li>
-</ul>
+<nav class="flex flex-col p-8 pt-0 font-fredoka font-bold text-lukash-dark space-y-5 items-start text-left">
+<div class="w-full">
+ <button class="flex items-center justify-between w-full text-xl hover:text-lukash-pink transition-colors" id="mobileCategoriasBtn" style="color: rgb(24, 15, 67);">CATEGORIAS<svg class="w-5 h-5 transition-transform duration-300" id="mobileCategoriasArrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg></button>
+ <div id="mobileCategoriasMenu" class="hidden mt-4 pl-4 border-l-4 border-lukash-pink/30 space-y-4 flex flex-col">
+ <a class="hover:text-lukash-pink transition-colors text-lg" href="modo-ahorro.html" style="color: rgb(24, 15, 67);">MODO AHORRO</a>
+ <a class="hover:text-lukash-pink transition-colors text-lg" href="rindiendo-money.html" style="color: rgb(24, 15, 67);">RINDIENDO LA MONEY</a>
+ <a class="hover:text-lukash-pink transition-colors text-lg" href="cuentas-claras.html" style="color: rgb(24, 15, 67);">CUENTAS CLARAS</a>
+ <a class="hover:text-lukash-pink transition-colors text-lg" href="cero-enredor.html" style="color: rgb(24, 15, 67);">CERO ENREDOS</a>
+ </div>
+ </div>
+ <a class="hover:text-lukash-pink transition-colors text-xl" href="Registro.html" style="color: rgb(24, 15, 67);">REGISTRO</a>
+ <a class="hover:text-lukash-pink transition-colors text-xl" href="#" style="color: rgb(24, 15, 67);">NOSOTROS</a>
+ <a class="hover:text-lukash-pink transition-colors text-xl" href="contactanos.html" style="color: rgb(24, 15, 67);">CONTACTANOS</a>
 </nav>
+</div>
+</div>
+<!-- END: Mobile Menu Drawer -->
 <!-- Main Content area (padded for header) -->
 <main class="pt-24 px-4 md:px-12 flex flex-col gap-bubble-gap relative z-10 w-full">
 <!-- Dialogue Bubble 1 (Left) -->
@@ -361,39 +378,68 @@
 </div>
 </div>
 </div>
-<script>
-        // Drawer Logic
-        const menuBtn = document.getElementById('menu-btn');
-        const closeMenuBtn = document.getElementById('close-menu-btn');
-        const navDrawer = document.getElementById('nav-drawer');
-        const navOverlay = document.getElementById('nav-overlay');
-        const navLinks = document.querySelectorAll('.nav-link');
+<script data-purpose="modal-functionality">
+        // Mobile Menu Logic
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+        const mobileMenuDrawer = document.getElementById('mobileMenuDrawer');
+        const closeMenuBtn = document.getElementById('closeMenuBtn');
+        const menuIcon = menuBtn.querySelector('.hamburger-icon');
 
         function openMenu() {
-            navDrawer.classList.remove('-translate-x-full');
-            navOverlay.classList.remove('hidden');
-            setTimeout(() => {
-                navOverlay.classList.remove('opacity-0');
-                navOverlay.classList.add('opacity-100');
-            }, 10);
+          mobileMenu.classList.remove('hidden');
+          if(menuIcon) menuIcon.classList.add('hidden');
+          setTimeout(() => {
+            mobileMenuOverlay.classList.remove('opacity-0');
+            mobileMenuDrawer.classList.remove('-translate-x-[150%]');
+          }, 10);
         }
 
         function closeMenu() {
-            navDrawer.classList.add('-translate-x-full');
-            navOverlay.classList.remove('opacity-100');
-            navOverlay.classList.add('opacity-0');
-            setTimeout(() => {
-                navOverlay.classList.add('hidden');
-            }, 300);
+          closeMenuBtn.style.opacity = '0';
+          mobileMenuOverlay.classList.add('opacity-0');
+          mobileMenuDrawer.classList.add('-translate-x-[150%]');
+          setTimeout(() => {
+            mobileMenu.classList.add('hidden');
+            closeMenuBtn.style.opacity = '1';
+            if(menuIcon) menuIcon.classList.remove('hidden');
+          }, 300);
         }
 
         menuBtn.addEventListener('click', openMenu);
         closeMenuBtn.addEventListener('click', closeMenu);
-        navOverlay.addEventListener('click', closeMenu);
-        navLinks.forEach(link => {
-            link.addEventListener('click', closeMenu);
-        });
+        mobileMenuOverlay.addEventListener('click', closeMenu);
     </script>
+<script data-purpose="navegacion-categorias">
+  (function () {
+    const dCat = document.getElementById('desktopCategorias');
+    const dBtn = document.getElementById('desktopCategoriasBtn');
+    const dMenu = document.getElementById('desktopCategoriasMenu');
+    const dArrow = document.getElementById('desktopCategoriasArrow');
+    if (dCat && dBtn && dMenu && dArrow) {
+      const toggle = (open) => {
+        dMenu.classList.toggle('hidden', !open);
+        dArrow.classList.toggle('rotate-180', open);
+      };
+      dBtn.addEventListener('click', (e) => { e.stopPropagation(); toggle(dMenu.classList.contains('hidden')); });
+      dCat.addEventListener('mouseenter', () => toggle(true));
+      dCat.addEventListener('mouseleave', () => toggle(false));
+      document.addEventListener('click', (e) => { if (!dCat.contains(e.target)) toggle(false); });
+    }
+    const mBtn = document.getElementById('mobileCategoriasBtn');
+    const mMenu = document.getElementById('mobileCategoriasMenu');
+    const mArrow = document.getElementById('mobileCategoriasArrow');
+    if (mBtn && mMenu && mArrow) {
+      mBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isHidden = mMenu.classList.contains('hidden');
+        mMenu.classList.toggle('hidden', !isHidden);
+        mArrow.classList.toggle('rotate-180', isHidden);
+      });
+    }
+  })();
+</script>
 
 
 </body></html>
