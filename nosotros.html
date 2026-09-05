@@ -126,6 +126,37 @@
       stroke-linejoin: round;
     }
   </style>
+  <style data-purpose="theme-toggle-styles">
+    /* Boton de cambio de tema: muestra luna en modo claro y sol en modo oscuro */
+    .theme-toggle { cursor: pointer; transition: transform 0.15s ease-in-out; }
+    .theme-toggle:active { transform: scale(0.9); }
+    .theme-toggle .icon-moon { display: block; }
+    .theme-toggle .icon-sun { display: none; }
+    html.dark .theme-toggle .icon-moon { display: none; }
+    html.dark .theme-toggle .icon-sun { display: block; }
+
+    /* Ajustes de modo oscuro (tokens de DESIGN.md) */
+    html body { background-color: #f7efd0 !important; background-image: none !important; }
+    html.dark body { background-image: url("images/fondo_.png") !important; background-size: cover !important; background-position: center !important; background-repeat: no-repeat !important; background-attachment: fixed !important; color: #EEE8E0; }
+    html:not(.dark) header[class*="bg-header-yellow"], html:not(.dark) .bg-header-yellow { background-color: #211941 !important; }
+    html:not(.dark) header span[class*="bg-black"] { background-color: #EEE8E0; }
+    html:not(.dark) .logo-stroke { stroke: #EEE8E0; }
+    html:not(.dark) header .theme-toggle svg * { stroke: #EEE8E0; }
+    html:not(.dark) header .theme-toggle { color: #EEE8E0; }
+    html.dark header[class*="bg-header-yellow"], html.dark .bg-header-yellow { background-color: #E7C11F !important; }
+    html.dark header span[class*="bg-black"] { background-color: #180F43; }
+    html.dark .logo-stroke { stroke: #180F43; }
+    html.dark header .theme-toggle svg * { stroke: #180F43; }
+    html.dark header .theme-toggle { color: #180F43; }
+    html.dark .bg-sticker-bg { background-color: #201a35; border-color: #EEE8E0; }
+    html.dark .bg-sticker-bg span { color: #EEE8E0; }
+    html.dark .bg-card-light { background-color: #201a35; }
+    html.dark .bg-card-light h3 { color: #EEE8E0; }
+    html.dark .bg-card-light p { color: #EEE8E0; }
+    html.dark .bg-chip-bg { background-color: #2a1b4d; }
+    html.dark .bg-chip-bg h2 { color: #EEE8E0; }
+    html.dark .logo-stroke { stroke: #EEE8E0; }
+  </style>
 </head>
 <body class="min-h-screen flex flex-col items-center">
 
@@ -141,10 +172,17 @@
        <span class="font-display text-4xl font-bold italic text-accent-green logo-stroke uppercase tracking-tighter">LUKA$H</span>
     </div>
 
-    <div class="w-10 h-10 rounded-full border-2 border-text-dark-blue flex items-center justify-center overflow-hidden bg-text-dark-blue">
-      <svg viewBox="0 0 24 24" class="w-8 h-8 text-white fill-current">
-        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path>
-      </svg>
+    <div class="flex items-center gap-2">
+      <!-- Theme Toggle (icono de luna/sol para modo oscuro/claro) -->
+      <button class="p-2 theme-toggle" type="button" aria-label="Cambiar tema">
+        <svg class="icon-moon" fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+        <svg class="icon-sun" fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="5" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></circle><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="black" stroke-linecap="round" stroke-width="2"></path></svg>
+      </button>
+      <div class="w-10 h-10 rounded-full border-2 border-text-dark-blue flex items-center justify-center overflow-hidden bg-text-dark-blue">
+        <svg viewBox="0 0 24 24" class="w-8 h-8 text-white fill-current">
+          <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path>
+        </svg>
+      </div>
     </div>
   </header>
 
@@ -224,4 +262,22 @@
 
 
 
+<script data-purpose="theme-toggle">
+    (function () {
+      var key = 'lukash-theme';
+      var root = document.documentElement;
+      var apply = function (dark) {
+        root.classList.toggle('dark', dark);
+        try { localStorage.setItem(key, dark ? 'dark' : 'light'); } catch (e) {}
+      };
+      var toggles = document.querySelectorAll('.theme-toggle');
+      var stored = null;
+      try { stored = localStorage.getItem(key); } catch (e) {}
+      var shouldDark = stored ? (stored === 'dark') : root.classList.contains('dark');
+      apply(shouldDark);
+      toggles.forEach(function (t) {
+        t.addEventListener('click', function () { apply(!root.classList.contains('dark')); });
+      });
+    })();
+  </script>
 </body></html>
