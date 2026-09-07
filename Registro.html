@@ -56,6 +56,18 @@
       0% { transform: translateX(0); }
       100% { transform: translateX(-50%); }
     }
+
+    /* Cinta superior (frente): se desplaza de izquierda a derecha */
+    .tape-content-reverse {
+      display: flex;
+      width: max-content;
+      animation: scroll-tape-reverse 15s linear infinite;
+    }
+
+    @keyframes scroll-tape-reverse {
+      0% { transform: translateX(-50%); }
+      100% { transform: translateX(0); }
+    }
   </style>
 <style data-purpose="button-3d-effects">
     .btn-3d {
@@ -224,15 +236,15 @@
 </div>
 <!-- END: Mobile Menu Drawer -->
 <!-- BEGIN: DecorativeElements -->
-<!-- Diagonal Tape -->
-<div class="diagonal-tape pointer-events-none opacity-80 lg:opacity-100">
-<div class="tape-content"><div class="h-[120px] w-[400vw]" style="background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuCHzlRtqxpouPyp3BHzWjXi4UhYNFEdOrmZ1AJfFBrLKKnE7Gixk0Mj8yoBX1sYFQqe4U1g1-I1mxT_J9xUdYjOKWBl215LzPeHkzHCnRvdYoi8lbZ361spuZ4KWpOTvyUWwbMBMpXZBKtq8BqlZIOBu0j-BoXrKpTqpAAkJvp5UE-kppNM9gwG2_-R98uHgn0KXgEmvk331JJT0Sehw12Ilmfio4_i_cDNoqXyhj8BLobWxcXc0RLN9tdGBFy2MwKbYQ&quot;); background-repeat: repeat-x; background-size: auto 100%;"></div></div>
-</div><div class="diagonal-tape pointer-events-none opacity-80 lg:opacity-100" style="transform: rotate(10deg); top: 40%;"><div class="tape-content"><div class="h-[120px] w-[400vw]" style="background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuARgTqEUy6tZIiYbQW1eaTLO520kX1VCaXwK-L-1yOlmQ_x64qRABAnuSLhkFVaS3Utt8aR6_VWvS5t26zjOmAZB_vuSlDC9LLfvxmAnk9AYxjBIvey0BhCCRw5KZWOWTe5kwmZv7oD1oHZZZBPKdQqWrES3hQQimHT-FJJedgKTXl6h5ACXe9Fra7NQR86EN_KWebxrUDfCcl3dEuHSbIFIcfKLrsOrVlcgp4ZdsmQ3GPC-xfMMlR7TauKWGSOHCPVdA&quot;); background-repeat: repeat-x; background-size: auto 100%;"></div></div></div>
+<!-- Las cintas con GIF ahora viven dentro de main, ancladas a la tarjeta de registro -->
 <!-- END: DecorativeElements -->
 <!-- BEGIN: MainContent -->
 <main class="relative flex items-center justify-center min-h-[calc(100vh-64px)] p-6 z-20">
+<div class="relative w-full max-w-sm">
+<!-- Cinta de fondo: diagonal atrás de la tarjeta, de derecha a izquierda -->
+<div class="diagonal-tape pointer-events-none opacity-80 lg:opacity-100" style="position:absolute; top:48%; left:50%; width:200vw; height:150px; transform:translate(-50%,-50%) rotate(-12deg); transform-origin:center center; z-index:5;"><div class="tape-content"><div class="h-32 w-[400vw]" style="background-image: url(&quot;images/gif-de-lukash.gif&quot;); background-repeat: repeat-x; background-size: auto 100%;"></div><div class="h-32 w-[400vw]" style="background-image: url(&quot;images/gif-de-lukash.gif&quot;); background-repeat: repeat-x; background-size: auto 100%;"></div></div></div>
 <!-- BEGIN: LoginModal -->
-<div class="bg-lukash-bg-modal w-full max-w-sm rounded-[45px] shadow-2xl relative transition-all duration-300 pt-8 px-4 pb-4" id="loginModal">
+<div class="bg-lukash-bg-modal w-full max-w-sm rounded-[45px] shadow-2xl relative transition-all duration-300 pt-8 px-4 pb-20 z-10" id="loginModal">
 <!-- Close Button -->
 <button class="absolute top-6 right-8 text-2xl font-bold font-fredoka hover:scale-110 transition-transform" data-purpose="close-modal" id="closeBtn" onclick="document.getElementById('loginModal').classList.add('hidden'); document.getElementById('relaxModal').classList.remove('hidden');">X</button>
 <div class="text-center mb-4">
@@ -286,7 +298,11 @@
 </div>
 </div>
 <!-- END: LoginModal -->
-<div class="hidden bg-lukash-bg-modal w-full max-w-sm rounded-[45px] shadow-2xl relative transition-all duration-300 p-8 flex flex-col items-center text-center" id="relaxModal"><h2 class="font-fredoka text-lukash-dark text-xl font-bold uppercase mb-4">¿NO TE QUERES REGISTRAR TODAVÍA? RELAX</h2><p class="font-roboto text-gray-700 text-sm mb-8">Date una vuelta primero. Cuando querás seguir subiendo de nivel con Luka$h, acá te esperamos.</p><div class="flex space-x-4 w-full justify-center"><button class="bg-lukash-pink text-white font-fredoka font-bold text-xs px-4 py-3 rounded-2xl btn-3d uppercase tracking-wider flex-1">VOLVER AL INICIO</button><button class="bg-lukash-pink text-white font-fredoka font-bold text-xs px-4 py-3 rounded-2xl btn-3d uppercase tracking-wider flex-1" onclick="document.getElementById('relaxModal').classList.add('hidden'); document.getElementById('loginModal').classList.remove('hidden');">REGISTRATE</button></div></div></main>
+<div class="hidden bg-lukash-bg-modal w-full max-w-sm rounded-[45px] shadow-2xl relative transition-all duration-300 p-8 flex flex-col items-center text-center z-10" id="relaxModal"><h2 class="font-fredoka text-lukash-dark text-xl font-bold uppercase mb-4">¿NO TE QUERES REGISTRAR TODAVÍA? RELAX</h2><p class="font-roboto text-gray-700 text-sm mb-8">Date una vuelta primero. Cuando querás seguir subiendo de nivel con Luka$h, acá te esperamos.</p><div class="flex space-x-4 w-full justify-center"><button class="bg-lukash-pink text-white font-fredoka font-bold text-xs px-4 py-3 rounded-2xl btn-3d uppercase tracking-wider flex-1">VOLVER AL INICIO</button><button class="bg-lukash-pink text-white font-fredoka font-bold text-xs px-4 py-3 rounded-2xl btn-3d uppercase tracking-wider flex-1" onclick="document.getElementById('relaxModal').classList.add('hidden'); document.getElementById('loginModal').classList.remove('hidden');">REGISTRATE</button></div></div>
+<!-- Cinta frontal: se posiciona por JS siempre sobre el borde inferior de la ventana -->
+<div class="diagonal-tape pointer-events-none opacity-90" id="cintaFrontal" style="position:absolute; left:50%; width:200vw; height:150px; transform:translateX(-50%) rotate(8deg); transform-origin:center center; z-index:20;"><div class="tape-content-reverse"><div class="h-32 w-[400vw]" style="background-image: url(&quot;images/gif-de-lukash.gif&quot;); background-repeat: repeat-x; background-size: auto 100%;"></div><div class="h-32 w-[400vw]" style="background-image: url(&quot;images/gif-de-lukash.gif&quot;); background-repeat: repeat-x; background-size: auto 100%;"></div></div></div>
+</div>
+</main>
 <!-- END: MainContent -->
 <!-- BEGIN: FloatingActionButton & Chat Window -->
 <div class="fixed inset-0 pointer-events-none z-[60]" id="particle-container"></div>
@@ -507,7 +523,38 @@
 
 
 
-<script data-purpose="theme-toggle">
+  <script data-purpose="posicion-cinta-frontal">
+    // Posiciona la cinta frontal justo sobre el borde inferior de la ventana de registro,
+    // de modo que cruce por delante de su borde sin tapar el texto.
+    (function () {
+      function positionCinta() {
+        var modal = document.getElementById('loginModal');
+        var cinta = document.getElementById('cintaFrontal');
+        var cont = cinta.parentElement;
+        if (!modal || !cinta || !cont) return;
+        // Cuando hay relaxModal visible, el loginModal está oculto; usar la ventana activa
+        var relajado = document.getElementById('relaxModal');
+        var activo = (relajado && !relajado.classList.contains('hidden')) ? relajado : modal;
+        var activoRect = activo.getBoundingClientRect();
+        var contRect = cont.getBoundingClientRect();
+        // Altura visible que queremos que cruce sobre el borde inferior (~35px)
+        var cruce = 35;
+        // top de la cinta = borde inferior de la ventana - cruce - desplazamiento del contenedor
+        cinta.style.top = (activoRect.bottom - cruce - contRect.top) + 'px';
+      }
+      positionCinta();
+      window.addEventListener('resize', positionCinta);
+      // Reposicionar al alternar entre ventanas y al cargar fuentes
+      var obs = new MutationObserver(positionCinta);
+      var targets = document.getElementById('loginModal');
+      if (targets) {
+        obs.observe(targets, { attributes: true, attributeFilter: ['class'] });
+      }
+      if (document.readyState !== 'loading') positionCinta();
+      window.addEventListener('load', positionCinta);
+    })();
+  </script>
+  <script data-purpose="theme-toggle">
   (function () {
     var key = 'lukash-theme';
     var root = document.documentElement;
