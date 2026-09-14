@@ -1,7 +1,7 @@
 <!DOCTYPE html><html lang="es" style=""><head>
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
-<title>Logins Modal LUKA$H - Doble Cinta Cruzada</title>
+<title>Login Modal LUKA$H - Doble Cinta Cruzada</title>
 <!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;700&amp;family=Roboto:wght@400;500&amp;family=Rubik:wght@400;600;700&amp;family=Roboto+Flex:wght@400;700&amp;display=swap" rel="stylesheet">
 <!-- Tailwind CSS v3 -->
@@ -159,55 +159,34 @@
       opacity: 0;
       pointer-events: none;
     }
-
-    /* Particle explosion */
-    .particle {
-      position: absolute;
-      border-radius: 50%;
-      pointer-events: none;
-      animation: explode 0.6s ease-out forwards;
-    }
-    @keyframes explode {
-      0% {
-        transform: scale(0) translate(0, 0);
-        opacity: 1;
-      }
-      100% {
-        transform: scale(1) translate(var(--tx), var(--ty));
-        opacity: 0;
-      }
-    }
   </style>
 <style data-purpose="theme-toggle-styles">
-        /* Boton de cambio de tema: muestra luna en modo claro y sol en modo oscuro */
-        .theme-toggle { cursor: pointer; transition: transform 0.15s ease-in-out; }
-        .theme-toggle:active { transform: scale(0.9); }
-        .theme-toggle .icon-moon { display: block; }
-        .theme-toggle .icon-sun { display: none; }
-        html.dark .theme-toggle .icon-moon { display: none; }
-        html.dark .theme-toggle .icon-sun { display: block; }
-
-        /* Ajustes de modo oscuro (tema unificado con tokens de DESIGN.md) */
-        html body { background-color: #f7efd0 !important; background-image: none !important; }
-        html.dark body { background-image: url("images/fondo_.png") !important; background-size: cover !important; background-position: center !important; background-repeat: no-repeat !important; background-attachment: fixed !important; }
-        html:not(.dark) #main-header { background-color: #211941 !important; color: #EEE8E0; border-color: rgba(231,193,31,0.4); }
-        html:not(.dark) #main-header svg * { stroke: #EEE8E0; }
-        html:not(.dark) #main-header .text-lukash-dark { color: #EEE8E0; }
-        html:not(.dark) #main-header a { color: inherit; }
-        html.dark #main-header { background-color: #E7C11F !important; color: #180F43; border-color: rgba(24,15,67,0.15); }
-        html.dark #main-header svg * { stroke: #180F43; }
-        html.dark #main-header .text-lukash-dark { color: #180F43; }
-        html.dark #main-header a { color: inherit; }
-        html:not(.dark) #desktopCategoriasMenu > div { background-color: #211941 !important; color: #EEE8E0; border-color: rgba(231,193,31,0.6); }
-        html:not(.dark) #desktopCategoriasMenu a { color: #EEE8E0; }
-        html:not(.dark) #main-header .hover\:text-\[\#f7efd0\]:hover { color: #E7C11F !important; }
-        html.dark #desktopCategoriasMenu > div { background-color: rgba(30,20,70,0.95) !important; color: #EEE8E0; }
-        html.dark #desktopCategoriasMenu a { color: #EEE8E0; }
-    </style>
+    .theme-toggle { cursor: pointer; transition: transform 0.15s ease-in-out; }
+    .theme-toggle:active { transform: scale(0.9); }
+    .theme-toggle .icon-moon { display: block; }
+    .theme-toggle .icon-sun { display: none; }
+    html.dark .theme-toggle .icon-moon { display: none; }
+    html.dark .theme-toggle .icon-sun { display: block; }
+    html body { background-color: #f7efd0 !important; background-image: none !important; }
+    html.dark body { background-image: url("images/fondo_.png") !important; background-size: cover !important; background-position: center !important; background-repeat: no-repeat !important; background-attachment: fixed !important; }
+    html:not(.dark) #main-header { background-color: #211941 !important; color: #EEE8E0; border-color: rgba(231,193,31,0.4); }
+    html:not(.dark) #main-header svg * { stroke: #EEE8E0; }
+    html:not(.dark) #main-header .text-lukash-dark { color: #EEE8E0; }
+    html:not(.dark) #main-header a { color: inherit; }
+    html.dark #main-header { background-color: #E7C11F !important; color: #180F43; border-color: rgba(24,15,67,0.15); }
+    html.dark #main-header svg * { stroke: #180F43; }
+    html.dark #main-header .text-lukash-dark { color: #180F43; }
+    html.dark #main-header a { color: inherit; }
+    html:not(.dark) #desktopCategoriasMenu > div { background-color: #211941 !important; color: #EEE8E0; border-color: rgba(231,193,31,0.6); }
+    html:not(.dark) #desktopCategoriasMenu a { color: #EEE8E0; }
+    html:not(.dark) #main-header .hover\:text-\[\#f7efd0\]:hover { color: #E7C11F !important; }
+    html.dark #desktopCategoriasMenu > div { background-color: rgba(30,20,70,0.95) !important; color: #EEE8E0; }
+    html.dark #desktopCategoriasMenu a { color: #EEE8E0; }
+</style>
 </head>
-<body class="font-roboto text-slate-800" style="min-height: 100vh; margin: 0px;">
+<body class="font-roboto text-slate-800" style="background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuCcpn5CU7dPBXHI86Lt-zCChNoNGR5ZIBj51yhpb7bs6yUafn2zfVey4Ldz8Uzfih11gXb3oQbqNiGktytJmapRN5BMCzfoVOq7_lrxNziSKfXSNBkuKlZSTfjpPJTwFLIHzfw5D543Ji45CH4BI01lrV4oCq8KCnuXAB8imCoBAKMi1VRTkcd1NIsbxVkO32FBPAQjX7xHB9tqnDjT6FUDSM6XiXvQAdQ8kMKc_k5cOQjHriu7tjy-C8VId_XQFzkAhyc7ZUgp3IUbNw&quot;); background-size: cover; background-position: center center; background-attachment: fixed; min-height: 100vh; margin: 0px;">
 <!-- BEGIN: MainHeader -->
-<header class="fixed top-0 left-0 right-0 bg-lukash-yellow w-full h-16 flex items-center justify-between px-4 z-50 border-b-4 border-black/10" id="main-header">
+<header class="fixed top-0 left-0 right-0 bg-lukash-yellow w-full h-16 flex items-center justify-between px-4 z-50 border-b-4 border-black/10 transition-opacity duration-100" id="main-header">
 <!-- Menu Icon -->
 <button class="p-2 lg:hidden" id="menuBtn"><svg class="hamburger-icon" fill="none" height="24" viewBox="0 0 30 24" width="30" xmlns="http://www.w3.org/2000/svg"><path d="M2 2H28M2 12H28M2 22H28" stroke="black" stroke-linecap="round" stroke-width="4"></path></svg><svg class="close-icon hidden" fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M18 6L6 18M6 6L18 18" stroke="black" stroke-linecap="round" stroke-width="3"></path></svg></button>
 <!-- Central Logo -->
@@ -215,7 +194,7 @@
 <img alt="LUKA$H Logo" class="h-16 drop-shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYRpEfrEAXglfH6g6bdTAiltJsJB-DrFhYXNpv6pCllmuHj7ZTXjF1qy9e06r27C5bLil8PgTWLPE-mWnWPz_8ibC0PbXo0mgx7meRO8nUsUV1qLPggd-nZBPOPjkThKh-Ou-I6nHQkWDHioMR9pUwKGZWmx0Cixdb5lqH1bSqo8ixHeoNWq9_ax4LS-cBhRHRiCd4KtV6Bz9ISa3Kd85RkHKMPOgK3YST2EQZs-TyZzikR3_DpMQVbNJtsVzgzE3r_g">
 </div>
 <div class="flex items-center lg:hidden">
-<!-- Theme Toggle (icono de luna/sol para modo oscuro/claro) -->
+<!-- Theme Toggle -->
 <button class="p-2 theme-toggle" type="button" aria-label="Cambiar tema">
 <svg class="icon-moon" fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
 <svg class="icon-sun" fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="5" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></circle><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="black" stroke-linecap="round" stroke-width="2"></path></svg>
@@ -255,7 +234,7 @@
 <div class="absolute top-6 left-6 w-64 shadow-2xl transform transition-transform duration-300 flex flex-col rounded-[45px] h-max border-none backdrop-blur-md pointer-events-auto -translate-x-[150%]" id="mobileMenuDrawer" style="background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuAeRFCguGmJAP2dmp1aYF4qsTfAyIOscChweRZXRQiHjUN1cBby8JpgZyNxGzAN7YfF65QjDHZHE-hgrwwVMMxD9k4-rpFKL-B_9GqV6IFyUHrQhxHoqlmhkmfI3JecSZ6_LW7x_9hHFFEiC6UR0OP3AGIFy4mSiGm2IddGjFf2S7w8pk5FdW73Z_0v-62A_L14O2JkuwFJodusGDaEsrG00RBvV1BalVc6XuLKTKaFJeZPdQfiEOPR6g6PH_MnnRLp8g&quot;); background-size: cover; background-position: center center; opacity: 0.95;">
 <div class="flex justify-between items-center p-6 h-max">
 <img alt="LUKA$H Logo" class="h-10 drop-shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYRpEfrEAXglfH6g6bdTAiltJsJB-DrFhYXNpv6pCllmuHj7ZTXjF1qy9e06r27C5bLil8PgTWLPE-mWnWPz_8ibC0PbXo0mgx7meRO8nUsUV1qLPggd-nZBPOPjkThKh-Ou-I6nHQkWDHioMR9pUwKGZWmx0Cixdb5lqH1bSqo8ixHeoNWq9_ax4LS-cBhRHRiCd4KtV6Bz9ISa3Kd85RkHKMPOgK3YST2EQZs-TyZzikR3_DpMQVbNJtsVzgzE3r_g">
-<button class="text-2xl font-rubik font-bold text-lukash-dark p-2 transition-all duration-200" id="closeMenuBtn" style="opacity: 1;">X</button>
+<button class="text-2xl font-fredoka font-bold text-lukash-dark p-2 transition-all duration-200" id="closeMenuBtn" style="opacity: 1;">X</button>
 </div>
 <nav class="flex flex-col p-8 pt-0 font-fredoka font-bold text-lukash-dark space-y-5 items-start text-left">
 <a href="index.html?intro=1" class="hover:text-lukash-pink transition-colors text-xl">INICIO</a>
@@ -269,7 +248,7 @@
  </div>
  </div>
  <a class="hover:text-lukash-pink transition-colors text-xl" href="Registro.html" style="color: rgb(24, 15, 67);">REGISTRO</a>
- <a class="hover:text-lukash-pink transition-colors text-xl" href="#" style="color: rgb(24, 15, 67);">NOSOTROS</a>
+ <a class="hover:text-lukash-pink transition-colors text-xl" href="nosotros.html" style="color: rgb(24, 15, 67);">NOSOTROS</a>
  <a class="hover:text-lukash-pink transition-colors text-xl" href="contactanos.html" style="color: rgb(24, 15, 67);">CONTACTANOS</a>
 </nav>
 </div>
@@ -277,19 +256,36 @@
 <!-- END: Mobile Menu Drawer -->
 <!-- BEGIN: MainContent -->
 <main class="relative flex items-center justify-center min-h-[calc(100vh-64px)] z-20 overflow-hidden p-4">
-<div class="relative max-w-7xl w-full flex flex-col lg:flex-row items-center justify-center lg:justify-between z-20 lg:gap-8 px-4 lg:px-12 gap-4"><!-- Right: Informative Yellow 3D Card (Top for Mobile) -->
-<div class="relative w-full lg:w-1/2 flex items-center justify-center order-1 lg:order-2">
-<div class="relative w-full max-w-md lg:max-w-xl rounded-2xl border-2 overflow-hidden" style="background-color: rgb(239, 236, 230); border-radius: 28px; box-shadow: rgb(198, 191, 195) 6px 10px 0px; transform: perspective(1000px) rotateY(-2deg) rotateX(1deg); border-width: medium; border-style: none; border-color: currentcolor; border-image: none;">
-<div class="flex flex-col justify-center items-start text-left p-8 md:p-12 lg:p-16 xl:p-20 space-y-4">
-<h2 class="font-rubik font-bold text-lukash-dark uppercase tracking-wide text-xl md:text-2xl leading-none text-[#180F43]">¿QUÉ MÁS PUES? BIENVENIDO@ A LUKASH</h2>
-<p class="font-rubik text-lukash-dark leading-snug text-sm md:text-base font-medium pr-4 text-slate-700">En LUKASH te enseñamos cómo ahorrar, invertir y tomar mejores decisiones financieras sin morir en el intento. La idea es que entiendas el dinero de forma fácil, a tu ritmo y sin sentir que estás viendo una clase aburrida.</p>
+<!-- Floating Star Decor Left -->
+<div class="absolute top-24 left-12 w-24 h-24 z-10 animate-float" style="animation-delay: -1s;">
+<svg class="w-full h-full drop-shadow-2xl fill-[#FF6B9E] opacity-90" viewBox="0 0 100 100">
+<path d="M50 0 C50 40, 60 50, 100 50 C60 50, 50 60, 50 100 C50 60, 40 50, 0 50 C40 50, 50 40, 50 0 Z"></path>
+</svg>
+</div>
+<!-- Floating Star Decor Right -->
+<div class="absolute bottom-48 right-8 w-20 h-20 z-10 animate-float" style="animation-delay: -2s; transform: rotate(15deg);">
+<svg class="w-full h-full drop-shadow-2xl fill-[#FF6B9E] opacity-90" viewBox="0 0 100 100">
+<path d="M50 0 C50 40, 60 50, 100 50 C60 50, 50 60, 50 100 C50 60, 40 50, 0 50 C40 50, 50 40, 50 0 Z"></path>
+</svg>
+</div>
+<div class="relative max-w-sm w-full flex flex-col items-center justify-center z-20 px-4 gap-4 mt-8 lg:max-w-2xl">
+<!-- Top: Informative Card -->
+<div class="relative w-full flex items-center justify-center order-1">
+<div class="relative w-full rounded-3xl overflow-visible" style="background-color: rgb(239, 236, 230); box-shadow: rgb(198, 191, 195) 6px 10px 0px;">
+<div class="flex flex-col justify-center items-center text-center p-6 pt-8 pb-12">
+<h2 class="font-roboto font-bold text-lukash-dark text-xl md:text-2xl mb-4 leading-snug" style="color: rgb(24, 15, 67);">PRESUPUESTAR NO ES DEJAR DE GASTAR… ES SABER GASTARLA.</h2>
+<p class="font-roboto text-lukash-dark text-sm md:text-base text-center font-medium leading-snug" style="color: rgb(24, 15, 67);">La plata alcanza más... cuando sabés pa&#39; dónde va.</p>
+</div>
+<div class="absolute -bottom-4 left-1/4 w-0 h-0 border-l-[15px] border-l-transparent border-r-[15px] border-r-transparent border-t-[25px]" style="border-top-color: rgb(239, 236, 230);"></div>
+</div>
+</div>
+<!-- Bottom: Gancho de la Categoria -->
+<div class="relative w-full flex flex-col items-center justify-center order-2 -mt-16">
+<div class="relative z-50 animate-float hover:scale-105 transition-transform duration-300 cursor-pointer">
+<img alt="Cuentas Claras" class="w-64 h-64 object-contain drop-shadow-2xl lg:w-96 lg:h-96" src="images/imagenes%20de%20las%20categorias/categoria.png">
 </div>
 </div>
 </div>
-<!-- Left: Piggy Bank with Money (Bottom for Mobile) -->
-<div class="relative w-full lg:w-1/2 flex items-center justify-start lg:justify-center order-2 lg:order-1">
-<img alt="Piggy Bank with Money" class="w-full max-w-[280px] md:w-[450px] lg:w-[2200px] h-auto object-contain drop-shadow-2xl animate-float lg:max-w-[800px]" src="images/saludando.png">
-</div></div>
 </main>
 <!-- END: MainContent -->
 <!-- BEGIN: FloatingActionButton & Chat Window -->
@@ -326,13 +322,12 @@
 <!-- END: FloatingActionButton & Chat Window -->
 <!-- BEGIN: Scripts -->
 <script data-purpose="modal-functionality">
-    // Mobile Menu Logic
     const menuBtn = document.getElementById('menuBtn');
     const mobileMenu = document.getElementById('mobileMenu');
     const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
     const mobileMenuDrawer = document.getElementById('mobileMenuDrawer');
     const closeMenuBtn = document.getElementById('closeMenuBtn');
-    const menuIcon = menuBtn.querySelector('.hamburger-icon');
+    const menuIcon = menuBtn.querySelector('.hamburger-icon');la 
 
     function openMenu() {
       mobileMenu.classList.remove('hidden');
@@ -358,35 +353,39 @@
     closeMenuBtn.addEventListener('click', closeMenu);
     mobileMenuOverlay.addEventListener('click', closeMenu);
 
-  </script>
-<script data-purpose="navegacion-categorias">
-  (function () {
-    const dCat = document.getElementById('desktopCategorias');
-    const dBtn = document.getElementById('desktopCategoriasBtn');
-    const dMenu = document.getElementById('desktopCategoriasMenu');
-    const dArrow = document.getElementById('desktopCategoriasArrow');
-    if (dCat && dBtn && dMenu && dArrow) {
-      const toggle = (open) => {
-        dMenu.classList.toggle('hidden', !open);
-        dArrow.classList.toggle('rotate-180', open);
-      };
-      dBtn.addEventListener('click', (e) => { e.stopPropagation(); toggle(dMenu.classList.contains('hidden')); });
-      dCat.addEventListener('mouseenter', () => toggle(true));
-      dCat.addEventListener('mouseleave', () => toggle(false));
-      document.addEventListener('click', (e) => { if (!dCat.contains(e.target)) toggle(false); });
+    // Desktop Categorias dropdown toggle
+    const desktopCategorias = document.getElementById('desktopCategorias');
+    const desktopCategoriasBtn = document.getElementById('desktopCategoriasBtn');
+    const desktopCategoriasMenu = document.getElementById('desktopCategoriasMenu');
+    const desktopCategoriasArrow = document.getElementById('desktopCategoriasArrow');
+
+    function toggleDesktopMenu(open) {
+      desktopCategoriasMenu.classList.toggle('hidden', !open);
+      desktopCategoriasArrow.classList.toggle('rotate-180', open);
     }
-    const mBtn = document.getElementById('mobileCategoriasBtn');
-    const mMenu = document.getElementById('mobileCategoriasMenu');
-    const mArrow = document.getElementById('mobileCategoriasArrow');
-    if (mBtn && mMenu && mArrow) {
-      mBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const isHidden = mMenu.classList.contains('hidden');
-        mMenu.classList.toggle('hidden', !isHidden);
-        mArrow.classList.toggle('rotate-180', isHidden);
-      });
-    }
-  })();
+
+    desktopCategoriasBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isHidden = desktopCategoriasMenu.classList.contains('hidden');
+      toggleDesktopMenu(isHidden);
+    });
+    desktopCategorias.addEventListener('mouseenter', () => toggleDesktopMenu(true));
+    desktopCategorias.addEventListener('mouseleave', () => toggleDesktopMenu(false));
+    document.addEventListener('click', (e) => {
+      if (!desktopCategorias.contains(e.target)) toggleDesktopMenu(false);
+    });
+
+    // Mobile Categorias dropdown toggle
+    const mobileCategoriasBtn = document.getElementById('mobileCategoriasBtn');
+    const mobileCategoriasMenu = document.getElementById('mobileCategoriasMenu');
+    const mobileCategoriasArrow = document.getElementById('mobileCategoriasArrow');
+
+    mobileCategoriasBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isHidden = mobileCategoriasMenu.classList.contains('hidden');
+      mobileCategoriasMenu.classList.toggle('hidden', !isHidden);
+      mobileCategoriasArrow.classList.toggle('rotate-180', isHidden);
+    });
 </script>
 <script data-purpose="chat-functionality">
   const fabButton = document.getElementById('fab-button');
@@ -394,46 +393,6 @@
   const closeChat = document.getElementById('close-chat');
   const chatForm = document.getElementById('chat-form');
   const chatMessages = document.getElementById('chat-messages');
-  const particleContainer = document.getElementById('particle-container');
-
-  const brandColors = ['#EE4599', '#180F43', '#E7C11F', '#A7EB5D'];
-
-  function createParticles(x, y) {
-    for (let i = 0; i < 30; i++) {
-      const particle = document.createElement('div');
-      particle.classList.add('particle');
-      const size = Math.random() * 10 + 5;
-      const color = brandColors[Math.floor(Math.random() * brandColors.length)];
-      particle.style.width = `${size}px`;
-      particle.style.height = `${size}px`;
-      particle.style.backgroundColor = color;
-      particle.style.left = `${x}px`;
-      particle.style.top = `${y}px`;
-      const angle = Math.random() * Math.PI * 2;
-      const velocity = 50 + Math.random() * 100;
-      const tx = Math.cos(angle) * velocity;
-      const ty = Math.sin(angle) * velocity;
-      particle.style.setProperty('--tx', `${tx}px`);
-      particle.style.setProperty('--ty', `${ty}px`);
-      particleContainer.appendChild(particle);
-      setTimeout(() => { particle.remove(); }, 600);
-    }
-  }
-
-  // Explosión automática del marranito al cargar la página:
-  // se dispara al inicio para que, mientras aparecen la imagen y el texto
-  // con recuadro, la animación de explosión ya esté terminando.
-  function triggerExplosion() {
-    const rect = fabButton.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-    fabButton.classList.add('exploding');
-    createParticles(centerX, centerY);
-  }
-
-  window.addEventListener('load', () => {
-    setTimeout(triggerExplosion, 300);
-  });
 
   fabButton.addEventListener('click', (e) => {
     chatWindow.classList.remove('hidden-chat');
@@ -471,20 +430,26 @@
   });
 </script>
 <!-- END: Scripts -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<!-- BEGIN: Footer -->
+<footer class="bg-lukash-dark py-8 px-4 z-20 relative" style="color: #E7C11F;">
+<div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex flex-col items-center md:items-start gap-2">
+<img alt="LUKA$H Logo" class="h-12 drop-shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYRpEfrEAXglfH6g6bdTAiltJsJB-DrFhYXNpv6pCllmuHj7ZTXjF1qy9e06r27C5bLil8PgTWLPE-mWnWPz_8ibC0PbXo0mgx7meRO8nUsUV1qLPggd-nZBPOPjkThKh-Ou-I6nHQkWDHioMR9pUwKGZWmx0Cixdb5lqH1bSqo8ixHeoNWq9_ax4LS-cBhRHRiCd4KtV6Bz9ISa3Kd85RkHKMPOgK3YST2EQZs-TyZzikR3_DpMQVbNJtsVzgzE3r_g">
+<p class="font-rubik text-xs text-white/60 text-center md:text-left">Educaci&oacute;n financiera sin morir en el intento.</p>
+</div>
+<nav class="flex flex-wrap justify-center gap-4 font-fredoka font-bold text-sm uppercase">
+<a href="index.html?intro=1" class="hover:text-white transition-colors">Inicio</a>
+<a href="modoAhorrointro.html" class="hover:text-white transition-colors">Modo Ahorro</a>
+<a href="invertir.html" class="hover:text-white transition-colors">Rindiendo la Money</a>
+<a href="cuentasclaras.html" class="hover:text-white transition-colors">Cuentas Claras</a>
+<a href="cero-enredor.html" class="hover:text-white transition-colors">Cero Enredos</a>
+<a href="nosotros.html" class="hover:text-white transition-colors">Nosotros</a>
+<a href="contactanos.html" class="hover:text-white transition-colors">Contacto</a>
+</nav>
+<p class="text-white/40 text-xs font-roboto text-center">&copy; 2026 LUKA$H. Todos los derechos reservados.</p>
+</div>
+</footer>
+<!-- END: Footer -->
 <script data-purpose="theme-toggle">
   (function () {
     var key = 'lukash-theme';
@@ -503,25 +468,4 @@
     });
   })();
 </script>
-
-<!-- BEGIN: Footer -->
-<footer class="bg-lukash-dark py-8 px-4 z-20 relative" style="color: #E7C11F;">
-<div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
-<div class="flex flex-col items-center md:items-start gap-2">
-<img alt="LUKA Logo" class="h-12 drop-shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYRpEfrEAXglfH6g6bdTAiltJsJB-DrFhYXNpv6pCllmuHj7ZTXjF1qy9e06r27C5bLil8PgTWLPE-mWnWPz_8ibC0PbXo0mgx7meRO8nUsUV1qLPggd-nZBPOPjkThKh-Ou-I6nHQkWDHioMR9pUwKGZWmx0Cixdb5lqH1bSqo8ixHeoNWq9_ax4LS-cBhRHRiCd4KtV6Bz9ISa3Kd85RkHKMPOgK3YST2EQZs-TyZzikR3_DpMQVbNJtsVzgzE3r_g">
-<p class="font-rubik text-xs text-white/60 text-center md:text-left">Educaci&#243;n financiera sin morir en el intento.</p>
-</div>
-<nav class="flex flex-wrap justify-center gap-4 font-fredoka font-bold text-sm uppercase">
-<a href="index.html?intro=1" class="hover:text-white transition-colors">Inicio</a>
-<a href="modoAhorrointro.html" class="hover:text-white transition-colors">Modo Ahorro</a>
-<a href="invertir.html" class="hover:text-white transition-colors">Rindiendo la Money</a>
-<a href="cuentasclaras.html" class="hover:text-white transition-colors">Cuentas Claras</a>
-<a href="cero-enredor.html" class="hover:text-white transition-colors">Cero Enredos</a>
-<a href="nosotros.html" class="hover:text-white transition-colors">Nosotros</a>
-<a href="contactanos.html" class="hover:text-white transition-colors">Contacto</a>
-</nav>
-<p class="text-white/40 text-xs font-roboto text-center">&#169; 2026 LUKA. Todos los derechos reservados.</p>
-</div>
-</footer>
-<!-- END: Footer -->
 </body></html>
