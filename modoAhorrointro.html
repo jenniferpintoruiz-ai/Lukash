@@ -42,22 +42,15 @@
       to   { opacity: 1; }
     }
 
-    /* Pantallas conectadas por scroll. Al soltar el gesto, el scroll
-       aterriza automáticamente dejando centrada/completa cada pantalla
-       (intro -> opciones -> simulador, y viceversa), con desplazamiento
-       suave. El simulador vive en su propia pantalla justo después de las
-       opciones, junto con la invitación «¡Ahora pongamos todo en práctica!»,
-       sin botón de apertura: arranca centrado y pasa a 2 columnas (simulador
-       a la izquierda + explicación a la derecha) SOLO en escritorio al tocar
+    /* Pantallas conectadas por scroll MANUAL: sin snap ni anclaje, el usuario
+       desplaza libremente entre la intro, las opciones y el simulador.
+       El simulador vive en su propia pantalla justo después de las opciones,
+       junto con la invitación «¡Ahora pongamos todo en práctica!», sin botón
+       de apertura: arranca centrado y pasa a 2 columnas (simulador a la
+       izquierda + explicación a la derecha) SOLO en escritorio al tocar
        un instrumento. */
-    html {
-      scroll-snap-type: y mandatory;
-      scroll-behavior: smooth;
-    }
     .screen {
       min-height: 100vh;
-      scroll-snap-align: start;
-      scroll-snap-stop: always;
     }
     .screen-embed iframe {
       display: block;
@@ -66,15 +59,19 @@
       border: 0;
       background: transparent;
     }
-    /* Pantalla del simulador (ya unificada con la invitación): ocupa 100vh
-       fijos, con el texto arriba y el simulador llenando el resto del alto. */
+    /* Pantalla del simulador unificada: el iframe ocupa los 100vh completos
+       (así NO genera scroll interno: coincide con la altura del contenido del
+       simulador embebido, 100vh sin padding extra). La invitación se superpone
+       a modo de overlay, siempre por debajo de la barra superior fija (56px)
+       y SIN bloquear los clics del simulador (pointer-events: none). */
     #screen-simulador {
       height: 100vh;
-      height: 100svh;
+      overflow: hidden;
+      position: relative;
     }
     #screen-simulador .screen-embed {
-      flex: 1;
-      min-height: 0;
+      position: absolute;
+      inset: 0;
     }
     #screen-simulador .screen-embed iframe {
       height: 100%;
@@ -345,13 +342,15 @@
      y el simulador en la MISMA pantalla, sin botón de apertura. El simulador
      arranca centrado (móvil y escritorio) y, al presionar un instrumento, se
      desplaza a la izquierda dejando la explicación a la derecha (solo escritorio). -->
-<section class="screen relative flex flex-col items-center justify-start overflow-hidden z-10" id="screen-simulador">
-<div class="w-full px-6 pt-6 pb-3 text-center relative z-20">
-<p class="font-fredoka font-bold text-xl md:text-2xl leading-snug" style="color: #E7C11F; text-shadow: 2px 2px 0 rgba(24, 15, 67, 0.35);">¡Ahora pongamos todo en práctica!</p>
-<p class="font-roboto font-medium text-xs md:text-sm text-center leading-snug max-w-xs md:max-w-sm mx-auto mt-1" style="color: #EEE8E0;">Entra al simulador y descubre cómo manejarías tu dinero en diferentes situaciones.</p>
-</div>
+<section class="screen relative flex flex-col items-center overflow-hidden z-10" id="screen-simulador">
 <div class="screen-embed relative z-10 w-full">
 <iframe src="simulador.html?embed=1" title="Simulador Rindiendo la Money" loading="lazy"></iframe>
+</div>
+<div class="w-full px-6 pt-[74px] pb-3 text-center relative z-20 pointer-events-none">
+<div class="mx-auto w-fit max-w-[90%] md:max-w-md rounded-[28px] px-6 py-5 md:px-8 md:py-6" style="background: linear-gradient(180deg, #FFFDF6 0%, #F1EDE3 100%); border: 2px solid rgba(24, 15, 67, 0.15); box-shadow: 0 4px 0 rgba(148, 148, 148, 0.35), 0 10px 16px rgba(0, 0, 0, 0.15);">
+<p class="font-fredoka font-bold text-xl md:text-2xl leading-snug" style="color:#180F43;">¡Ahora pongamos todo en práctica!</p>
+<p class="font-roboto font-medium text-xs md:text-sm leading-snug max-w-[36ch] mx-auto mt-1" style="color:#4A4A4A;">Entra al simulador y descubre cómo manejarías tu dinero en diferentes situaciones.</p>
+</div>
 </div>
 </section>
 <!-- END: MainContent -->
