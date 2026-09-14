@@ -300,8 +300,8 @@
 
     .carousel-item {
       position: absolute;
-      width: 190px;
-      height: 260px;
+      width: 175px;
+      height: 240px;
       cursor: pointer;
       transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.8s ease, box-shadow 0.4s ease;
       user-select: none;
@@ -691,7 +691,7 @@
 <div class="relative w-full max-w-5xl flex flex-col lg:flex-row items-center justify-center gap-6 lg:gap-8">
 <!-- Left: Piggy Bank with Money -->
 <div class="w-full lg:w-1/2 flex items-center justify-center">
-<img alt="Marranito saludando" class="w-full max-w-[380px] md:max-w-[560px] h-auto object-contain drop-shadow-2xl animate-float" src="images/saludo.png">
+<img alt="Marranito saludando" class="w-full max-w-[260px] md:max-w-[560px] h-auto object-contain drop-shadow-2xl animate-float" src="images/saludo.png">
 </div>
 <!-- Right: Text Card -->
 <div class="w-full lg:w-1/2 flex items-center justify-center">
@@ -790,7 +790,7 @@
 <button class="text-white hover:text-lukash-pink transition-colors font-bold text-xl" id="close-chat">×</button>
 </div>
 <!-- Messages Area -->
-<div class="flex-1 p-4 overflow-y-auto flex flex-col space-y-3" id="chat-messages">
+<div class="flex-1 p-4 flex flex-col space-y-3" id="chat-messages">
 <div class="bg-lukash-bg-modal text-lukash-dark p-3 rounded-lg rounded-tl-none self-start max-w-[80%] shadow-sm chat-msg">
 <p class="text-sm font-roboto">¡Hola! Soy LUKASH tu asistente personal ¿En qué te puedo ayudar hoy con tus finanzas?</p>
 </div>
@@ -1357,7 +1357,7 @@
 
     function startAutoRotate() {
       clearInterval(autoRotateInterval);
-      autoRotateInterval = setInterval(() => { rotateCarousel(1); }, 4000);
+      autoRotateInterval = setInterval(() => { rotateCarousel(1); }, 3500);
     }
     function stopAutoRotate() { clearInterval(autoRotateInterval); }
     function restartAutoRotateWithDelay() {

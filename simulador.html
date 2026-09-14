@@ -329,7 +329,7 @@
 <div class="space-y-2">
 <label class="font-rubik font-bold text-xl text-primary-black block text-center" for="montoInput">¿Cuánto querés ahorrar?</label>
 <div class="currency-input-wrapper">
-<input class="currency-input w-full bg-white rounded-2xl py-3 px-4 font-rubik font-bold text-2xl text-primary-black border-2 border-black/20 focus:border-primary-pink focus:ring-0 text-center shadow-inner" id="montoInput" placeholder="800" type="number" value="">
+<input class="currency-input w-full bg-white rounded-2xl py-3 px-4 font-rubik font-bold text-2xl text-primary-black border-2 border-black/20 focus:border-primary-pink focus:ring-0 text-center shadow-inner" id="montoInput" placeholder="0000" type="number" value="">
 </div>
 </div>
 <!-- Total Result Box -->
@@ -572,8 +572,8 @@
 
     switch(type) {
       case 'banco':
-        bubbleHeader.textContent = `"Mirá pues parce... no es que esté mal, pero no es la mejor opción y te explico por qué"`;
-        bubbleStatus.textContent = "Tus lucas no crecieron";
+        bubbleHeader.textContent = `"Mirá pues... no es que esté mal, pero no es la mejor opción y te explico por qué"`;
+        bubbleStatus.textContent = "Tu dinero no creció";
         bubbleExplanation.innerHTML = `Guardaste <strong>${formattedInitial}</strong> y aunque el banco te dio un poquito más (apenas <strong>+${formattedGain}</strong> al año), no alcanzó para ganarle a la desvalorización del dinero. Eso significa que seguís viendo la plata en la cuenta, pero con el tiempo compra menos cosas.`;
         bubbleGrowth.textContent = "Muy bajo, prácticamente nulo (~0.1% E.A.).";
         bubbleInflation.textContent = "En la mayoría de casos, NO.";
@@ -643,10 +643,26 @@
   });
 
   montoInput.addEventListener('input', () => {
-    const activeBtn = document.querySelector('.instrument-btn.active');
-    if (activeBtn) {
-      updateSimulation(activeBtn, false);
-    }
+      const activeBtn = document.querySelector('.instrument-btn.active');
+      const bancoBtn = document.querySelector('.instrument-btn[data-type="banco"]');
+
+      if (!montoInput.value.trim()) {
+        if (activeBtn) activeBtn.classList.remove('active', 'bg-btn-pink');
+        resultadoValor.innerHTML = formatCurrency(0);
+        explanationBubble.classList.add('hidden');
+        return;
+      }
+
+      const selectedBtn = activeBtn || bancoBtn;
+      if (!selectedBtn) return;
+
+      if (!activeBtn) {
+        buttons.forEach(b => b.classList.remove('active', 'bg-btn-pink'));
+        selectedBtn.classList.add('active', 'bg-btn-pink');
+      }
+
+      updateSimulation(selectedBtn, false);
+      explanationBubble.classList.remove('hidden');
   });
 
   // Initialize with current value if active button exists
