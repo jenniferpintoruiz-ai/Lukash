@@ -58,6 +58,11 @@
       height: 100vh;
       border: 0;
       background: transparent;
+      overflow: hidden;
+    }
+    .screen-embed {
+      height: auto;
+      overflow: visible;
     }
     /* Pantalla del simulador unificada: el iframe ocupa los 100vh completos
        (así NO genera scroll interno: coincide con la altura del contenido del
@@ -65,8 +70,9 @@
        a modo de overlay, siempre por debajo de la barra superior fija (56px)
        y SIN bloquear los clics del simulador (pointer-events: none). */
     #screen-simulador {
-      height: 100vh;
-      overflow: hidden;
+      height: auto;
+      min-height: 100vh;
+      overflow: visible;
       position: relative;
     }
     #screen-simulador .screen-embed {
@@ -74,7 +80,8 @@
       inset: 0;
     }
     #screen-simulador .screen-embed iframe {
-      height: 100%;
+      height: 100vh;
+      min-height: 100vh;
     }
     @media (max-width: 639px) {
       #screen-simulador {
@@ -605,6 +612,15 @@
     var marranitoIntro = document.getElementById('marranito-scroll');
     var frames = document.querySelectorAll('.screen-embed iframe');
     var ticking = false;
+
+    window.addEventListener('message', function (event) {
+      if (!event.data || event.data.type !== 'lukash-frame-height') return;
+      frames.forEach(function (frame) {
+        if (frame.contentWindow === event.source) {
+          frame.style.height = Math.max(event.data.height, window.innerHeight) + 'px';
+        }
+      });
+    });
 
     function clamp(v, min, max) { return Math.min(Math.max(v, min), max); }
 

@@ -36,7 +36,7 @@
     .diagonal-tape {
       position: fixed;
       width: 200vw;
-      height: 120px;
+      height: 82px;
       transform: rotate(-10deg);
       top: 60%;
       left: -25%;
@@ -49,6 +49,8 @@
     .tape-content {
       display: flex;
       width: max-content;
+      min-width: max-content;
+      flex-shrink: 0;
       animation: scroll-tape 15s linear infinite;
     }
 
@@ -61,12 +63,65 @@
     .tape-content-reverse {
       display: flex;
       width: max-content;
+      min-width: max-content;
+      flex-shrink: 0;
       animation: scroll-tape-reverse 15s linear infinite;
     }
 
     @keyframes scroll-tape-reverse {
       0% { transform: translateX(-50%); }
       100% { transform: translateX(0); }
+    }
+
+    /* Fondo continuo de la cinta (igual que en la pantalla "Nosotros"):
+       el degradado queda fijo y sin cortes */
+    .diagonal-tape {
+      background-color: #f3e0a2;
+      background-image: url("images/donde%20degradado%4072x.png");
+      background-size: auto 100%;
+      background-position: center center;
+      background-repeat: repeat-x;
+    }
+
+    /* Panel de la cinta: copia fiel de la cinta de "Nosotros" (mismo tamaño de
+       logo 64px, estrella 32px, mismo gap y padding) para que sea el MISMO gif */
+    .tape-panel {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: clamp(1.5rem, 5vw, 3.5rem);
+      padding: 1rem clamp(1rem, 4vw, 2.5rem);
+      box-sizing: border-box;
+      width: max-content;
+      flex-shrink: 0;
+    }
+    .tape-panel img.logo-tape {
+      height: 4rem;
+      width: auto;
+      flex-shrink: 0;
+      object-fit: contain;
+    }
+    .tape-panel img.star-tape {
+      height: 2rem;
+      width: auto;
+      flex-shrink: 0;
+    }
+
+    /* Responsive: mismas medidas móviles que "Nosotros" */
+    @media (max-width: 640px) {
+      .diagonal-tape {
+        height: 64px;
+      }
+      .tape-panel {
+        gap: clamp(1rem, 4vw, 2rem);
+        padding: 0.75rem clamp(0.75rem, 3vw, 1.5rem);
+      }
+      .tape-panel img.logo-tape {
+        height: clamp(2.5rem, 10vw, 3.5rem);
+      }
+      .tape-panel img.star-tape {
+        height: clamp(1.5rem, 5vw, 2rem);
+      }
     }
   </style>
 <style data-purpose="button-3d-effects">
@@ -242,11 +297,11 @@
 <main class="relative flex items-center justify-center min-h-[calc(100vh-64px)] p-6 z-20">
 <div class="relative w-full max-w-sm">
 <!-- Cinta de fondo: diagonal atrás de la tarjeta, de derecha a izquierda -->
-<div class="diagonal-tape pointer-events-none opacity-80 lg:opacity-100" style="position:absolute; top:48%; left:50%; width:200vw; height:150px; transform:translate(-50%,-50%) rotate(-12deg); transform-origin:center center; z-index:5;"><div class="tape-content"><div class="h-32 w-[400vw]" style="background-image: url(&quot;images/gif-de-lukash.gif&quot;); background-repeat: repeat-x; background-size: auto 100%;"></div><div class="h-32 w-[400vw]" style="background-image: url(&quot;images/gif-de-lukash.gif&quot;); background-repeat: repeat-x; background-size: auto 100%;"></div></div></div>
+<div class="diagonal-tape pointer-events-none opacity-80 lg:opacity-100" style="position:absolute; top:48%; left:50%; width:200vw; transform:translate(-50%,-50%) rotate(-12deg); transform-origin:center center; z-index:5;"><div class="tape-content"><div class="tape-panel"><img class="logo-tape" alt="Logo LUKA$H" src="images/Recurso%2017.png"><img class="star-tape" alt="" src="images/estrella.png"><img class="logo-tape" alt="Logo LUKA$H" src="images/Recurso%2017.png"><img class="star-tape" alt="" src="images/estrella.png"><img class="logo-tape" alt="Logo LUKA$H" src="images/Recurso%2017.png"><img class="star-tape" alt="" src="images/estrella.png"><img class="logo-tape" alt="Logo LUKA$H" src="images/Recurso%2017.png"><img class="star-tape" alt="" src="images/estrella.png"><img class="logo-tape" alt="Logo LUKA$H" src="images/Recurso%2017.png"><img class="star-tape" alt="" src="images/estrella.png"><img class="logo-tape" alt="Logo LUKA$H" src="images/Recurso%2017.png"><img class="star-tape" alt="" src="images/estrella.png"><img class="logo-tape" alt="Logo LUKA$H" src="images/Recurso%2017.png"><img class="star-tape" alt="" src="images/estrella.png"><img class="logo-tape" alt="Logo LUKA$H" src="images/Recurso%2017.png"><img class="star-tape" alt="" src="images/estrella.png"><img class="logo-tape" alt="Logo LUKA$H" src="images/Recurso%2017.png"><img class="star-tape" alt="" src="images/estrella.png"><img class="logo-tape" alt="Logo LUKA$H" src="images/Recurso%2017.png"><img class="star-tape" alt="" src="images/estrella.png"><img class="logo-tape" alt="Logo LUKA$H" src="images/Recurso%2017.png"><img class="star-tape" alt="" src="images/estrella.png"><img class="logo-tape" alt="Logo LUKA$H" src="images/Recurso%2017.png"><img class="star-tape" alt="" src="images/estrella.png"><img class="logo-tape" alt="Logo LUKA$H" src="images/Recurso%2017.png"><img class="star-tape" alt="" src="images/estrella.png"><img class="logo-tape" alt="Logo LUKA$H" src="images/Recurso%2017.png"><img class="star-tape" alt="" src="images/estrella.png"></div><div class="tape-panel"><img class="logo-tape" alt="Logo LUKA$H" src="images/Recurso%2017.png"><img class="star-tape" alt="" src="images/estrella.png"><img class="logo-tape" alt="Logo LUKA$H" src="images/Recurso%2017.png"><img class="star-tape" alt="" src="images/estrella.png"><img class="logo-tape" alt="Logo LUKA$H" src="images/Recurso%2017.png"><img class="star-tape" alt="" src="images/estrella.png"><img class="logo-tape" alt="Logo LUKA$H" src="images/Recurso%2017.png"><img class="star-tape" alt="" src="images/estrella.png"><img class="logo-tape" alt="Logo LUKA$H" src="images/Recurso%2017.png"><img class="star-tape" alt="" src="images/estrella.png"><img class="logo-tape" alt="Logo LUKA$H" src="images/Recurso%2017.png"><img class="star-tape" alt="" src="images/estrella.png"><img class="logo-tape" alt="Logo LUKA$H" src="images/Recurso%2017.png"><img class="star-tape" alt="" src="images/estrella.png"><img class="logo-tape" alt="Logo LUKA$H" src="images/Recurso%2017.png"><img class="star-tape" alt="" src="images/estrella.png"><img class="logo-tape" alt="Logo LUKA$H" src="images/Recurso%2017.png"><img class="star-tape" alt="" src="images/estrella.png"><img class="logo-tape" alt="Logo LUKA$H" src="images/Recurso%2017.png"><img class="star-tape" alt="" src="images/estrella.png"><img class="logo-tape" alt="Logo LUKA$H" src="images/Recurso%2017.png"><img class="star-tape" alt="" src="images/estrella.png"><img class="logo-tape" alt="Logo LUKA$H" src="images/Recurso%2017.png"><img class="star-tape" alt="" src="images/estrella.png"><img class="logo-tape" alt="Logo LUKA$H" src="images/Recurso%2017.png"><img class="star-tape" alt="" src="images/estrella.png"><img class="logo-tape" alt="Logo LUKA$H" src="images/Recurso%2017.png"><img class="star-tape" alt="" src="images/estrella.png"></div></div></div>
 <!-- BEGIN: LoginModal -->
 <div class="bg-lukash-bg-modal w-full max-w-sm rounded-[45px] shadow-2xl relative transition-all duration-300 pt-8 px-4 pb-20 z-10" id="loginModal">
 <!-- Close Button -->
-<button class="absolute top-6 right-8 text-2xl font-bold font-fredoka hover:scale-110 transition-transform" data-purpose="close-modal" id="closeBtn" onclick="document.getElementById('loginModal').classList.add('hidden'); document.getElementById('relaxModal').classList.remove('hidden');">X</button>
+<button class="absolute top-6 right-8 text-2xl font-bold font-fredoka hover:scale-110 transition-transform" data-purpose="close-modal" id="closeBtn" aria-label="Cerrar">X</button>
 <div class="text-center mb-4">
 <h1 class="font-fredoka text-lukash-pink md:text-2xl font-bold leading-tight uppercase mb-1 text-lg">
           Sigue aprendiendo&nbsp;<div class="">con LUKAsH
@@ -298,9 +353,9 @@
 </div>
 </div>
 <!-- END: LoginModal -->
-<div class="hidden bg-lukash-bg-modal w-full max-w-sm rounded-[45px] shadow-2xl relative transition-all duration-300 p-8 flex flex-col items-center text-center z-10" id="relaxModal"><h2 class="font-fredoka text-lukash-dark text-xl font-bold uppercase mb-4">¿NO TE QUERES REGISTRAR TODAVÍA? RELAX</h2><p class="font-roboto text-gray-700 text-sm mb-8">Date una vuelta primero. Cuando querás seguir subiendo de nivel con Luka$h, acá te esperamos.</p><div class="flex space-x-4 w-full justify-center"><button class="bg-lukash-pink text-white font-fredoka font-bold text-xs px-4 py-3 rounded-2xl btn-3d uppercase tracking-wider flex-1">VOLVER AL INICIO</button><button class="bg-lukash-pink text-white font-fredoka font-bold text-xs px-4 py-3 rounded-2xl btn-3d uppercase tracking-wider flex-1" onclick="document.getElementById('relaxModal').classList.add('hidden'); document.getElementById('loginModal').classList.remove('hidden');">REGISTRATE</button></div></div>
+<div class="hidden bg-lukash-bg-modal w-full max-w-sm rounded-[45px] shadow-2xl relative transition-all duration-300 p-8 flex flex-col items-center text-center z-10" id="relaxModal" style="transform: translateY(-38px);"><h2 class="font-fredoka text-lukash-dark text-xl font-bold uppercase mb-4">¿No te quieres registrar todavía? </h2><p class="font-roboto text-gray-700 text-sm mb-8">Tranqui, cuando quieras seguir aprendiendo sobre el dinero, Lukash estará aquí.</p><div class="flex space-x-4 w-full justify-center"><button class="bg-lukash-pink text-white font-fredoka font-bold text-xs px-4 py-3 rounded-2xl btn-3d uppercase tracking-wider flex-1" onclick="location.href='index.html?intro=1'">VOLVER AL INICIO</button><button class="bg-lukash-pink text-white font-fredoka font-bold text-xs px-4 py-3 rounded-2xl btn-3d uppercase tracking-wider flex-1" onclick="abrirRegistro()">REGISTRATE</button></div></div>
 <!-- Cinta frontal: se posiciona por JS siempre sobre el borde inferior de la ventana -->
-<div class="diagonal-tape pointer-events-none opacity-90" id="cintaFrontal" style="position:absolute; left:50%; width:200vw; height:150px; transform:translateX(-50%) rotate(8deg); transform-origin:center center; z-index:20;"><div class="tape-content-reverse"><div class="h-32 w-[400vw]" style="background-image: url(&quot;images/gif-de-lukash.gif&quot;); background-repeat: repeat-x; background-size: auto 100%;"></div><div class="h-32 w-[400vw]" style="background-image: url(&quot;images/gif-de-lukash.gif&quot;); background-repeat: repeat-x; background-size: auto 100%;"></div></div></div>
+<div class="diagonal-tape pointer-events-none opacity-90" id="cintaFrontal" style="position:absolute; left:50%; width:200vw; transform:translateX(-50%) rotate(8deg); transform-origin:center center; z-index:20;"><div class="tape-content-reverse"><div class="tape-panel"><img class="logo-tape" alt="Logo LUKA$H" src="images/Recurso%2017.png"><img class="star-tape" alt="" src="images/estrella.png"><img class="logo-tape" alt="Logo LUKA$H" src="images/Recurso%2017.png"><img class="star-tape" alt="" src="images/estrella.png"><img class="logo-tape" alt="Logo LUKA$H" src="images/Recurso%2017.png"><img class="star-tape" alt="" src="images/estrella.png"><img class="logo-tape" alt="Logo LUKA$H" src="images/Recurso%2017.png"><img class="star-tape" alt="" src="images/estrella.png"><img class="logo-tape" alt="Logo LUKA$H" src="images/Recurso%2017.png"><img class="star-tape" alt="" src="images/estrella.png"><img class="logo-tape" alt="Logo LUKA$H" src="images/Recurso%2017.png"><img class="star-tape" alt="" src="images/estrella.png"><img class="logo-tape" alt="Logo LUKA$H" src="images/Recurso%2017.png"><img class="star-tape" alt="" src="images/estrella.png"><img class="logo-tape" alt="Logo LUKA$H" src="images/Recurso%2017.png"><img class="star-tape" alt="" src="images/estrella.png"><img class="logo-tape" alt="Logo LUKA$H" src="images/Recurso%2017.png"><img class="star-tape" alt="" src="images/estrella.png"><img class="logo-tape" alt="Logo LUKA$H" src="images/Recurso%2017.png"><img class="star-tape" alt="" src="images/estrella.png"><img class="logo-tape" alt="Logo LUKA$H" src="images/Recurso%2017.png"><img class="star-tape" alt="" src="images/estrella.png"><img class="logo-tape" alt="Logo LUKA$H" src="images/Recurso%2017.png"><img class="star-tape" alt="" src="images/estrella.png"><img class="logo-tape" alt="Logo LUKA$H" src="images/Recurso%2017.png"><img class="star-tape" alt="" src="images/estrella.png"><img class="logo-tape" alt="Logo LUKA$H" src="images/Recurso%2017.png"><img class="star-tape" alt="" src="images/estrella.png"></div><div class="tape-panel"><img class="logo-tape" alt="Logo LUKA$H" src="images/Recurso%2017.png"><img class="star-tape" alt="" src="images/estrella.png"><img class="logo-tape" alt="Logo LUKA$H" src="images/Recurso%2017.png"><img class="star-tape" alt="" src="images/estrella.png"><img class="logo-tape" alt="Logo LUKA$H" src="images/Recurso%2017.png"><img class="star-tape" alt="" src="images/estrella.png"><img class="logo-tape" alt="Logo LUKA$H" src="images/Recurso%2017.png"><img class="star-tape" alt="" src="images/estrella.png"><img class="logo-tape" alt="Logo LUKA$H" src="images/Recurso%2017.png"><img class="star-tape" alt="" src="images/estrella.png"><img class="logo-tape" alt="Logo LUKA$H" src="images/Recurso%2017.png"><img class="star-tape" alt="" src="images/estrella.png"><img class="logo-tape" alt="Logo LUKA$H" src="images/Recurso%2017.png"><img class="star-tape" alt="" src="images/estrella.png"><img class="logo-tape" alt="Logo LUKA$H" src="images/Recurso%2017.png"><img class="star-tape" alt="" src="images/estrella.png"><img class="logo-tape" alt="Logo LUKA$H" src="images/Recurso%2017.png"><img class="star-tape" alt="" src="images/estrella.png"><img class="logo-tape" alt="Logo LUKA$H" src="images/Recurso%2017.png"><img class="star-tape" alt="" src="images/estrella.png"><img class="logo-tape" alt="Logo LUKA$H" src="images/Recurso%2017.png"><img class="star-tape" alt="" src="images/estrella.png"><img class="logo-tape" alt="Logo LUKA$H" src="images/Recurso%2017.png"><img class="star-tape" alt="" src="images/estrella.png"><img class="logo-tape" alt="Logo LUKA$H" src="images/Recurso%2017.png"><img class="star-tape" alt="" src="images/estrella.png"><img class="logo-tape" alt="Logo LUKA$H" src="images/Recurso%2017.png"><img class="star-tape" alt="" src="images/estrella.png"></div></div></div>
 </div>
 </main>
 <!-- END: MainContent -->
@@ -343,14 +398,23 @@
     const loginForm = document.getElementById('loginForm');
     const feedback = document.getElementById('feedback');
 
-    // Handle Close
+    // Handle Close: funde la ventana de registro y muestra la ventanita de "relax"
     closeBtn.addEventListener('click', () => {
       modal.style.opacity = '0';
       modal.style.transform = 'scale(0.9)';
       setTimeout(() => {
         modal.classList.add('hidden');
+        document.getElementById('relaxModal').classList.remove('hidden');
       }, 300);
     });
+
+    // Reabrir la ventana de registro desde "REGISTRATE": restaura opacidad y escala
+    function abrirRegistro() {
+      modal.classList.remove('hidden');
+      modal.style.opacity = '1';
+      modal.style.transform = 'scale(1)';
+      document.getElementById('relaxModal').classList.add('hidden');
+    }
 
     // Handle Submit
     loginForm.addEventListener('submit', (e) => {
@@ -537,8 +601,8 @@
         var activo = (relajado && !relajado.classList.contains('hidden')) ? relajado : modal;
         var activoRect = activo.getBoundingClientRect();
         var contRect = cont.getBoundingClientRect();
-        // Altura visible que queremos que cruce sobre el borde inferior (~35px)
-        var cruce = 35;
+        // Cruce sobre el borde inferior: 15px con la ventanita de relax para no tapar los botones, 35px con el registro
+        var cruce = (activo === relajado) ? 15 : 35;
         // top de la cinta = borde inferior de la ventana - cruce - desplazamiento del contenedor
         cinta.style.top = (activoRect.bottom - cruce - contRect.top) + 'px';
       }

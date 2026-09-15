@@ -236,6 +236,7 @@
         }
         body.embedded {
           min-height: 100vh;
+          overflow: hidden !important;
         }
         /* Contenido del iframe con mayor separación superior: queda por debajo
            de la barra superior fija (56px) y más abajo dentro de la pantalla. */
@@ -243,6 +244,17 @@
           padding-top: clamp(6.5rem, 24vh, 18rem);
         }
     </style>
+<script>
+  (function () {
+    function reportHeight() {
+      var height = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+      window.parent.postMessage({ type: 'lukash-frame-height', height: height }, '*');
+    }
+    window.addEventListener('load', reportHeight);
+    window.addEventListener('resize', reportHeight);
+    if (window.ResizeObserver) new ResizeObserver(reportHeight).observe(document.documentElement);
+  })();
+</script>
 </head>
 <body class="font-rubik text-slate-800 fade-in-page" style="min-height: 100vh; background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuBv30VP4LCdd9maibDUE6gSoXu_cv79xLbFXS2Ora-eyRo5s-z9qEcNDUI04nROTOnsFtQ-2WSZZ_elx0Zs8eXR6imeaqrIJ0M8GtW7_NA_SAx5oOfnjuVXz5Kozc7W2yjQjHiNd3WpX4tIQdP4LKGJwpRel1gqCa-210cfmQZS9rYu54qBRk77uIf6zB8B_FtpyMrY0fwyRSmmuYDPBxGVEw-5TyezrbYi_SAMg-ct4hsLLtU4W2z_0vWuJEBFnmTuOWrubw3la1yhLQ&quot;); background-size: cover; background-position: center center; background-repeat: no-repeat; background-attachment: fixed; overflow-y: auto;">
 <script>if (new URLSearchParams(location.search).get('embed') === '1') document.body.classList.add('embedded');</script>
@@ -339,7 +351,8 @@ Veamos las maneras en que estemos en <strong class="font-bold">modo ahorro</stro
 <div class="bg-lukash-yellow rounded-xl p-4 shadow-xl border-2 border-black/20 relative" style="background-color: rgb(241, 236, 230);">
 <div class="absolute -top-[12px] left-1/2 -translate-x-1/2 w-0 h-0 border-l-[12px] border-l-transparent border-r-[12px] border-r-transparent border-b-[12px] border-b-black/20"></div>
 <div class="absolute -top-[10px] left-1/2 -translate-x-1/2 w-0 h-0 border-l-[10px] border-l-transparent border-r-[10px] border-r-transparent border-b-[10px] border-b-lukash-yellow" style="border-bottom-color: rgb(241, 236, 230);"></div>
-<p class="font-roboto text-sm text-lukash-dark text-left pr-3">Los bancos como Bancolombia y Davivienda son seguros, pero tu dinero crece muy poco.</p><div class="">Tasa_0.5%-1% anual</div><div class="">Inflación: 8%</div><div class="">Aunque ganas algo, tu dinero pierde valor con el tiempo.</div><p class=""></p>
+<p class="font-roboto text-sm text-lukash-dark text-left pr-3"><strong>¿Qué es?</strong> Tu cuenta del banco de toda la vida, donde casi todos guardan su plata.</p>
+<p class="font-roboto text-xs text-lukash-dark text-left mt-1"><strong>¿Recomendada?</strong> No. La mayoría paga casi nada y tu dinero pierde valor cada año.</p>
 </div>
 </div>
 </div>
@@ -351,7 +364,8 @@ Veamos las maneras en que estemos en <strong class="font-bold">modo ahorro</stro
 <div class="bg-lukash-yellow rounded-xl p-4 shadow-xl border-2 border-black/20 relative" style="background-color: rgb(241, 236, 230);">
 <div class="absolute -top-[12px] left-1/2 -translate-x-1/2 w-0 h-0 border-l-[12px] border-l-transparent border-r-[12px] border-r-transparent border-b-[12px] border-b-black/20"></div>
 <div class="absolute -top-[10px] left-1/2 -translate-x-1/2 w-0 h-0 border-l-[10px] border-l-transparent border-r-[10px] border-r-transparent border-b-[10px] border-b-lukash-yellow" style="border-bottom-color: rgb(241, 236, 230);"></div>
-<p class="font-roboto text-sm text-lukash-dark text-left pr-3">Nequi y davivienda son practicos, pero tu dinero casi no genera rendimiento.</p><div class="">Tasa: 0% - 1%</div><div class="">Ingración: 8%</div><div class="">Con la inflación, cada año vale menos.</div><p class=""></p>
+<p class="font-roboto text-sm text-lukash-dark text-left pr-3"><strong>¿Qué es?</strong> Apps del celular para guardar tu plata: Ualá, RappiPay, Nequi y Daviplata.</p>
+<p class="font-roboto text-xs text-lukash-dark text-left mt-1"><strong>¿Recomendada?</strong> Depende: Ualá paga hasta 11% solo si usás la tarjeta; Nequi y Daviplata casi no pagan (0–0,1%).</p>
 </div>
 </div>
 </div>
@@ -363,7 +377,8 @@ Veamos las maneras en que estemos en <strong class="font-bold">modo ahorro</stro
 <div class="bg-lukash-yellow rounded-xl p-4 shadow-xl border-2 border-black/20 relative" style="background-color: rgb(241, 236, 230);">
 <div class="absolute -top-[12px] left-1/2 -translate-x-1/2 w-0 h-0 border-l-[12px] border-l-transparent border-r-[12px] border-r-transparent border-b-[12px] border-b-black/20"></div>
 <div class="absolute -top-[10px] left-1/2 -translate-x-1/2 w-0 h-0 border-l-[10px] border-l-transparent border-r-[10px] border-r-transparent border-b-[10px] border-b-lukash-yellow" style="border-bottom-color: rgb(241, 236, 230);"></div>
-<p class="font-roboto text-sm text-lukash-dark text-left pr-3">Nu Bank y Lulo Bank, aquí tu dinero sí empieza a crecer.</p><div class="">Tasa: 8%–10% anual</div><div class="">Inflación: ~8%</div><div class="">Tu dinero iguala o supera la inflación.</div><p class=""></p>
+<p class="font-roboto text-sm text-lukash-dark text-left pr-3"><strong>¿Qué es?</strong> Cuentas de banco donde tu dinero sí crece de verdad, por encima de la inflación (Pibank, Ban100, Nu, Lulo).</p>
+<p class="font-roboto text-xs text-lukash-dark text-left mt-1"><strong>¿Recomendada?</strong> Sí, de las 4 opciones es la más balanceada: Pibank paga hasta 11% sin tarjeta ni letra chica y tu plata sigue disponible.</p>
 </div>
 </div>
 </div>
@@ -375,7 +390,8 @@ Veamos las maneras en que estemos en <strong class="font-bold">modo ahorro</stro
 <div class="bg-lukash-yellow rounded-xl p-4 shadow-xl border-2 border-black/20 relative" style="background-color: rgb(241, 236, 230);">
 <div class="absolute -top-[12px] left-1/2 -translate-x-1/2 w-0 h-0 border-l-[12px] border-l-transparent border-r-[12px] border-r-transparent border-b-[12px] border-b-black/20"></div>
 <div class="absolute -top-[10px] left-1/2 -translate-x-1/2 w-0 h-0 border-l-[10px] border-l-transparent border-r-[10px] border-r-transparent border-b-[10px] border-b-lukash-yellow" style="border-bottom-color: rgb(241, 236, 230);"></div>
-<p class="font-roboto text-sm text-lukash-dark text-left pr-3">BBVA y Banco de Bogotá, si puedes dejar tu dinero quieto, te pagan más.</p><div class="">Tasa: 9%–11% anual</div><div class="">No puedes retirarlo antes.</div><div class="">Tu dinero crece y supera la inflación.</div><p class=""></p>
+<p class="font-roboto text-sm text-lukash-dark text-left pr-3"><strong>¿Qué es?</strong> Dejás tu plata quieta por un plazo fijo (meses o años) y el banco te paga una tasa garantizada a cambio.</p>
+<p class="font-roboto text-xs text-lukash-dark text-left mt-1"><strong>¿Recomendada?</strong> Sí, si podés dejar la plata quieta hasta el vencimiento: entre 10,8% y 13,5% anual, le ganas de sobra a la inflación (6,24%).</p>
 </div>
 </div>
 </div>
@@ -397,6 +413,8 @@ Veamos las maneras en que estemos en <strong class="font-bold">modo ahorro</stro
     var iframe     = document.getElementById('iframe-simulador');
     var abierto    = false;
 
+    if (!btnAbrir || !btnCerrar || !panel || !iframe) return;
+
     function abrirSimulador() {
       if (abierto) return;
       abierto = true;
@@ -406,7 +424,7 @@ Veamos las maneras en que estemos en <strong class="font-bold">modo ahorro</stro
       }
       panel.style.maxHeight = '800px';
       panel.style.opacity   = '1';
-      btnAbrir.innerHTML    = '<span>✅</span> <span>SIMULADOR ABIERTO</span>';
+      btnAbrir.innerHTML    = '<span>SIMULADOR ABIERTO</span>';
       btnAbrir.style.opacity = '0.8';
       btnAbrir.style.cursor = 'default';
       btnAbrir.onmouseover = null;

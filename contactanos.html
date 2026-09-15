@@ -54,26 +54,172 @@
   </style>
 <!-- Coverflow 3D and transition styling -->
 <style data-purpose="carousel-styles">
-    .perspective-container {
+    /* ===== Carrusel estilo "categorias" adaptado a las redes de contactanos ===== */
+    .carousel-container {
       perspective: 1200px;
+      will-change: transform;
+      height: clamp(280px, 50vh, 440px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      z-index: 10;
+      margin-top: 0.75rem;
       touch-action: pan-y;
       user-select: none;
       -webkit-user-select: none;
     }
 
-    .coverflow-card {
-      transition: transform 0.42s cubic-bezier(0.22, 1, 0.36, 1), 
-                  opacity 0.42s cubic-bezier(0.22, 1, 0.36, 1),
-                  filter 0.42s cubic-bezier(0.22, 1, 0.36, 1);
-      will-change: transform, opacity;
-      transform-style: preserve-3d;
-      backface-visibility: hidden;
+    .carousel-item {
+      position: absolute;
+      width: 210px;
+      height: 210px;
+      cursor: pointer;
+      transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.8s ease, box-shadow 0.4s ease;
+      user-select: none;
+      perspective: 1000px;
     }
 
-    /* Subtle touch highlight disable */
-    * {
-      -webkit-tap-highlight-color: transparent;
+    .carousel-item.init-state {
+      transform: translate3d(0, 0, 0) scale(0.2) !important;
+      opacity: 0 !important;
+      transition: transform 1.2s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 1.2s ease !important;
     }
+
+    @media (min-width: 640px) {
+      .carousel-item { width: 250px; height: 250px; }
+    }
+    @media (min-width: 1024px) {
+      .carousel-item { width: 290px; height: 290px; }
+    }
+
+    /* Fondos translúcidos por red (para verse bien sobre fondo_.png en modo oscuro) */
+    .color-youtube .card-front, .color-youtube .card-back { background-color: rgba(214, 60, 42, 0.88); color: #fff; }
+    .color-facebook .card-front, .color-facebook .card-back { background-color: rgba(24, 118, 210, 0.88); color: #fff; }
+    .color-tiktok .card-front, .color-tiktok .card-back { background-color: rgba(20, 22, 25, 0.88); color: #fff; }
+    .color-gmail .card-front, .color-gmail .card-back { background-color: rgba(255, 251, 246, 0.92); color: #180F43; }
+    .color-instagram .card-front, .color-instagram .card-back { background-color: rgba(197, 66, 139, 0.88); color: #fff; }
+
+    /* Posiciones del carrusel de 5 tarjetas */
+    @media (max-width: 639px) {
+      .pos-0 { transform: translate3d(0, 0, 100px) scale(1); z-index: 10; opacity: 1; }
+      .pos-1 { transform: translate3d(80px, 0, -40px) scale(0.85) rotateY(-15deg); z-index: 5; opacity: 0.8; }
+      .pos-4 { transform: translate3d(-80px, 0, -40px) scale(0.85) rotateY(15deg); z-index: 5; opacity: 0.8; }
+      .pos-2 { transform: translate3d(45px, 0, -150px) scale(0.68); z-index: 2; opacity: 0.5; }
+      .pos-3 { transform: translate3d(-45px, 0, -150px) scale(0.68); z-index: 2; opacity: 0.5; }
+    }
+    @media (min-width: 640px) {
+      .pos-0 { transform: translate3d(0, 0, 100px) scale(1); z-index: 10; opacity: 1; }
+      .pos-1 { transform: translate3d(200px, 0, -80px) scale(0.85) rotateY(-20deg); z-index: 5; opacity: 0.8; }
+      .pos-4 { transform: translate3d(-200px, 0, -80px) scale(0.85) rotateY(20deg); z-index: 5; opacity: 0.8; }
+      .pos-2 { transform: translate3d(110px, 0, -260px) scale(0.68); z-index: 2; opacity: 0.5; }
+      .pos-3 { transform: translate3d(-110px, 0, -260px) scale(0.68); z-index: 2; opacity: 0.5; }
+    }
+    @media (min-width: 1024px) {
+      .pos-1 { transform: translate3d(300px, 0, -100px) scale(0.85) rotateY(-25deg); }
+      .pos-4 { transform: translate3d(-300px, 0, -100px) scale(0.85) rotateY(25deg); }
+      .pos-2 { transform: translate3d(150px, 0, -320px) scale(0.68); }
+      .pos-3 { transform: translate3d(-150px, 0, -320px) scale(0.68); }
+    }
+
+    .pos-0 .card-front, .pos-0 .card-back {
+      box-shadow: 0 25px 50px rgba(0,0,0,0.4), inset 0 2px 4px rgba(255,255,255,0.4);
+    }
+    .carousel-item:hover .card-front, .carousel-item:hover .card-back {
+      box-shadow: 0 30px 60px rgba(0,0,0,0.5), inset 0 2px 4px rgba(255,255,255,0.5);
+    }
+    .carousel-item:active { transform: scale(0.96) !important; }
+
+    .card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+      transform-style: preserve-3d;
+    }
+    .card-inner.is-flipped { transform: rotateY(180deg); }
+
+    .card-front, .card-back {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 30px;
+      border: 1.5px solid rgba(255,255,255,0.5);
+      background-image: linear-gradient(135deg, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0.06) 30%, rgba(255,255,255,0) 55%, rgba(255,255,255,0.14) 100%);
+      box-shadow: 0 18px 45px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.6), inset 0 0 20px rgba(255,255,255,0.22);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.1rem;
+      text-align: center;
+    }
+    .card-back { transform: rotateY(180deg); }
+
+    .card-title {
+      font-family: 'Fredoka', 'Bubblegum Sans', sans-serif;
+      font-weight: 700;
+      text-transform: uppercase;
+      line-height: 1.05;
+      font-size: clamp(0.95rem, 3.4vw, 1.6rem);
+      margin: 0.15rem 0 0.4rem;
+    }
+
+    .card-btn {
+      background-color: #EFEAE4;
+      color: #180F43;
+      font-family: 'Fredoka', sans-serif;
+      font-weight: 700;
+      padding: clamp(4px, 1.5vw, 6px) clamp(12px, 3vw, 18px);
+      font-size: clamp(0.75rem, 2vw, 1rem);
+      border-radius: 12px;
+      border: none;
+      box-shadow: 0 5px 0 #C9BFB0;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      margin-top: 0.7rem;
+      z-index: 20;
+    }
+    .card-btn:active { transform: scale(0.96); box-shadow: none; }
+
+    .card-icon {
+      margin-bottom: 0.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: auto;
+      min-height: 46px;
+    }
+    .card-icon svg {
+      width: clamp(56px, 12vw, 92px);
+      height: auto;
+      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.25));
+    }
+    .card-icon .stroke-white { stroke: #fff; }
+    .tiktok-glyph {
+      font-size: clamp(50px, 13vw, 88px);
+      line-height: 1;
+      color: #fff;
+      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.25));
+    }
+
+    .card-text {
+      font-family: 'Roboto', sans-serif;
+      font-size: clamp(0.78rem, 2.4vw, 1rem);
+      line-height: 1.35;
+      margin: 0 0 0.25rem;
+    }
+
+    /* Pista inferior del carrusel (visible en claro y oscuro) */
+    .carousel-hint {
+      color: #211941;
+      z-index: 10;
+      text-align: center;
+      margin-top: 0.75rem;
+    }
+    html.dark .carousel-hint { color: #EEE8E0; }
   </style>
 <style data-purpose="theme-toggle-styles">
         /* Boton de cambio de tema: muestra luna en modo claro y sol en modo oscuro */
@@ -85,8 +231,8 @@
         html.dark .theme-toggle .icon-sun { display: block; }
 
         /* Ajustes de modo oscuro (tema unificado con tokens de DESIGN.md) */
+        /* Fondo de contáctanos: color claro fijo */
         html body { background-color: #f7efd0 !important; background-image: none !important; }
-        html.dark body { background-image: url("images/fondo_.png") !important; background-size: cover !important; background-position: center !important; background-repeat: no-repeat !important; background-attachment: fixed !important; }
         html:not(.dark) #main-header { background-color: #211941 !important; color: #EEE8E0; border-color: rgba(231,193,31,0.4); }
         html:not(.dark) #main-header svg * { stroke: #EEE8E0; }
         html:not(.dark) #main-header .text-lukash-dark { color: #EEE8E0; }
@@ -100,6 +246,28 @@
         html:not(.dark) #main-header .hover\:text-\[\#f7efd0\]:hover { color: #E7C11F !important; }
         html.dark #desktopCategoriasMenu > div { background-color: rgba(30,20,70,0.95) !important; color: #EEE8E0; }
         html.dark #desktopCategoriasMenu a { color: #EEE8E0; }
+    </style>
+    <style data-purpose="typewriter-title">
+        /* Efecto "se escribe solo" igual al de ¿QUIÉNES SOMOS? en nosotros */
+        .typewriter-title {
+          display: inline-block;
+          width: 100%;
+          max-width: 100%;
+          box-sizing: border-box;
+          padding: 0.2em 0.35em 0.12em 0.15em;
+          line-height: 1.15;
+          overflow: hidden;
+          white-space: nowrap;
+          border-right: 3px solid #181428;
+          animation: typewriter 1.65s steps(11, end) forwards, caret-off 0s 1.65s forwards;
+        }
+        @keyframes typewriter {
+          from { width: 0; }
+          to { width: 100%; }
+        }
+        @keyframes caret-off {
+          to { border-color: transparent; }
+        }
     </style>
 </head>
 <body class="bg-[#FCF7E0] text-[#181428] h-[100dvh] w-screen overflow-hidden flex flex-col items-center justify-between relative select-none m-0 p-0">
@@ -181,84 +349,106 @@
 <!-- BEGIN: BrandHeader -->
 <header class="flex flex-col items-center justify-center text-center w-full mt-2 sm:mt-4 md:mt-6 shrink-0 mx-auto pt-6" data-purpose="brand-header" style="position: relative; z-index: 20;">
 <div class="flex flex-col items-center justify-center w-full mx-auto select-none">
-<h1 class="logo-font text-[#181428] tracking-tight mb-0.5 text-center text-2xl sm:text-3xl md:text-4xl lg:text-[42px] leading-tight" style="font-weight: 400; transform: translateY(calc(-5% - 10px));">
-        SOMOS
-      </h1>
-<div class="relative flex items-center justify-center -mt-1 md:-mt-2 mx-auto"><img alt="LUKA$H" class="h-16 md:h-24 lg:h-28 w-auto object-contain select-none pointer-events-none drop-shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3zNwRLjrspYsIyrnHJxmSNIQBNWU67lcIDLsEaAW2tOv5ntMQEK-szZOdotHC6X9awoMiAUEMPefEsX4hEUJC4RSE-z7GmHiCPrU_XsHxF68O74C9ycVQTuOEw7XcL5YlyRk71mHxmtxBnJEPQdn1v8P7FaRA3wYOJAEx-vHAtRPDI-2cHikasvy1M6Ed7UlGEOKkp0QFMLnmVz2aSPe92OyNlXYCXvmsFV6Q5IBF3ycp16fODOQaMoHwPr9qn7zXsEA" style="transform: scale(1.21); transform-origin: center center;"/></div>
 </div>
-<h2 class="logo-font text-[#181428] tracking-wide text-center text-xl sm:text-2xl md:text-3xl lg:text-[34px] mt-8 sm:mt-8 md:mt-10 lg:mt-12 w-full mx-auto" style="font-weight: 400; position: relative; z-index: 30;">
+<h2 class="typewriter-title logo-font text-[#181428] tracking-wide text-center text-4xl sm:text-5xl md:text-6xl lg:text-7xl mt-8 sm:mt-8 md:mt-10 lg:mt-12 w-full mx-auto" style="font-weight: 400; position: relative; z-index: 30;">
       CONTACTANOS
     </h2>
 </header>
 <!-- END: BrandHeader -->
 <!-- BEGIN: CoverflowSection -->
-<section class="w-full flex flex-col items-center justify-center flex-1 my-auto" data-purpose="social-coverflow-section" style="position: relative; z-index: 10; transform: translateY(-4vh);">
-<!-- 3D Carousel Viewport -->
-<div class="perspective-container relative w-full h-44 sm:h-52 md:h-64 lg:h-72 flex items-center justify-center cursor-grab active:cursor-grabbing -mt-6 sm:-mt-4 md:mt-0" id="carouselTrack" style="top: 0px;">
-<!-- Card 0: YouTube -->
-<div class="coverflow-card absolute flex flex-col items-center cursor-pointer" data-index="0" data-name="YOUTUBE" data-url="https://www.youtube.com/channel/UCdCVbmFD91-AQKYuTwhomsw" style="transform: translateX(125px) scale(0.68) rotateY(-28deg); z-index: 10; opacity: 0.88;">
-<div class="w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 lg:w-52 lg:h-52 rounded-[24px] sm:rounded-[30px] md:rounded-[36px] bg-[#FF0000] shadow-2xl flex items-center justify-center overflow-hidden border-[1.5px] border-white/20">
-<svg class="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 translate-x-0.5 fill-white" viewbox="0 0 24 24">
-<path d="M8 5v14l11-7z"></path>
-</svg>
+<section class="w-full flex flex-col items-center justify-center flex-1 my-auto -mt-2" data-purpose="social-carousel-section" style="position: relative; z-index: 10;">
+<div class="carousel-container w-full max-w-lg lg:max-w-6xl" id="carousel">
+<!-- Card: YOUTUBE -->
+<div class="carousel-item color-youtube pos-0" data-index="0" data-url="https://www.youtube.com/channel/UCdCVbmFD91-AQKYuTwhomsw">
+<div class="card-inner">
+<div class="card-front">
+<div class="card-icon"><svg class="fill-white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="#FFFFFF" d="M8 5v14l11-7z"></path></svg></div>
+<h2 class="card-title">YOUTUBE</h2>
+<button class="card-btn ir-btn">ACCEDER</button>
 </div>
-</div>
-<!-- Card 1: Facebook -->
-<div class="coverflow-card absolute flex flex-col items-center cursor-pointer" data-index="1" data-name="FACEBOOK" data-url="https://web.facebook.com/profile.php?id=61593871417475&amp;locale=es_LA" style="transform: translateX(-125px) scale(0.68) rotateY(28deg); z-index: 10; opacity: 0.88;">
-<div class="w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 lg:w-52 lg:h-52 rounded-[24px] sm:rounded-[30px] md:rounded-[36px] bg-[#1877F2] shadow-2xl flex items-center justify-center overflow-hidden border-[1.5px] border-white/20">
-<svg class="w-14 h-14 sm:w-18 sm:h-18 md:w-24 md:h-24 fill-white translate-y-1.5" viewbox="0 0 24 24">
-<path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path>
-</svg>
-</div>
-</div>
-<!-- Card 2: TikTok -->
-<div class="coverflow-card absolute flex flex-col items-center cursor-pointer" data-index="2" data-name="TIK TOK" data-url="https://www.tiktok.com/@lukash4928?_r=1&amp;_t=ZS-99RZVyeuDYb" style="transform: translateX(-72px) scale(0.82) rotateY(16deg); z-index: 20; opacity: 0.95;">
-<div class="w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 lg:w-52 lg:h-52 rounded-[24px] sm:rounded-[30px] md:rounded-[36px] bg-black shadow-2xl flex items-center justify-center overflow-hidden border-[1.5px] border-white/20"><img alt="TikTok" class="w-full h-full object-contain rounded-[24px] sm:rounded-[30px] md:rounded-[36px] select-none pointer-events-none" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAMRLkHBvR0jd13JNbJ2qJu1KTR-mc4wJYGLsTiPnr7IXceNFLuXReMW2VPDmb0ji8rhimQRuGOIzNJ1wBjED50272-QbAj19lTDdF1scuL-4I88y-30yjiXohezdpSwdJy7LAclcBJTxTNe-xjZtGOSJ5JKunaOeJbvU-hI3wNw_TO0VaQDJe9Vo3Z6o2l0hpsIiSrKa5fJQipUB5KQZcQEt0IKspWlVqVHeSlLjRBrvrImhDUWFRAa61czNIq4TNTkOA"/></div>
-</div>
-<!-- Card 3: Gmail -->
-<div class="coverflow-card absolute flex flex-col items-center cursor-pointer" data-index="3" data-name="GMAIL" data-url="mailto:lukash.finanzas@gmail.com" style="transform: translateX(0px) scale(1.06) rotateY(0deg); z-index: 30; opacity: 1;">
-<div class="w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 lg:w-52 lg:h-52 rounded-[24px] sm:rounded-[30px] md:rounded-[36px] bg-white shadow-2xl flex items-center justify-center overflow-hidden border-[1.5px] border-black/5">
-<svg class="w-14 h-14 sm:w-18 sm:h-18 md:w-22 md:h-22" viewbox="0 0 24 24">
-<path d="M1.5 5.5v13a1.5 1.5 0 0 0 1.5 1.5h3v-9.5l6 4.5 6-4.5V20h3a1.5 1.5 0 0 0 1.5-1.5v-13C22.5 4.12 20.88 3.3 19.8 4.1L12 10 4.2 4.1C3.12 3.3 1.5 4.12 1.5 5.5z" fill="#4285F4"></path>
-<path d="M19.8 4.1L12 10 4.2 4.1C3.12 3.3 1.5 4.12 1.5 5.5V7l10.5 8L22.5 7V5.5c0-1.38-1.62-2.2-2.7-1.4z" fill="#EA4335"></path>
-<path d="M18 10.5V20h3a1.5 1.5 0 0 0 1.5-1.5V7z" fill="#34A853"></path>
-<path d="M1.5 7v11.5A1.5 1.5 0 0 0 3 20h3V10.5z" fill="#FBBC05"></path>
-</svg>
-</div>
-</div>
-<!-- Card 4: Instagram -->
-<div class="coverflow-card absolute flex flex-col items-center cursor-pointer" data-index="4" data-name="INSTAGRAM" data-url="https://www.instagram.com/somos.lukash?igsi=MW11Njc3OHlzdTN0NQ==" style="transform: translateX(72px) scale(0.82) rotateY(-16deg); z-index: 20; opacity: 0.95;">
-<div class="w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 lg:w-52 lg:h-52 rounded-[24px] sm:rounded-[30px] md:rounded-[36px] bg-gradient-to-tr from-[#FFDC80] via-[#F56040] via-[#FD1D1D] to-[#833AB4] shadow-2xl flex items-center justify-center overflow-hidden border-[1.5px] border-white/20">
-<svg class="w-14 h-14 sm:w-18 sm:h-18 md:w-22 md:h-22 text-white" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
-<rect height="20" rx="5" ry="5" width="20" x="2" y="2"></rect>
-<path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-<line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line>
-</svg>
+<div class="card-back">
+<h2 class="card-title text-xl lg:text-2xl mb-2">YOUTUBE</h2>
+<p class="font-rubik card-text font-medium mb-4 text-center px-2">Mirá nuestros videos para aprender finanzas sin vueltas.</p>
+<button class="card-btn action-btn">IR A YOUTUBE</button>
 </div>
 </div>
 </div>
-<!-- Synchronized central title underneath active element -->
-<div class="text-center mt-3 sm:mt-4 md:mt-6" data-purpose="active-caption-container">
-<span class="logo-font text-base sm:text-xl md:text-2xl text-[#181428] tracking-wider uppercase inline-block select-none" id="activeSocialLabel" style="font-weight: normal;">GMAIL</span>
+<!-- Card: FACEBOOK -->
+<div class="carousel-item color-facebook pos-1" data-index="1" data-url="https://web.facebook.com/profile.php?id=61593871417475&amp;locale=es_LA">
+<div class="card-inner">
+<div class="card-front">
+<div class="card-icon"><svg class="fill-white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="#FFFFFF" d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path></svg></div>
+<h2 class="card-title">FACEBOOK</h2>
+<button class="card-btn ir-btn">ACCEDER</button>
 </div>
+<div class="card-back">
+<h2 class="card-title text-xl lg:text-2xl mb-2">FACEBOOK</h2>
+<p class="font-rubik card-text font-medium mb-4 text-center px-2">Sumate a nuestra comunidad y seguí los tips del día a día.</p>
+<button class="card-btn action-btn">VISITAR FACEBOOK</button>
+</div>
+</div>
+</div>
+<!-- Card: TIK TOK -->
+<div class="carousel-item color-tiktok pos-2" data-index="2" data-url="https://www.tiktok.com/@lukash4928">
+<div class="card-inner">
+<div class="card-front">
+<div class="card-icon"><span class="tiktok-glyph">♪♫</span></div>
+<h2 class="card-title">TIK TOK</h2>
+<button class="card-btn ir-btn">ACCEDER</button>
+</div>
+<div class="card-back">
+<h2 class="card-title text-xl lg:text-2xl mb-2">TIK TOK</h2>
+<p class="font-rubik card-text font-medium mb-4 text-center px-2">Tips rápidos de educación financiera en videos cortos.</p>
+<button class="card-btn action-btn">VER TIK TOK</button>
+</div>
+</div>
+</div>
+<!-- Card: GMAIL -->
+<div class="carousel-item color-gmail pos-3" data-index="3" data-url="mailto:lukash.finanzas@gmail.com">
+<div class="card-inner">
+<div class="card-front">
+<div class="card-icon"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M1.5 5.5v13a1.5 1.5 0 0 0 1.5 1.5h3v-9.5l6 4.5 6-4.5V20h3a1.5 1.5 0 0 0 1.5-1.5v-13C22.5 4.12 20.88 3.3 19.8 4.1L12 10 4.2 4.1C3.12 3.3 1.5 4.12 1.5 5.5z" fill="#4285F4"></path><path d="M19.8 4.1L12 10 4.2 4.1C3.12 3.3 1.5 4.12 1.5 5.5V7l10.5 8L22.5 7V5.5c0-1.38-1.62-2.2-2.7-1.4z" fill="#EA4335"></path><path d="M18 10.5V20h3a1.5 1.5 0 0 0 1.5-1.5V7z" fill="#34A853"></path><path d="M1.5 7v11.5A1.5 1.5 0 0 0 3 20h3V10.5z" fill="#FBBC05"></path></svg></div>
+<h2 class="card-title">GMAIL</h2>
+<button class="card-btn ir-btn">ACCEDER</button>
+</div>
+<div class="card-back">
+<h2 class="card-title text-xl lg:text-2xl mb-2">GMAIL</h2>
+<p class="font-rubik card-text font-medium mb-4 text-center px-2">Escribinos y contanos tu duda o propuesta por mail.</p>
+<button class="card-btn action-btn">ESCRIBIR</button>
+</div>
+</div>
+</div>
+<!-- Card: INSTAGRAM -->
+<div class="carousel-item color-instagram pos-4" data-index="4" data-url="https://www.instagram.com/somos.lukash">
+<div class="card-inner">
+<div class="card-front">
+<div class="card-icon"><svg class="stroke-white" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect height="20" rx="5" ry="5" width="20" x="2" y="2"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg></div>
+<h2 class="card-title">INSTAGRAM</h2>
+<button class="card-btn ir-btn">ACCEDER</button>
+</div>
+<div class="card-back">
+<h2 class="card-title text-xl lg:text-2xl mb-2">INSTAGRAM</h2>
+<p class="font-rubik card-text font-medium mb-4 text-center px-2">Seguí nuestro día a día con posteos y novedades.</p>
+<button class="card-btn action-btn">SEGUIR EN IG</button>
+</div>
+</div>
+</div>
+</div>
+<p class="carousel-hint font-rubik font-bold text-base lg:text-lg">Accede a nuestras redes sociales y mantenete al día con nuestras novedades.</p>
 </section>
 <!-- END: CoverflowSection -->
 </main>
 <!-- END: MainContent -->
 <!-- Coverflow Controller Script -->
-<script data-purpose="coverflow-controller">
-  (function () {
-    const cards = Array.from(document.querySelectorAll('.coverflow-card'));
-    const label = document.getElementById('activeSocialLabel');
-    const track = document.getElementById('carouselTrack');
-    
-    const total = cards.length;
-    // TikTok is index 2 in our DOM list, Gmail is index 3
-    let currentIndex = 3; 
-    let startX = 0;
-    let currentDeltaX = 0;
-    let isDragging = false;
-    let maxDeltaMoved = 0;
+<script data-purpose="carousel-controller">
+  document.addEventListener('DOMContentLoaded', () => {
+    const items = document.querySelectorAll('.carousel-item');
+    const total = items.length;
+    const colorNames = ['color-youtube', 'color-facebook', 'color-tiktok', 'color-gmail', 'color-instagram'];
+    let currentIndex = 0;
+    let isRotating = false;
+
+    setTimeout(() => items.forEach(item => item.classList.remove('init-state')), 50);
 
     function openSocialLink(url) {
       if (!url) return;
@@ -269,174 +459,55 @@
       }
     }
 
-    function getSpacing() {
-      const width = window.innerWidth;
-      if (width >= 1024) {
-        return { step1: 180, step2: 320 };
-      } else if (width >= 768) {
-        return { step1: 140, step2: 240 };
-      } else if (width >= 640) {
-        return { step1: 105, step2: 180 };
-      } else {
-        return { step1: 72, step2: 125 };
-      }
-    }
-
-    // Update positions based on coverflow perspective
-    function renderCoverflow() {
-      const spacing = getSpacing();
-
-      cards.forEach((card, i) => {
-        let diff = (i - currentIndex) % total;
-        if (diff > total / 2) diff -= total;
-        if (diff < -total / 2) diff += total;
-
-        let translateX = 0;
-        let scale = 1;
-        let zIndex = 10;
-        let opacity = 1;
-        let rotateY = 0;
-
-        if (diff === 0) {
-          // Active Center item
-          translateX = 0;
-          scale = 1.06;
-          zIndex = 30;
-          rotateY = 0;
-          opacity = 1;
-        } else if (diff === -1) {
-          translateX = -spacing.step1;
-          scale = 0.82;
-          zIndex = 20;
-          rotateY = 16;
-          opacity = 0.95;
-        } else if (diff === 1) {
-          translateX = spacing.step1;
-          scale = 0.82;
-          zIndex = 20;
-          rotateY = -16;
-          opacity = 0.95;
-        } else if (diff === -2) {
-          translateX = -spacing.step2;
-          scale = 0.68;
-          zIndex = 10;
-          rotateY = 28;
-          opacity = 0.88;
-        } else if (diff === 2) {
-          translateX = spacing.step2;
-          scale = 0.68;
-          zIndex = 10;
-          rotateY = -28;
-          opacity = 0.88;
-        } else {
-          translateX = diff > 0 ? (spacing.step2 + 100) : -(spacing.step2 + 100);
-          scale = 0.45;
-          zIndex = 1;
-          opacity = 0;
-        }
-
-        card.style.transform = `translateX(${translateX}px) scale(${scale}) rotateY(${rotateY}deg)`;
-        card.style.zIndex = zIndex;
-        card.style.opacity = opacity;
-      });
-
-      // Update active platform text
-      const activeCard = cards[currentIndex];
-      if (activeCard && label) {
-        label.textContent = activeCard.dataset.name;
-      }
-    }
-
-    // Move by offset (-1 or +1) with looping
-    function move(direction) {
-      currentIndex = (currentIndex + direction + total) % total;
-      renderCoverflow();
-    }
-
-    // Event Listeners for click on individual cards
-    cards.forEach((card, index) => {
-      card.addEventListener('click', (e) => {
-        if (maxDeltaMoved > 10) return;
-        if (index === currentIndex) {
-          openSocialLink(card.dataset.url);
-        } else {
-          currentIndex = index;
-          renderCoverflow();
-        }
-      });
-    });
-
-    // Label click also opens the current active platform's link
-    if (label) {
-      label.style.cursor = 'pointer';
-      label.addEventListener('click', () => {
-        const activeCard = cards[currentIndex];
-        if (activeCard) {
-          openSocialLink(activeCard.dataset.url);
+    function updateLayout() {
+      items.forEach(item => {
+        const idx = parseInt(item.dataset.index, 10);
+        const rel = ((idx - currentIndex) % total + total) % total;
+        const colorClass = colorNames.find(c => item.classList.contains(c)) || '';
+        item.className = `carousel-item ${colorClass} pos-${rel}`.trim();
+        if (rel !== 0) {
+          const inner = item.querySelector('.card-inner');
+          if (inner) inner.classList.remove('is-flipped');
         }
       });
     }
 
-    // Pointer & Touch Events for Drag/Swipe
-    function handleStart(clientX) {
-      isDragging = true;
-      startX = clientX;
-      currentDeltaX = 0;
-      maxDeltaMoved = 0;
+    function rotateCarousel(steps) {
+      if (isRotating) return;
+      isRotating = true;
+      currentIndex = (currentIndex + steps + total) % total;
+      items.forEach(item => {
+        const inner = item.querySelector('.card-inner');
+        if (inner) inner.classList.remove('is-flipped');
+      });
+      updateLayout();
+      setTimeout(() => { isRotating = false; }, 800);
     }
 
-    function handleMove(clientX) {
-      if (!isDragging) return;
-      currentDeltaX = clientX - startX;
-      if (Math.abs(currentDeltaX) > maxDeltaMoved) {
-        maxDeltaMoved = Math.abs(currentDeltaX);
-      }
-    }
+    items.forEach(item => {
+      item.addEventListener('click', (e) => {
+        if (isRotating) return;
+        const card = e.target.closest('.carousel-item');
+        if (!card) return;
+        const match = card.className.match(/pos-(\d)/);
+        if (!match) return;
+        const rel = parseInt(match[1], 10);
+        const inner = card.querySelector('.card-inner');
 
-    function handleEnd() {
-      if (!isDragging) return;
-      isDragging = false;
-      const threshold = 35;
-      if (currentDeltaX > threshold) {
-        move(-1);
-      } else if (currentDeltaX < -threshold) {
-        move(1);
-      }
-      currentDeltaX = 0;
-    }
+        if (rel === 0) {
+          if (e.target.closest('.ir-btn') || e.target.closest('.action-btn')) {
+            openSocialLink(card.dataset.url);
+          } else if (inner && inner.classList.contains('is-flipped')) {
+            inner.classList.remove('is-flipped');
+          }
+          return;
+        }
 
-    // Touch listener setup
-    track.addEventListener('touchstart', (e) => handleStart(e.touches[0].clientX), { passive: true });
-    track.addEventListener('touchmove', (e) => handleMove(e.touches[0].clientX), { passive: true });
-    track.addEventListener('touchend', handleEnd, { passive: true });
-
-    // Mouse listener setup
-    track.addEventListener('mousedown', (e) => handleStart(e.clientX));
-    window.addEventListener('mousemove', (e) => {
-      if (isDragging) handleMove(e.clientX);
+        const steps = rel <= Math.floor(total / 2) ? rel : rel - total;
+        rotateCarousel(steps);
+      });
     });
-    window.addEventListener('mouseup', () => {
-      if (isDragging) handleEnd();
-    });
-
-    // Keyboard left/right arrow navigation
-    window.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowLeft') move(-1);
-      if (e.key === 'ArrowRight') move(1);
-      if (e.key === 'Enter') {
-        const activeCard = cards[currentIndex];
-        if (activeCard) openSocialLink(activeCard.dataset.url);
-      }
-    });
-
-    // Window resize handler to maintain proportional spacing
-    window.addEventListener('resize', () => {
-      renderCoverflow();
-    });
-
-    // Initial render
-    renderCoverflow();
-  })();
+  });
 </script>
 <script data-purpose="modal-functionality">
   const menuBtn = document.getElementById('menuBtn');
@@ -501,19 +572,13 @@
 </script>
 <script data-purpose="theme-toggle">
   (function () {
-    var key = 'lukash-theme';
+    // Contáctanos se muestra SIEMPRE en modo claro: se quita el modo oscuro
+    // y el botón de tema queda sin efecto para que no cambie su apariencia.
     var root = document.documentElement;
-    var apply = function (dark) {
-      root.classList.toggle('dark', dark);
-      try { localStorage.setItem(key, dark ? 'dark' : 'light'); } catch (e) {}
-    };
+    root.classList.remove('dark');
     var toggles = document.querySelectorAll('.theme-toggle');
-    var stored = null;
-    try { stored = localStorage.getItem(key); } catch (e) {}
-    var shouldDark = stored ? (stored === 'dark') : root.classList.contains('dark');
-    apply(shouldDark);
     toggles.forEach(function (t) {
-      t.addEventListener('click', function () { apply(!root.classList.contains('dark')); });
+      t.addEventListener('click', function () { root.classList.remove('dark'); });
     });
   })();
 </script>

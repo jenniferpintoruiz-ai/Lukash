@@ -19,10 +19,18 @@
             "sticker-bg": "#FFFFFF",
             "chip-bg": "#EAE6DF",
             "pink-accent": "#E84C89",
+            "lukash-yellow": "#E7C11F",
+            "lukash-pink": "#EE4599",
+            "lukash-bg-modal": "#F9F6F0",
+            "lukash-green": "#A7EB5D",
+            "lukash-dark": "#180F43",
           },
           fontFamily: {
             display: ['Fredoka', 'cursive', 'sans-serif'],
             body: ['Roboto', 'sans-serif'],
+            fredoka: ['Fredoka', 'sans-serif'],
+            roboto: ['Roboto', 'sans-serif'],
+            rubik: ['Rubik', 'sans-serif'],
           },
         },
       },
@@ -98,14 +106,88 @@
     /* Marquesina Animation */
     @keyframes marquee {
       0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-    .animate-marquee {
-      display: flex;
-      width: 200%;
-      animation: marquee 20s linear infinite;
+      100% { transform: translate3d(-50%, 0, 0); }
     }
 
+    /* Fondo estático de la cinta: el degradado se mantiene fijo y continuo,
+       ocupando todo el ancho sin repetir patrones, por lo que nunca se corta */
+    .marquee-bg {
+      min-height: 82px;
+      background-color: var(--header-yellow);
+      background-image: url("images/donde%20degradado%4072x.png");
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      background-position: center center;
+    }
+
+    /* Cinta animada: ancho al contenido (max-content), dos grupos idénticos
+       se desplazan -50% para un loop perfecto sin logos cortados */
+    .animate-marquee {
+      display: flex;
+      width: max-content;
+      animation: marquee 20s linear infinite;
+      will-change: transform;
+    }
+
+    /* Cada grupo abraza su propio contenido: nada se recorta en los bordes
+       y ambos grupos son idénticos para repetir el patrón sin costuras */
+    .marquee-group {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: clamp(1.5rem, 5vw, 3.5rem);
+      padding: 1rem clamp(1rem, 4vw, 2.5rem);
+      box-sizing: border-box;
+      width: max-content;
+      min-height: 82px;
+    }
+    @media (max-width: 640px) {
+      .marquee-group {
+        min-height: 64px;
+        gap: clamp(1rem, 4vw, 2rem);
+        padding: 0.75rem clamp(0.75rem, 3vw, 1.5rem);
+        flex-wrap: nowrap;
+      }
+      .marquee-group img:not(.star-img) {
+        height: clamp(2.5rem, 10vw, 3.5rem);
+        width: auto;
+      }
+      .star-img {
+        width: clamp(1.5rem, 5vw, 2rem);
+        height: clamp(1.5rem, 5vw, 2rem);
+      }
+      .animate-marquee {
+        animation-duration: 16s;
+      }
+    }
+    /* Estrellas en la cinta: reemplazan el SVG anterior con la imagen estrella.png */
+    .star-img {
+      width: 2rem;
+      height: 2rem;
+      flex-shrink: 0;
+    }
+    .typewriter-title {
+      display: inline-block;
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
+      padding: 0.2em 0.35em 0.12em 0.15em;
+      line-height: 1.15;
+      overflow: hidden;
+      white-space: nowrap;
+      border-right: 3px solid #180F43;
+      animation: typewriter 2.4s steps(16, end) forwards, caret-off 0s 2.4s forwards;
+    }
+    @keyframes typewriter {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+    @keyframes typewriter-caret {
+      50% { border-color: transparent; }
+    }
+    @keyframes caret-off {
+      to { border-color: transparent; }
+    }
     /* Decorative frame for light card */
     .custom-frame {
       border-top: 4px solid var(--accent-green);
@@ -118,13 +200,9 @@
       z-index: -1;
     }
 
-    .logo-stroke {
-      paint-order: stroke fill;
-      stroke: black;
-      stroke-width: 6px;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
+    .about-hero { background: linear-gradient(135deg, var(--text-dark-blue) 0%, var(--pink-accent) 100%); color: var(--sticker-bg); }
+    .about-hero img { filter: drop-shadow(0 14px 12px rgba(0, 0, 0, 0.28)); }
+    .about-logo-banner { display: block; width: 100%; max-width: 920px; height: auto; margin: 0 auto; border: 4px solid var(--text-dark-blue); border-radius: 24px; box-shadow: 0 8px 0 var(--text-dark-blue); }
   </style>
   <style data-purpose="theme-toggle-styles">
     /* Boton de cambio de tema: muestra luna en modo claro y sol en modo oscuro */
@@ -138,16 +216,19 @@
     /* Ajustes de modo oscuro (tokens de DESIGN.md) */
     html body { background-color: #f7efd0 !important; background-image: none !important; }
     html.dark body { background-image: url("images/fondo_.png") !important; background-size: cover !important; background-position: center !important; background-repeat: no-repeat !important; background-attachment: fixed !important; color: #EEE8E0; }
-    html:not(.dark) header[class*="bg-header-yellow"], html:not(.dark) .bg-header-yellow { background-color: #211941 !important; }
-    html:not(.dark) header span[class*="bg-black"] { background-color: #EEE8E0; }
-    html:not(.dark) .logo-stroke { stroke: #EEE8E0; }
-    html:not(.dark) header .theme-toggle svg * { stroke: #EEE8E0; }
-    html:not(.dark) header .theme-toggle { color: #EEE8E0; }
-    html.dark header[class*="bg-header-yellow"], html.dark .bg-header-yellow { background-color: #E7C11F !important; }
-    html.dark header span[class*="bg-black"] { background-color: #180F43; }
-    html.dark .logo-stroke { stroke: #180F43; }
-    html.dark header .theme-toggle svg * { stroke: #180F43; }
-    html.dark header .theme-toggle { color: #180F43; }
+    html:not(.dark) #main-header { background-color: #211941 !important; color: #EEE8E0; border-color: rgba(231,193,31,0.4); }
+    html:not(.dark) #main-header svg * { stroke: #EEE8E0; }
+    html:not(.dark) #main-header .text-lukash-dark { color: #EEE8E0; }
+    html:not(.dark) #main-header a { color: inherit; }
+    html.dark #main-header { background-color: #E7C11F !important; color: #180F43; border-color: rgba(24,15,67,0.15); }
+    html.dark #main-header svg * { stroke: #180F43; }
+    html.dark #main-header .text-lukash-dark { color: #180F43; }
+    html.dark #main-header a { color: inherit; }
+    html:not(.dark) #desktopCategoriasMenu > div { background-color: #211941 !important; color: #EEE8E0; border-color: rgba(231,193,31,0.6); }
+    html:not(.dark) #desktopCategoriasMenu a { color: #EEE8E0; }
+    html:not(.dark) #main-header .hover\:text-\[\#f7efd0\]:hover { color: #E7C11F !important; }
+    html.dark #desktopCategoriasMenu > div { background-color: rgba(30,20,70,0.95) !important; color: #EEE8E0; }
+    html.dark #desktopCategoriasMenu a { color: #EEE8E0; }
     html.dark .bg-sticker-bg { background-color: #201a35; border-color: #EEE8E0; }
     html.dark .bg-sticker-bg span { color: #EEE8E0; }
     html.dark .bg-card-light { background-color: #201a35; }
@@ -155,44 +236,87 @@
     html.dark .bg-card-light p { color: #EEE8E0; }
     html.dark .bg-chip-bg { background-color: #2a1b4d; }
     html.dark .bg-chip-bg h2 { color: #EEE8E0; }
-    html.dark .logo-stroke { stroke: #EEE8E0; }
   </style>
 </head>
 <body class="min-h-screen flex flex-col items-center">
 
-  <!-- Navbar -->
-  <header class="w-full bg-header-yellow h-[70px] flex items-center justify-between px-6 shadow-[0_4px_10px_rgba(0,0,0,0.15)] z-50 fixed top-0">
-    <button class="flex flex-col gap-1.5">
-      <span class="w-8 h-1 bg-black rounded-full"></span>
-      <span class="w-8 h-1 bg-black rounded-full"></span>
-      <span class="w-8 h-1 bg-black rounded-full"></span>
-    </button>
-    
-    <div class="absolute left-1/2 -translate-x-1/2 top-2">
-       <span class="font-display text-4xl font-bold italic text-accent-green logo-stroke uppercase tracking-tighter">LUKA$H</span>
+<!-- BEGIN: MainHeader -->
+  <header class="fixed top-0 left-0 right-0 bg-lukash-yellow w-full h-16 flex items-center justify-between px-4 z-50 border-b-4 border-black/10" id="main-header">
+    <!-- Menu Icon -->
+    <button class="p-2 lg:hidden" id="menuBtn"><svg class="hamburger-icon" fill="none" height="24" viewBox="0 0 30 24" width="30" xmlns="http://www.w3.org/2000/svg"><path d="M2 2H28M2 12H28M2 22H28" stroke="black" stroke-linecap="round" stroke-width="4"></path></svg><svg class="close-icon hidden" fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M18 6L6 18M6 6L18 18" stroke="black" stroke-linecap="round" stroke-width="3"></path></svg></button>
+    <!-- Central Logo -->
+    <div class="absolute left-1/2 -translate-x-1/2 lg:hidden">
+      <img alt="LUKA$H Logo" class="h-16 drop-shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYRpEfrEAXglfH6g6bdTAiltJsJB-DrFhYXNpv6pCllmuHj7ZTXjF1qy9e06r27C5bLil8PgTWLPE-mWnWPz_8ibC0PbXo0mgx7meRO8nUsUV1qLPggd-nZBPOPjkThKh-Ou-I6nHQkWDHioMR9pUwKGZWmx0Cixdb5lqH1bSqo8ixHeoNWq9_ax4LS-cBhRHRiCd4KtV6Bz9ISa3Kd85RkHKMPOgK3YST2EQZs-TyZzikR3_DpMQVbNJtsVzgzE3r_g">
     </div>
-
-    <div class="flex items-center gap-2">
+    <div class="flex items-center lg:hidden">
       <!-- Theme Toggle (icono de luna/sol para modo oscuro/claro) -->
       <button class="p-2 theme-toggle" type="button" aria-label="Cambiar tema">
         <svg class="icon-moon" fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
         <svg class="icon-sun" fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="5" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></circle><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="black" stroke-linecap="round" stroke-width="2"></path></svg>
       </button>
-      <div class="w-10 h-10 rounded-full border-2 border-text-dark-blue flex items-center justify-center overflow-hidden bg-text-dark-blue">
-        <svg viewBox="0 0 24 24" class="w-8 h-8 text-white fill-current">
-          <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path>
+      <!-- User Icon -->
+      <button class="p-2">
+        <svg fill="none" height="28" viewBox="0 0 28 28" width="28" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="14" cy="14" r="12" stroke="black" stroke-width="2"></circle>
+          <circle cx="14" cy="10" r="4" stroke="black" stroke-width="2"></circle>
+          <path d="M6 22C6 18.6863 8.68629 16 12 16H16C19.3137 16 22 18.6863 22 22" stroke="black" stroke-width="2"></path>
         </svg>
-      </div>
+      </button>
     </div>
+    <div class="mx-auto w-full max-w-[1280px] h-full"><nav class="hidden lg:flex items-center w-full h-full px-8 font-fredoka font-bold text-lukash-dark tracking-wider relative justify-between"><div class="flex items-center h-full"><img alt="LUKA$H Logo" class="h-16 drop-shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYRpEfrEAXglfH6g6bdTAiltJsJB-DrFhYXNpv6pCllmuHj7ZTXjF1qy9e06r27C5bLil8PgTWLPE-mWnWPz_8ibC0PbXo0mgx7meRO8nUsUV1qLPggd-nZBPOPjkThKh-Ou-I6nHQkWDHioMR9pUwKGZWmx0Cixdb5lqH1bSqo8ixHeoNWq9_ax4LS-cBhRHRiCd4KtV6Bz9ISa3Kd85RkHKMPOgK3YST2EQZs-TyZzikR3_DpMQVbNJtsVzgzE3r_g"></div><div class="flex items-center justify-center space-x-20 uppercase text-xl w-max flex-1">
+      <a href="index.html?intro=1" class="transition-colors hover:text-[#f7efd0]">INICIO</a>
+      <div class="relative" id="desktopCategorias">
+        <button class="flex items-center gap-1 transition-colors hover:text-[#f7efd0]" id="desktopCategoriasBtn">CATEGORIAS<svg class="w-4 h-4 transition-transform duration-300" id="desktopCategoriasArrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg></button>
+        <div class="absolute left-1/2 -translate-x-1/2 top-full pt-4 hidden" id="desktopCategoriasMenu">
+          <div class="bg-lukash-bg-modal/95 backdrop-blur-md text-lukash-dark rounded-2xl shadow-2xl border-2 border-lukash-yellow p-4 w-64 flex flex-col space-y-1 font-bold text-lg">
+            <a class="hover:bg-[#eac62f] hover:text-white transition-colors rounded-lg px-4 py-2.5" href="modoAhorrointro.html">MODO AHORRO</a>
+            <a class="hover:bg-[#eac62f] hover:text-white transition-colors rounded-lg px-4 py-2.5" href="invertir.html">RINDIENDO LA MONEY</a>
+            <a class="hover:bg-[#eac62f] hover:text-white transition-colors rounded-lg px-4 py-2.5" href="cuentasclaras.html">CUENTAS CLARAS</a>
+            <a class="hover:bg-[#eac62f] hover:text-white transition-colors rounded-lg px-4 py-2.5" href="cero-enredor.html">CERO ENREDOS</a>
+          </div>
+        </div>
+      </div>
+      <a href="Registro.html" class="transition-colors hover:text-[#f7efd0]">REGISTRO</a>
+      <a href="nosotros.html" aria-current="page" class="transition-colors hover:text-[#f7efd0]">NOSOTROS</a>
+      <a href="contactanos.html" class="transition-colors hover:text-[#f7efd0]">CONTACTANOS</a>
+    </div><div class="flex items-center"><button class="p-2 theme-toggle" type="button" aria-label="Cambiar tema"><svg class="icon-moon" fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg><svg class="icon-sun" fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></circle><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path></svg></button><svg fill="none" height="32" viewBox="0 0 28 28" width="32" xmlns="http://www.w3.org/2000/svg"><circle cx="14" cy="14" r="12" stroke="currentColor" stroke-width="2"></circle><circle cx="14" cy="10" r="4" stroke="currentColor" stroke-width="2"></circle><path d="M6 22C6 18.6863 8.68629 16 12 16H16C19.3137 16 22 18.6863 22 22" stroke="currentColor" stroke-width="2"></path></svg></div></nav></div>
   </header>
+  <!-- END: MainHeader -->
+  <!-- BEGIN: Mobile Menu Drawer -->
+  <div class="fixed inset-0 z-[60] pointer-events-none hidden" id="mobileMenu">
+    <!-- Overlay -->
+    <div class="absolute inset-0 transition-opacity duration-300 bg-black/10 pointer-events-auto backdrop-blur-sm opacity-0" id="mobileMenuOverlay"></div>
+    <!-- Drawer -->
+    <div class="absolute top-6 left-6 w-64 shadow-2xl transform transition-transform duration-300 flex flex-col rounded-[45px] h-max border-none backdrop-blur-md pointer-events-auto -translate-x-[150%]" id="mobileMenuDrawer" style="background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuAeRFCguGmJAP2dmp1aYF4qsTfAyIOscChweRZXRQiHjUN1cBby8JpgZyNxGzAN7YfF65QjDHZHE-hgrwwVMMxD9k4-rpFKL-B_9GqV6IFyUHrQhxHoqlmhkmfI3JecSZ6_LW7x_9hHFFEiC6UR0OP3AGIFy4mSiGm2IddGjFf2S7w8pk5FdW73Z_0v-62A_L14O2JkuwFJodusGDaEsrG00RBvV1BalVc6XuLKTKaFJeZPdQfiEOPR6g6PH_MnnRLp8g&quot;); background-size: cover; background-position: center center; opacity: 0.95;">
+      <div class="flex justify-between items-center p-6 h-max">
+        <img alt="LUKA$H Logo" class="h-10 drop-shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYRpEfrEAXglfH6g6bdTAiltJsJB-DrFhYXNpv6pCllmuHj7ZTXjF1qy9e06r27C5bLil8PgTWLPE-mWnWPz_8ibC0PbXo0mgx7meRO8nUsUV1qLPggd-nZBPOPjkThKh-Ou-I6nHQkWDHioMR9pUwKGZWmx0Cixdb5lqH1bSqo8ixHeoNWq9_ax4LS-cBhRHRiCd4KtV6Bz9ISa3Kd85RkHKMPOgK3YST2EQZs-TyZzikR3_DpMQVbNJtsVzgzE3r_g">
+        <button class="text-2xl font-fredoka font-bold text-lukash-dark p-2 transition-all duration-200" id="closeMenuBtn" style="opacity: 1;">X</button>
+      </div>
+      <nav class="flex flex-col p-8 pt-0 font-fredoka font-bold text-lukash-dark space-y-5 items-start text-left">
+        <a href="index.html?intro=1" class="hover:text-lukash-pink transition-colors text-xl">INICIO</a>
+        <div class="w-full">
+          <button class="flex items-center justify-between w-full text-xl hover:text-lukash-pink transition-colors" id="mobileCategoriasBtn" style="color: rgb(24, 15, 67);">CATEGORIAS<svg class="w-5 h-5 transition-transform duration-300" id="mobileCategoriasArrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg></button>
+          <div id="mobileCategoriasMenu" class="hidden mt-4 pl-4 border-l-4 border-lukash-pink/30 space-y-4 flex flex-col">
+            <a class="hover:text-lukash-pink transition-colors text-lg" href="modoAhorrointro.html" style="color: rgb(24, 15, 67);">MODO AHORRO</a>
+            <a class="hover:text-lukash-pink transition-colors text-lg" href="invertir.html" style="color: rgb(24, 15, 67);">RINDIENDO LA MONEY</a>
+            <a class="hover:text-lukash-pink transition-colors text-lg" href="cuentasclaras.html" style="color: rgb(24, 15, 67);">CUENTAS CLARAS</a>
+            <a class="hover:text-lukash-pink transition-colors text-lg" href="cero-enredor.html" style="color: rgb(24, 15, 67);">CERO ENREDOS</a>
+          </div>
+        </div>
+        <a class="hover:text-lukash-pink transition-colors text-xl" href="Registro.html" style="color: rgb(24, 15, 67);">REGISTRO</a>
+        <a class="hover:text-lukash-pink transition-colors text-xl" href="nosotros.html" style="color: rgb(24, 15, 67);">NOSOTROS</a>
+        <a class="hover:text-lukash-pink transition-colors text-xl" href="contactanos.html" style="color: rgb(24, 15, 67);">CONTACTANOS</a>
+      </nav>
+    </div>
+  </div>
+  <!-- END: Mobile Menu Drawer -->
 
   <!-- Main Content -->
   <main class="w-full max-w-2xl mt-[100px] px-6 pb-32 flex flex-col gap-12 relative">
-    
+
     <!-- Chip Nosotros -->
-    <div class="self-end -mr-6">
-      <div class="bg-chip-bg py-4 pl-8 pr-6 rounded-l-full shadow-md">
-        <h2 class="font-display text-3xl font-bold text-text-dark-blue tracking-tight">NOSOTROS</h2>
+    <div class="w-full flex justify-center">
+        <h2 class="typewriter-title font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-text-dark-blue tracking-tight text-center">NOSOTROS</h2>
       </div>
     </div>
 
@@ -234,29 +358,37 @@
   </main>
 
   <!-- Cinta Marquesina Inferior -->
-  <div class="fixed bottom-12 left-0 w-full overflow-hidden z-40 transform -rotate-2">
-    <div class="bg-gradient-to-r from-accent-green to-pink-accent border-y-4 border-black/10 py-4">
-      <div class="animate-marquee whitespace-nowrap items-center gap-12">
-        <!-- Pattern repetition -->
-        <div class="flex items-center gap-12 shrink-0">
-          <span class="font-display text-3xl font-bold text-text-dark-blue italic">LUKA$H</span>
-          <svg viewBox="0 0 100 100" class="w-8 h-8 fill-pink-accent"><path d="M50 0 L60 40 L100 50 L60 60 L50 100 L40 60 L0 50 L40 40 Z"></path></svg>
-          <span class="font-display text-3xl font-bold text-text-dark-blue italic">LUKA$H</span>
-          <svg viewBox="0 0 100 100" class="w-8 h-8 fill-pink-accent"><path d="M50 0 L60 40 L100 50 L60 60 L50 100 L40 60 L0 50 L40 40 Z"></path></svg>
-          <span class="font-display text-3xl font-bold text-text-dark-blue italic">LUKA$H</span>
-          <svg viewBox="0 0 100 100" class="w-8 h-8 fill-pink-accent"><path d="M50 0 L60 40 L100 50 L60 60 L50 100 L40 60 L0 50 L40 40 Z"></path></svg>
+  <div class="relative w-full mt-[-5rem] overflow-hidden z-40 transform -rotate-[6deg]">
+    <div class="marquee-bg overflow-hidden">
+      <div class="animate-marquee">
+        <!-- Patrón repetido: grupo idéntico duplicado para loop sin costuras -->
+        <div class="marquee-group flex items-center shrink-0" role="group" aria-label="Logos LUKA$H con estrellas">
+          <img class="h-12 md:h-16 w-auto shrink-0 object-contain" src="images/Recurso%2017.png" alt="Logo LUKA$H">
+          <img class="star-img shrink-0 object-contain" src="images/estrella.png" alt="">
+          <img class="h-12 md:h-16 w-auto shrink-0 object-contain" src="images/Recurso%2017.png" alt="Logo LUKA$H">
+          <img class="star-img shrink-0 object-contain" src="images/estrella.png" alt="">
+          <img class="h-12 md:h-16 w-auto shrink-0 object-contain" src="images/Recurso%2017.png" alt="Logo LUKA$H">
+          <img class="star-img shrink-0 object-contain" src="images/estrella.png" alt="">
+          <img class="h-12 md:h-16 w-auto shrink-0 object-contain" src="images/Recurso%2017.png" alt="Logo LUKA$H">
+          <img class="star-img shrink-0 object-contain" src="images/estrella.png" alt="">
         </div>
-        <div class="flex items-center gap-12 shrink-0">
-          <span class="font-display text-3xl font-bold text-text-dark-blue italic">LUKA$H</span>
-          <svg viewBox="0 0 100 100" class="w-8 h-8 fill-pink-accent"><path d="M50 0 L60 40 L100 50 L60 60 L50 100 L40 60 L0 50 L40 40 Z"></path></svg>
-          <span class="font-display text-3xl font-bold text-text-dark-blue italic">LUKA$H</span>
-          <svg viewBox="0 0 100 100" class="w-8 h-8 fill-pink-accent"><path d="M50 0 L60 40 L100 50 L60 60 L50 100 L40 60 L0 50 L40 40 Z"></path></svg>
-          <span class="font-display text-3xl font-bold text-text-dark-blue italic">LUKA$H</span>
-          <svg viewBox="0 0 100 100" class="w-8 h-8 fill-pink-accent"><path d="M50 0 L60 40 L100 50 L60 60 L50 100 L40 60 L0 50 L40 40 Z"></path></svg>
+        <div class="marquee-group flex items-center shrink-0" role="group" aria-label="Logos LUKA$H con estrellas">
+          <img class="h-12 md:h-16 w-auto shrink-0 object-contain" src="images/Recurso%2017.png" alt="Logo LUKA$H">
+          <img class="star-img shrink-0 object-contain" src="images/estrella.png" alt="">
+          <img class="h-12 md:h-16 w-auto shrink-0 object-contain" src="images/Recurso%2017.png" alt="Logo LUKA$H">
+          <img class="star-img shrink-0 object-contain" src="images/estrella.png" alt="">
+          <img class="h-12 md:h-16 w-auto shrink-0 object-contain" src="images/Recurso%2017.png" alt="Logo LUKA$H">
+          <img class="star-img shrink-0 object-contain" src="images/estrella.png" alt="">
+          <img class="h-12 md:h-16 w-auto shrink-0 object-contain" src="images/Recurso%2017.png" alt="Logo LUKA$H">
+          <img class="star-img shrink-0 object-contain" src="images/estrella.png" alt="">
         </div>
       </div>
     </div>
   </div>
+
+  <section class="w-full max-w-2xl min-h-[34rem] px-6 mt-16 mb-8 text-center">
+    <h2 class="typewriter-title font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-text-dark-blue">¿QUIÉNES SOMOS?</h2>
+  </section>
 
 
 
@@ -264,20 +396,75 @@
 
 <script data-purpose="theme-toggle">
     (function () {
-      var key = 'lukash-theme';
+      // Nosotros se muestra SIEMPRE en modo claro: se quita el modo oscuro
+      // y el botón de tema queda sin efecto para que no cambie su apariencia.
       var root = document.documentElement;
-      var apply = function (dark) {
-        root.classList.toggle('dark', dark);
-        try { localStorage.setItem(key, dark ? 'dark' : 'light'); } catch (e) {}
-      };
+      root.classList.remove('dark');
       var toggles = document.querySelectorAll('.theme-toggle');
-      var stored = null;
-      try { stored = localStorage.getItem(key); } catch (e) {}
-      var shouldDark = stored ? (stored === 'dark') : root.classList.contains('dark');
-      apply(shouldDark);
       toggles.forEach(function (t) {
-        t.addEventListener('click', function () { apply(!root.classList.contains('dark')); });
+        t.addEventListener('click', function () { root.classList.remove('dark'); });
       });
+    })();
+  </script>
+  <script data-purpose="modal-functionality">
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+    const mobileMenuDrawer = document.getElementById('mobileMenuDrawer');
+    const closeMenuBtn = document.getElementById('closeMenuBtn');
+    const menuIcon = menuBtn ? menuBtn.querySelector('.hamburger-icon') : null;
+
+    function openMenu() {
+      mobileMenu.classList.remove('hidden');
+      if(menuIcon) menuIcon.classList.add('hidden');
+      setTimeout(() => {
+        mobileMenuOverlay.classList.remove('opacity-0');
+        mobileMenuDrawer.classList.remove('-translate-x-[150%]');
+      }, 10);
+    }
+
+    function closeMenu() {
+      closeMenuBtn.style.opacity = '0';
+      mobileMenuOverlay.classList.add('opacity-0');
+      mobileMenuDrawer.classList.add('-translate-x-[150%]');
+      setTimeout(() => {
+        mobileMenu.classList.add('hidden');
+        closeMenuBtn.style.opacity = '1';
+        if(menuIcon) menuIcon.classList.remove('hidden');
+      }, 300);
+    }
+
+    if(menuBtn) menuBtn.addEventListener('click', openMenu);
+    if(closeMenuBtn) closeMenuBtn.addEventListener('click', closeMenu);
+    if(mobileMenuOverlay) mobileMenuOverlay.addEventListener('click', closeMenu);
+  </script>
+  <script data-purpose="navegacion-categorias">
+    (function () {
+      const dCat = document.getElementById('desktopCategorias');
+      const dBtn = document.getElementById('desktopCategoriasBtn');
+      const dMenu = document.getElementById('desktopCategoriasMenu');
+      const dArrow = document.getElementById('desktopCategoriasArrow');
+      if (dCat && dBtn && dMenu && dArrow) {
+        const toggle = (open) => {
+          dMenu.classList.toggle('hidden', !open);
+          dArrow.classList.toggle('rotate-180', open);
+        };
+        dBtn.addEventListener('click', (e) => { e.stopPropagation(); toggle(dMenu.classList.contains('hidden')); });
+        dCat.addEventListener('mouseenter', () => toggle(true));
+        dCat.addEventListener('mouseleave', () => toggle(false));
+        document.addEventListener('click', (e) => { if (!dCat.contains(e.target)) toggle(false); });
+      }
+      const mBtn = document.getElementById('mobileCategoriasBtn');
+      const mMenu = document.getElementById('mobileCategoriasMenu');
+      const mArrow = document.getElementById('mobileCategoriasArrow');
+      if (mBtn && mMenu && mArrow) {
+        mBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const isHidden = mMenu.classList.contains('hidden');
+          mMenu.classList.toggle('hidden', !isHidden);
+          mArrow.classList.toggle('rotate-180', isHidden);
+        });
+      }
     })();
   </script>
 

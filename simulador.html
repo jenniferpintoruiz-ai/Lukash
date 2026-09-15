@@ -215,6 +215,7 @@
         }
         body.embedded {
           min-height: 100vh;
+          overflow: hidden !important;
         }
         /* Contenido centrado dentro del iframe */
         body.embedded main {
@@ -229,6 +230,17 @@
           padding-bottom: 0;
         }
     </style>
+<script>
+  (function () {
+    function reportHeight() {
+      var height = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+      window.parent.postMessage({ type: 'lukash-frame-height', height: height }, '*');
+    }
+    window.addEventListener('load', reportHeight);
+    window.addEventListener('resize', reportHeight);
+    if (window.ResizeObserver) new ResizeObserver(reportHeight).observe(document.documentElement);
+  })();
+</script>
 <style data-purpose="simulado-centrado">
         /* Estado CENTRADO (por defecto): simulador al centro */
         main.sim-center .sim-grid {
@@ -327,7 +339,7 @@
 <div class="bg-card-bg rounded-[32px] p-6 w-full shadow-3d-card border-4 border-black/10 flex flex-col space-y-6 shrink-0 relative z-20">
 <!-- Input Section -->
 <div class="space-y-2">
-<label class="font-rubik font-bold text-xl text-primary-black block text-center" for="montoInput">¿Cuánto querés ahorrar?</label>
+<label class="font-rubik font-bold text-xl text-primary-black block text-center" for="montoInput">¿Cuánto quieres ahorrar?</label>
 <div class="currency-input-wrapper">
 <input class="currency-input w-full bg-white rounded-2xl py-3 px-4 font-rubik font-bold text-2xl text-primary-black border-2 border-black/20 focus:border-primary-pink focus:ring-0 text-center shadow-inner" id="montoInput" placeholder="0000" type="number" value="">
 </div>
@@ -358,29 +370,19 @@
 <h3 class="font-rubik font-bold text-xl lg:text-2xl text-primary-black leading-snug" id="bubbleHeader">"Mirá pues parce... no es que esté mal, pero no es la mejor opción y te explico por qué"</h3>
 <!-- Status Banner -->
 <div class="bg-white/60 rounded-xl p-3 border-2 border-black/10 inline-block" id="statusContainer">
-<p class="font-rubik font-bold text-primary-fuchsia text-lg lg:text-xl" id="bubbleStatus">Tus lucas no crecieron</p>
+<p class="font-rubik font-bold text-primary-fuchsia text-lg lg:text-xl" id="bubbleStatus">Tu dinero apenas creció</p>
 </div>
 <!-- Main Explanation Body -->
-<p class="font-rubik text-primary-black font-medium text-sm md:text-base leading-relaxed" id="bubbleExplanation">Guardaste <strong>$&nbsp;100.000</strong> y aunque el banco te dio un poquito más (apenas <strong>+$&nbsp;100</strong> al año), no alcanzó para ganarle a la desvalorización del dinero. Eso significa que seguís viendo la plata en la cuenta, pero con el tiempo compra menos cosas.</p>
-<!-- Extra Financial Metadata -->
-<div class="bg-white/40 rounded-xl p-4 border-2 border-black/10 space-y-2 text-primary-black font-medium text-sm md:text-base" id="extraInfo">
-<p class=""><strong class="font-bold">Crecimiento estimado:</strong> <span class="" id="bubbleGrowth">Muy bajo, prácticamente nulo (0,44% E.A.).</span></p>
-<p class=""><strong class="font-bold">¿Le gana a la desvalorización?:</strong> <span class="" id="bubbleInflation">NO. La inflación (6,24%) se come la ganancia.</span></p>
-</div>
-<!-- Comparador de bancos: mejor banco de la categoría + listas de buenos y malos -->
-<div class="w-full text-left space-y-3" id="bankCompare">
-<div class="flex flex-wrap items-center justify-center gap-2 rounded-xl px-3 py-2 shadow-md" style="background-color:#DE7A8F; color:#fff;">
-<span class="font-rubik font-bold text-xs md:text-sm">🏆 Mejor de esta categoría:</span>
-<span class="font-rubik font-extrabold text-sm md:text-base" id="bestBankName">Davivienda</span>
-<span class="font-rubik font-bold text-xs md:text-sm rounded-lg px-2 py-0.5" style="background-color:rgba(255,255,255,0.25);" id="bestBankRate">0,44% E.A.</span>
-</div>
+<p class="font-rubik text-primary-black font-medium text-sm md:text-base leading-relaxed" id="bubbleExplanation">Guardaste <strong>$&nbsp;100.000</strong> en <strong>Davivienda</strong> (0,44% E.A.), el mejor banco tradicional. Aun así apenas ganaste <strong>+$&nbsp;440</strong> al año: mucho menos que la inflación, así que tu plata compra menos con el tiempo.</p>
+<!-- Comparador de bancos: listas de buenos y malos por categoría -->
+<div class="w-full text-left" id="bankCompare">
 <div class="grid grid-cols-2 gap-3">
 <div class="bg-white/50 rounded-xl p-3 border-2 border-[#8AC346]/60">
-<p class="font-rubik font-bold text-[0.7rem] uppercase tracking-wide mb-2" style="color:#4a7c1f;">✅ Bancos buenos</p>
+<p class="font-rubik font-bold text-[0.7rem] uppercase tracking-wide mb-2" style="color:#4a7c1f;">Bancos recomendados</p>
 <div class="flex flex-wrap gap-1.5" id="goodBanks"></div>
 </div>
 <div class="bg-white/50 rounded-xl p-3 border-2 border-[#EE4599]/40">
-<p class="font-rubik font-bold text-[0.7rem] uppercase tracking-wide mb-2" style="color:#d6307e;">❌ Bancos malos</p>
+<p class="font-rubik font-bold text-[0.7rem] uppercase tracking-wide mb-2" style="color:#d6307e;">Bancos no tan recomendados</p>
 <div class="flex flex-wrap gap-1.5" id="badBanks"></div>
 </div>
 </div>
@@ -389,6 +391,12 @@
 </div>
 </div>
 </div>
+</div>
+<!-- Botón Continuar: debajo del simulador, navega directo a antesdelRegistro.html -->
+<div class="w-full flex justify-center mt-10 pb-4">
+  <button class="btn-3d bg-[#8AC346] text-white font-fredoka font-bold text-base sm:text-lg px-12 py-4 rounded-2xl uppercase tracking-wider hover:scale-105 transition-transform max-w-[300px] w-full" onclick="top.location.href='antesdelRegistro.html'" aria-label="Continuar">
+    Continuar
+  </button>
 </div>
 </main>
 <!-- END: MainContent -->
@@ -552,14 +560,9 @@
   const explanationBubble = document.getElementById('explanationBubble');
   const bubbleTag = document.getElementById('bubbleTag');
   const bubbleHeader = document.getElementById('bubbleHeader');
-  const bubbleExplanation = document.getElementById('bubbleExplanation');
+const bubbleExplanation = document.getElementById('bubbleExplanation');
   const bubbleStatus = document.getElementById('bubbleStatus');
   const statusContainer = document.getElementById('statusContainer');
-  const extraInfo = document.getElementById('extraInfo');
-  const bubbleGrowth = document.getElementById('bubbleGrowth');
-  const bubbleInflation = document.getElementById('bubbleInflation');
-  const bestBankName = document.getElementById('bestBankName');
-  const bestBankRate = document.getElementById('bestBankRate');
   const goodBanks = document.getElementById('goodBanks');
   const badBanks = document.getElementById('badBanks');
 
@@ -601,11 +604,9 @@
     return chip;
   };
 
-  // Pinta el mejor banco y las listas de buenos/malos de la categoría activa.
+  // Pinta las listas de buenos/malos de la categoría activa.
   function renderBanks(type) {
     const data = BANK_DATA[type];
-    bestBankName.textContent = data.mejor.name;
-    bestBankRate.textContent = data.mejor.rateLabel + ' E.A.';
     goodBanks.innerHTML = '';
     badBanks.innerHTML = '';
     data.buenos.forEach(b => goodBanks.appendChild(bankChip(b.name, b.rateLabel)));
@@ -618,7 +619,7 @@
     let rawVal = montoInput.value.trim();
     let montoInicial = parseNumber(rawVal);
     if (montoInicial <= 0) {
-      montoInicial = 100000;
+      return;
     }
 
     const type = btnElement.getAttribute('data-type');
@@ -649,40 +650,36 @@
     switch(type) {
       case 'banco':
         bubbleHeader.textContent = `"Ojo parce: hasta el MEJOR banco tradicional paga casi nada"`;
-        bubbleStatus.textContent = `Tus lucas apenas crecieron (+${formattedGain})`;
-        bubbleExplanation.innerHTML = `Guardaste <strong>${formattedInitial}</strong> en <strong>${data.mejor.name}</strong>, el mejor banco tradicional de hoy (${data.mejor.rateLabel}% E.A.). Aun así, apenas generaste <strong>+${formattedGain}</strong> al año: mucho menos que la inflación (<strong>${data.inflacion}</strong>). Tu plata sigue en la cuenta, pero cada año compra menos cosas.`;
-        bubbleGrowth.textContent = `${data.mejor.name}: ${data.mejor.rateLabel}% E.A.`;
-        bubbleInflation.textContent = `NO. La inflación (${data.inflacion}) se come la ganancia.`;
+        bubbleStatus.textContent = `Tu dinero apenas creció (+${formattedGain})`;
+        bubbleExplanation.innerHTML = `Guardaste <strong>${formattedInitial}</strong> en <strong>${data.mejor.name}</strong>, el mejor banco tradicional de hoy (${data.mejor.rateLabel}% E.A.). Aun así, apenas generaste <strong>+${formattedGain}</strong> al año: mucho menos que la inflación (<strong>${data.inflacion}</strong>). Aunque tu saldo aumentó, los precios subieron más y por eso tu dinero alcanza para comprar menos.`;
         break;
 
       case 'billetera':
-        bubbleHeader.textContent = `"No todas las billeteras son iguales: ${data.mejor.name} sí paga"`;
-        bubbleStatus.textContent = `Con ${data.mejor.name} ganás +${formattedGain} al año`;
-        bubbleExplanation.innerHTML = `Dejaste tus <strong>${formattedInitial}</strong> en ${data.mejor.name} (${data.mejor.rateLabel}% E.A.) y hoy valen <strong>${formattedFinal}</strong>. En Nequi (0,1%) o Daviplata (0%) el mismo dinero casi no rinde: por eso importa dónde guardás la plata.`;
-        bubbleGrowth.textContent = `Alta solo en las buenas. ${data.mejor.name}: ${data.mejor.rateLabel}% E.A.`;
-        bubbleInflation.textContent = `SÍ, ${data.mejor.name} le gana a la inflación (${data.inflacion}).`;
+        bubbleHeader.textContent = `"No todas las billeteras son iguales: ${data.mejor.name} sí paga, pero con condiciones"`;
+        bubbleStatus.textContent = `Con ${data.mejor.name} ganás hasta +${formattedGain} al año`;
+        bubbleExplanation.innerHTML = `Dejaste tus <strong>${formattedInitial}</strong> en ${data.mejor.name} (${data.mejor.rateLabel}% E.A.) y hoy valen <strong>${formattedFinal}</strong>. Ojo con la letra chica: Ualá paga esa tasa solo si usás la tarjeta cada mes; sin uso, baja. En Nequi (0,1%) o Daviplata (0%) el mismo dinero casi no rinde: por eso importa dónde guardás la plata.`;
         break;
 
       case 'altorend':
         bubbleHeader.textContent = `"¡Gran jugada! ${data.mejor.name} es la cuenta de alto rendimiento que más paga"`;
         bubbleStatus.textContent = `+${formattedGain} al año con ${data.mejor.name}`;
-        bubbleExplanation.innerHTML = `${data.mejor.name} (${data.mejor.rateLabel}% E.A.) convierte tus <strong>${formattedInitial}</strong> en <strong>${formattedFinal}</strong> en un año. Le siguen de cerca Ban100, Finandina, Nu y Lulo Bank: plata creciendo y liquidez para usarla cuando quieras.`;
-        bubbleGrowth.textContent = `Alto. ${data.mejor.name}: ${data.mejor.rateLabel}% E.A.`;
-        bubbleInflation.textContent = `¡SÍ! Le gana holgadamente a la inflación (${data.inflacion}).`;
+        bubbleExplanation.innerHTML = `${data.mejor.name} (${data.mejor.rateLabel}% E.A. desde el primer peso) convierte tus <strong>${formattedInitial}</strong> en <strong>${formattedFinal}</strong> en un año, sin condiciones ni tarjeta que usar. Le siguen de cerca Ban100, Finandina, Nu y Lulo Bank: plata creciendo y liquidez para usarla cuando quieras.`;
         break;
 
       case 'cdt':
         bubbleHeader.textContent = `"El mejor CDT del mercado hoy lo paga ${data.mejor.name}"`;
         bubbleStatus.textContent = `+${formattedGain} garantizados en un año`;
         bubbleExplanation.innerHTML = `Con ${data.mejor.rateLabel}% E.A. a 360 días, tus <strong>${formattedInitial}</strong> se convierten en <strong>${formattedFinal}</strong> sin riesgo ni sorpresas. Pibank ${data.mejor.rateLabel}% va parejo; los bancos grandes (Bancolombia 10,9% y Davivienda 11%) pagan bastante menos. Eso sí: no podés tocar esa plata antes del plazo.`;
-        bubbleGrowth.textContent = `Muy buena y fija. ${data.mejor.name}: ${data.mejor.rateLabel}% E.A.`;
-        bubbleInflation.textContent = `SÍ, gana de sobra a la inflación (${data.inflacion}).`;
         break;
     }
   }
 
   buttons.forEach(btn => {
     btn.addEventListener('click', function() {
+      if (!montoInput.value.trim()) {
+        return;
+      }
+
       // Toggle logic
       if (this.classList.contains('active')) {
         this.classList.remove('active', 'bg-btn-pink');
