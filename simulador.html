@@ -339,10 +339,10 @@
 </div>
 <!-- Grid of 4 Instrument Buttons -->
 <div class="grid grid-cols-2 gap-3">
-<button class="btn-3d bg-primary-white text-primary-black font-rubik font-bold text-xs py-2 px-2 rounded-2xl flex items-center justify-center text-center h-16 instrument-btn" data-rate="0.001" data-type="banco">1. Bancos tradicionales</button>
-<button class="btn-3d bg-primary-white text-primary-black font-rubik font-bold text-xs py-2 px-2 rounded-2xl flex items-center justify-center text-center h-16 instrument-btn" data-rate="0.08" data-type="billetera">2. Billeteras digitales</button>
-<button class="btn-3d bg-primary-white text-primary-black font-rubik font-bold text-xs py-2 px-2 rounded-2xl flex items-center justify-center text-center h-16 instrument-btn leading-tight" data-rate="0.115" data-type="altorend">3. Cuentas de alto rendimiento</button>
-<button class="btn-3d bg-primary-white text-primary-black font-rubik font-bold text-xs py-2 px-2 rounded-2xl flex items-center justify-center text-center h-16 instrument-btn leading-tight" data-rate="0.095" data-type="cdt">4. CDT (Certificado a término)</button>
+<button class="btn-3d bg-primary-white text-primary-black font-rubik font-bold text-xs py-2 px-2 rounded-2xl flex items-center justify-center text-center h-16 instrument-btn" data-type="banco">1. Bancos tradicionales</button>
+<button class="btn-3d bg-primary-white text-primary-black font-rubik font-bold text-xs py-2 px-2 rounded-2xl flex items-center justify-center text-center h-16 instrument-btn" data-type="billetera">2. Billeteras digitales</button>
+<button class="btn-3d bg-primary-white text-primary-black font-rubik font-bold text-xs py-2 px-2 rounded-2xl flex items-center justify-center text-center h-16 instrument-btn leading-tight" data-type="altorend">3. Cuentas de alto rendimiento</button>
+<button class="btn-3d bg-primary-white text-primary-black font-rubik font-bold text-xs py-2 px-2 rounded-2xl flex items-center justify-center text-center h-16 instrument-btn leading-tight" data-type="cdt">4. CDT (Certificado a término)</button>
 </div>
 </div>
 </div>
@@ -364,9 +364,26 @@
 <p class="font-rubik text-primary-black font-medium text-sm md:text-base leading-relaxed" id="bubbleExplanation">Guardaste <strong>$&nbsp;100.000</strong> y aunque el banco te dio un poquito más (apenas <strong>+$&nbsp;100</strong> al año), no alcanzó para ganarle a la desvalorización del dinero. Eso significa que seguís viendo la plata en la cuenta, pero con el tiempo compra menos cosas.</p>
 <!-- Extra Financial Metadata -->
 <div class="bg-white/40 rounded-xl p-4 border-2 border-black/10 space-y-2 text-primary-black font-medium text-sm md:text-base" id="extraInfo">
-<p class="text-left"><strong class="font-bold">Mejores bancos:</strong> <span class="" id="bubbleBestBanks">Banco de Occidente (1,65% E.A.), Banco Caja Social (0,85% E.A.), Davivienda (0,44% E.A.).</span></p>
-<p class="text-left"><strong class="font-bold">Peores bancos:</strong> <span class="" id="bubbleWorstBanks">Bancolombia (0,07% E.A.), Banco de Bogotá (0,18% E.A.), BBVA (0,33% E.A.).</span></p>
-<p class="text-left text-xs text-gray-500">Datos: Superintendencia Financiera de Colombia (sept. 2026). Las tasas cambian, verifica en tu banco.</p>
+<p class=""><strong class="font-bold">Crecimiento estimado:</strong> <span class="" id="bubbleGrowth">Muy bajo, prácticamente nulo (0,44% E.A.).</span></p>
+<p class=""><strong class="font-bold">¿Le gana a la desvalorización?:</strong> <span class="" id="bubbleInflation">NO. La inflación (6,24%) se come la ganancia.</span></p>
+</div>
+<!-- Comparador de bancos: mejor banco de la categoría + listas de buenos y malos -->
+<div class="w-full text-left space-y-3" id="bankCompare">
+<div class="flex flex-wrap items-center justify-center gap-2 rounded-xl px-3 py-2 shadow-md" style="background-color:#DE7A8F; color:#fff;">
+<span class="font-rubik font-bold text-xs md:text-sm">🏆 Mejor de esta categoría:</span>
+<span class="font-rubik font-extrabold text-sm md:text-base" id="bestBankName">Davivienda</span>
+<span class="font-rubik font-bold text-xs md:text-sm rounded-lg px-2 py-0.5" style="background-color:rgba(255,255,255,0.25);" id="bestBankRate">0,44% E.A.</span>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<div class="bg-white/50 rounded-xl p-3 border-2 border-[#8AC346]/60">
+<p class="font-rubik font-bold text-[0.7rem] uppercase tracking-wide mb-2" style="color:#4a7c1f;">✅ Bancos buenos</p>
+<div class="flex flex-wrap gap-1.5" id="goodBanks"></div>
+</div>
+<div class="bg-white/50 rounded-xl p-3 border-2 border-[#EE4599]/40">
+<p class="font-rubik font-bold text-[0.7rem] uppercase tracking-wide mb-2" style="color:#d6307e;">❌ Bancos malos</p>
+<div class="flex flex-wrap gap-1.5" id="badBanks"></div>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -539,8 +556,61 @@
   const bubbleStatus = document.getElementById('bubbleStatus');
   const statusContainer = document.getElementById('statusContainer');
   const extraInfo = document.getElementById('extraInfo');
-  const bubbleBestBanks = document.getElementById('bubbleBestBanks');
-  const bubbleWorstBanks = document.getElementById('bubbleWorstBanks');
+  const bubbleGrowth = document.getElementById('bubbleGrowth');
+  const bubbleInflation = document.getElementById('bubbleInflation');
+  const bestBankName = document.getElementById('bestBankName');
+  const bestBankRate = document.getElementById('bestBankRate');
+  const goodBanks = document.getElementById('goodBanks');
+  const badBanks = document.getElementById('badBanks');
+
+  // BASE DE DATOS DE BANCOS (fuentes: SFC, LaRepública, Rankia, FinanzasPlus — sept 2026)
+  // Para cada categoría: MEJOR banco (usado para el cálculo del simulador),
+  // BANCOS BUENOS (los que pagan más) y BANCOS MALOS (los que pagan casi nada).
+  const BANK_DATA = {
+    banco: {
+      inflacion: '6,24%',
+      mejor: { name: 'Davivienda', rate: 0.0044, rateLabel: '0,44%' },
+      buenos: [{ name: 'Davivienda', rateLabel: '0,44%' }, { name: 'BBVA', rateLabel: '0,37%' }],
+      malos: [{ name: 'Bancolombia', rateLabel: '0,07%' }, { name: 'Banco de Bogotá', rateLabel: '0,18%' }]
+    },
+    billetera: {
+      inflacion: '6,24%',
+      mejor: { name: 'Ualá', rate: 0.11, rateLabel: '11,0%' },
+      buenos: [{ name: 'Ualá', rateLabel: 'hasta 11%' }, { name: 'RappiPay', rateLabel: '~6,6%' }],
+      malos: [{ name: 'Nequi', rateLabel: '0,1%' }, { name: 'Daviplata', rateLabel: '0%' }]
+    },
+    altorend: {
+      inflacion: '6,24%',
+      mejor: { name: 'Pibank', rate: 0.11, rateLabel: '11,0%' },
+      buenos: [{ name: 'Pibank', rateLabel: '11%' }, { name: 'Ban100', rateLabel: '10%' }, { name: 'Finandina', rateLabel: '9,3%' }, { name: 'Nu', rateLabel: '8,75%' }, { name: 'Lulo Bank', rateLabel: '8-10%' }],
+      malos: [{ name: 'RappiPay', rateLabel: '~6,6%' }, { name: 'Nequi', rateLabel: '0,1%' }]
+    },
+    cdt: {
+      inflacion: '6,24%',
+      mejor: { name: 'Banco Pichincha', rate: 0.135, rateLabel: '13,5%' },
+      buenos: [{ name: 'Banco Pichincha', rateLabel: '13,5%' }, { name: 'Pibank', rateLabel: '13,5%' }, { name: 'Contactar', rateLabel: '13,3%' }, { name: 'Banco W', rateLabel: '13,2%' }, { name: 'KOA', rateLabel: '12,9%' }, { name: 'Ban100', rateLabel: '12,7%' }],
+      malos: [{ name: 'Bancolombia', rateLabel: '10,9%' }, { name: 'Davivienda', rateLabel: '11%' }, { name: 'BBVA', rateLabel: '11%' }, { name: 'Banco Popular', rateLabel: '10,8%' }]
+    }
+  };
+
+  // Genera una "chip" con banco y tasa para las listas buenos/malos.
+  const bankChip = (name, rateLabel) => {
+    const chip = document.createElement('span');
+    chip.className = 'inline-flex items-center gap-1 bg-white/80 text-primary-black font-roboto font-semibold text-[0.7rem] rounded-full px-2 py-1 border border-black/10';
+    chip.innerHTML = `<span>${name}</span><span class="font-bold">${rateLabel}</span>`;
+    return chip;
+  };
+
+  // Pinta el mejor banco y las listas de buenos/malos de la categoría activa.
+  function renderBanks(type) {
+    const data = BANK_DATA[type];
+    bestBankName.textContent = data.mejor.name;
+    bestBankRate.textContent = data.mejor.rateLabel + ' E.A.';
+    goodBanks.innerHTML = '';
+    badBanks.innerHTML = '';
+    data.buenos.forEach(b => goodBanks.appendChild(bankChip(b.name, b.rateLabel)));
+    data.malos.forEach(b => badBanks.appendChild(bankChip(b.name, b.rateLabel)));
+  }
 
   function updateSimulation(btnElement, animate = false) {
     if (!btnElement) return;
@@ -551,8 +621,10 @@
       montoInicial = 100000;
     }
 
-    const rate = parseFloat(btnElement.getAttribute('data-rate'));
     const type = btnElement.getAttribute('data-type');
+    const data = BANK_DATA[type];
+    // El resultado SIEMPRE se calcula con la tasa del MEJOR banco de la categoría.
+    const rate = data.mejor.rate;
     const gananciaAnual = montoInicial * rate;
     const montoTotal = montoInicial + gananciaAnual;
     
@@ -571,37 +643,40 @@
     bubbleTag.textContent = btnText;
     statusContainer.classList.remove('hidden');
 
+    // Renderiza el mejor banco y las listas de buenos/malos de esta categoría.
+    renderBanks(type);
+
     switch(type) {
       case 'banco':
-        bubbleHeader.textContent = `"Mirá pues... no es que esté mal, pero no es la mejor opción y te explico por qué"`;
-        bubbleStatus.textContent = "Tu dinero no creció";
-        bubbleExplanation.innerHTML = `Guardaste <strong>${formattedInitial}</strong> y aunque el banco te dio un poquito más (apenas <strong>+${formattedGain}</strong> al año), no alcanzó para ganarle a la desvalorización del dinero. Eso significa que seguís viendo la plata en la cuenta, pero con el tiempo compra menos cosas.`;
-        bubbleBestBanks.textContent = "Banco de Occidente (1,65% E.A.), Banco Caja Social (0,85% E.A.), Davivienda (0,44% E.A.).";
-        bubbleWorstBanks.textContent = "Bancolombia (0,07% E.A.), Banco de Bogotá (0,18% E.A.), BBVA (0,33% E.A.).";
+        bubbleHeader.textContent = `"Ojo parce: hasta el MEJOR banco tradicional paga casi nada"`;
+        bubbleStatus.textContent = `Tus lucas apenas crecieron (+${formattedGain})`;
+        bubbleExplanation.innerHTML = `Guardaste <strong>${formattedInitial}</strong> en <strong>${data.mejor.name}</strong>, el mejor banco tradicional de hoy (${data.mejor.rateLabel}% E.A.). Aun así, apenas generaste <strong>+${formattedGain}</strong> al año: mucho menos que la inflación (<strong>${data.inflacion}</strong>). Tu plata sigue en la cuenta, pero cada año compra menos cosas.`;
+        bubbleGrowth.textContent = `${data.mejor.name}: ${data.mejor.rateLabel}% E.A.`;
+        bubbleInflation.textContent = `NO. La inflación (${data.inflacion}) se come la ganancia.`;
         break;
 
       case 'billetera':
-        bubbleHeader.textContent = `"Una opción práctica para mover tu dinero día a día"`;
-        bubbleStatus.textContent = `Ganaste aproximadamente +${formattedGain} en el año`;
-        bubbleExplanation.innerHTML = `Al dejar tus <strong>${formattedInitial}</strong> en los bolsillos o metas de tu billetera digital, tu dinero creció a un total de <strong>${formattedFinal}</strong> en 12 meses, dándote liquidez constante mientras te proteges de la inflación.`;
-        bubbleBestBanks.textContent = "Ualá (hasta 11% E.A.), Daviplata Bolsillos (8,25% E.A.), RappiPay (≈6,6% E.A.).";
-        bubbleWorstBanks.textContent = "Nequi saldo normal (0,1% E.A.), Daviplata saldo normal (0%: no genera intereses).";
+        bubbleHeader.textContent = `"No todas las billeteras son iguales: ${data.mejor.name} sí paga"`;
+        bubbleStatus.textContent = `Con ${data.mejor.name} ganás +${formattedGain} al año`;
+        bubbleExplanation.innerHTML = `Dejaste tus <strong>${formattedInitial}</strong> en ${data.mejor.name} (${data.mejor.rateLabel}% E.A.) y hoy valen <strong>${formattedFinal}</strong>. En Nequi (0,1%) o Daviplata (0%) el mismo dinero casi no rinde: por eso importa dónde guardás la plata.`;
+        bubbleGrowth.textContent = `Alta solo en las buenas. ${data.mejor.name}: ${data.mejor.rateLabel}% E.A.`;
+        bubbleInflation.textContent = `SÍ, ${data.mejor.name} le gana a la inflación (${data.inflacion}).`;
         break;
 
       case 'altorend':
-        bubbleHeader.textContent = `"¡De las mejores decisiones para hacer crecer tus ahorros!"`;
-        bubbleStatus.textContent = `¡Generaste una ganancia neta de +${formattedGain} al año!`;
-        bubbleExplanation.innerHTML = `Tu dinero creció a un total de <strong>${formattedFinal}</strong>. Le ganaste a la inflación de forma real mientras mantenés la liquidez que necesitás para mover tu plata cuando querás.`;
-        bubbleBestBanks.textContent = "Pibank (11%–12% E.A.), Nu Colombia (≈8,8% E.A.), Lulo Bank (7,5%–10% E.A.).";
-        bubbleWorstBanks.textContent = "Nequi rendimientos (≈5% E.A.) y, por lejos, las cuentas tradicionales como Bancolombia (0,07% E.A.).";
+        bubbleHeader.textContent = `"¡Gran jugada! ${data.mejor.name} es la cuenta de alto rendimiento que más paga"`;
+        bubbleStatus.textContent = `+${formattedGain} al año con ${data.mejor.name}`;
+        bubbleExplanation.innerHTML = `${data.mejor.name} (${data.mejor.rateLabel}% E.A.) convierte tus <strong>${formattedInitial}</strong> en <strong>${formattedFinal}</strong> en un año. Le siguen de cerca Ban100, Finandina, Nu y Lulo Bank: plata creciendo y liquidez para usarla cuando quieras.`;
+        bubbleGrowth.textContent = `Alto. ${data.mejor.name}: ${data.mejor.rateLabel}% E.A.`;
+        bubbleInflation.textContent = `¡SÍ! Le gana holgadamente a la inflación (${data.inflacion}).`;
         break;
 
       case 'cdt':
-        bubbleHeader.textContent = `"Rendimiento seguro, fijo y sin sorpresas"`;
-        bubbleStatus.textContent = `Ganancia fija asegurada de +${formattedGain} al año`;
-        bubbleExplanation.innerHTML = `Aseguraste un total de <strong>${formattedFinal}</strong> al finalizar el año. Tu plata estuvo congelada por 12 meses, pero te garantizó una tasa fija sin preocuparte por los altibajos del mercado.`;
-        bubbleBestBanks.textContent = "Pichincha (13,5% E.A.), Pibank (13% E.A.), Ban100 (12,9% E.A.), Lulo Bank (12,5% E.A.).";
-        bubbleWorstBanks.textContent = "Bancolombia (≈8,6% E.A.), AV Villas (≈8,6% E.A.), Banco Caja Social (≈9,4% E.A.).";
+        bubbleHeader.textContent = `"El mejor CDT del mercado hoy lo paga ${data.mejor.name}"`;
+        bubbleStatus.textContent = `+${formattedGain} garantizados en un año`;
+        bubbleExplanation.innerHTML = `Con ${data.mejor.rateLabel}% E.A. a 360 días, tus <strong>${formattedInitial}</strong> se convierten en <strong>${formattedFinal}</strong> sin riesgo ni sorpresas. Pibank ${data.mejor.rateLabel}% va parejo; los bancos grandes (Bancolombia 10,9% y Davivienda 11%) pagan bastante menos. Eso sí: no podés tocar esa plata antes del plazo.`;
+        bubbleGrowth.textContent = `Muy buena y fija. ${data.mejor.name}: ${data.mejor.rateLabel}% E.A.`;
+        bubbleInflation.textContent = `SÍ, gana de sobra a la inflación (${data.inflacion}).`;
         break;
     }
   }
