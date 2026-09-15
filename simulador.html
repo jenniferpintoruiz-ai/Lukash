@@ -364,8 +364,9 @@
 <p class="font-rubik text-primary-black font-medium text-sm md:text-base leading-relaxed" id="bubbleExplanation">Guardaste <strong>$&nbsp;100.000</strong> y aunque el banco te dio un poquito más (apenas <strong>+$&nbsp;100</strong> al año), no alcanzó para ganarle a la desvalorización del dinero. Eso significa que seguís viendo la plata en la cuenta, pero con el tiempo compra menos cosas.</p>
 <!-- Extra Financial Metadata -->
 <div class="bg-white/40 rounded-xl p-4 border-2 border-black/10 space-y-2 text-primary-black font-medium text-sm md:text-base" id="extraInfo">
-<p class=""><strong class="font-bold">Crecimiento estimado:</strong> <span class="" id="bubbleGrowth">Muy bajo, prácticamente nulo (~0.1% E.A.).</span></p>
-<p class=""><strong class="font-bold">¿Le gana a la desvalorización?:</strong> <span class="" id="bubbleInflation">En la mayoría de casos, NO.</span></p>
+<p class="text-left"><strong class="font-bold">Mejores bancos:</strong> <span class="" id="bubbleBestBanks">Banco de Occidente (1,65% E.A.), Banco Caja Social (0,85% E.A.), Davivienda (0,44% E.A.).</span></p>
+<p class="text-left"><strong class="font-bold">Peores bancos:</strong> <span class="" id="bubbleWorstBanks">Bancolombia (0,07% E.A.), Banco de Bogotá (0,18% E.A.), BBVA (0,33% E.A.).</span></p>
+<p class="text-left text-xs text-gray-500">Datos: Superintendencia Financiera de Colombia (sept. 2026). Las tasas cambian, verifica en tu banco.</p>
 </div>
 </div>
 </div>
@@ -538,8 +539,8 @@
   const bubbleStatus = document.getElementById('bubbleStatus');
   const statusContainer = document.getElementById('statusContainer');
   const extraInfo = document.getElementById('extraInfo');
-  const bubbleGrowth = document.getElementById('bubbleGrowth');
-  const bubbleInflation = document.getElementById('bubbleInflation');
+  const bubbleBestBanks = document.getElementById('bubbleBestBanks');
+  const bubbleWorstBanks = document.getElementById('bubbleWorstBanks');
 
   function updateSimulation(btnElement, animate = false) {
     if (!btnElement) return;
@@ -575,32 +576,32 @@
         bubbleHeader.textContent = `"Mirá pues... no es que esté mal, pero no es la mejor opción y te explico por qué"`;
         bubbleStatus.textContent = "Tu dinero no creció";
         bubbleExplanation.innerHTML = `Guardaste <strong>${formattedInitial}</strong> y aunque el banco te dio un poquito más (apenas <strong>+${formattedGain}</strong> al año), no alcanzó para ganarle a la desvalorización del dinero. Eso significa que seguís viendo la plata en la cuenta, pero con el tiempo compra menos cosas.`;
-        bubbleGrowth.textContent = "Muy bajo, prácticamente nulo (~0.1% E.A.).";
-        bubbleInflation.textContent = "En la mayoría de casos, NO.";
+        bubbleBestBanks.textContent = "Banco de Occidente (1,65% E.A.), Banco Caja Social (0,85% E.A.), Davivienda (0,44% E.A.).";
+        bubbleWorstBanks.textContent = "Bancolombia (0,07% E.A.), Banco de Bogotá (0,18% E.A.), BBVA (0,33% E.A.).";
         break;
 
       case 'billetera':
         bubbleHeader.textContent = `"Una opción práctica para mover tu dinero día a día"`;
         bubbleStatus.textContent = `Ganaste aproximadamente +${formattedGain} en el año`;
         bubbleExplanation.innerHTML = `Al dejar tus <strong>${formattedInitial}</strong> en los bolsillos o metas de tu billetera digital, tu dinero creció a un total de <strong>${formattedFinal}</strong> en 12 meses, dándote liquidez constante mientras te proteges de la inflación.`;
-        bubbleGrowth.textContent = "Moderado (~8.0% E.A.).";
-        bubbleInflation.textContent = "Casi le empata, protegiendo parcialmente tu capital.";
+        bubbleBestBanks.textContent = "Ualá (hasta 11% E.A.), Daviplata Bolsillos (8,25% E.A.), RappiPay (≈6,6% E.A.).";
+        bubbleWorstBanks.textContent = "Nequi saldo normal (0,1% E.A.), Daviplata saldo normal (0%: no genera intereses).";
         break;
 
       case 'altorend':
         bubbleHeader.textContent = `"¡De las mejores decisiones para hacer crecer tus ahorros!"`;
         bubbleStatus.textContent = `¡Generaste una ganancia neta de +${formattedGain} al año!`;
         bubbleExplanation.innerHTML = `Tu dinero creció a un total de <strong>${formattedFinal}</strong>. Le ganaste a la inflación de forma real mientras mantenés la liquidez que necesitás para mover tu plata cuando querás.`;
-        bubbleGrowth.textContent = "Alto (~11.5% E.A.).";
-        bubbleInflation.textContent = "¡SÍ, totalmente!";
+        bubbleBestBanks.textContent = "Pibank (11%–12% E.A.), Nu Colombia (≈8,8% E.A.), Lulo Bank (7,5%–10% E.A.).";
+        bubbleWorstBanks.textContent = "Nequi rendimientos (≈5% E.A.) y, por lejos, las cuentas tradicionales como Bancolombia (0,07% E.A.).";
         break;
 
       case 'cdt':
         bubbleHeader.textContent = `"Rendimiento seguro, fijo y sin sorpresas"`;
         bubbleStatus.textContent = `Ganancia fija asegurada de +${formattedGain} al año`;
         bubbleExplanation.innerHTML = `Aseguraste un total de <strong>${formattedFinal}</strong> al finalizar el año. Tu plata estuvo congelada por 12 meses, pero te garantizó una tasa fija sin preocuparte por los altibajos del mercado.`;
-        bubbleGrowth.textContent = "Constante y seguro (~9.5% E.A.).";
-        bubbleInflation.textContent = "SÍ, con tasa fija asegurada.";
+        bubbleBestBanks.textContent = "Pichincha (13,5% E.A.), Pibank (13% E.A.), Ban100 (12,9% E.A.), Lulo Bank (12,5% E.A.).";
+        bubbleWorstBanks.textContent = "Bancolombia (≈8,6% E.A.), AV Villas (≈8,6% E.A.), Banco Caja Social (≈9,4% E.A.).";
         break;
     }
   }
