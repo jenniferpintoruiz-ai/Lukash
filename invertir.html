@@ -130,6 +130,41 @@
       transform: translateY(2px);
       box-shadow: 0 2px 0 #9d1c5b;
     }
+
+    /* Variante verde del botón 3D (estilo CONTINUAR) con color #88C146
+       igual al botón VOLVER de pistasvolver1.html */
+    .btn-green-3d {
+      background-color: #88C146;
+      box-shadow: 0 8px 0 #5E8A2E;
+      border-radius: 20px;
+      transition: transform 0.1s, box-shadow 0.1s;
+    }
+    .btn-green-3d:active {
+      transform: translateY(4px);
+      box-shadow: 0 4px 0 #5E8A2E;
+    }
+
+    /* Transición de pantalla: barrido de derecha a izquierda (super fluida) */
+    /* En modo claro el barrido usa el color de fondo claro #f7efd0 */
+    #pageTransition {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 9999;
+      background-color: #f7efd0;
+      transform: translateX(100%);
+      transition: transform 0.75s cubic-bezier(0.76, 0, 0.24, 1);
+      pointer-events: none;
+      will-change: transform;
+      visibility: hidden;
+    }
+    #pageTransition.active {
+      transform: translateX(0);
+      pointer-events: auto;
+      visibility: visible;
+    }
     
     .fab-shadow {
       box-shadow: 0 4px 15px rgba(0,0,0,0.3);
@@ -282,6 +317,12 @@
 <div class="relative z-50 animate-float hover:scale-105 transition-transform duration-300 cursor-pointer">
 <img alt="Rindiendo la Money" class="w-64 h-64 object-contain drop-shadow-2xl lg:w-96 lg:h-96" src="images/imagenes%20de%20las%20categorias/categoria5.png">
 </div>
+</div>
+<!-- Continuar Button -->
+<div class="relative w-full flex flex-col items-center justify-center order-3 mt-2 z-20">
+<button type="button" class="btn-green-3d font-fredoka font-bold text-base md:text-lg px-12 py-2.5 uppercase tracking-wider cursor-pointer transition-all duration-200 hover:brightness-105" id="continueBtn" data-href="pistas.html" style="background-color: #88C146; color: #ffffff;">
+            CONTINUAR
+          </button>
 </div>
 </div>
 </main>
@@ -463,6 +504,21 @@
     apply(shouldDark);
     toggles.forEach(function (t) {
       t.addEventListener('click', function () { apply(!root.classList.contains('dark')); });
+    });
+  })();
+</script>
+<!-- Transición de pantalla: barrido derecha a izquierda -->
+<div aria-hidden="true" id="pageTransition"></div>
+<script data-purpose="page-transition">
+  (function () {
+    var btn = document.getElementById('continueBtn');
+    var overlay = document.getElementById('pageTransition');
+    if (!btn || !overlay) return;
+    btn.addEventListener('click', function () {
+      overlay.classList.add('active');
+      setTimeout(function () {
+        window.location.href = btn.getAttribute('data-href');
+      }, 600);
     });
   })();
 </script>

@@ -1,0 +1,746 @@
+<!DOCTYPE html><html lang="es" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Lukash - Pista 1</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Google Fonts: Eating Pasta (using Fredoka as fallback/closest available), Roboto -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&amp;family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary-fixed": "#231b00",
+                    "surface-variant": "#2e3061",
+                    "tertiary-container": "#5ea200",
+                    "on-surface": "#e1e0ff",
+                    "surface-container-high": "#232456",
+                    "surface-container-lowest": "#05053a",
+                    "on-background": "#e1e0ff",
+                    "surface-bright": "#323466",
+                    "tertiary-fixed-dim": "#87dc23",
+                    "error": "#ffb4ab",
+                    "on-tertiary-fixed-variant": "#2c5000",
+                    "surface-dim": "#0b0b3e",
+                    "on-primary-fixed": "#3f001a",
+                    "primary-fixed-dim": "#ffb1c4",
+                    "outline": "#a28b8f",
+                    "secondary-container": "#d1aa00",
+                    "surface-container-low": "#141546",
+                    "on-tertiary": "#1d3700",
+                    "on-secondary-fixed-variant": "#564500",
+                    "inverse-primary": "#9e3c5c",
+                    "secondary-fixed-dim": "#ecc228",
+                    "primary-fixed": "#ffd9e0",
+                    "surface-tint": "#ffb1c4",
+                    "inverse-on-surface": "#292b5c",
+                    "tertiary": "#87dc23",
+                    "on-tertiary-container": "#183000",
+                    "outline-variant": "#554246",
+                    "on-error-container": "#ffdad6",
+                    "on-error": "#690005",
+                    "primary-container": "#dc6d8d",
+                    "on-surface-variant": "#dac0c5",
+                    "on-primary": "#620a2e",
+                    "error-container": "#93000a",
+                    "secondary": "#efc52b",
+                    "secondary-fixed": "#ffe082",
+                    "tertiary-fixed": "#a2fa42",
+                    "on-tertiary-fixed": "#0e2000",
+                    "surface-container": "#18194b",
+                    "surface": "#0b0b3e",
+                    "primary": "#ffb1c4",
+                    "on-secondary-container": "#504000",
+                    "background": "#0b0b3e",
+                    "inverse-surface": "#e1e0ff",
+                    "on-primary-fixed-variant": "#802444",
+                    "surface-container-highest": "#2e3061",
+                    "on-primary-container": "#580227",
+                    "on-secondary": "#3c2f00",
+                    "lukash-yellow": "#E7C11F",
+                    "lukash-pink": "#EE4599",
+                    "lukash-bg-modal": "#F9F6F0",
+                    "lukash-green": "#A7EB5D",
+                    "lukash-dark": "#180F43"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "16px",
+                    "unit": "8px",
+                    "container-padding": "24px",
+                    "card-gap": "20px"
+            },
+            "fontFamily": {
+                    "body-lg": ["Roboto", "sans-serif"],
+                    "label-bold": ["Roboto", "sans-serif"],
+                    "headline-lg": ["Fredoka", "cursive"],
+                    "display-lg": ["Fredoka", "cursive"],
+                    "headline-lg-mobile": ["Fredoka", "cursive"],
+                    "body-md": ["Roboto", "sans-serif"],
+                    "fredoka": ["Fredoka", "sans-serif"],
+                    "roboto": ["Roboto", "sans-serif"],
+                    "rubik": ["Rubik", "sans-serif"]
+            },
+            "fontSize": {
+                    "body-lg": ["18px", {"lineHeight": "1.5", "fontWeight": "600"}],
+                    "label-bold": ["14px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.2", "fontWeight": "800"}],
+                    "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "1.2", "fontWeight": "800"}],
+                    "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "500"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        /* Custom UI Specific Styles */
+        .bg-lukash-gradient {
+            background: linear-gradient(135deg, #180F43 0%, #DE7A8F 100%);
+        }
+        
+        .lukash-logo-text {
+            color: #91DA26;
+            -webkit-text-stroke: 2px #212121;
+            paint-order: stroke fill;
+            text-shadow: 2px 2px 0px #212121, 4px 4px 0px rgba(0,0,0,0.5);
+            font-family: 'Fredoka', cursive;
+        }
+
+        .text-responsive-h2 {
+            font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+        }
+
+        .text-responsive-p {
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .card-glassmorphism {
+            background: rgba(238, 232, 224, 0.4);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+
+        .btn-3d-green {
+            background-color: #8AC346;
+            box-shadow: 0 6px 0 0 #5e8b2a, 0 8px 4px rgba(0,0,0,0.3);
+            border: 2px solid #212121;
+            transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+            cursor: grab;
+            touch-action: none;
+            user-select: none;
+            will-change: transform;
+        }
+        
+        .btn-3d-green:active {
+            cursor: grabbing;
+        }
+
+        .btn-3d-green.is-dragging {
+            cursor: grabbing;
+            box-shadow: 0 12px 0 0 #5e8b2a, 0 16px 12px rgba(0,0,0,0.4);
+            z-index: 100;
+            transition: none; /* Disable transition during drag for 1:1 mapping */
+        }
+
+        /* Floating Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        .float-anim {
+            animation: float 6s ease-in-out infinite;
+        }
+        .float-anim-delay {
+            animation: float 8s ease-in-out infinite 1s;
+        }
+
+        /* Success Pop Animation */
+        @keyframes success-pop {
+            0% { transform: translate(var(--tx, 0), var(--ty, 0)) scale(1); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7); }
+            50% { transform: translate(var(--tx, 0), var(--ty, 0)) scale(1.05); box-shadow: 0 0 20px rgba(138, 195, 70, 0.8); }
+            100% { transform: translate(var(--tx, 0), var(--ty, 0)) scale(1); box-shadow: 0 0 0 0 rgba(138, 195, 70, 0); }
+        }
+        
+        .success-pop {
+            animation: success-pop 0.5s ease-out forwards;
+            box-shadow: 0 4px 0 0 #5e8b2a, 0 6px 4px rgba(0,0,0,0.3);
+        }
+
+        /* Shake Error Animation */
+        @keyframes shake-error {
+            0%, 100% { transform: translate(var(--tx, 0), var(--ty, 0)) translateX(0); }
+            20%, 60% { transform: translate(var(--tx, 0), var(--ty, 0)) translateX(-10px); }
+            40%, 80% { transform: translate(var(--tx, 0), var(--ty, 0)) translateX(10px); }
+        }
+
+        .shake-error {
+            animation: shake-error 0.5s ease-in-out;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.8), 0 6px 0 0 #5e8b2a, 0 8px 4px rgba(0,0,0,0.3) !important;
+            border-color: #ffb4ab !important;
+        }
+
+        .floating-action-btn {
+            background-color: #EE4599;
+            box-shadow: 0 4px 0 0 #b32a6e, 0 6px 4px rgba(0,0,0,0.3);
+            border: 2px solid #212121;
+            transition: all 0.1s ease-in-out;
+        }
+
+        .floating-action-btn:active {
+            transform: translateY(2px) scale(0.96);
+            box-shadow: 0 2px 0 0 #b32a6e, 0 4px 4px rgba(0,0,0,0.3);
+        }
+
+        /* Botón siguiente: mismo estilo base del botón RESOLVER de pistas.html */
+        .next-btn {
+            background-color: #e43888;
+            width: clamp(280px, 80%, 400px);
+            margin: 30px auto 40px;
+            padding: clamp(15px, 2vw, 22px);
+            border-radius: 20px;
+            text-align: center;
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 700;
+            font-size: clamp(20px, 3vw, 28px);
+            letter-spacing: 0.02em;
+            color: #FFFFFF;
+            box-shadow: 0 8px 0 #ab2a66;
+            cursor: pointer;
+            transition: transform 0.1s, box-shadow 0.1s;
+            z-index: 10;
+        }
+        .next-btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 4px 0 #ab2a66;
+        }
+
+        .tag-pista {
+            background-color: #EEE8E0;
+            box-shadow: 2px 2px 0 0 #212121;
+        }
+        
+        /* Pulse for target area */
+        @keyframes target-pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 255, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+        }
+        .drop-target-active {
+            background-color: rgba(255, 255, 255, 0.3);
+            border-style: solid;
+            animation: target-pulse 1s infinite;
+        }
+        
+        /* Confetti Animation */
+        @keyframes particle-fly {
+            0% { transform: translate(-50%, -50%) translate(0, 0) rotate(0deg); opacity: 1; }
+            100% { transform: translate(-50%, -50%) translate(var(--tx), var(--ty)) rotate(var(--rot)); opacity: 0; }
+        }
+        .confetti-particle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            animation: particle-fly 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        }
+
+        /* Navigation Drawer Transition */
+        #nav-drawer {
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        #nav-drawer.open {
+            transform: translateX(0);
+        }
+
+        #nav-backdrop {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        #nav-backdrop.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* ===== Barra superior estilo index.html (header + tema) ===== */
+        .theme-toggle { cursor: pointer; transition: transform 0.15s ease-in-out; }
+        .theme-toggle:active { transform: scale(0.9); }
+        .theme-toggle .icon-moon { display: block; }
+        .theme-toggle .icon-sun { display: none; }
+        html.dark .theme-toggle .icon-moon { display: none; }
+        html.dark .theme-toggle .icon-sun { display: block; }
+        html body { background-color: #f7efd0 !important; background-image: none !important; }
+        html.dark body { background-image: url("images/fondo_.png") !important; background-size: cover !important; background-position: center !important; background-repeat: no-repeat !important; background-attachment: fixed !important; }
+        html:not(.dark) #main-header { background-color: #211941 !important; color: #EEE8E0; border-color: rgba(231,193,31,0.4); }
+        html:not(.dark) #main-header svg * { stroke: #EEE8E0; }
+        html:not(.dark) #main-header .text-lukash-dark { color: #EEE8E0; }
+        html:not(.dark) #main-header a { color: inherit; }
+        html.dark #main-header { background-color: #E7C11F !important; color: #180F43; border-color: rgba(24,15,67,0.15); }
+        html.dark #main-header svg * { stroke: #180F43; }
+        html.dark #main-header .text-lukash-dark { color: #180F43; }
+        html.dark #main-header a { color: inherit; }
+        html:not(.dark) #desktopCategoriasMenu > div { background-color: #211941 !important; color: #EEE8E0; border-color: rgba(231,193,31,0.6); }
+        html:not(.dark) #desktopCategoriasMenu a { color: #EEE8E0; }
+        html:not(.dark) #main-header .hover\:text-\[\#f7efd0\]:hover { color: #E7C11F !important; }
+        html.dark #desktopCategoriasMenu > div { background-color: rgba(30,20,70,0.95) !important; color: #EEE8E0; }
+        html.dark #desktopCategoriasMenu a { color: #EEE8E0; }
+    </style>
+</head>
+<body class="font-roboto text-slate-800" style="margin: 0px;">
+<!-- BEGIN: MainHeader -->
+<header class="fixed top-0 left-0 right-0 bg-lukash-yellow w-full h-16 flex items-center justify-between px-4 z-50 border-b-4 border-black/10 transition-opacity duration-100" id="main-header">
+<!-- Menu Icon -->
+<button class="p-2 lg:hidden" id="menuBtn"><svg class="hamburger-icon" fill="none" height="24" viewBox="0 0 30 24" width="30" xmlns="http://www.w3.org/2000/svg"><path d="M2 2H28M2 12H28M2 22H28" stroke="black" stroke-linecap="round" stroke-width="4"></path></svg><svg class="close-icon hidden" fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M18 6L6 18M6 6L18 18" stroke="black" stroke-linecap="round" stroke-width="3"></path></svg></button>
+<!-- Central Logo -->
+<div class="absolute left-1/2 -translate-x-1/2 lg:hidden">
+<img alt="LUKA$H Logo" class="h-16 drop-shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYRpEfrEAXglfH6g6bdTAiltJsJB-DrFhYXNpv6pCllmuHj7ZTXjF1qy9e06r27C5bLil8PgTWLPE-mWnWPz_8ibC0PbXo0mgx7meRO8nUsUV1qLPggd-nZBPOPjkThKh-Ou-I6nHQkWDHioMR9pUwKGZWmx0Cixdb5lqH1bSqo8ixHeoNWq9_ax4LS-cBhRHRiCd4KtV6Bz9ISa3Kd85RkHKMPOgK3YST2EQZs-TyZzikR3_DpMQVbNJtsVzgzE3r_g">
+</div>
+<div class="flex items-center lg:hidden">
+<!-- Theme Toggle (icono de luna/sol para modo oscuro/claro) -->
+<button class="p-2 theme-toggle" type="button" aria-label="Cambiar tema">
+<svg class="icon-moon" fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<svg class="icon-sun" fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="5" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></circle><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="black" stroke-linecap="round" stroke-width="2"></path></svg>
+</button>
+<!-- User Icon -->
+<button class="p-2">
+<svg fill="none" height="28" viewBox="0 0 28 28" width="28" xmlns="http://www.w3.org/2000/svg">
+<circle cx="14" cy="14" r="12" stroke="black" stroke-width="2"></circle>
+<circle cx="14" cy="10" r="4" stroke="black" stroke-width="2"></circle>
+<path d="M6 22C6 18.6863 8.68629 16 12 16H16C19.3137 16 22 18.6863 22 22" stroke="black" stroke-width="2"></path>
+</svg>
+</button>
+</div>
+<div class="mx-auto w-full max-w-[1280px] h-full"><nav class="hidden lg:flex items-center w-full h-full px-8 font-fredoka font-bold text-lukash-dark tracking-wider relative justify-between"><div class="flex items-center h-full"><img alt="LUKA$H Logo" class="h-16 drop-shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYRpEfrEAXglfH6g6bdTAiltJsJB-DrFhYXNpv6pCllmuHj7ZTXjF1qy9e06r27C5bLil8PgTWLPE-mWnWPz_8ibC0PbXo0mgx7meRO8nUsUV1qLPggd-nZBPOPjkThKh-Ou-I6nHQkWDHioMR9pUwKGZWmx0Cixdb5lqH1bSqo8ixHeoNWq9_ax4LS-cBhRHRiCd4KtV6Bz9ISa3Kd85RkHKMPOgK3YST2EQZs-TyZzikR3_DpMQVbNJtsVzgzE3r_g"></div><div class="flex items-center justify-center space-x-20 uppercase text-xl w-max flex-1">
+<a href="index.html?intro=1" class="transition-colors hover:text-[#f7efd0]">INICIO</a>
+<div class="relative" id="desktopCategorias">
+ <button class="flex items-center gap-1 transition-colors hover:text-[#f7efd0]" id="desktopCategoriasBtn">CATEGORIAS<svg class="w-4 h-4 transition-transform duration-300" id="desktopCategoriasArrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg></button>
+ <div class="absolute left-1/2 -translate-x-1/2 top-full pt-4 hidden" id="desktopCategoriasMenu">
+ <div class="bg-lukash-bg-modal/95 backdrop-blur-md text-lukash-dark rounded-2xl shadow-2xl border-2 border-lukash-yellow p-4 w-64 flex flex-col space-y-1 font-bold text-lg">
+ <a class="hover:bg-[#eac62f] hover:text-white transition-colors rounded-lg px-4 py-2.5" href="modoAhorrointro.html">MODO AHORRO</a>
+ <a class="hover:bg-[#eac62f] hover:text-white transition-colors rounded-lg px-4 py-2.5" href="invertir.html">RINDIENDO LA MONEY</a>
+ <a class="hover:bg-[#eac62f] hover:text-white transition-colors rounded-lg px-4 py-2.5" href="cuentasclaras.html">CUENTAS CLARAS</a>
+ <a class="hover:bg-[#eac62f] hover:text-white transition-colors rounded-lg px-4 py-2.5" href="cero-enredor.html">CERO ENREDOS</a>
+ </div>
+ </div>
+ </div>
+ <a href="Registro.html" class="transition-colors hover:text-[#f7efd0]">REGISTRO</a>
+ <a href="nosotros.html" class="transition-colors hover:text-[#f7efd0]">NOSOTROS</a>
+ <a href="contactanos.html" class="transition-colors hover:text-[#f7efd0]">CONTACTANOS</a>
+</div><div class="flex items-center"><button class="p-2 theme-toggle" type="button" aria-label="Cambiar tema"><svg class="icon-moon" fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg><svg class="icon-sun" fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></circle><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path></svg></button><svg fill="none" height="32" viewBox="0 0 28 28" width="32" xmlns="http://www.w3.org/2000/svg"><circle cx="14" cy="14" r="12" stroke="currentColor" stroke-width="2"></circle><circle cx="14" cy="10" r="4" stroke="currentColor" stroke-width="2"></circle><path d="M6 22C6 18.6863 8.68629 16 12 16H16C19.3137 16 22 18.6863 22 22" stroke="currentColor" stroke-width="2"></path></svg></div></nav></div></header>
+<!-- END: MainHeader -->
+<!-- BEGIN: Mobile Menu Drawer -->
+<div class="fixed inset-0 z-[60] pointer-events-none hidden" id="mobileMenu">
+<!-- Overlay -->
+<div class="absolute inset-0 transition-opacity duration-300 bg-black/10 pointer-events-auto backdrop-blur-sm opacity-0" id="mobileMenuOverlay"></div>
+<!-- Drawer -->
+<div class="absolute top-6 left-6 w-64 shadow-2xl transform transition-transform duration-300 flex flex-col rounded-[45px] h-max border-none backdrop-blur-md pointer-events-auto -translate-x-[150%]" id="mobileMenuDrawer" style="background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuAeRFCguGmJAP2dmp1aYF4qsTfAyIOscChweRZXRQiHjUN1cBby8JpgZyNxGzAN7YfF65QjDHZHE-hgrwwVMMxD9k4-rpFKL-B_9GqV6IFyUHrQhxHoqlmhkmfI3JecSZ6_LW7x_9hHFFEiC6UR0OP3AGIFy4mSiGm2IddGjFf2S7w8pk5FdW73Z_0v-62A_L14O2JkuwFJodusGDaEsrG00RBvV1BalVc6XuLKTKaFJeZPdQfiEOPR6g6PH_MnnRLp8g&quot;); background-size: cover; background-position: center center; opacity: 0.95;">
+<div class="flex justify-between items-center p-6 h-max">
+<img alt="LUKA$H Logo" class="h-10 drop-shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYRpEfrEAXglfH6g6bdTAiltJsJB-DrFhYXNpv6pCllmuHj7ZTXjF1qy9e06r27C5bLil8PgTWLPE-mWnWPz_8ibC0PbXo0mgx7meRO8nUsUV1qLPggd-nZBPOPjkThKh-Ou-I6nHQkWDHioMR9pUwKGZWmx0Cixdb5lqH1bSqo8ixHeoNWq9_ax4LS-cBhRHRiCd4KtV6Bz9ISa3Kd85RkHKMPOgK3YST2EQZs-TyZzikR3_DpMQVbNJtsVzgzE3r_g">
+<button class="text-2xl font-fredoka font-bold text-lukash-dark p-2 transition-all duration-200" id="closeMenuBtn" style="opacity: 1;">X</button>
+</div>
+<nav class="flex flex-col p-8 pt-0 font-fredoka font-bold text-lukash-dark space-y-5 items-start text-left">
+<a href="index.html?intro=1" class="hover:text-lukash-pink transition-colors text-xl">INICIO</a>
+<div class="w-full">
+ <button class="flex items-center justify-between w-full text-xl hover:text-lukash-pink transition-colors" id="mobileCategoriasBtn" style="color: rgb(24, 15, 67);">CATEGORIAS<svg class="w-5 h-5 transition-transform duration-300" id="mobileCategoriasArrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg></button>
+ <div id="mobileCategoriasMenu" class="hidden mt-4 pl-4 border-l-4 border-lukash-pink/30 space-y-4 flex flex-col">
+ <a class="hover:text-lukash-pink transition-colors text-lg" href="modoAhorrointro.html" style="color: rgb(24, 15, 67);">MODO AHORRO</a>
+ <a class="hover:text-lukash-pink transition-colors text-lg" href="invertir.html" style="color: rgb(24, 15, 67);">RINDIENDO LA MONEY</a>
+ <a class="hover:text-lukash-pink transition-colors text-lg" href="cuentasclaras.html" style="color: rgb(24, 15, 67);">CUENTAS CLARAS</a>
+ <a class="hover:text-lukash-pink transition-colors text-lg" href="cero-enredor.html" style="color: rgb(24, 15, 67);">CERO ENREDOS</a>
+ </div>
+ </div>
+ <a class="hover:text-lukash-pink transition-colors text-xl" href="Registro.html" style="color: rgb(24, 15, 67);">REGISTRO</a>
+ <a class="hover:text-lukash-pink transition-colors text-xl" href="nosotros.html" style="color: rgb(24, 15, 67);">NOSOTROS</a>
+ <a class="hover:text-lukash-pink transition-colors text-xl" href="contactanos.html" style="color: rgb(24, 15, 67);">CONTACTANOS</a>
+</nav>
+</div>
+</div>
+<!-- END: Mobile Menu Drawer -->
+<!-- Main Content Canvas -->
+<main class="relative z-10 w-full mx-auto px-4 pt-8 md:pt-16 pb-20 min-h-[calc(100vh-64px)] flex flex-col items-center justify-center">
+<!-- Main Game Card -->
+<div class="card-glassmorphism rounded-[60px] w-full p-6 relative flex flex-col items-center border-t-2 border-l-2 border-white/50 backdrop-blur-xl overflow-hidden max-w-[350px] md:max-w-[450px] lg:max-w-[550px] md:p-10 transition-all duration-300 shadow-[15px_15px_30px_rgba(0,0,0,0.1)]">
+<!-- Pista Tag -->
+<div class="absolute -left-4 top-8 py-2 px-6 font-headline-lg-mobile text-[#EE4599] uppercase tracking-wider z-20 bg-white drop-shadow-sm">
+                Pista 1
+            </div>
+<!-- Number Indicator -->
+<div class="absolute right-8 font-display-lg text-white drop-shadow-lg z-20" style="font-size: calc(48px); top: 16px; right: 24px;">
+                2
+            </div>
+<!-- 3D Illustration -->
+<div class="w-full max-w-[200px] md:max-w-[250px] mt-8 mb-4 md:mb-8 relative z-10">
+
+</div>
+<!-- Instruction Text -->
+<h2 class="font-headline-lg-mobile text-responsive-h2 text-center text-[#212121] leading-tight mb-4 px-2 drop-shadow-sm font-bold" style="font-size: calc(-5px + clamp(1.5rem, 3.5vw, 2.5rem));">
+                Fíjate bien en la afirmación, decide si es verdadera o falsa y contesta correctamente.
+            </h2>
+<!-- Question Text -->
+<p class="font-body-lg text-center text-[#212121] px-4 mb-6 md:mb-10 text-responsive-p" style="font-size: calc(21px);">
+                Si comienzas a invertir pequeñas cantidades desde joven, tu dinero tiene más tiempo para crecer
+            </p>
+<!-- Decorative Wavy Shape & Input Outline Placeholder -->
+<div class="relative w-full flex items-center justify-center mb-8 px-2 h-24 md:h-32">
+<!-- Abstract shape placeholder representing the wavy pink shape -->
+
+<!-- Input Outline Target Box -->
+<div class="border-2 border-white/40 bg-black/5 z-10 relative flex items-center justify-center transition-colors border-white rounded-none w-1/2 h-[60px] md:h-[80px] mx-auto" id="drop-target" style="border-style: dashed;"><span class="material-symbols-outlined text-white/30 text-3xl md:text-5xl transition-opacity" id="drop-icon">add</span></div>
+</div>
+<!-- Action Buttons Container -->
+<div class="w-full flex gap-4 md:gap-8 justify-center z-20 px-2 relative min-h-[60px] md:min-h-[80px] mb-2" id="buttons-container">
+<button class="draggable-btn flex-1 btn-3d-green py-4 px-2 font-headline-lg-mobile text-[18px] md:text-[22px] text-white uppercase tracking-wide relative" data-x="0" data-y="0" id="btn-verdadero" style="--tx: 0px; --ty: 0px; transform: translate(0px, 0px) scale(1); transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s; border-radius: 12px; border-width: 0px; box-shadow: rgb(104, 157, 30) 0px 6px 0px 0px; width: 140px; height: 56px; padding: 0px; background-color: rgb(144, 217, 42);">Verdadero</button>
+<button class="draggable-btn flex-1 btn-3d-green py-4 px-2 font-headline-lg-mobile text-[18px] md:text-[22px] text-white uppercase tracking-wide relative" data-x="0" data-y="0" id="btn-falso" style="--tx: 0px; --ty: 0px; transform: translate(0px, 0px) scale(1); transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s; border-radius: 12px; border-width: 0px; box-shadow: rgb(104, 157, 30) 0px 6px 0px 0px; width: 140px; height: 56px; padding: 0px; background-color: rgb(144, 217, 42);">Falso</button>
+</div>
+<!-- Botón Siguiente: aparece solo al responder correctamente (Verdadero) -->
+<button class="hidden next-btn" id="nextBtn" onclick="goNext()">Siguiente</button>
+</div>
+</main>
+<!-- Floating Action Button (Piggy Bank Icon) -->
+<div class="fixed bottom-8 right-8 z-50">
+<button class="floating-action-btn w-16 h-16 rounded-full flex items-center justify-center group relative">
+<span class="material-symbols-outlined text-white text-3xl transition-transform group-hover:scale-110" style="font-variation-settings: &quot;FILL&quot; 1;">savings</span>
+</button>
+</div>
+<script data-purpose="menu-functionality">
+    /* Menú móvil (drawer) y menú de categorías, igual que en index.html */
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+    const mobileMenuDrawer = document.getElementById('mobileMenuDrawer');
+    const closeMenuBtn = document.getElementById('closeMenuBtn');
+    const menuIcon = menuBtn.querySelector('.hamburger-icon');
+
+    function openMenu() {
+      mobileMenu.classList.remove('hidden');
+      if(menuIcon) menuIcon.classList.add('hidden');
+      setTimeout(() => {
+        mobileMenuOverlay.classList.remove('opacity-0');
+        mobileMenuDrawer.classList.remove('-translate-x-[150%]');
+      }, 10);
+    }
+
+    function closeMenu() {
+      closeMenuBtn.style.opacity = '0';
+      mobileMenuOverlay.classList.add('opacity-0');
+      mobileMenuDrawer.classList.add('-translate-x-[150%]');
+      setTimeout(() => {
+        mobileMenu.classList.add('hidden');
+        closeMenuBtn.style.opacity = '1';
+        if(menuIcon) menuIcon.classList.remove('hidden');
+      }, 300);
+    }
+
+    menuBtn.addEventListener('click', openMenu);
+    closeMenuBtn.addEventListener('click', closeMenu);
+    mobileMenuOverlay.addEventListener('click', closeMenu);
+
+    // Desktop Categorias dropdown toggle
+    const desktopCategorias = document.getElementById('desktopCategorias');
+    const desktopCategoriasBtn = document.getElementById('desktopCategoriasBtn');
+    const desktopCategoriasMenu = document.getElementById('desktopCategoriasMenu');
+    const desktopCategoriasArrow = document.getElementById('desktopCategoriasArrow');
+
+    function toggleDesktopMenu(open) {
+      desktopCategoriasMenu.classList.toggle('hidden', !open);
+      desktopCategoriasArrow.classList.toggle('rotate-180', open);
+    }
+
+    desktopCategoriasBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isHidden = desktopCategoriasMenu.classList.contains('hidden');
+      toggleDesktopMenu(isHidden);
+    });
+    desktopCategorias.addEventListener('mouseenter', () => toggleDesktopMenu(true));
+    desktopCategorias.addEventListener('mouseleave', () => toggleDesktopMenu(false));
+    document.addEventListener('click', (e) => {
+      if (!desktopCategorias.contains(e.target)) toggleDesktopMenu(false);
+    });
+
+    // Mobile Categorias dropdown toggle
+    const mobileCategoriasBtn = document.getElementById('mobileCategoriasBtn');
+    const mobileCategoriasMenu = document.getElementById('mobileCategoriasMenu');
+    const mobileCategoriasArrow = document.getElementById('mobileCategoriasArrow');
+
+    mobileCategoriasBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isHidden = mobileCategoriasMenu.classList.contains('hidden');
+      mobileCategoriasMenu.classList.toggle('hidden', !isHidden);
+      mobileCategoriasArrow.classList.toggle('rotate-180', isHidden);
+    });
+</script>
+<script data-purpose="theme-toggle">
+  (function () {
+    var key = 'lukash-theme';
+    var root = document.documentElement;
+    var apply = function (dark) {
+      root.classList.toggle('dark', dark);
+      try { localStorage.setItem(key, dark ? 'dark' : 'light'); } catch (e) {}
+    };
+    var toggles = document.querySelectorAll('.theme-toggle');
+    var stored = null;
+    try { stored = localStorage.getItem(key); } catch (e) {}
+    var shouldDark = stored ? (stored === 'dark') : root.classList.contains('dark');
+    apply(shouldDark);
+    toggles.forEach(function (t) {
+      t.addEventListener('click', function () { apply(!root.classList.contains('dark')); });
+    });
+  })();
+</script>
+<script data-purpose="drag-game">
+    const draggables = document.querySelectorAll('.draggable-btn');
+    const dropTarget = document.getElementById('drop-target');
+    const dropIcon = document.getElementById('drop-icon');
+    
+    let activeDraggable = null;
+    let startX = 0;
+    let startY = 0;
+    let btnInTarget = null;
+
+    // Botón "Siguiente": aparece solo cuando se responde correctamente (Verdadero)
+    const nextBtn = document.getElementById('nextBtn');
+    function checkPistaCompleta() {
+        if (nextBtn) nextBtn.classList.toggle('hidden', !btnInTarget);
+    }
+    // Redirige a la siguiente pantalla cuando el usuario presiona "Siguiente"
+    function goNext() {
+        window.location.href = 'pistasvolver1.html';
+    }
+
+    // Confetti creation function
+    function createConfetti(x, y) {
+        const colors = ['#EE4599', '#DE7A8F', '#E7C11F', '#91DA26'];
+        const numParticles = 40;
+        
+        for (let i = 0; i < numParticles; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('confetti-particle');
+            
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            const size = Math.random() * 8 + 6; 
+            
+            const angle = Math.random() * Math.PI * 2;
+            const velocity = Math.random() * 150 + 50; 
+            
+            const tx = Math.cos(angle) * velocity;
+            const ty = Math.sin(angle) * velocity + (Math.random() * 50 + 20); // add some gravity
+            const rot = Math.random() * 360;
+            
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            particle.style.backgroundColor = color;
+            particle.style.left = `${x}px`;
+            particle.style.top = `${y}px`;
+            particle.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+            
+            particle.style.setProperty('--tx', `${tx}px`);
+            particle.style.setProperty('--ty', `${ty}px`);
+            particle.style.setProperty('--rot', `${rot}deg`);
+            
+            document.body.appendChild(particle);
+            
+            setTimeout(() => {
+                particle.remove();
+            }, 800);
+        }
+    }
+
+    // Initialize dataset values for transforms
+    draggables.forEach(btn => {
+        btn.dataset.x = 0;
+        btn.dataset.y = 0;
+        btn.addEventListener('pointerdown', dragStart);
+        // Prevent default touch actions like scrolling while dragging
+        btn.addEventListener('touchstart', (e) => e.preventDefault(), {passive: false});
+    });
+
+    function dragStart(e) {
+        // Only allow left click or touch
+        if (e.pointerType === 'mouse' && e.button !== 0) return;
+        
+        activeDraggable = e.currentTarget;
+        
+        // Disable CSS transition during drag for real-time 1:1 mapping
+        activeDraggable.style.transition = 'none';
+        activeDraggable.classList.add('is-dragging');
+        activeDraggable.classList.remove('success-pop', 'shake-error');
+        
+        // If it was in target, remove it
+        if (btnInTarget === activeDraggable) {
+            btnInTarget = null;
+            dropTarget.classList.remove('drop-target-active');
+            dropIcon.style.opacity = '1';
+            checkPistaCompleta();
+        }
+
+        // Get starting coordinates based on current transform
+        const currentX = parseFloat(activeDraggable.dataset.x) || 0;
+        const currentY = parseFloat(activeDraggable.dataset.y) || 0;
+        
+        startX = e.clientX - currentX;
+        startY = e.clientY - currentY;
+
+        document.addEventListener('pointermove', drag, {passive: false});
+        document.addEventListener('pointerup', dragEnd);
+        document.addEventListener('pointercancel', dragEnd);
+        
+        activeDraggable.setPointerCapture(e.pointerId);
+    }
+
+    function drag(e) {
+        if (!activeDraggable) return;
+        e.preventDefault();
+
+        const x = e.clientX - startX;
+        const y = e.clientY - startY;
+
+        activeDraggable.dataset.x = x;
+        activeDraggable.dataset.y = y;
+        
+        activeDraggable.style.setProperty('--tx', `${x}px`);
+        activeDraggable.style.setProperty('--ty', `${y}px`);
+        activeDraggable.style.transform = `translate(${x}px, ${y}px) scale(1.05)`;
+
+        // Collision detection
+        const targetRect = dropTarget.getBoundingClientRect();
+        const draggableRect = activeDraggable.getBoundingClientRect();
+        const center_x = draggableRect.left + draggableRect.width / 2;
+        const center_y = draggableRect.top + draggableRect.height / 2;
+
+        if (center_x > targetRect.left && center_x < targetRect.right &&
+            center_y > targetRect.top && center_y < targetRect.bottom) {
+            dropTarget.classList.add('drop-target-active');
+        } else {
+            dropTarget.classList.remove('drop-target-active');
+        }
+    }
+
+    function dragEnd(e) {
+        if (!activeDraggable) return;
+
+        activeDraggable.classList.remove('is-dragging');
+        dropTarget.classList.remove('drop-target-active');
+        
+        // Re-enable smooth transition for snapping or returning
+        activeDraggable.style.transition = 'transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s ease';
+        
+        const targetRect = dropTarget.getBoundingClientRect();
+        const draggableRect = activeDraggable.getBoundingClientRect();
+        
+        const center_x = draggableRect.left + draggableRect.width / 2;
+        const center_y = draggableRect.top + draggableRect.height / 2;
+
+        if (center_x > targetRect.left && center_x < targetRect.right &&
+            center_y > targetRect.top && center_y < targetRect.bottom) {
+            
+            const isCorrect = activeDraggable.textContent.trim().toUpperCase() === 'VERDADERO';
+            
+            if (isCorrect) {
+                if (btnInTarget && btnInTarget !== activeDraggable) {
+                    returnToStart(btnInTarget);
+                }
+                snapToTarget(activeDraggable, targetRect);
+                // Trigger confetti exactly at the target's center
+                createConfetti(targetRect.left + targetRect.width / 2, targetRect.top + targetRect.height / 2);
+            } else {
+                // Incorrect logic
+                const el = activeDraggable;
+                el.style.transform = `translate(${el.dataset.x}px, ${el.dataset.y}px) scale(1)`;
+                el.classList.add('shake-error');
+                
+                setTimeout(() => {
+                    el.classList.remove('shake-error');
+                    returnToStart(el);
+                }, 500);
+            }
+        } else {
+            returnToStart(activeDraggable);
+        }
+
+        document.removeEventListener('pointermove', drag);
+        document.removeEventListener('pointerup', dragEnd);
+        document.removeEventListener('pointercancel', dragEnd);
+        activeDraggable.releasePointerCapture(e.pointerId);
+        activeDraggable = null;
+    }
+
+    function snapToTarget(el, targetRect) {
+        btnInTarget = el;
+        
+        // Calculate required transform to snap to center of target
+        const elOriginalRect = el.getBoundingClientRect();
+        // Since it's translated, we need to find its "zero" position
+        const currentX = parseFloat(el.dataset.x) || 0;
+        const currentY = parseFloat(el.dataset.y) || 0;
+        const zeroLeft = elOriginalRect.left - currentX;
+        const zeroTop = elOriginalRect.top - currentY;
+        
+        const targetCenterX = targetRect.left + targetRect.width / 2;
+        const targetCenterY = targetRect.top + targetRect.height / 2;
+        
+        const targetX = targetCenterX - zeroLeft - (elOriginalRect.width / 2);
+        const targetY = targetCenterY - zeroTop - (elOriginalRect.height / 2);
+
+        el.dataset.x = targetX;
+        el.dataset.y = targetY;
+        el.style.setProperty('--tx', `${targetX}px`);
+        el.style.setProperty('--ty', `${targetY}px`);
+        el.style.transform = `translate(${targetX}px, ${targetY}px) scale(1)`;
+        
+        dropTarget.classList.add('bg-white/30', 'border-solid');
+        dropTarget.classList.remove('border-dashed');
+        dropIcon.style.opacity = '0'; // Hide icon when item is inside
+        
+        // Add success class after a tiny delay to trigger animation
+        setTimeout(() => {
+            el.classList.add('success-pop');
+        }, 50);
+
+        // Pista completada correctamente: mostramos el botón Siguiente
+        checkPistaCompleta();
+    }
+
+    function returnToStart(el) {
+        el.dataset.x = 0;
+        el.dataset.y = 0;
+        el.style.setProperty('--tx', '0px');
+        el.style.setProperty('--ty', '0px');
+        el.style.transform = `translate(0px, 0px) scale(1)`;
+        el.classList.remove('success-pop', 'shake-error');
+        
+        if (btnInTarget === el) {
+            btnInTarget = null;
+            dropTarget.classList.remove('bg-white/30', 'border-solid');
+            dropTarget.classList.add('border-dashed');
+            dropIcon.style.opacity = '1';
+            checkPistaCompleta();
+        }
+    }
+</script>
+
+
+
+
+
+
+
+
+</body></html>
