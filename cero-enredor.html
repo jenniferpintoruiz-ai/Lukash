@@ -50,6 +50,26 @@
       transform: translateY(2px);
       box-shadow: 0 2px 0 #9d1c5b;
     }
+    /* Botón "¡VAMOS!" estilo del sitio (rosa #e43888, como el resto de pantallas) */
+    .btn-vamos {
+      display: inline-block;
+      background-color: #e43888;
+      color: #FFFFFF;
+      font-family: 'Fredoka', sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      font-size: clamp(18px, 2.5vw, 24px);
+      padding: clamp(12px, 2vw, 16px) clamp(48px, 8vw, 80px);
+      border-radius: 20px;
+      box-shadow: 0 8px 0 #ab2a66;
+      transition: transform 0.1s, box-shadow 0.1s;
+    }
+    .btn-vamos:hover { filter: brightness(1.05); }
+    .btn-vamos:active {
+      transform: translateY(4px);
+      box-shadow: 0 4px 0 #ab2a66;
+    }
     .fab-shadow { box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
     .chat-window { transform-origin: bottom right; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
     .chat-window.hidden-chat { transform: scale(0); opacity: 0; pointer-events: none; }
@@ -175,6 +195,7 @@
 <div class="relative z-50 animate-float hover:scale-105 transition-transform duration-300 cursor-pointer">
 <img alt="Cero Enredos" class="w-64 h-64 object-contain drop-shadow-2xl lg:w-96 lg:h-96" src="images/imagenes%20de%20las%20categorias/categoria-3.png">
 </div>
+<a href="conversacion1.html" class="btn-vamos mt-2">¡Vamos!</a>
 </div>
 </div>
 </main>

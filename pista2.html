@@ -78,22 +78,22 @@
         },
         "fontFamily": {
                 "headline-lg": [
-                        "Plus Jakarta Sans"
+                        "Fredoka", "sans-serif"
                 ],
                 "headline-lg-mobile": [
-                        "Plus Jakarta Sans"
+                        "Fredoka", "sans-serif"
                 ],
                 "body-md": [
-                        "Plus Jakarta Sans"
+                        "Roboto", "sans-serif"
                 ],
                 "body-lg": [
-                        "Plus Jakarta Sans"
+                        "Roboto", "sans-serif"
                 ],
                 "display-lg": [
-                        "Plus Jakarta Sans"
+                        "Fredoka", "sans-serif"
                 ],
                 "label-bold": [
-                        "Plus Jakarta Sans"
+                        "Roboto", "sans-serif"
                 ],
                 "eating-pasta": ["'Eating Pasta'", "'Fredoka'", "sans-serif"],
                 "roboto": ["'Roboto'", "sans-serif"],
@@ -167,12 +167,11 @@
 <style data-purpose="custom-utilities">
     body {
       font-family: 'Roboto', sans-serif;
-      margin: 0 auto;
+      margin: 0;
       min-height: 100dvh;
       position: relative;
       overflow-x: hidden;
-      background: linear-gradient(180deg, #0b0b3e 0%, #18194b 100%); /* Atmospheric gradient */
-      color: #e1e0ff;
+      color: #180F43;
     }
     
     .lukash-logo {
@@ -193,11 +192,94 @@
       box-shadow: 0 20px 40px -10px rgba(0,0,0,0.05);
     }
 
-    .match-line {
-      position: absolute;
-      background-color: #999;
-      height: 1.5px;
-      z-index: 0;
+    /* ===== Estilos visuales alineados con pista1.html ===== */
+    .card-glassmorphism {
+      background: rgba(238, 232, 224, 0.4);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    }
+    .text-responsive-h2 {
+      font-size: clamp(1.25rem, 3.2vw, 1.9rem);
+    }
+
+    /* Botón siguiente: mismos estilos que SIGUIENTE de pista1.html */
+    .next-btn {
+      background-color: #e43888;
+      width: clamp(280px, 80%, 400px);
+      margin: 30px auto 40px;
+      padding: clamp(15px, 2vw, 22px);
+      border-radius: 20px;
+      text-align: center;
+      font-family: 'Fredoka', sans-serif;
+      font-weight: 700;
+      font-size: clamp(20px, 3vw, 28px);
+      letter-spacing: 0.02em;
+      color: #FFFFFF;
+      box-shadow: 0 8px 0 #ab2a66;
+      cursor: pointer;
+      transition: transform 0.1s, box-shadow 0.1s;
+      z-index: 10;
+    }
+    .next-btn:active {
+      transform: translateY(4px);
+      box-shadow: 0 4px 0 #ab2a66;
+    }
+
+    /* Acierto: cada pareja se pinta con un color de marca (sin líneas) */
+    .matching-card {
+      position: relative;
+      transition: all 0.2s;
+    }
+    .selected-match {
+      outline: 3px solid #FFFFFF;
+      outline-offset: 2px;
+      transform: scale(1.04);
+    }
+    .wrong-flash {
+      border: 3px solid #FF4D4D !important;
+    }
+    .matched {
+      pointer-events: none;
+    }
+    .pair-cdt {
+      background-color: #8AC346 !important;
+      color: #FFFFFF !important;
+      box-shadow: 0 8px 0 #5e8a2e !important;
+      border-color: #5e8a2e !important;
+    }
+    .pair-fic {
+      background-color: #E7C11F !important;
+      color: #180F43 !important;
+      box-shadow: 0 8px 0 #b99812 !important;
+      border-color: #b99812 !important;
+    }
+    .pair-acciones {
+      background-color: #EE4599 !important;
+      color: #FFFFFF !important;
+      box-shadow: 0 8px 0 #ab2a66 !important;
+      border-color: #ab2a66 !important;
+    }
+    .pair-cdt p, .pair-cdt span, .pair-acciones p, .pair-acciones span { color: #FFFFFF !important; }
+    .pair-fic p, .pair-fic span { color: #180F43 !important; }
+
+    @keyframes shake-error {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-6px); }
+      40%, 80% { transform: translateX(6px); }
+    }
+    .animate-shake { animation: shake-error 0.4s; }
+
+    @keyframes particle-fly {
+      0% { transform: translate(-50%, -50%) translate(0, 0) rotate(0deg); opacity: 1; }
+      100% { transform: translate(-50%, -50%) translate(var(--tx), var(--ty)) rotate(var(--rot)); opacity: 0; }
+    }
+    .confetti-particle {
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      animation: particle-fly 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
     }
     
     /* Ensure content fits within 100dvh but can scroll if needed */
@@ -231,7 +313,7 @@
     html.dark #desktopCategoriasMenu a { color: #EEE8E0; }
   </style>
 </head>
-<body class="flex flex-col items-center" style="background-color: rgb(234, 241, 225); background-image: none; min-height: 100vh; overflow-x: hidden; margin: 0;">
+<body class="font-roboto text-slate-800" style="min-height: 100vh; overflow-x: hidden; margin: 0;">
 <div class="app-container w-full pt-16 pb-20">
 <!-- BEGIN: MainHeader -->
 <header class="fixed top-0 left-0 right-0 bg-lukash-yellow w-full h-16 flex items-center justify-between px-4 z-50 border-b-4 border-black/10 transition-opacity duration-100" id="main-header">
@@ -303,44 +385,131 @@
 </div>
 <!-- END: Mobile Menu Drawer -->
 <!-- BEGIN: Main Content Area -->
-<main class="w-full px-4 flex-1 flex flex-col relative mt-6 items-center justify-center">
-<!-- Decorative Star Bottom Right (Positioned relative to main) -->
-<!-- Main White Card -->
-<section class="bg-[#f0f4ea] rounded-[40px] w-full max-w-[850px] min-h-[550px] relative shadow-soft-xl pt-10 pb-8 px-6 flex flex-col items-center shadow-sm mx-auto shadow-[10px_10px_25px_rgba(0,0,0,0.15)] shadow-[10px_10px_30px_rgba(0,0,0,0.1)] shadow-[15px_15px_30px_rgba(0,0,0,0.05)] shadow-xl">
-<!-- Top Badges -->
-<div class="absolute top-6 left-0 bg-white px-4 py-1.5 shadow-sm border border-gray-100 flex items-center">
-<span class="font-bold text-[#c85d7d] tracking-wider text-sm font-['Eating_Pasta'] uppercase">PISTA 2</span>
-</div>
-<div class="absolute top-6 right-6">
-<span class="font-bold text-4xl drop-shadow-md font-['Eating_Pasta'] text-white">1 </span>
-</div>
-<!-- 3D Piggy Bank Image -->
-<div class="w-48 h-48 md:w-64 md:h-64 mt-8 mb-6 relative">
+<main class="relative z-10 w-full mx-auto px-4 pb-20 min-h-[calc(100vh-64px)] flex flex-col items-center justify-center">
+<!-- Tarjeta de cristal con el mismo estilo visual de pista1.html -->
+<div class="card-glassmorphism rounded-[60px] w-full p-6 relative flex flex-col items-center border-t-2 border-l-2 border-white/50 backdrop-blur-xl overflow-hidden max-w-[350px] md:max-w-[460px] lg:max-w-[560px] md:p-8 transition-all duration-300 shadow-[15px_15px_30px_rgba(0,0,0,0.1)]">
+<!-- Badge superior izquierdo -->
+<div class="absolute -left-4 top-8 py-2 px-6 font-headline-lg-mobile text-[#EE4599] uppercase tracking-wider z-20 bg-white drop-shadow-sm font-bold">
+                Pista 2
+            </div>
+<!-- Número superior derecho -->
+<div class="absolute right-8 font-display-lg text-white drop-shadow-lg z-20" style="font-size: calc(58px); top: 17px;">2</div>
+<!-- Imagen 3D de la alcancía -->
+<div class="w-40 h-40 md:w-48 md:h-48 mt-10 mb-2 relative z-10">
 <div class="absolute inset-0 bg-black/5 rounded-full blur-xl translate-y-6 scale-90"></div>
-<img alt="3D Piggy Bank" class="w-full h-full object-contain relative z-10" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC43FQ1KtXqLNIvYxOYv0p-Z7lVXjlJQJFebrcr_yLNZYHRGVIXf3WB0iPq-OfRyek0Lm6_X-d97MmqsVf6gY9pjsxOg6Mzz0RmG-cTGxqkdedS9XFb5Ku2Vg9ENm7nGhFH9H8SZOZVM38Abw65huCe5lBF1iOfomtv1amhv9ReZk1wHqe5KSvffS043tMRl7PW4uC4555XYwEyfDrcBhbETKgjrnfsywqIcTUdD0LbTDUXlqgWsEdvylMz5A9cGUzmUw"/>
+<img alt="3D Piggy Bank" class="w-full h-full object-contain relative z-10" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC43FQ1KtXqLNIvYxOYv0p-Z7lVXjlJQJFebrcr_yLNZYHRGVIXf3WB0iPq-OfRyek0Lm6_X-d97MmqsVf6gY9pjsxOg6Mzz0RmG-cTGxqkdedS9XFb5Ku2Vg9ENm7nGhFH9H8SZOZVM38Abw65huCe5lBF1iOfomtv1amhv9ReZk1wHqe5KSvffS043tMRl7PW4uC4555XYwEyfDrcBhbETKgjrnfsywqIcTUdD0LbTDUXlqgWsEdvylMz5A9cGUzmUw">
 </div>
-<!-- Instruction Text -->
-<h2 class="text-center text-black text-[15px] md:text-lg leading-tight mb-10 px-2 tracking-wide uppercase font-['Eating_Pasta']">
-        Une la palabra con su respectivo sig nificado
-      </h2>
-<!-- Matching Game Container -->
-<div class="w-full max-w-[600px] relative flex flex-col items-center mt-2 pb-12 mx-auto">
-<!-- Top Row: Meanings (Yellow Boxes) -->
+<!-- Título de la actividad -->
+<h2 class="font-headline-lg-mobile font-bold text-responsive-h2 text-center text-[#180F43] leading-tight mb-4 px-2">Une la palabra con su respectivo significado</h2>
+<!-- Juego de emparejar -->
+<div class="w-full max-w-[600px] relative flex flex-col items-center mt-4 pb-10 mx-auto">
+<!-- Fila superior: definiciones -->
 <div class="flex justify-between w-full space-x-2 md:space-x-4 relative z-10">
-<div class="bg-[#f7b73b] p-2.5 w-1/3 flex items-center justify-center text-center shadow-sm h-32 md:h-40 border border-orange-200/50 cursor-pointer transition-all duration-200 hover:scale-105 active:scale-95 rounded-lg" data-match="CDT" id="card-cdt"><p class="text-[9px] md:text-[12px] font-bold text-black leading-tight">Soy una inversión donde debes esperar un tiempo determinado para recibir tu dinero con ganancias.</p></div>
-<div class="bg-[#f7b73b] p-2.5 w-1/3 flex items-center justify-center text-center shadow-sm h-32 md:h-40 border border-orange-200/50 cursor-pointer transition-all duration-200 hover:scale-105 active:scale-95 rounded-lg" data-match="FIC" id="card-fic"><p class="text-[9px] md:text-[12px] font-bold text-black leading-tight">Muchas personas confían su dinero a expertos para invertirlo en conjunto</p></div>
-<div class="bg-[#f7b73b] p-2.5 w-1/3 flex items-center justify-center text-center shadow-sm h-32 md:h-40 border border-orange-200/50 cursor-pointer transition-all duration-200 hover:scale-105 active:scale-95 ring-4 ring-brand-yellow rounded-lg" data-match="Acciones" id="card-acciones"><p class="text-[9px] md:text-[12px] font-bold text-black leading-tight">Cuando me compras, te conviertes en dueño de una pequeña parte de una empresa.</p></div>
+<div class="matching-card bg-[#f7b73b] p-2.5 w-1/3 flex items-center justify-center text-center shadow-[0_6px_0_0_#d99a12] h-32 md:h-40 border border-orange-200/50 cursor-pointer transition-all duration-200 hover:scale-105 active:scale-95 rounded-lg" data-match="CDT" id="card-cdt"><p class="text-[9px] md:text-[12px] font-bold text-black leading-tight">Soy una inversión donde debes esperar un tiempo determinado para recibir tu dinero con ganancias.</p></div>
+<div class="matching-card bg-[#f7b73b] p-2.5 w-1/3 flex items-center justify-center text-center shadow-[0_6px_0_0_#d99a12] h-32 md:h-40 border border-orange-200/50 cursor-pointer transition-all duration-200 hover:scale-105 active:scale-95 rounded-lg" data-match="FIC" id="card-fic"><p class="text-[9px] md:text-[12px] font-bold text-black leading-tight">Muchas personas confían su dinero a expertos para invertirlo en conjunto.</p></div>
+<div class="matching-card bg-[#f7b73b] p-2.5 w-1/3 flex items-center justify-center text-center shadow-[0_6px_0_0_#d99a12] h-32 md:h-40 border border-orange-200/50 cursor-pointer transition-all duration-200 hover:scale-105 active:scale-95 rounded-lg" data-match="Acciones" id="card-acciones"><p class="text-[9px] md:text-[12px] font-bold text-black leading-tight">Cuando me compras, te conviertes en dueño de una pequeña parte de una empresa.</p></div>
 </div>
-<!-- Matching Lines (Simulated with SVG for simplicity in HTML structure without complex absolute positioning logic per line) -->
-<!-- Bottom Row: Words (White Labels) -->
-<div class="flex justify-between w-full px-4 md:px-10 space-x-4 relative z-10 mt-16 md:mt-24">
-<div class="bg-white py-3 px-4 w-28 md:w-36 text-center cursor-pointer transition-all duration-200 hover:scale-105 active:scale-95 border border-black/10 shadow-[0_8px_0_0_#d1d5db] font-bold rounded-lg" data-match="Acciones" id="label-acciones"><span class="text-[11px] md:text-sm font-bold text-black">Acciones</span></div>
-<div class="bg-white py-3 px-4 w-28 md:w-36 text-center cursor-pointer transition-all duration-200 hover:scale-105 active:scale-95 border border-black/10 shadow-[0_8px_0_0_#d1d5db] font-bold rounded-lg" data-match="CDT" id="label-cdt"><span class="text-[11px] md:text-sm font-bold text-black">CDT</span></div>
-<div class="bg-white py-3 px-4 w-28 md:w-36 text-center cursor-pointer transition-all duration-200 hover:scale-105 active:scale-95 border border-black/10 shadow-[0_8px_0_0_#d1d5db] font-bold ring-4 ring-brand-yellow rounded-lg" data-match="FIC" id="label-fic"><span class="text-[11px] md:text-sm font-bold text-black">FIC</span></div>
+<!-- Fila inferior: palabras -->
+<div class="flex justify-between w-full px-4 md:px-10 space-x-4 relative z-10 mt-16 md:mt-20">
+<div class="matching-card bg-white py-3 px-4 w-28 md:w-36 text-center cursor-pointer transition-all duration-200 hover:scale-105 active:scale-95 border border-black/10 shadow-[0_8px_0_0_#d1d5db] font-bold rounded-lg" data-match="Acciones" id="label-acciones"><span class="text-[11px] md:text-sm font-bold text-black">Acciones</span></div>
+<div class="matching-card bg-white py-3 px-4 w-28 md:w-36 text-center cursor-pointer transition-all duration-200 hover:scale-105 active:scale-95 border border-black/10 shadow-[0_8px_0_0_#d1d5db] font-bold rounded-lg" data-match="CDT" id="label-cdt"><span class="text-[11px] md:text-sm font-bold text-black">CDT</span></div>
+<div class="matching-card bg-white py-3 px-4 w-28 md:w-36 text-center cursor-pointer transition-all duration-200 hover:scale-105 active:scale-95 border border-black/10 shadow-[0_8px_0_0_#d1d5db] font-bold rounded-lg" data-match="FIC" id="label-fic"><span class="text-[11px] md:text-sm font-bold text-black">FIC</span></div>
 </div>
-<svg class="absolute inset-0 w-full h-full pointer-events-none z-0" id="matching-canvas" style="overflow: visible;"></svg><script> (function() { const canvas = document.getElementById('matching-canvas'); const cards = document.querySelectorAll('[id^="card-"]'); const labels = document.querySelectorAll('[id^="label-"]'); let selectedSource = null; function drawLine(el1, el2) { const rect1 = el1.getBoundingClientRect(); const rect2 = el2.getBoundingClientRect(); const containerRect = canvas.getBoundingClientRect(); const x1 = rect1.left + rect1.width / 2 - containerRect.left; const y1 = rect1.bottom - containerRect.top; const x2 = rect2.left + rect2.width / 2 - containerRect.left; const y2 = rect2.top - containerRect.top; const line = document.createElementNS('http://www.w3.org/2000/svg', 'line'); line.setAttribute('x1', x1); line.setAttribute('y1', y1); line.setAttribute('x2', x2); line.setAttribute('y2', y2); line.setAttribute('stroke', '#999'); line.setAttribute('stroke-width', '2'); canvas.appendChild(line); } function handleSelection(el) { if (el.classList.contains('completed')) return; if (!selectedSource) { selectedSource = el; el.classList.add('ring-4', 'ring-brand-yellow'); } else { if (selectedSource.dataset.match === el.dataset.match && selectedSource !== el) { drawLine(selectedSource, el); [selectedSource, el].forEach(item => { item.classList.remove('ring-4', 'ring-brand-yellow'); item.classList.add('completed', 'opacity-70', 'border-green-500', 'border-2'); item.style.pointerEvents = 'none'; }); selectedSource = null; } else { [selectedSource, el].forEach(item => { item.classList.add('animate-shake', 'border-red-500'); setTimeout(() => { item.classList.remove('animate-shake', 'border-red-500', 'ring-4', 'ring-brand-yellow'); }, 500); }); selectedSource = null; } } } cards.forEach(c => c.addEventListener('click', () => handleSelection(c))); labels.forEach(l => l.addEventListener('click', () => handleSelection(l))); window.addEventListener('resize', () => { canvas.innerHTML = ''; }); })(); </script><style> @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } } .animate-shake { animation: shake 0.2s ease-in-out 0s 2; } </style></div>
-</section>
+</div>
+<!-- Botón siguiente: visible solo cuando las 3 parejas están resueltas -->
+<button class="hidden next-btn" id="nextBtn" onclick="goNext()">Siguiente</button>
+</div>
 </main>
+<script data-purpose="matching-game">
+  /* Emparejar por toque/clic, como en la versión anterior, pero ahora las
+     respuestas correctas se pintan del MISMO COLOR (una por pareja) en lugar
+     de dibujar líneas. Al completar las 3 parejas se muestra SIGUIENTE + confeti. */
+  (function () {
+    const cards = document.querySelectorAll('[id^="card-"]');
+    const labels = document.querySelectorAll('[id^="label-"]');
+    const nextBtn = document.getElementById('nextBtn');
+    const PAIR_CLASS = { 'CDT': 'pair-cdt', 'FIC': 'pair-fic', 'Acciones': 'pair-acciones' };
+    const totalPairs = 3;
+    let selectedSource = null;
+    let matchedCount = 0;
+
+    function createConfetti(x, y) {
+      const colors = ['#EE4599', '#DE7A8F', '#E7C11F', '#91DA26'];
+      for (let i = 0; i < 30; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('confetti-particle');
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        const size = Math.random() * 8 + 6;
+        const angle = Math.random() * Math.PI * 2;
+        const velocity = Math.random() * 120 + 40;
+        const tx = Math.cos(angle) * velocity;
+        const ty = Math.sin(angle) * velocity + 30;
+        const rot = Math.random() * 360;
+        particle.style.width = size + 'px';
+        particle.style.height = size + 'px';
+        particle.style.backgroundColor = color;
+        particle.style.left = x + 'px';
+        particle.style.top = y + 'px';
+        particle.style.borderRadius = '50%';
+        particle.style.setProperty('--tx', tx + 'px');
+        particle.style.setProperty('--ty', ty + 'px');
+        particle.style.setProperty('--rot', rot + 'deg');
+        document.body.appendChild(particle);
+        setTimeout(() => particle.remove(), 800);
+      }
+    }
+
+    function paintPair(el1, el2) {
+      const pairClass = PAIR_CLASS[el1.dataset.match];
+      [el1, el2].forEach(item => {
+        item.classList.remove('selected-match');
+        item.classList.add('matched', pairClass);
+        item.style.pointerEvents = 'none';
+      });
+    }
+
+    function handleSelection(el) {
+      if (el.classList.contains('matched')) return;
+      if (!selectedSource) {
+        selectedSource = el;
+        el.classList.add('selected-match');
+        return;
+      }
+      const src = selectedSource;
+      if (src === el) {
+        src.classList.remove('selected-match');
+        selectedSource = null;
+        return;
+      }
+      if (src.dataset.match === el.dataset.match) {
+        paintPair(src, el);
+        matchedCount++;
+        selectedSource = null;
+        if (matchedCount === totalPairs) {
+          nextBtn.classList.remove('hidden');
+          const rect = el.getBoundingClientRect();
+          createConfetti(rect.left + rect.width / 2, rect.top + rect.height / 2);
+          createConfetti(rect.left + rect.width / 2, rect.top - 40);
+        }
+      } else {
+        [src, el].forEach(item => {
+          item.classList.remove('selected-match');
+          item.classList.add('animate-shake', 'wrong-flash');
+          setTimeout(() => item.classList.remove('animate-shake', 'wrong-flash'), 500);
+        });
+        selectedSource = null;
+      }
+    }
+
+    cards.forEach(c => c.addEventListener('click', () => handleSelection(c)));
+    labels.forEach(l => l.addEventListener('click', () => handleSelection(l)));
+  })();
+</script>
+<script data-purpose="go-next">
+  function goNext() {
+    window.location.href = 'pistasvolver2.html';
+  }
+</script>
 <!-- END: Main Content Area -->
 <!-- BEGIN: Floating Action Button -->
 <!-- END: Floating Action Button -->

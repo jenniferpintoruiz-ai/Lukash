@@ -147,7 +147,7 @@
         html.dark #desktopCategoriasMenu > div { background-color: rgba(30,20,70,0.95) !important; color: #EEE8E0; }
         html.dark #desktopCategoriasMenu a { color: #EEE8E0; }
 
-        /* ===== Animaciones secuenciales de pistasvolver1 ===== */
+        /* ===== Animaciones secuenciales de pistasvolver2 ===== */
         .type-text { color: #180F43; text-align: center; }
         #typingFull strong { font-weight: 800; }
         .type-caret {
@@ -276,11 +276,11 @@
                     Pero antes que nada toma nota de esta cifra que necesitarás más adelante
                 </p>
 </div>
-<!-- Right Bubble: la imagen detrasdelnumero.png va completa detrás del número 100 -->
+<!-- Right Bubble: la imagen detrasdelnumero.png va completa detrás del número 022 -->
 <div class="hidden absolute right-0 bottom-0 w-40 h-40 md:w-52 md:h-52 z-30" id="cienBubble" style="transform: rotate(12deg);">
-<img alt="Fondo del número 100" class="absolute inset-0 w-full h-full object-contain" src="images/detrasdelnumero.png">
+<img alt="Fondo del número 022" class="absolute inset-0 w-full h-full object-contain" src="images/detrasdelnumero.png">
 <div class="absolute inset-0 flex items-center justify-center font-display-lg leading-none" style="color: #180F43; font-size: clamp(3rem, 10vw, 4.6rem);">
-                    100
+                    022
                 </div>
 </div>
 </div>
@@ -394,14 +394,12 @@
      1) Se escribe TODO el texto del recuadro verde en un solo contenedor.
      2) Al terminar desaparece el cursor.
      3) Mostrar la tarjeta "Pero antes que nada toma nota de esta cifra...".
-     4) Mostrar el número 100 con animación.
+     4) Mostrar el número 022 con animación.
      5) Mostrar el botón VOLVER (verde). */
   (function () {
     // El texto se escribe en un único contenedor; la pregunta va en negrilla
     var segments = [
-      { text: 'Ahora que sabes que invertir está al alcance, debes descubrir: ', bold: false },
-      { text: '¿dónde puede invertir una persona su dinero?', bold: true },
-      { text: ' Reúne las pistas y explora las diferentes opciones de inversión para convertirte en un experto financiero.', bold: false }
+      { text: 'No todas las inversiones están en bancos o fondos. Algunas personas invierten comprando algo que luego les permite ganar más dinero.', bold: false }
     ];
     var chars = [];
     var fullLength = 0;

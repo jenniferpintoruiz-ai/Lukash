@@ -355,7 +355,11 @@
 <div class="fixed inset-0 z-[100] bg-black bg-opacity-70 flex justify-center items-center transition-opacity duration-300 opacity-0 pointer-events-none" id="resolverModal">
 <div class="bg-[#180F43] rounded-3xl p-8 md:p-12 max-w-[90%] w-[450px] text-center relative shadow-[0_0_40px_rgba(238,69,153,0.4)] transform transition-transform duration-300 scale-95" id="modalContent" style="background-color: rgb(247, 239, 208); color: rgb(24, 15, 67);">
 <button class="absolute -top-5 -right-5 w-12 h-12 bg-[#E7C11F] rounded-full text-[#180F43] font-['Fredoka'] font-bold text-2xl border-4 border-[#180F43] flex items-center justify-center hover:scale-110 transition-transform shadow-lg" onclick="closeModal()" style="background-color: rgb(131, 196, 40);">X</button>
-<p class="font-['Roboto'] text-xl md:text-2xl font-bold leading-relaxed m-0 text-[#180F43]">La suma de las cifras de las pistas obtenidas es…</p><div class="mt-8"><input class="w-full px-6 py-4 rounded-full bg-white border-none shadow-inner text-center text-[#180F43] font-bold text-xl focus:outline-none focus:ring-2 focus:ring-[#E7C11F]" placeholder="Escribe aqui la suma" type="text"></div>
+<p class="font-['Roboto'] text-xl md:text-2xl font-bold leading-relaxed m-0 text-[#180F43]">La suma de las cifras de las pistas obtenidas es…</p><div class="mt-8"><input class="w-full px-6 py-4 rounded-full bg-white border-none shadow-inner text-center text-[#180F43] font-bold text-xl focus:outline-none focus:ring-2 focus:ring-[#E7C11F]" id="answerInput" placeholder="Escribe aqui la suma" type="text" inputmode="numeric" autocomplete="off"></div>
+<!-- Botón Comprobar: aparece cuando el usuario escribe un número -->
+<button class="hidden mx-auto w-auto min-w-[180px] mt-5 bg-[#8AC346] text-white font-['Rubik'] font-bold uppercase rounded-full px-10 py-2.5 text-sm shadow-[0_5px_0_#5e8a2e] active:translate-y-1 active:shadow-none transition-all cursor-pointer" id="checkBtn" onclick="checkAnswer()">Comprobar</button>
+<!-- Mensaje de retroalimentación amable -->
+<p class="hidden mt-5 font-['Roboto'] font-bold text-base md:text-lg leading-snug rounded-2xl px-4 py-3" id="answerFeedback"></p>
 </div>
 </div>
 <script>
@@ -382,6 +386,52 @@ function closeModal() {
             modalContent.classList.remove('scale-100');
             modalContent.classList.add('scale-95');
         }
+
+        // Muestra el botón COMPROBAR en cuanto el usuario escribe un número
+        function onAnswerInput() {
+            const btn = document.getElementById('checkBtn');
+            const feedback = document.getElementById('answerFeedback');
+            const hasValue = document.getElementById('answerInput').value.trim().length > 0;
+            btn.classList.toggle('hidden', !hasValue);
+            feedback.classList.add('hidden');
+        }
+
+        // Valida la suma de las cifras de las pistas (Pista 1 = 100, Pista 2 = 022 → 122)
+        function checkAnswer() {
+            const input = document.getElementById('answerInput');
+            const feedback = document.getElementById('answerFeedback');
+            const value = (input.value || '').replace(/[^0-9]/g, ''); // solo dígitos
+
+            if (value === '') {
+                feedback.classList.remove('hidden');
+                feedback.classList.remove('bg-[#95EC2F]', 'text-[#180F43]');
+                feedback.classList.add('bg-[#FFE2E2]', 'text-[#B3261E]');
+                feedback.textContent = 'Escribe un número para poder comprobar tu respuesta.';
+                return;
+            }
+
+            if (value === '122') {
+                feedback.textContent = '¡Correcto! 100 + 22 = 122. ¡Has resuelto el caso!';
+                feedback.classList.remove('hidden');
+                feedback.classList.remove('bg-[#FFE2E2]', 'text-[#B3261E]');
+                feedback.classList.add('bg-[#95EC2F]', 'text-[#180F43]');
+                document.getElementById('checkBtn').disabled = true;
+                setTimeout(function () {
+                    window.location.href = 'felicidades.html';
+                }, 1600);
+            } else {
+                input.value = '';
+                feedback.classList.remove('hidden');
+                feedback.classList.remove('bg-[#95EC2F]', 'text-[#180F43]');
+                feedback.classList.add('bg-[#FFE2E2]', 'text-[#B3261E]');
+                feedback.textContent = 'Vaya, esa no es la suma correcta. Recuerda los números que obtuviste en las pistas 1 y 2, súmalos y vuelve a intentarlo. ¡Tú puedes!';
+                document.getElementById('checkBtn').classList.add('hidden');
+                input.focus();
+            }
+        }
+
+        // Listener: detecta cuando el usuario escribe en el campo de respuesta
+        document.getElementById('answerInput').addEventListener('input', onAnswerInput);
     </script>
 <script data-purpose="menu-functionality">
     /* Menú móvil (drawer) y menú de categorías, igual que en index.html */

@@ -1,9 +1,9 @@
 <!DOCTYPE html><html lang="es" style=""><head>
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
-<title>Lukash - Pista Summary</title>
+<title>LUKA$H - Felicidades</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;family=Fredoka:wght@400;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;family=Fredoka:wght@400;600;700&amp;family=Roboto:wght@400;500;700&amp;family=Rubik:wght@600;700&amp;display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
 <script id="tailwind-config">
         tailwind.config = {
@@ -62,7 +62,8 @@
                         "lukash-pink": "#EE4599",
                         "lukash-bg-modal": "#F9F6F0",
                         "lukash-green": "#A7EB5D",
-                        "lukash-dark": "#180F43"
+                        "lukash-dark": "#180F43",
+                        "lukash-cream": "#FDF5D8"
                     },
                     "borderRadius": {
                         "DEFAULT": "1rem",
@@ -84,7 +85,8 @@
                         "display-lg": ["Eating Pasta", "Fredoka", "sans-serif"],
                         "headline-lg-mobile": ["Eating Pasta", "Fredoka", "sans-serif"],
                         "fredoka": ["Fredoka", "sans-serif"],
-                        "roboto": ["Roboto", "sans-serif"]
+                        "roboto": ["Roboto", "sans-serif"],
+                        "rubik": ["Rubik", "sans-serif"]
                     },
                     "fontSize": {
                         "label-bold": ["14px", { "lineHeight": "1.2", "fontWeight": "700" }],
@@ -99,31 +101,6 @@
         }
     </script>
 <style>
-        @font-face {
-            font-family: 'Eating Pasta';
-            src: local('Eating Pasta');
-            font-display: swap;
-        }
-        .neo-pop-shadow {
-            box-shadow: 4px 6px 0px 0px rgba(0, 0, 0, 1);
-        }
-        .neo-pop-shadow-white {
-            box-shadow: -4px 6px 0px 0px rgba(255, 255, 255, 1);
-        }
-        .btn-press:active {
-            transform: translateY(4px);
-            box-shadow: 0px 0px 0px 0px rgba(0,0,0,1);
-        }
-        .glass-card {
-            background: rgba(238, 232, 224, 0.8);
-            backdrop-filter: blur(10px);
-        }
-        .organic-bg {
-            background: radial-gradient(circle at 100% 100%, #ecc228 0%, #ecc228 35%, transparent 35%),
-                        radial-gradient(circle at 50% 20%, #dc6d8d 0%, #dc6d8d 40%, transparent 50%),
-                        linear-gradient(135deg, #0b0b3e 0%, #18194b 100%);
-        }
-
         /* ===== Barra superior estilo index.html (header + tema) ===== */
         .theme-toggle { cursor: pointer; transition: transform 0.15s ease-in-out; }
         .theme-toggle:active { transform: scale(0.9); }
@@ -132,7 +109,7 @@
         html.dark .theme-toggle .icon-moon { display: none; }
         html.dark .theme-toggle .icon-sun { display: block; }
         html body { background-color: #f7efd0 !important; background-image: none !important; }
-        html.dark body { background-image: url("images/fondo_.png") !important; background-size: cover !important; background-position: center !important; background-repeat: no-repeat !important; background-attachment: fixed !important; }
+        html.dark body { background-image: url("images/fondo_.png") !important; background-size: cover !important; background-position: center !important; background-repeat: no-repeat !important; background-attachment: fixed !important; color: #EEE8E0; }
         html:not(.dark) #main-header { background-color: #211941 !important; color: #EEE8E0; border-color: rgba(231,193,31,0.4); }
         html:not(.dark) #main-header svg * { stroke: #EEE8E0; }
         html:not(.dark) #main-header .text-lukash-dark { color: #EEE8E0; }
@@ -147,52 +124,148 @@
         html.dark #desktopCategoriasMenu > div { background-color: rgba(30,20,70,0.95) !important; color: #EEE8E0; }
         html.dark #desktopCategoriasMenu a { color: #EEE8E0; }
 
-        /* ===== Animaciones secuenciales de pistasvolver1 ===== */
-        .type-text { color: #180F43; text-align: center; }
-        #typingFull strong { font-weight: 800; }
-        .type-caret {
-            display: inline-block;
-            width: 2px;
-            height: 1.05em;
-            margin-left: 2px;
-            vertical-align: text-bottom;
-            background-color: #180F43;
-            animation: caret-blink 1s steps(2, start) infinite;
-        }
-        @keyframes caret-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-
-        .fade-in-up { animation: fadeInUp 0.9s ease both; }
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(22px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .slide-in-left { animation: slideInLeft 1.1s ease both; }
-        @keyframes slideInLeft {
-            from { opacity: 0; transform: translateX(-40px) rotate(-8deg); }
-            to { opacity: 1; transform: translateX(0) rotate(-6deg); }
-        }
-        .pop-in { animation: popIn 1s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
-        @keyframes popIn {
-            0% { opacity: 0; transform: scale(0.3) rotate(12deg); }
-            60% { opacity: 1; transform: scale(1.12) rotate(12deg); }
-            100% { opacity: 1; transform: scale(1) rotate(12deg); }
+        /* ===== Cuerpo principal ===== */
+        body {
+            min-height: 100vh;
+            margin: 0;
+            overflow-x: hidden;
+            font-family: 'Roboto', sans-serif;
         }
 
-        /* Botón VOLVER verde estilo resolver de pistas.html */
-        .volver-btn {
-            background-color: #88C146;
+        /* ===== Tarjeta central crema estilo "sticker" ===== */
+        .cream-card {
+            background-color: #FDF5D8;
+            border-radius: 28px;
+            box-shadow: 0 10px 0px 0px rgba(0,0,0,0.2), inset 1px 1px 0px rgba(255,255,255,0.8);
+            transform: perspective(1000px) rotateY(-1deg);
+            border: 2px solid rgba(0,0,0,0.1);
+        }
+
+        /* ===== Cintas marquesina (los "gifs") de extremo a extremo, SIN degradado ===== */
+        .marquee-tape {
+            position: absolute;
+            width: 110vw;
+            left: 50%;
+            z-index: 10;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            pointer-events: none;
+        }
+        .marquee-tape-top { transform: translateX(-50%) rotate(-3deg); top: -18px; }
+        .marquee-tape-bottom { transform: translateX(-50%) rotate(2.5deg); bottom: -55px; }
+
+        /* Fondo de la cinta: color sólido (sin degradado) */
+        .marquee-bg {
+            background-color: #E7C11F;
+        }
+        /* Modo oscuro: la cinta usa el fondo crema claro (f7efd0) */
+        html.dark .marquee-bg {
+            background-color: #f7efd0;
+        }
+
+        /* Contenido animado: dos grupos idénticos para un loop perfecto */
+        .animate-marquee {
+            display: flex;
+            width: max-content;
+            animation: marquee 14s linear infinite;
+            will-change: transform;
+        }
+        .animate-marquee-reverse { animation-direction: reverse; }
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Cada grupo abraza su contenido, nada se recorta en los bordes */
+        .marquee-group {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: clamp(1.25rem, 4vw, 2.5rem);
+            padding: 0.7rem clamp(1rem, 4vw, 2rem);
+            box-sizing: border-box;
+            width: max-content;
+            flex-shrink: 0;
+        }
+        .marquee-group img.star-img {
+            height: clamp(1.5rem, 4vw, 2.2rem);
+            width: auto;
+            flex-shrink: 0;
+        }
+        .ribbon-text {
             font-family: 'Fredoka', sans-serif;
-            box-shadow: 0 8px 0 #5E8A2E;
+            font-weight: 700;
+            font-size: clamp(1.25rem, 4vw, 2.1rem);
+            color: #180F43;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+        @media (max-width: 640px) {
+            .marquee-group { gap: clamp(0.9rem, 3vw, 1.4rem); padding: 0.5rem clamp(0.6rem, 3vw, 1rem); }
+        }
+
+        /* ===== Botones interactivos estilo del sitio (rosa #e43888, tipo "SIGUIENTE") ===== */
+        .btn-3d {
+            background-color: #e43888;
             border-radius: 20px;
+            box-shadow: 0 5px 0 #ab2a66;
             transition: transform 0.1s, box-shadow 0.1s;
+            color: #FFFFFF;
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 700;
+            font-size: clamp(14px, 2vw, 16px);
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+            cursor: pointer;
+            position: relative;
+            z-index: 30;
+            pointer-events: auto;
         }
-        .volver-btn:active {
-            transform: translateY(4px);
-            box-shadow: 0 4px 0 #5E8A2E;
+        .btn-3d:active { transform: translateY(3px); box-shadow: 0 2px 0 #ab2a66; }
+
+        /* ===== Mascota flotante (estrella) ===== */
+        .levitate { animation: float 3s ease-in-out infinite; }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-12px) scale(1.03); }
         }
+
+        /* ===== Confeti ===== */
+        .confetti-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 18px;
+            top: -20px;
+            animation: fall linear infinite;
+        }
+        @keyframes fall {
+            to { transform: translateY(105vh) rotate(720deg); }
+        }
+
+        /* ===== Chat flotante ===== */
+        .chat-window {
+            transform-origin: bottom right;
+            transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .chat-window.hidden-chat { transform: scale(0); opacity: 0; pointer-events: none; }
+        .chat-window.active-chat { transform: scale(1); opacity: 1; pointer-events: auto; }
     </style>
 </head>
-<body class="font-roboto text-slate-800 min-h-screen flex flex-col" style="margin: 0px;">
+<body class="flex flex-col relative min-h-screen">
+<!-- Confetti Canvas Background -->
+<div class="confetti-container z-50" id="confetti-container"></div>
+
 <!-- BEGIN: MainHeader -->
 <header class="fixed top-0 left-0 right-0 bg-lukash-yellow w-full h-16 flex items-center justify-between px-4 z-50 border-b-4 border-black/10 transition-opacity duration-100" id="main-header">
 <!-- Menu Icon -->
@@ -262,52 +335,199 @@
 </div>
 </div>
 <!-- END: Mobile Menu Drawer -->
-<!-- Main Content Area -->
-<main class="flex-1 flex flex-col items-center justify-center p-container-padding max-w-lg mx-auto w-full relative z-10 gap-8">
-<!-- Instructions Card -->
-<section class="glass-card w-full rounded-[3rem] p-8 text-center mt-12 backdrop-blur-lg shadow-xl" style="background-color: rgb(177, 208, 124); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.3); opacity: 0.8;">
-<div class="font-body-lg text-body-lg type-text" id="typingFull" style="min-height: 8em;"><span class="type-caret"></span></div>
-</section>
-<!-- Floating Elements Area -->
-<div class="w-full relative h-56 md:h-60 my-8">
-<!-- Left Card -->
-<div class="hidden absolute left-0 top-0 -rotate-6 w-1/2 bg-white/90 rounded-2xl p-4 neo-pop-shadow z-20 text-surface-container-lowest shadow-[0_4px_0_0_rgba(0,0,0,0.2)]" id="cifraCard">
-<p class="font-label-bold text-label-bold text-center" style="color: #180F43;">
-                    Pero antes que nada toma nota de esta cifra que necesitarás más adelante
-                </p>
+
+<!-- Main Canvas -->
+<main class="flex-1 flex flex-col items-center justify-center px-4 py-12 relative z-20 w-full max-w-md mx-auto mt-16">
+<!-- Central Card Frame -->
+<div class="relative w-full my-auto">
+<!-- Top Tape Banner (gif) -->
+<div class="marquee-tape marquee-tape-top">
+<div class="marquee-bg">
+<div class="animate-marquee">
+<div class="marquee-group" role="group" aria-label="Banda felicidades">
+
+<span class="ribbon-text">FELICIDADES</span>
+<img class="star-img" src="images/estrella.png" alt="">
+
+<span class="ribbon-text">FELICIDADES</span>
+<img class="star-img" src="images/estrella.png" alt="">
+
+<span class="ribbon-text">FELICIDADES</span>
+<img class="star-img" src="images/estrella.png" alt="">
+
+<span class="ribbon-text">FELICIDADES</span>
+<img class="star-img" src="images/estrella.png" alt="">
+
+<span class="ribbon-text">FELICIDADES</span>
+<img class="star-img" src="images/estrella.png" alt="">
+
+<span class="ribbon-text">FELICIDADES</span>
+<img class="star-img" src="images/estrella.png" alt="">
+
+<span class="ribbon-text">FELICIDADES</span>
+<img class="star-img" src="images/estrella.png" alt="">
+
+<span class="ribbon-text">FELICIDADES</span>
+<img class="star-img" src="images/estrella.png" alt="">
+
+<span class="ribbon-text">FELICIDADES</span>
+<img class="star-img" src="images/estrella.png" alt="">
+
+<span class="ribbon-text">FELICIDADES</span>
+<img class="star-img" src="images/estrella.png" alt="">
 </div>
-<!-- Right Bubble: la imagen detrasdelnumero.png va completa detrás del número 100 -->
-<div class="hidden absolute right-0 bottom-0 w-40 h-40 md:w-52 md:h-52 z-30" id="cienBubble" style="transform: rotate(12deg);">
-<img alt="Fondo del número 100" class="absolute inset-0 w-full h-full object-contain" src="images/detrasdelnumero.png">
-<div class="absolute inset-0 flex items-center justify-center font-display-lg leading-none" style="color: #180F43; font-size: clamp(3rem, 10vw, 4.6rem);">
-                    100
-                </div>
+<div class="marquee-group" role="group" aria-label="Banda felicidades">
+
+<span class="ribbon-text">FELICIDADES</span>
+<img class="star-img" src="images/estrella.png" alt="">
+
+<span class="ribbon-text">FELICIDADES</span>
+<img class="star-img" src="images/estrella.png" alt="">
+
+<span class="ribbon-text">FELICIDADES</span>
+<img class="star-img" src="images/estrella.png" alt="">
+
+<span class="ribbon-text">FELICIDADES</span>
+<img class="star-img" src="images/estrella.png" alt="">
+
+<span class="ribbon-text">FELICIDADES</span>
+<img class="star-img" src="images/estrella.png" alt="">
+
+<span class="ribbon-text">FELICIDADES</span>
+<img class="star-img" src="images/estrella.png" alt="">
+
+<span class="ribbon-text">FELICIDADES</span>
+<img class="star-img" src="images/estrella.png" alt="">
+
+<span class="ribbon-text">FELICIDADES</span>
+<img class="star-img" src="images/estrella.png" alt="">
+
+<span class="ribbon-text">FELICIDADES</span>
+<img class="star-img" src="images/estrella.png" alt="">
+
+<span class="ribbon-text">FELICIDADES</span>
+<img class="star-img" src="images/estrella.png" alt="">
 </div>
 </div>
-<!-- Action Button: aparece al final de la animación y vuelve a pistas.html activando el pulso de PISTA 2 -->
-<a class="hidden volver-btn font-headline-lg-mobile text-headline-lg-mobile uppercase py-4 px-12 transition-all rounded-2xl text-white shadow-xl inline-block mx-auto" style="text-decoration: none;" href="pistas.html?pista2=pulse">
-            VOLVER
-        </a>
+</div>
+</div>
+<!-- Cream 3D Main Card -->
+<div class="cream-card w-full p-6 sm:p-8 pt-8 flex flex-col items-center relative z-10 pointer-events-auto">
+<!-- Mascot Illustration (estrella) -->
+<h1 class="text-3xl sm:text-4xl text-black font-fredoka font-bold text-center mb-4 mt-3 leading-tight">
+¡FELICIDADES,<br>DETECTIVE FINANCIERO!
+</h1>
+<p class="text-sm sm:text-base text-gray-800 text-center mb-6 font-medium leading-relaxed max-w-xs">
+Has reunido las pistas, resuelto los casos y dado tus primeros pasos en el mundo de la inversión. Acabas de desbloquear nuevos elementos para tu perfil.
+</p>
+<!-- Interactive 3D Action Buttons -->
+<div class="flex flex-col gap-3.5 relative z-30 max-w-xs mx-auto w-full">
+<button class="btn-3d w-full py-2 px-3 text-center uppercase" id="btnPerfil">PERSONALIZA TU PERFIL</button>
+<button class="btn-3d w-full py-2 px-3 text-center uppercase" id="btnIA">CONSULTAR A LA IA</button>
+<button class="btn-3d w-full py-2 px-3 text-center uppercase" id="btnCategoria">OTRA CATEGORIA</button>
+</div>
+</div>
+<!-- Bottom Tape Banner (gif) -->
+<div class="marquee-tape marquee-tape-bottom">
+<div class="marquee-bg">
+<div class="animate-marquee animate-marquee-reverse">
+<div class="marquee-group" role="group" aria-label="Banda felicidades">
+
+<span class="ribbon-text">FELICIDADES</span>
+<img class="star-img" src="images/estrella.png" alt="">
+
+<span class="ribbon-text">FELICIDADES</span>
+<img class="star-img" src="images/estrella.png" alt="">
+
+<span class="ribbon-text">FELICIDADES</span>
+<img class="star-img" src="images/estrella.png" alt="">
+
+<span class="ribbon-text">FELICIDADES</span>
+<img class="star-img" src="images/estrella.png" alt="">
+
+<span class="ribbon-text">FELICIDADES</span>
+<img class="star-img" src="images/estrella.png" alt="">
+
+<span class="ribbon-text">FELICIDADES</span>
+<img class="star-img" src="images/estrella.png" alt="">
+
+<span class="ribbon-text">FELICIDADES</span>
+<img class="star-img" src="images/estrella.png" alt="">
+
+<span class="ribbon-text">FELICIDADES</span>
+<img class="star-img" src="images/estrella.png" alt="">
+
+<span class="ribbon-text">FELICIDADES</span>
+<img class="star-img" src="images/estrella.png" alt="">
+
+<span class="ribbon-text">FELICIDADES</span>
+<img class="star-img" src="images/estrella.png" alt="">
+</div>
+<div class="marquee-group" role="group" aria-label="Banda felicidades">
+
+<span class="ribbon-text">FELICIDADES</span>
+<img class="star-img" src="images/estrella.png" alt="">
+
+<span class="ribbon-text">FELICIDADES</span>
+<img class="star-img" src="images/estrella.png" alt="">
+
+<span class="ribbon-text">FELICIDADES</span>
+<img class="star-img" src="images/estrella.png" alt="">
+
+<span class="ribbon-text">FELICIDADES</span>
+<img class="star-img" src="images/estrella.png" alt="">
+
+<span class="ribbon-text">FELICIDADES</span>
+<img class="star-img" src="images/estrella.png" alt="">
+
+<span class="ribbon-text">FELICIDADES</span>
+<img class="star-img" src="images/estrella.png" alt="">
+
+<span class="ribbon-text">FELICIDADES</span>
+<img class="star-img" src="images/estrella.png" alt="">
+
+<span class="ribbon-text">FELICIDADES</span>
+<img class="star-img" src="images/estrella.png" alt="">
+
+<span class="ribbon-text">FELICIDADES</span>
+<img class="star-img" src="images/estrella.png" alt="">
+
+<span class="ribbon-text">FELICIDADES</span>
+<img class="star-img" src="images/estrella.png" alt="">
+</div>
+</div>
+</div>
+</div>
+</div>
 </main>
-<!-- Floating Action Button (Piggy Bank) -->
-<button aria-label="Savings" class="fixed bottom-8 right-8 bg-primary text-on-primary w-16 h-16 rounded-full flex items-center justify-center border-2 border-black neo-pop-shadow btn-press transition-all z-50">
-<span class="material-symbols-outlined text-3xl" data-icon="savings">savings</span>
+
+<!-- Floating Action Button (FAB) & Chat Assistant -->
+<div class="fixed bottom-6 right-6 z-50">
+<button class="w-16 h-16 bg-lukash-pink rounded-full flex items-center justify-center shadow-[0px_4px_0px_0px_rgba(87,0,50,1)] hover:scale-105 active:scale-95 transition-all border-2 border-black" id="fab-chat">
+<span class="material-symbols-outlined text-white" style="font-size: 32px;">chat</span>
 </button>
-
-
-
-
-
-
-
-
-
-
-
-
-
+<!-- Chat Modal Window -->
+<div class="chat-window absolute bottom-0 right-0 w-80 h-96 bg-white rounded-2xl shadow-2xl border-4 border-lukash-pink flex flex-col overflow-hidden hidden-chat" id="chat-window">
+<div class="bg-lukash-yellow p-4 flex justify-between items-center border-b-2 border-black">
+<h3 class="font-fredoka font-bold text-lg text-lukash-dark">Asistente LUKA$H</h3>
+<button class="text-black font-bold text-xl hover:text-lukash-pink" id="close-chat">✕</button>
+</div>
+<div class="flex-1 p-4 overflow-y-auto flex flex-col space-y-3 bg-lukash-bg-modal" id="chat-messages">
+<div class="bg-white text-lukash-dark p-3 rounded-lg rounded-tl-none max-w-[85%] shadow-sm border border-gray-200">
+<p class="text-sm">¡Hola! 🐷 Soy tu asistente LUKA$H. ¡Felicidades por completar el caso financiero!</p>
+</div>
+</div>
+<form class="p-3 bg-white border-t border-gray-200 flex space-x-2" id="chat-form">
+<input class="flex-1 rounded-full px-4 py-2 border border-gray-300 text-sm focus:outline-none focus:border-lukash-pink" placeholder="Haz una pregunta..." required="" type="text">
+<button class="bg-lukash-pink text-white rounded-full p-2 w-10 h-10 flex items-center justify-center hover:bg-[#d63a8a] transition-colors" type="submit">
+<span class="material-symbols-outlined" style="font-size: 20px;">send</span>
+</button>
+</form>
+</div>
+</div>
 
 <script data-purpose="menu-functionality">
+    /* Menú móvil (drawer) y menú de categorías, igual que en index.html */
     const menuBtn = document.getElementById('menuBtn');
     const mobileMenu = document.getElementById('mobileMenu');
     const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
@@ -339,6 +559,7 @@
     closeMenuBtn.addEventListener('click', closeMenu);
     mobileMenuOverlay.addEventListener('click', closeMenu);
 
+    // Desktop Categorias dropdown toggle
     const desktopCategorias = document.getElementById('desktopCategorias');
     const desktopCategoriasBtn = document.getElementById('desktopCategoriasBtn');
     const desktopCategoriasMenu = document.getElementById('desktopCategoriasMenu');
@@ -360,6 +581,7 @@
       if (!desktopCategorias.contains(e.target)) toggleDesktopMenu(false);
     });
 
+    // Mobile Categorias dropdown toggle
     const mobileCategoriasBtn = document.getElementById('mobileCategoriasBtn');
     const mobileCategoriasMenu = document.getElementById('mobileCategoriasMenu');
     const mobileCategoriasArrow = document.getElementById('mobileCategoriasArrow');
@@ -389,86 +611,64 @@
     });
   })();
 </script>
-<script data-purpose="secuencia-animacion">
-  /* Animación secuencial lenta con efecto máquina de escribir:
-     1) Se escribe TODO el texto del recuadro verde en un solo contenedor.
-     2) Al terminar desaparece el cursor.
-     3) Mostrar la tarjeta "Pero antes que nada toma nota de esta cifra...".
-     4) Mostrar el número 100 con animación.
-     5) Mostrar el botón VOLVER (verde). */
-  (function () {
-    // El texto se escribe en un único contenedor; la pregunta va en negrilla
-    var segments = [
-      { text: 'Ahora que sabes que invertir está al alcance, debes descubrir: ', bold: false },
-      { text: '¿dónde puede invertir una persona su dinero?', bold: true },
-      { text: ' Reúne las pistas y explora las diferentes opciones de inversión para convertirte en un experto financiero.', bold: false }
-    ];
-    var chars = [];
-    var fullLength = 0;
-    segments.forEach(function (seg) {
-      seg.text.split('').forEach(function (ch) {
-        chars.push({ ch: ch, bold: seg.bold });
-      });
-      fullLength += seg.text.length;
-    });
+<script data-purpose="felicidades-logic">
+  // 1. Confetti dinámico
+  const colors = ['#f94ea2', '#8DC63F', '#f2cc2c', '#EE4599'];
+  const container = document.getElementById('confetti-container');
+  container.innerHTML = '';
+  for (let i = 0; i < 16; i++) {
+    const confetti = document.createElement('div');
+    confetti.classList.add('confetti');
+    confetti.style.left = Math.random() * 100 + 'vw';
+    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    confetti.style.animationDuration = Math.random() * 3 + 2.5 + 's';
+    confetti.style.animationDelay = Math.random() * 2 + 's';
+    container.appendChild(confetti);
+  }
 
-    var typeEl = document.getElementById('typingFull');
-    var cifraCard = document.getElementById('cifraCard');
-    var cienBubble = document.getElementById('cienBubble');
-    var volverBtn = document.querySelector('.volver-btn');
+  // 2. Botones principales
+  document.getElementById('btnPerfil').addEventListener('click', () => {
+    window.location.href = 'Registro.html';
+  });
+  document.getElementById('btnIA').addEventListener('click', () => {
+    document.getElementById('fab-chat').click();
+  });
+  document.getElementById('btnCategoria').addEventListener('click', () => {
+    window.location.href = 'index.html?intro=1';
+  });
 
-    var speed = 40; // ms por carácter: animación rápida
-
-    function sleep(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
-
-    function caret() { return '<span class="type-caret"></span>'; }
-
-    // Construye el HTML con la pregunta escrita dentro de <strong>
-    function renderHTML(pos) {
-      var html = '';
-      var inBold = false;
-      for (var i = 0; i < pos && i < chars.length; i++) {
-        var c = chars[i];
-        if (c.bold && !inBold) { html += '<strong>'; inBold = true; }
-        else if (!c.bold && inBold) { html += '</strong>'; inBold = false; }
-        html += c.ch;
-      }
-      if (inBold) html += '</strong>';
-      return html;
-    }
-
-    function typeInto(el) {
-      return new Promise(function (resolve) {
-        el.innerHTML = caret();
-        var pos = 0;
-        var timer = setInterval(function () {
-          pos++;
-          el.innerHTML = renderHTML(pos) + caret();
-          if (pos >= fullLength) {
-            clearInterval(timer);
-            // Al terminar se deja el texto completo SIN el cursor de escritura
-            el.innerHTML = renderHTML(fullLength);
-            resolve();
-          }
-        }, speed);
-      });
-    }
-
-    async function run() {
-      if (!typeEl) return;
-      await typeInto(typeEl);
-      await sleep(450);
-      cifraCard.classList.remove('hidden');
-      cifraCard.classList.add('slide-in-left');
-      await sleep(1300);
-      cienBubble.classList.remove('hidden');
-      cienBubble.classList.add('pop-in');
-      await sleep(1300);
-      volverBtn.classList.remove('hidden');
-      volverBtn.classList.add('fade-in-up');
-    }
-
-    run();
-  })();
+  // 3. Chat del asistente
+  const fabChat = document.getElementById('fab-chat');
+  const chatWindow = document.getElementById('chat-window');
+  const closeChat = document.getElementById('close-chat');
+  const chatForm = document.getElementById('chat-form');
+  const chatMessages = document.getElementById('chat-messages');
+  fabChat.addEventListener('click', () => {
+    chatWindow.classList.toggle('hidden-chat');
+    chatWindow.classList.toggle('active-chat');
+  });
+  closeChat.addEventListener('click', () => {
+    chatWindow.classList.add('hidden-chat');
+    chatWindow.classList.remove('active-chat');
+  });
+  chatForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const input = chatForm.querySelector('input');
+    const text = input.value.trim();
+    if (!text) return;
+    const userMsg = document.createElement('div');
+    userMsg.className = 'bg-lukash-pink text-white p-3 rounded-lg rounded-tr-none self-end max-w-[85%] shadow-sm';
+    userMsg.innerHTML = `<p class="text-sm">${text}</p>`;
+    chatMessages.appendChild(userMsg);
+    input.value = '';
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+    setTimeout(() => {
+      const botMsg = document.createElement('div');
+      botMsg.className = 'bg-white text-lukash-dark p-3 rounded-lg rounded-tl-none max-w-[85%] shadow-sm border border-gray-200';
+      botMsg.innerHTML = `<p class="text-sm">¡Excelente pregunta! Recuerda que al invertir la clave es diversificar y mantener la constancia. 🚀</p>`;
+      chatMessages.appendChild(botMsg);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }, 1000);
+  });
 </script>
 </body></html>
