@@ -1,0 +1,307 @@
+<!DOCTYPE html><html class="dark" lang="es" style="width: 390px; height: 804px; overflow: hidden; position: relative;"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Lukash - Presupuesto Mensual</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800;12..96,900&amp;family=Fredoka:wght@900&amp;family=Plus+Jakarta+Sans:wght@500;600;800&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-on-surface": "#30295c",
+                        "outline-variant": "#4d4633",
+                        "on-secondary-fixed-variant": "#8c0053",
+                        "surface-bright": "#393266",
+                        "on-primary-fixed-variant": "#554500",
+                        "on-primary-fixed": "#231b00",
+                        "on-secondary-fixed": "#3e0021",
+                        "tertiary-fixed": "#acf845",
+                        "surface-dim": "#13083e",
+                        "on-surface-variant": "#d0c6ad",
+                        "secondary": "#ffb0cd",
+                        "on-tertiary-fixed": "#102000",
+                        "on-error-container": "#ffdad6",
+                        "on-tertiary-fixed-variant": "#304f00",
+                        "surface-variant": "#352d61",
+                        "tertiary-container": "#8fd824",
+                        "error": "#ffb4ab",
+                        "surface": "#13083e",
+                        "primary-fixed": "#ffe178",
+                        "primary": "#ffde68",
+                        "primary-container": "#e7c11f",
+                        "on-secondary-container": "#ffc0d6",
+                        "on-error": "#690005",
+                        "on-background": "#e5deff",
+                        "surface-container-lowest": "#0d0339",
+                        "on-tertiary-container": "#375a00",
+                        "on-tertiary": "#203700",
+                        "surface-container-highest": "#352d61",
+                        "secondary-fixed-dim": "#ffb0cd",
+                        "on-primary-container": "#614f00",
+                        "surface-tint": "#e9c322",
+                        "outline": "#999079",
+                        "surface-container-high": "#2a2255",
+                        "secondary-fixed": "#ffd9e4",
+                        "surface-container-low": "#1b1346",
+                        "on-secondary": "#640039",
+                        "surface-container": "#1f174a",
+                        "tertiary-fixed-dim": "#92db27",
+                        "primary-fixed-dim": "#e9c322",
+                        "inverse-surface": "#e5deff",
+                        "background": "#13083e",
+                        "tertiary": "#aaf543",
+                        "on-surface": "#e5deff",
+                        "error-container": "#93000a",
+                        "inverse-primary": "#715d00",
+                        "secondary-container": "#af0068",
+                        "on-primary": "#3b2f00",
+                        "lukash-card-bg": "#F7F0A3",
+                        "lukash-bg": "#4A2E65",
+                        "lukash-yellow": "#FDE68A"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px",
+                        "lukash-card": "18px"
+                    },
+                    "spacing": {
+                        "base": "8px",
+                        "gutter": "16px",
+                        "card-gap": "12px",
+                        "container-padding": "20px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["Fredoka", "Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "label-bold": ["Fredoka", "Plus Jakarta Sans"],
+                        "headline-md-mobile": ["Bricolage Grotesque"],
+                        "display-lg": ["Fredoka", "Bricolage Grotesque"],
+                        "headline-md": ["Bricolage Grotesque"],
+                        "body-lg": ["Plus Jakarta Sans"],
+                        "playful": ["Fredoka", "sans-serif"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["12px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "1.5", "fontWeight": "500" }],
+                        "label-bold": ["14px", { "lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "900" }],
+                        "headline-md-mobile": ["20px", { "lineHeight": "1.2", "fontWeight": "700" }],
+                        "display-lg": ["32px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "900" }],
+                        "headline-md": ["24px", { "lineHeight": "1.2", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "1.5", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #4A2E65; /* Approximate background from image */
+            background-image: radial-gradient(circle at 15% 80%, rgba(53,45,97,1) 0%, rgba(74,46,101,1) 50%, rgba(74,46,101,1) 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Decorative stars/blobs - Using CSS shapes/gradients to mimic the image without relying on missing assets if possible, but placeholders requested */
+        .decorative-star-tr {
+            position: absolute;
+            top: 4rem;
+            right: 0;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, #EE4599 0%, transparent 70%);
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            transform: rotate(15deg) scale(1.5);
+            z-index: 0;
+            filter: drop-shadow(0 0 10px rgba(238, 69, 153, 0.5));
+        }
+
+        .decorative-star-bl {
+             position: absolute;
+             bottom: 0rem;
+             left: -2rem;
+             width: 120px;
+             height: 120px;
+             background: radial-gradient(circle, #ffde68 0%, transparent 70%);
+             clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+             transform: rotate(-15deg) scale(1.5);
+             z-index: 0;
+             filter: drop-shadow(0 0 10px rgba(255, 222, 104, 0.5));
+        }
+
+
+        .card-scale-anim {
+            transition: transform 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .card-scale-anim.active {
+            transform: scale(1.12);
+        }
+
+        @media (min-width: 768px) {
+            .card-hover:hover {
+                transform: scale(1.04);
+            }
+        }
+    </style>
+</head>
+<body class="text-on-background font-body-md">
+<!-- Decorative Elements -->
+<div class="decorative-star-tr"></div>
+<div class="decorative-star-bl"></div>
+<!-- TopAppBar JSON Blueprint -->
+<header class="bg-lukash-yellow flex justify-between items-center w-full px-container-padding h-16 fixed top-0 z-50 shadow-md">
+<button class="text-black hover:bg-black/10 transition-colors rounded-full p-2 flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl font-bold">menu</span>
+</button>
+<h1 class="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 flex items-center justify-center"><img alt="LUKASH Logo" class="h-8 md:h-10 object-contain block" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA13jtGtoRHGoV0p8sC96x-ExCxDUETJG5sgy3wBVf1_NBGpUR6K3ePVaV26WgMUS4_UqOgzi9rMqo1uvQPe22UEY1XWyM2GSuCbj2GKfPyvygPXLxeDcO6NJmnLpJfaYfeS8nTickblwiYaKuBdFVSid-rf0OfvOaw0MtM0qig3iOT05ADh_zx_UPN_nkbjEdGOdbUnOfvjsGUzaZRU-Lk8QtZxfq96FlgfZ16gdIp4wCVLsghNro3grBVfPygCwxk-GM"></h1>
+<button class="text-black hover:bg-black/10 transition-colors rounded-full p-2 flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl" style="font-variation-settings: &quot;FILL&quot; 1;">account_circle</span>
+</button>
+</header>
+<!-- Main Content Canvas -->
+<main class="pt-24 pb-20 px-container-padding max-w-5xl mx-auto flex flex-col items-center relative z-10">
+<!-- Header Section -->
+<div class="text-center mb-8 w-full mt-4">
+<h2 class="text-display-lg md:text-display-lg font-playful font-black text-white uppercase mb-2 drop-shadow-md">
+                PRESUPUESTO MENSUAL
+            </h2>
+<div class="flex items-center justify-center text-display-lg font-playful font-black text-white drop-shadow-md">
+<span class="mr-2 text-primary">$</span>
+<!-- Editable currency input simulating the design -->
+<input class="bg-transparent border-none text-center text-display-lg font-playful font-black text-white focus:ring-0 focus:outline-none p-0 w-64 placeholder-white/50 bg-white/10 border-b-2 border-primary/50 rounded-lg px-4 py-1 focus:bg-white/20 focus:border-primary transition-colors" id="monthly-budget-input" placeholder="0" type="text" value="">
+</div>
+</div>
+<!-- 3x3 Grid Layout -->
+<div class="grid grid-cols-3 gap-card-gap w-full md:gap-gutter max-w-3xl">
+<!-- Card 1: PASAJES -->
+<div class="bg-lukash-card-bg rounded-lukash-card p-2 md:p-4 flex flex-col items-center justify-between text-center shadow-[0_4px_6px_-1px_rgba(0,0,0,0.15)] shadow-black/20 cursor-pointer card-scale-anim card-hover h-32 md:h-48" onclick="animateCard(this)">
+<div class="h-20 md:h-28 w-full flex items-center justify-center mb-1"><img class="h-full w-full object-contain drop-shadow-lg scale-125 scale-110" data-alt="A 3D stylized pink piggy bank riding a green classic Vespa scooter. The style is cute, playful, and maximalist, matching a gamified financial app UI. Soft studio lighting, yellow background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD7pJuxnAOGuE-12v0sgUa1ckLPEt0xTpoBulxgjFVb8ULH5U5MEcIqmiS3AFMTQggHCpsYEdGvK1xJ-qERugoDaBBSwLYjKlbmr8-TI4s_8Sn7k_esAE0ANeTdlnY-Dg8QF9jhWVW4HfEXGs9z_t4cfELUZP_kHRvAM19IvPtv9xbi8ocuCUUD8YTLhFxfIgO-CPRI4m31RW3ePNnYxNiJ2rGX4kFa5rdVsdIJNO7UjQhrgHLOCRzYQYIa5wqfXsd0a6E"></div>
+<div class="flex flex-col items-center justify-end flex-grow">
+<span class="text-surface-container-highest font-playful text-[10px] md:text-label-bold uppercase leading-tight font-black">PASAJES</span>
+
+</div>
+</div>
+<!-- Card 2: ALIMENTACION BASICA -->
+<div class="bg-lukash-card-bg rounded-lukash-card p-2 md:p-4 flex flex-col items-center justify-between text-center shadow-[0_4px_6px_-1px_rgba(0,0,0,0.15)] shadow-black/20 cursor-pointer card-scale-anim card-hover h-32 md:h-48" onclick="animateCard(this)">
+<div class="h-16 md:h-24 w-full flex items-center justify-center mb-2">
+<img class="h-full object-contain drop-shadow-lg scale-110" data-alt="A 3D stylized pink piggy bank pushing a shopping cart full of groceries like bread and vegetables. The style is cute, playful, and maximalist, matching a gamified financial app UI. Soft studio lighting, yellow background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCVl8kGHyU7ZeuJkb4xHilr9KXzd30fuy44MflxdrZlMaqjxbv9R4u2TR_QZGf4AcRP0dagDBApK14n5nouu6g9LnxjBgVECDptUIr2gkMQmNYazjHVSY57u-CGYmKPz_1MkdKvdy8XjXn4-lH7eGo3E1nNmGB2Rf0SVRlUaBFbFuu2C2SG18oDdhJ4J13y2f4tmYbVEHq_bWLC2krPzvadDxy3RxFE1Yd_BUr9Upa2LVVUeSuYtBlhaZIM8CkGjOGTGIc">
+</div>
+<div class="flex flex-col items-center justify-end flex-grow">
+<span class="text-surface-container-highest font-playful text-[10px] md:text-label-bold uppercase leading-tight font-black">ALIMENTACION<br>BASICA</span>
+
+</div>
+</div>
+<!-- Card 3: DATOS -->
+<div class="bg-lukash-card-bg rounded-lukash-card p-2 md:p-4 flex flex-col items-center justify-between text-center shadow-[0_4px_6px_-1px_rgba(0,0,0,0.15)] shadow-black/20 cursor-pointer card-scale-anim card-hover h-32 md:h-48" onclick="animateCard(this)">
+<div class="h-16 md:h-24 w-full flex items-center justify-center mb-2">
+<img alt="DATOS" class="h-full object-contain drop-shadow-lg scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvkESwDDczeuUt_gMfg8ivpChuxyvKSaAWP2KUKXuD_sZ5VN9iiVRJId1ZAUG7a0bxt7N3Lw6jB8LJBVS88OSm39nnQht8UfDSX2Uq8Vx0f4nyHzknK9fIearMyyBelHH6cA7RgNIWH5PXkpYBERkJhFRdQOpn9OrbLmpej-jRH9uX0vnYsssITgXRADeZy1nuMvXNtkYfdiuFJmuYhDH4pPn1rmzmLDAQv184XIwHeMweq0LcNq4ZZZ4ow-90e75oxsk">
+</div>
+<div class="flex flex-col items-center justify-end flex-grow">
+<span class="text-surface-container-highest font-playful text-[10px] md:text-label-bold uppercase leading-tight font-black">DATOS</span>
+
+</div>
+</div>
+<!-- Card 4: ROPA -->
+<div class="bg-lukash-card-bg rounded-lukash-card p-2 md:p-4 flex flex-col items-center justify-between text-center shadow-[0_4px_6px_-1px_rgba(0,0,0,0.15)] shadow-black/20 cursor-pointer card-scale-anim card-hover h-32 md:h-48" onclick="animateCard(this)">
+<div class="h-16 md:h-24 w-full flex items-center justify-center mb-2">
+<img class="h-full object-contain drop-shadow-lg scale-110" data-alt="A 3D stylized pink piggy bank wearing a polo shirt holding several colorful shopping bags. The style is cute, playful, and maximalist, matching a gamified financial app UI. Soft studio lighting, yellow background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPDsJD5VkBSr-lJsjqFyJvo_nD38B5hPE0xJeleBRDRLcHmFV0v5uZzpoyAvHbvcKNC17Ng62r6Z9Ze5tSwfqj8DUMaWYDcNC9xctSjQkXlPYuIEuGkTXfqMQNwNV6b12J3H6XX4sROvERrWHyNZ1vkBCcV4z0UmLK8Q6Dwqvv71tP_rMhv3Mk68rR2mlTmg-nrUUK6ltVmUZH_wMgtRr-jnuNscfvFnjEP1MAhlyYRBxV0JDvNZTdVOTlgY5CiA8-gCE">
+</div>
+<div class="flex flex-col items-center justify-end flex-grow">
+<span class="text-surface-container-highest font-playful text-[10px] md:text-label-bold uppercase leading-tight font-black">ROPA</span>
+
+</div>
+</div>
+<!-- Card 5: SUSCRIPCIONES -->
+<div class="bg-lukash-card-bg rounded-lukash-card p-2 md:p-4 flex flex-col items-center justify-between text-center shadow-[0_4px_6px_-1px_rgba(0,0,0,0.15)] shadow-black/20 cursor-pointer card-scale-anim card-hover h-32 md:h-48" onclick="animateCard(this)">
+<div class="h-16 md:h-24 w-full flex items-center justify-center mb-2 relative">
+<img alt="SUSCRIPCIONES" class="h-full object-contain drop-shadow-lg scale-125" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEoHt8GeyivlV0mFRT9fYcNWE_FNT62Y9IueirZYt2N8QL3AcEOk_CsWpw_q3NwFAlNzGZoiIYUt-ESe-obNQdOIL_O3FNc-wanBuL7VvSy8uQ15oa0wZ7XobUH3OtiD4wMoaJ3TCVI9K5WtksJuXhS2krkrFIexBNQ26MKXVcadKI8gm4-6zqGlweWKD0KAZ4_5aSwPMIOeYJ7xxSTixMqN_DaB4tAjzCBzkFx_7JaM_yCtBrejEg68YnPcfJycQQVjM">
+</div>
+<div class="flex flex-col items-center justify-end flex-grow">
+<span class="text-surface-container-highest font-playful text-[9px] md:text-[12px] uppercase leading-tight font-black">SUSCRIPCIONES</span>
+
+</div>
+</div>
+<!-- Card 6: SALIDAS -->
+<div class="bg-lukash-card-bg rounded-lukash-card p-2 md:p-4 flex flex-col items-center justify-between text-center shadow-[0_4px_6px_-1px_rgba(0,0,0,0.15)] shadow-black/20 cursor-pointer card-scale-anim card-hover h-32 md:h-48" onclick="animateCard(this)">
+<div class="h-16 md:h-24 w-full flex items-center justify-center mb-2">
+<img class="h-full object-contain drop-shadow-lg scale-110" data-alt="A 3D stylized pink piggy bank handing a ticket to another piggy bank inside a vintage theater ticket booth. The style is cute, playful, and maximalist, matching a gamified financial app UI. Soft studio lighting, yellow background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCrndWUY33s3bq-uDX0VkdtFn6d7m7biHbSnYBcGx97H4PrHGQAD47G3_qAkDgpPd5O-kbRH8dt6wOMTMQjKIOfw33h2OGC3HdmvZtv08CGg6KWtJNBm0DvxpvZM9bPFykRiCAlX9wMW2HCn5L-Ak6hsvZnD6iFAUzwYUg0ztwBTlkUHRcbZW2hIvAmszXi3lLiSm1ELlqxjH7p6jmOb9lQcp0Tk6jodyvpUIuCmwelno3rEbcNlajixuUKDSKuQBN65D8">
+</div>
+<div class="flex flex-col items-center justify-end flex-grow">
+<span class="text-surface-container-highest font-playful text-[10px] md:text-label-bold uppercase leading-tight font-black">SALIDAS</span>
+
+</div>
+</div>
+<!-- Card 7: GUSTICOS -->
+<div class="bg-lukash-card-bg rounded-lukash-card p-2 md:p-4 flex flex-col items-center justify-between text-center shadow-[0_4px_6px_-1px_rgba(0,0,0,0.15)] shadow-black/20 cursor-pointer card-scale-anim card-hover h-32 md:h-48" onclick="animateCard(this)">
+<div class="h-16 md:h-24 w-full flex items-center justify-center mb-2">
+<img alt="GUSTICOS" class="h-full object-contain drop-shadow-lg scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAb0C3LGLLfx_F5bfZYdEwdtEjrMgzLG5wMzvph4AwAWYho44pFeO9G84Fr8H-TtOZhQngp413Y75nPojslxY4oX5Fy_z0rF1BimnPjMN-zyO2nzRkN_mjWNjEqFNXIYk4sUa0qUAPtTssXSjjZHOWZsRP_nVGPTB0C5IMfb3nviaNBFFE6CW8GrgOoKxGKBUEvO7IJRvSMFUL_xxwu6ix6amktXSIDO9PY3uFPlDzPujqYFZsklq3Sra4ADn7_YOOoRoE">
+</div>
+<div class="flex flex-col items-center justify-end flex-grow">
+<span class="text-surface-container-highest font-playful text-[10px] md:text-label-bold uppercase leading-tight font-black">GUSTICOS</span>
+
+</div>
+</div>
+<!-- Card 8: APORTE EN CASA -->
+<div class="bg-lukash-card-bg rounded-lukash-card p-2 md:p-4 flex flex-col items-center justify-between text-center shadow-[0_4px_6px_-1px_rgba(0,0,0,0.15)] shadow-black/20 cursor-pointer card-scale-anim card-hover h-32 md:h-48" onclick="animateCard(this)">
+<div class="h-16 md:h-24 w-full flex items-center justify-center mb-2">
+<img class="h-full object-contain drop-shadow-lg scale-110" data-alt="A 3D stylized pink piggy bank standing next to a miniature house, holding a large golden key. The style is cute, playful, and maximalist, matching a gamified financial app UI. Soft studio lighting, yellow background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYNh-_jfXw5yILUoeVTujLt9CTzUakJxAgtOOIIzKmppFF5SUxMjGuoDdf8rFaaTaUryTySa99uc0BqquZl1SeYSXr3MU916_15Z_d1OlKgRIgep5HFvoRR3ExN175NARnyZKSqf-DBaP0xbuMAqItxY-gUQlQ79LMohYWI1E4k7w26brScFLghe_wIOu-o46TlqGNmcA7cptUVnjDPGjCtON6V9d0oTlF1SGhqBzIIAMU4DmIUamLNBaQ2tEjw7b4zb0">
+</div>
+<div class="flex flex-col items-center justify-end flex-grow">
+<span class="text-surface-container-highest font-playful text-[10px] md:text-[12px] uppercase leading-tight font-black">APORTE EN<br>CASA</span>
+
+</div>
+</div>
+<!-- Card 9: MEDICAMENTOS -->
+<div class="bg-lukash-card-bg rounded-lukash-card p-2 md:p-4 flex flex-col items-center justify-between text-center shadow-[0_4px_6px_-1px_rgba(0,0,0,0.15)] shadow-black/20 cursor-pointer card-scale-anim card-hover h-32 md:h-48" onclick="animateCard(this)">
+<div class="h-16 md:h-24 w-full flex items-center justify-center mb-2">
+<img alt="MEDICAMENTOS" class="h-full object-contain drop-shadow-lg scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCK_P6mrnk-Zpw5C2zqBn-fDFLMn7CYr1fXmpSQIYsL4PcVThBYfqmOz6ctJV3PXQsvwxhDwmSMD2R1zUBTvzE5Uw0Zx3eqNZJF0MbGNOhCysUNW6m31WxYS8tuJXFVEjjMuzVSop1aPEI_Or2Xrz-5dJgA945qbAEL9lhuuuKn3yXUlLO2BPdTyX_GQ4E81KL0rUP-t0JtmWl98cefV5kDn4JHDhpPx_qWrdz8Rwxu5qSPbIql2vKJdWOmCVuhtxeVgzw">
+</div>
+<div class="flex flex-col items-center justify-end flex-grow">
+<span class="text-surface-container-highest font-playful text-[9px] md:text-[11px] uppercase leading-tight font-black">MEDICAMENTOS</span>
+
+</div>
+</div>
+</div>
+</main>
+<!-- FAB for general action (optional, but fits the style) -->
+<button class="fixed bottom-6 right-6 w-14 h-14 bg-secondary rounded-full flex items-center justify-center shadow-lg shadow-black/30 hover:scale-110 transition-transform z-50"><img alt="Savings Icon" class="w-8 h-8 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAIUqybFGtmIegOaZqT-f3_oH5CjiSUcDLF7lvKUwBHEkXmmg3SoHYACvKaW764ds7A3lS4qTZ5l4584o4D6aThngh426Ak1FYFf5gbzsJ0oXlI4CHU0CcTd98yTBj2B6hiF86r_atcByEikV3ikgkGibYy0y7_YcVO17blfraU20niz0QUqAOYk9V_3YRmU2NmDbajrPP-Uz4-CcEx8Imnu7JzFaqOWwCgeL_VTgAO0N3EZ-K9jVCEbi6GNGAFXARiPMU"></button>
+<script>
+        function animateCard(element) {
+            element.classList.add('active');
+            setTimeout(() => {
+                element.classList.remove('active');
+            }, 700);
+        }
+    </script>
+<script>
+(function() {
+    const budgetInput = document.getElementById('monthly-budget-input');
+    if (!budgetInput) return;
+
+    function formatValue(val) {
+        if (!val) return '';
+        return parseInt(val.replace(/\D/g, ''), 10).toLocaleString('es-CO');
+    }
+
+    // Load from localStorage using 'presupuestoMensual' key
+    const savedBudget = localStorage.getItem('presupuestoMensual');
+    if (savedBudget) {
+        budgetInput.value = formatValue(savedBudget);
+    }
+
+    // Update localStorage on change and keep formatting
+    budgetInput.addEventListener('input', (e) => {
+        let rawValue = e.target.value.replace(/\D/g, '');
+        localStorage.setItem('presupuestoMensual', rawValue);
+        e.target.value = formatValue(rawValue);
+    });
+})();
+</script>
+
+</body></html>

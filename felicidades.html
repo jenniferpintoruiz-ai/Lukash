@@ -141,26 +141,39 @@
             border: 2px solid rgba(0,0,0,0.1);
         }
 
-        /* ===== Cintas marquesina (los "gifs") de extremo a extremo, SIN degradado ===== */
+        /* ===== Cintas marquesina (los "gifs") rectas, a caballo sobre los bordes del recuadro ===== */
         .marquee-tape {
+            --tape-h: clamp(3rem, 7vw, 4rem);
             position: absolute;
+            display: flex;
+            align-items: center;
             width: 110vw;
             left: 50%;
-            z-index: 10;
+            height: var(--tape-h);
+            transform: translateX(-50%);
+            z-index: 30;
             overflow: hidden;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.25);
             pointer-events: none;
         }
-        .marquee-tape-top { transform: translateX(-50%) rotate(-3deg); top: -18px; }
-        .marquee-tape-bottom { transform: translateX(-50%) rotate(2.5deg); bottom: -55px; }
+        .marquee-tape-top { top: calc(var(--tape-h) / -2); }
+        .marquee-tape-bottom { bottom: calc(var(--tape-h) / -2); }
 
         /* Fondo de la cinta: color sólido (sin degradado) */
         .marquee-bg {
-            background-color: #E7C11F;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            background-color: #b2cf7b;
         }
-        /* Modo oscuro: la cinta usa el fondo crema claro (f7efd0) */
+        /* Modo oscuro: la cinta usa el crema f7efd0 */
         html.dark .marquee-bg {
             background-color: #f7efd0;
+        }
+        /* Modo oscuro: las estrellas de la cinta se tiñen al verde b2cf7b */
+        html.dark .star-img {
+            filter: brightness(0) invert(1) sepia(1) saturate(7) hue-rotate(21deg) brightness(0.8) contrast(1.04);
         }
 
         /* Contenido animado: dos grupos idénticos para un loop perfecto */
@@ -182,7 +195,7 @@
             align-items: center;
             justify-content: flex-start;
             gap: clamp(1.25rem, 4vw, 2.5rem);
-            padding: 0.7rem clamp(1rem, 4vw, 2rem);
+            padding: 0.6rem clamp(1rem, 4vw, 2rem);
             box-sizing: border-box;
             width: max-content;
             flex-shrink: 0;
@@ -196,13 +209,14 @@
             font-family: 'Fredoka', sans-serif;
             font-weight: 700;
             font-size: clamp(1.25rem, 4vw, 2.1rem);
+            line-height: 1.1;
             color: #180F43;
             letter-spacing: 0.05em;
             text-transform: uppercase;
             white-space: nowrap;
         }
         @media (max-width: 640px) {
-            .marquee-group { gap: clamp(0.9rem, 3vw, 1.4rem); padding: 0.5rem clamp(0.6rem, 3vw, 1rem); }
+            .marquee-group { gap: clamp(0.9rem, 3vw, 1.4rem); padding: 0.4rem clamp(0.6rem, 3vw, 1rem); }
         }
 
         /* ===== Botones interactivos estilo del sitio (rosa #e43888, tipo "SIGUIENTE") ===== */
@@ -268,11 +282,10 @@
 
 <!-- BEGIN: MainHeader -->
 <header class="fixed top-0 left-0 right-0 bg-lukash-yellow w-full h-16 flex items-center justify-between px-4 z-50 border-b-4 border-black/10 transition-opacity duration-100" id="main-header">
-<!-- Menu Icon -->
-<button class="p-2 lg:hidden" id="menuBtn"><svg class="hamburger-icon" fill="none" height="24" viewBox="0 0 30 24" width="30" xmlns="http://www.w3.org/2000/svg"><path d="M2 2H28M2 12H28M2 22H28" stroke="black" stroke-linecap="round" stroke-width="4"></path></svg><svg class="close-icon hidden" fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M18 6L6 18M6 6L18 18" stroke="black" stroke-linecap="round" stroke-width="3"></path></svg></button>
-<!-- Central Logo -->
-<div class="absolute left-1/2 -translate-x-1/2 lg:hidden">
-<img alt="LUKA$H Logo" class="h-16 drop-shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYRpEfrEAXglfH6g6bdTAiltJsJB-DrFhYXNpv6pCllmuHj7ZTXjF1qy9e06r27C5bLil8PgTWLPE-mWnWPz_8ibC0PbXo0mgx7meRO8nUsUV1qLPggd-nZBPOPjkThKh-Ou-I6nHQkWDHioMR9pUwKGZWmx0Cixdb5lqH1bSqo8ixHeoNWq9_ax4LS-cBhRHRiCd4KtV6Bz9ISa3Kd85RkHKMPOgK3YST2EQZs-TyZzikR3_DpMQVbNJtsVzgzE3r_g">
+<!-- Menu Icon: hamburguesa a la derecha junto al resto (móvil) -->
+<!-- Logo móvil: siempre a la izquierda -->
+<div class="lg:hidden shrink-0">
+<img alt="LUKA$H Logo" class="h-16 w-auto max-w-none shrink-0 drop-shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYRpEfrEAXglfH6g6bdTAiltJsJB-DrFhYXNpv6pCllmuHj7ZTXjF1qy9e06r27C5bLil8PgTWLPE-mWnWPz_8ibC0PbXo0mgx7meRO8nUsUV1qLPggd-nZBPOPjkThKh-Ou-I6nHQkWDHioMR9pUwKGZWmx0Cixdb5lqH1bSqo8ixHeoNWq9_ax4LS-cBhRHRiCd4KtV6Bz9ISa3Kd85RkHKMPOgK3YST2EQZs-TyZzikR3_DpMQVbNJtsVzgzE3r_g">
 </div>
 <div class="flex items-center lg:hidden">
 <!-- Theme Toggle (icono de luna/sol para modo oscuro/claro) -->
@@ -288,8 +301,9 @@
 <path d="M6 22C6 18.6863 8.68629 16 12 16H16C19.3137 16 22 18.6863 22 22" stroke="black" stroke-width="2"></path>
 </svg>
 </button>
+<button class="p-2 lg:hidden" id="menuBtn"><svg class="hamburger-icon" fill="none" height="24" viewBox="0 0 30 24" width="30" xmlns="http://www.w3.org/2000/svg"><path d="M2 2H28M2 12H28M2 22H28" stroke="black" stroke-linecap="round" stroke-width="4"></path></svg><svg class="close-icon hidden" fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M18 6L6 18M6 6L18 18" stroke="black" stroke-linecap="round" stroke-width="3"></path></svg></button>
 </div>
-<div class="mx-auto w-full max-w-[1280px] h-full"><nav class="hidden lg:flex items-center w-full h-full px-8 font-fredoka font-bold text-lukash-dark tracking-wider relative justify-between"><div class="flex items-center h-full"><img alt="LUKA$H Logo" class="h-16 drop-shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYRpEfrEAXglfH6g6bdTAiltJsJB-DrFhYXNpv6pCllmuHj7ZTXjF1qy9e06r27C5bLil8PgTWLPE-mWnWPz_8ibC0PbXo0mgx7meRO8nUsUV1qLPggd-nZBPOPjkThKh-Ou-I6nHQkWDHioMR9pUwKGZWmx0Cixdb5lqH1bSqo8ixHeoNWq9_ax4LS-cBhRHRiCd4KtV6Bz9ISa3Kd85RkHKMPOgK3YST2EQZs-TyZzikR3_DpMQVbNJtsVzgzE3r_g"></div><div class="flex items-center justify-center space-x-20 uppercase text-xl w-max flex-1">
+<div class="hidden lg:block mx-auto w-full max-w-[1280px] h-full"><nav class="hidden lg:flex items-center w-full h-full px-8 font-fredoka font-bold text-lukash-dark tracking-wider relative justify-between"><div class="flex items-center h-full"><img alt="LUKA$H Logo" class="h-16 drop-shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYRpEfrEAXglfH6g6bdTAiltJsJB-DrFhYXNpv6pCllmuHj7ZTXjF1qy9e06r27C5bLil8PgTWLPE-mWnWPz_8ibC0PbXo0mgx7meRO8nUsUV1qLPggd-nZBPOPjkThKh-Ou-I6nHQkWDHioMR9pUwKGZWmx0Cixdb5lqH1bSqo8ixHeoNWq9_ax4LS-cBhRHRiCd4KtV6Bz9ISa3Kd85RkHKMPOgK3YST2EQZs-TyZzikR3_DpMQVbNJtsVzgzE3r_g"></div><div class="flex items-center justify-center space-x-20 uppercase text-xl w-max flex-1">
 <a href="index.html?intro=1" class="transition-colors hover:text-[#f7efd0]">INICIO</a>
 <div class="relative" id="desktopCategorias">
  <button class="flex items-center gap-1 transition-colors hover:text-[#f7efd0]" id="desktopCategoriasBtn">CATEGORIAS<svg class="w-4 h-4 transition-transform duration-300" id="desktopCategoriasArrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg></button>
@@ -312,7 +326,7 @@
 <!-- Overlay -->
 <div class="absolute inset-0 transition-opacity duration-300 bg-black/10 pointer-events-auto backdrop-blur-sm opacity-0" id="mobileMenuOverlay"></div>
 <!-- Drawer -->
-<div class="absolute top-6 left-6 w-64 shadow-2xl transform transition-transform duration-300 flex flex-col rounded-[45px] h-max border-none backdrop-blur-md pointer-events-auto -translate-x-[150%]" id="mobileMenuDrawer" style="background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuAeRFCguGmJAP2dmp1aYF4qsTfAyIOscChweRZXRQiHjUN1cBby8JpgZyNxGzAN7YfF65QjDHZHE-hgrwwVMMxD9k4-rpFKL-B_9GqV6IFyUHrQhxHoqlmhkmfI3JecSZ6_LW7x_9hHFFEiC6UR0OP3AGIFy4mSiGm2IddGjFf2S7w8pk5FdW73Z_0v-62A_L14O2JkuwFJodusGDaEsrG00RBvV1BalVc6XuLKTKaFJeZPdQfiEOPR6g6PH_MnnRLp8g&quot;); background-size: cover; background-position: center center; opacity: 0.95;">
+<div class="absolute top-6 right-6 w-64 shadow-2xl transform transition-transform duration-300 flex flex-col rounded-[45px] h-max border-none backdrop-blur-md pointer-events-auto translate-x-[150%]" id="mobileMenuDrawer" style="background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuAeRFCguGmJAP2dmp1aYF4qsTfAyIOscChweRZXRQiHjUN1cBby8JpgZyNxGzAN7YfF65QjDHZHE-hgrwwVMMxD9k4-rpFKL-B_9GqV6IFyUHrQhxHoqlmhkmfI3JecSZ6_LW7x_9hHFFEiC6UR0OP3AGIFy4mSiGm2IddGjFf2S7w8pk5FdW73Z_0v-62A_L14O2JkuwFJodusGDaEsrG00RBvV1BalVc6XuLKTKaFJeZPdQfiEOPR6g6PH_MnnRLp8g&quot;); background-size: cover; background-position: center center; opacity: 0.95;">
 <div class="flex justify-between items-center p-6 h-max">
 <img alt="LUKA$H Logo" class="h-10 drop-shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYRpEfrEAXglfH6g6bdTAiltJsJB-DrFhYXNpv6pCllmuHj7ZTXjF1qy9e06r27C5bLil8PgTWLPE-mWnWPz_8ibC0PbXo0mgx7meRO8nUsUV1qLPggd-nZBPOPjkThKh-Ou-I6nHQkWDHioMR9pUwKGZWmx0Cixdb5lqH1bSqo8ixHeoNWq9_ax4LS-cBhRHRiCd4KtV6Bz9ISa3Kd85RkHKMPOgK3YST2EQZs-TyZzikR3_DpMQVbNJtsVzgzE3r_g">
 <button class="text-2xl font-fredoka font-bold text-lukash-dark p-2 transition-all duration-200" id="closeMenuBtn" style="opacity: 1;">X</button>
@@ -412,7 +426,7 @@
 </div>
 </div>
 <!-- Cream 3D Main Card -->
-<div class="cream-card w-full p-6 sm:p-8 pt-8 flex flex-col items-center relative z-10 pointer-events-auto">
+<div class="cream-card w-full px-5 sm:px-8 pt-12 sm:pt-14 pb-12 sm:pb-14 flex flex-col items-center relative z-10 pointer-events-auto">
 <!-- Mascot Illustration (estrella) -->
 <h1 class="text-3xl sm:text-4xl text-black font-fredoka font-bold text-center mb-4 mt-3 leading-tight">
 ¡FELICIDADES,<br>DETECTIVE FINANCIERO!
@@ -540,14 +554,14 @@ Has reunido las pistas, resuelto los casos y dado tus primeros pasos en el mundo
       if(menuIcon) menuIcon.classList.add('hidden');
       setTimeout(() => {
         mobileMenuOverlay.classList.remove('opacity-0');
-        mobileMenuDrawer.classList.remove('-translate-x-[150%]');
+        mobileMenuDrawer.classList.remove('translate-x-[150%]');
       }, 10);
     }
 
     function closeMenu() {
       closeMenuBtn.style.opacity = '0';
       mobileMenuOverlay.classList.add('opacity-0');
-      mobileMenuDrawer.classList.add('-translate-x-[150%]');
+      mobileMenuDrawer.classList.add('translate-x-[150%]');
       setTimeout(() => {
         mobileMenu.classList.add('hidden');
         closeMenuBtn.style.opacity = '1';

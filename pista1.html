@@ -269,11 +269,10 @@
 <body class="font-roboto text-slate-800" style="margin: 0px;">
 <!-- BEGIN: MainHeader -->
 <header class="fixed top-0 left-0 right-0 bg-lukash-yellow w-full h-16 flex items-center justify-between px-4 z-50 border-b-4 border-black/10 transition-opacity duration-100" id="main-header">
-<!-- Menu Icon -->
-<button class="p-2 lg:hidden" id="menuBtn"><svg class="hamburger-icon" fill="none" height="24" viewBox="0 0 30 24" width="30" xmlns="http://www.w3.org/2000/svg"><path d="M2 2H28M2 12H28M2 22H28" stroke="black" stroke-linecap="round" stroke-width="4"></path></svg><svg class="close-icon hidden" fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M18 6L6 18M6 6L18 18" stroke="black" stroke-linecap="round" stroke-width="3"></path></svg></button>
-<!-- Central Logo -->
-<div class="absolute left-1/2 -translate-x-1/2 lg:hidden">
-<img alt="LUKA$H Logo" class="h-16 drop-shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYRpEfrEAXglfH6g6bdTAiltJsJB-DrFhYXNpv6pCllmuHj7ZTXjF1qy9e06r27C5bLil8PgTWLPE-mWnWPz_8ibC0PbXo0mgx7meRO8nUsUV1qLPggd-nZBPOPjkThKh-Ou-I6nHQkWDHioMR9pUwKGZWmx0Cixdb5lqH1bSqo8ixHeoNWq9_ax4LS-cBhRHRiCd4KtV6Bz9ISa3Kd85RkHKMPOgK3YST2EQZs-TyZzikR3_DpMQVbNJtsVzgzE3r_g">
+<!-- Menu Icon: hamburguesa a la derecha junto al resto (móvil) -->
+<!-- Logo móvil: siempre a la izquierda -->
+<div class="lg:hidden shrink-0">
+<img alt="LUKA$H Logo" class="h-16 w-auto max-w-none shrink-0 drop-shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYRpEfrEAXglfH6g6bdTAiltJsJB-DrFhYXNpv6pCllmuHj7ZTXjF1qy9e06r27C5bLil8PgTWLPE-mWnWPz_8ibC0PbXo0mgx7meRO8nUsUV1qLPggd-nZBPOPjkThKh-Ou-I6nHQkWDHioMR9pUwKGZWmx0Cixdb5lqH1bSqo8ixHeoNWq9_ax4LS-cBhRHRiCd4KtV6Bz9ISa3Kd85RkHKMPOgK3YST2EQZs-TyZzikR3_DpMQVbNJtsVzgzE3r_g">
 </div>
 <div class="flex items-center lg:hidden">
 <!-- Theme Toggle (icono de luna/sol para modo oscuro/claro) -->
@@ -289,8 +288,9 @@
 <path d="M6 22C6 18.6863 8.68629 16 12 16H16C19.3137 16 22 18.6863 22 22" stroke="black" stroke-width="2"></path>
 </svg>
 </button>
+<button class="p-2 lg:hidden" id="menuBtn"><svg class="hamburger-icon" fill="none" height="24" viewBox="0 0 30 24" width="30" xmlns="http://www.w3.org/2000/svg"><path d="M2 2H28M2 12H28M2 22H28" stroke="black" stroke-linecap="round" stroke-width="4"></path></svg><svg class="close-icon hidden" fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M18 6L6 18M6 6L18 18" stroke="black" stroke-linecap="round" stroke-width="3"></path></svg></button>
 </div>
-<div class="mx-auto w-full max-w-[1280px] h-full"><nav class="hidden lg:flex items-center w-full h-full px-8 font-fredoka font-bold text-lukash-dark tracking-wider relative justify-between"><div class="flex items-center h-full"><img alt="LUKA$H Logo" class="h-16 drop-shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYRpEfrEAXglfH6g6bdTAiltJsJB-DrFhYXNpv6pCllmuHj7ZTXjF1qy9e06r27C5bLil8PgTWLPE-mWnWPz_8ibC0PbXo0mgx7meRO8nUsUV1qLPggd-nZBPOPjkThKh-Ou-I6nHQkWDHioMR9pUwKGZWmx0Cixdb5lqH1bSqo8ixHeoNWq9_ax4LS-cBhRHRiCd4KtV6Bz9ISa3Kd85RkHKMPOgK3YST2EQZs-TyZzikR3_DpMQVbNJtsVzgzE3r_g"></div><div class="flex items-center justify-center space-x-20 uppercase text-xl w-max flex-1">
+<div class="hidden lg:block mx-auto w-full max-w-[1280px] h-full"><nav class="hidden lg:flex items-center w-full h-full px-8 font-fredoka font-bold text-lukash-dark tracking-wider relative justify-between"><div class="flex items-center h-full"><img alt="LUKA$H Logo" class="h-16 drop-shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYRpEfrEAXglfH6g6bdTAiltJsJB-DrFhYXNpv6pCllmuHj7ZTXjF1qy9e06r27C5bLil8PgTWLPE-mWnWPz_8ibC0PbXo0mgx7meRO8nUsUV1qLPggd-nZBPOPjkThKh-Ou-I6nHQkWDHioMR9pUwKGZWmx0Cixdb5lqH1bSqo8ixHeoNWq9_ax4LS-cBhRHRiCd4KtV6Bz9ISa3Kd85RkHKMPOgK3YST2EQZs-TyZzikR3_DpMQVbNJtsVzgzE3r_g"></div><div class="flex items-center justify-center space-x-20 uppercase text-xl w-max flex-1">
 <a href="index.html?intro=1" class="transition-colors hover:text-[#f7efd0]">INICIO</a>
 <div class="relative" id="desktopCategorias">
  <button class="flex items-center gap-1 transition-colors hover:text-[#f7efd0]" id="desktopCategoriasBtn">CATEGORIAS<svg class="w-4 h-4 transition-transform duration-300" id="desktopCategoriasArrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg></button>
@@ -313,7 +313,7 @@
 <!-- Overlay -->
 <div class="absolute inset-0 transition-opacity duration-300 bg-black/10 pointer-events-auto backdrop-blur-sm opacity-0" id="mobileMenuOverlay"></div>
 <!-- Drawer -->
-<div class="absolute top-6 left-6 w-64 shadow-2xl transform transition-transform duration-300 flex flex-col rounded-[45px] h-max border-none backdrop-blur-md pointer-events-auto -translate-x-[150%]" id="mobileMenuDrawer" style="background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuAeRFCguGmJAP2dmp1aYF4qsTfAyIOscChweRZXRQiHjUN1cBby8JpgZyNxGzAN7YfF65QjDHZHE-hgrwwVMMxD9k4-rpFKL-B_9GqV6IFyUHrQhxHoqlmhkmfI3JecSZ6_LW7x_9hHFFEiC6UR0OP3AGIFy4mSiGm2IddGjFf2S7w8pk5FdW73Z_0v-62A_L14O2JkuwFJodusGDaEsrG00RBvV1BalVc6XuLKTKaFJeZPdQfiEOPR6g6PH_MnnRLp8g&quot;); background-size: cover; background-position: center center; opacity: 0.95;">
+<div class="absolute top-6 right-6 w-64 shadow-2xl transform transition-transform duration-300 flex flex-col rounded-[45px] h-max border-none backdrop-blur-md pointer-events-auto translate-x-[150%]" id="mobileMenuDrawer" style="background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuAeRFCguGmJAP2dmp1aYF4qsTfAyIOscChweRZXRQiHjUN1cBby8JpgZyNxGzAN7YfF65QjDHZHE-hgrwwVMMxD9k4-rpFKL-B_9GqV6IFyUHrQhxHoqlmhkmfI3JecSZ6_LW7x_9hHFFEiC6UR0OP3AGIFy4mSiGm2IddGjFf2S7w8pk5FdW73Z_0v-62A_L14O2JkuwFJodusGDaEsrG00RBvV1BalVc6XuLKTKaFJeZPdQfiEOPR6g6PH_MnnRLp8g&quot;); background-size: cover; background-position: center center; opacity: 0.95;">
 <div class="flex justify-between items-center p-6 h-max">
 <img alt="LUKA$H Logo" class="h-10 drop-shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYRpEfrEAXglfH6g6bdTAiltJsJB-DrFhYXNpv6pCllmuHj7ZTXjF1qy9e06r27C5bLil8PgTWLPE-mWnWPz_8ibC0PbXo0mgx7meRO8nUsUV1qLPggd-nZBPOPjkThKh-Ou-I6nHQkWDHioMR9pUwKGZWmx0Cixdb5lqH1bSqo8ixHeoNWq9_ax4LS-cBhRHRiCd4KtV6Bz9ISa3Kd85RkHKMPOgK3YST2EQZs-TyZzikR3_DpMQVbNJtsVzgzE3r_g">
 <button class="text-2xl font-fredoka font-bold text-lukash-dark p-2 transition-all duration-200" id="closeMenuBtn" style="opacity: 1;">X</button>
@@ -348,15 +348,15 @@
 <h2 class="font-headline-lg-mobile text-responsive-h2 text-center text-[#212121] leading-tight mb-4 px-2 drop-shadow-sm font-bold" style="font-size: calc(-5px + clamp(1.5rem, 3.5vw, 2.5rem));">Encuentra las palabras correctas, colócalas en su lugar para completar cada frase</h2>
 <!-- Question Text with Interactive Slots -->
 <p class="font-body-lg text-center text-[#212121] px-2 mb-6 md:mb-10 text-responsive-p" style="font-size: calc(20px);">
-Muchas personas creen que para invertir necesitan tener mucho <span class="btn-slot" data-answer="DINERO" data-index="0">________</span>, pero no es así. Invertir consiste en tomar una parte de tu <span class="btn-slot" data-answer="DINERO" data-index="1">________</span> y ponerla a trabajar para alcanzar tus <span class="btn-slot" data-answer="METAS" data-index="2">________</span> en el futuro. Cuanto antes empieces, más oportunidades tendrá tu dinero de <span class="btn-slot" data-answer="CRECER" data-index="3">________</span>.
+Muchas personas creen que para invertir necesitan tener mucho <span class="btn-slot" data-answer="Dinero" data-index="0">________</span>, pero no es así. Invertir consiste en tomar una parte de tu <span class="btn-slot" data-answer="Dinero" data-index="1">________</span> y ponerla a trabajar para alcanzar tus <span class="btn-slot" data-answer="Metas" data-index="2">________</span> en el futuro. Cuanto antes empieces, más oportunidades tendrá tu dinero de <span class="btn-slot" data-answer="Crecer" data-index="3">________</span>.
 </p>
 <!-- Action Buttons Container -->
 <div class="w-full gap-4 md:gap-8 justify-center z-20 px-2 relative min-h-[60px] md:min-h-[80px] mb-2" id="buttons-container">
 <div class="grid grid-cols-2 gap-4 w-full">
-<button class="draggable-btn py-4 px-2 font-bold text-[18px] md:text-[22px] text-white uppercase tracking-wide relative rounded-full" data-word="METAS" draggable="true" id="btn-metas" style="background-color: rgb(126, 210, 49); box-shadow: rgb(85, 138, 27) 0px 6px 0px 0px, rgba(0, 0, 0, 0.3) 0px 8px 4px; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; border-radius: 16px;">METAS</button>
-<button class="draggable-btn py-4 px-2 font-bold text-[18px] md:text-[22px] text-white uppercase tracking-wide relative rounded-full" data-word="DINERO" draggable="true" id="btn-dinero-1" style="background-color: rgb(126, 210, 49); box-shadow: rgb(85, 138, 27) 0px 6px 0px 0px, rgba(0, 0, 0, 0.3) 0px 8px 4px; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; border-radius: 16px;">DINERO</button>
-<button class="draggable-btn py-4 px-2 font-bold text-[18px] md:text-[22px] text-white uppercase tracking-wide relative rounded-full" data-word="DINERO" draggable="true" id="btn-dinero-2" style="background-color: rgb(126, 210, 49); box-shadow: rgb(85, 138, 27) 0px 6px 0px 0px, rgba(0, 0, 0, 0.3) 0px 8px 4px; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; border-radius: 16px;">DINERO</button>
-<button class="draggable-btn py-4 px-2 font-bold text-[18px] md:text-[22px] text-white uppercase tracking-wide relative rounded-full" data-word="CRECER" draggable="true" id="btn-crecer" style="background-color: rgb(126, 210, 49); box-shadow: rgb(85, 138, 27) 0px 6px 0px 0px, rgba(0, 0, 0, 0.3) 0px 8px 4px; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; border-radius: 16px;">CRECER</button>
+<button class="draggable-btn py-4 px-2 font-bold text-[18px] md:text-[22px] text-white tracking-wide relative rounded-full" data-word="Metas" draggable="true" id="btn-metas" style="background-color: rgb(126, 210, 49); box-shadow: rgb(85, 138, 27) 0px 6px 0px 0px, rgba(0, 0, 0, 0.3) 0px 8px 4px; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; border-radius: 16px;">Metas</button>
+<button class="draggable-btn py-4 px-2 font-bold text-[18px] md:text-[22px] text-white tracking-wide relative rounded-full" data-word="Dinero" draggable="true" id="btn-dinero-1" style="background-color: rgb(126, 210, 49); box-shadow: rgb(85, 138, 27) 0px 6px 0px 0px, rgba(0, 0, 0, 0.3) 0px 8px 4px; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; border-radius: 16px;">Dinero</button>
+<button class="draggable-btn py-4 px-2 font-bold text-[18px] md:text-[22px] text-white tracking-wide relative rounded-full" data-word="Dinero" draggable="true" id="btn-dinero-2" style="background-color: rgb(126, 210, 49); box-shadow: rgb(85, 138, 27) 0px 6px 0px 0px, rgba(0, 0, 0, 0.3) 0px 8px 4px; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; border-radius: 16px;">Dinero</button>
+<button class="draggable-btn py-4 px-2 font-bold text-[18px] md:text-[22px] text-white tracking-wide relative rounded-full" data-word="Crecer" draggable="true" id="btn-crecer" style="background-color: rgb(126, 210, 49); box-shadow: rgb(85, 138, 27) 0px 6px 0px 0px, rgba(0, 0, 0, 0.3) 0px 8px 4px; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; border-radius: 16px;">Crecer</button>
 </div>
 </div>
 <!-- Botón Siguiente: visible solo cuando todas las palabras están correctamente colocadas -->
@@ -382,14 +382,14 @@ Muchas personas creen que para invertir necesitan tener mucho <span class="btn-s
       if(menuIcon) menuIcon.classList.add('hidden');
       setTimeout(() => {
         mobileMenuOverlay.classList.remove('opacity-0');
-        mobileMenuDrawer.classList.remove('-translate-x-[150%]');
+        mobileMenuDrawer.classList.remove('translate-x-[150%]');
       }, 10);
     }
 
     function closeMenu() {
       closeMenuBtn.style.opacity = '0';
       mobileMenuOverlay.classList.add('opacity-0');
-      mobileMenuDrawer.classList.add('-translate-x-[150%]');
+      mobileMenuDrawer.classList.add('translate-x-[150%]');
       setTimeout(() => {
         mobileMenu.classList.add('hidden');
         closeMenuBtn.style.opacity = '1';

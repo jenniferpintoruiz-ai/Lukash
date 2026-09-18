@@ -1,0 +1,1380 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LUKA$H - Chat</title>
+
+<!-- ===== Fuentes (Google Fonts) ===== -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Roboto:ital,wght@0,400;0,500;0,700&display=swap" rel="stylesheet">
+
+<style>
+/* =====================================================================
+   DESIGN TOKENS (DESIGN.md)
+   Base: crema #f7efd0 + azul oscuro #180F43.
+   Acentos fucsia / amarillo: SOLO botones clave, logo y detalles.
+   ===================================================================== */
+:root {
+  --color-primary-fuchsia: #EE4599;
+  --color-primary-pink: #DE7A8F;
+  --color-primary-dark-blue: #180F43;
+  --color-primary-yellow: #E7C11F;
+  --color-primary-white: #EEE8E0;
+  --color-primary-black: #212121;
+  --color-secondary-blue: #01504B;
+  --color-green-lemon: #91DA26;
+  --color-green-mid: #8AC346;
+  --color-green-light: #95EC2F;
+  --bg-gradient-warm: linear-gradient(90deg, #EE4599 0%, #E7C11F 100%);
+  --font-heading: 'Fredoka', 'Bubblegum Sans', sans-serif;
+  --font-body: 'Roboto', sans-serif;
+
+  --bg-cream: #f7efd0;
+  --bg-surface: #ffffff;
+  --radius-lg: 22px;
+}
+
+/* ===== Reset base ===== */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body { height: 100%; }
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-primary-dark-blue);
+  background-color: var(--bg-cream);
+  -webkit-font-smoothing: antialiased;
+}
+
+.hidden { display: none !important; }
+
+/* ============================================================
+   Contenedor del chat (solo modo claro)
+   Estado chiquito: widget flotante abajo a la derecha.
+   Estado grande:  `.app--full` ocupa la pantalla.
+   `transform: translateZ(0)` convierte .app en contenedor de
+   los elementos `fixed` internos (chips y barra de entrada).
+   ============================================================ */
+.app {
+  position: fixed;
+  right: 14px;
+  bottom: 14px;
+  width: min(92vw, 372px);
+  height: min(72vh, 540px);
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-cream);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 10px 28px rgba(24,15,67,.18);
+  transform: translateZ(0);
+  z-index: 40;
+}
+.app--full {
+  width: 100%;
+  max-width: 780px;
+  height: auto;
+  left: 50%; top: 0; bottom: 0;
+  transform: translateX(-50%);
+  border-radius: 0;
+  margin: 0 auto;
+  box-shadow: none;
+}
+.app--hidden { display: none; }
+
+/* ===== Encabezado (siempre fijo con la imagen del chat) ===== */
+.app-header {
+  flex: 0 0 auto;
+  height: 64px;
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  background-color: var(--color-primary-dark-blue);
+  color: var(--bg-cream);
+  z-index: 20;
+}
+.header-title { display: flex; align-items: center; gap: 10px; }
+.logo-mark {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--color-primary-yellow);
+  color: var(--color-primary-dark-blue);
+  font-size: 20px;
+  overflow: hidden;
+}
+.header-title h1 {
+  font-family: var(--font-heading);
+  font-size: clamp(1.15rem, 3vw, 1.45rem);
+  letter-spacing: .05em;
+}
+.header-actions { display: flex; gap: 6px; align-items: center; }
+.icon-btn {
+  border: none;
+  background: transparent;
+  color: inherit;
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: transform .15s ease, background .15s ease;
+}
+.icon-btn:hover { background: rgba(247,239,208,.15); }
+.icon-btn:active { transform: scale(.92); }
+
+/* ===== Panel de mensajes ===== */
+.chat-area {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding: 22px 14px 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  scroll-behavior: smooth;
+}
+
+.msg { display: flex; gap: 10px; align-items: flex-end; max-width: 100%; }
+.msg--bot { justify-content: flex-start; }
+.msg--user { justify-content: flex-end; }
+
+.avatar {
+  flex: 0 0 auto;
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--bg-cream);
+  display: flex; align-items: center; justify-content: center;
+}
+.avatar img { width: 100%; height: 100%; object-fit: cover; }
+.avatar .av-fb { display: none; width: 100%; height: 100%; }
+
+.bubble {
+  position: relative;
+  max-width: min(82%, 520px);
+  padding: 13px 17px;
+  border-radius: var(--radius-lg);
+  font-size: clamp(0.95rem, 1.6vw, 1.02rem);
+  line-height: 1.5;
+  white-space: pre-line;
+  word-break: break-word;
+}
+.msg--bot .bubble {
+  background: var(--color-primary-dark-blue);
+  color: var(--bg-cream);
+  border-bottom-left-radius: 8px;
+  box-shadow: 0 6px 14px rgba(24,15,67,.12);
+}
+.msg--user .bubble {
+  background: var(--bg-surface);
+  color: var(--color-primary-dark-blue);
+  border-bottom-right-radius: 8px;
+  box-shadow: 0 6px 14px rgba(24,15,67,.10);
+}
+
+/* Indicador de escritura */
+.typing-dots { display: inline-flex; gap: 6px; align-items: center; padding: 6px 2px; }
+.typing-dots span {
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: var(--color-primary-fuchsia);
+  animation: blink 1.2s infinite ease-in-out;
+}
+.typing-dots span:nth-child(2) { animation-delay: .2s; }
+.typing-dots span:nth-child(3) { animation-delay: .4s; }
+@keyframes blink { 0%,80%,100% { opacity:.25; transform: translateY(0);} 40% { opacity:1; transform: translateY(-4px);} }
+
+/* ===== Chips de respuesta (solo en puntos de decisión reales) ===== */
+.suggestions {
+  position: fixed;
+  bottom: 88px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 780px;
+  padding: 0 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 15;
+}
+.suggestions button {
+  pointer-events: auto;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: .9rem;
+  color: #fff;
+  background: var(--color-primary-fuchsia);
+  border: none;
+  border-radius: 999px;
+  padding: 9px 16px;
+  cursor: pointer;
+  box-shadow: 0 6px 14px rgba(238,69,153,.32);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.suggestions button:hover { transform: translateY(-2px); }
+.suggestions button:active { transform: scale(.94); box-shadow: 0 3px 8px rgba(238,69,153,.32); }
+.suggestions button.tip--ghost {
+  background: var(--bg-surface);
+  color: var(--color-primary-dark-blue);
+  box-shadow: 0 4px 10px rgba(24,15,67,.14);
+}
+
+/* ===== Barra de entrada ===== */
+.input-bar {
+  position: fixed;
+  bottom: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 780px;
+  background: rgba(247,239,208,.94);
+  backdrop-filter: blur(8px);
+  padding: 12px 14px calc(12px + env(safe-area-inset-bottom));
+  display: flex;
+  gap: 10px;
+  z-index: 20;
+}
+.input-bar input {
+  flex: 1;
+  border: none;
+  border-radius: 999px;
+  padding: 12px 18px;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--color-primary-dark-blue);
+  background: var(--bg-surface);
+  outline: none;
+  box-shadow: inset 0 0 0 2px rgba(24,15,67,.12);
+  transition: box-shadow .15s ease;
+}
+.input-bar input::placeholder { color: rgba(24,15,67,.45); }
+.input-bar input:focus { box-shadow: inset 0 0 0 2px rgba(24,15,67,.35); }
+.send-btn {
+  flex: 0 0 auto;
+  width: 50px; height: 50px;
+  border-radius: 50%;
+  border: none;
+  background: var(--bg-gradient-warm);
+  color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 6px 14px rgba(238,69,153,.32);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.send-btn:hover { transform: translateY(-2px); }
+.send-btn:active { transform: scale(.93); box-shadow: 0 3px 8px rgba(238,69,153,.32); }
+
+/* ===== Botón flotante para reabrir el chat (al cerrar con la X) ===== */
+.fab {
+  position: fixed;
+  right: 16px; bottom: 16px;
+  width: 62px; height: 62px;
+  border-radius: 50%;
+  border: none;
+  background: var(--bg-gradient-warm);
+  color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 10px 22px rgba(238,69,153,.38);
+  z-index: 60;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.fab:hover { transform: translateY(-2px); }
+.fab:active { transform: scale(.93); }
+
+.chat-area::-webkit-scrollbar { width: 8px; }
+.chat-area::-webkit-scrollbar-thumb { background: rgba(24,15,67,.2); border-radius: 999px; }
+
+@media (max-width: 480px) {
+  .msg--bot .bubble { max-width: 88%; }
+  .avatar { width: 36px; height: 36px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ================= APLICACIÓN ================= -->
+<div class="app">
+  <header class="app-header">
+    <div class="header-title">
+      <span class="logo-mark">
+        <img src="images/Recurso ia.png" alt="Luka$h"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+        <svg class="av-fb" viewBox="0 0 64 64" aria-hidden="true">
+          <ellipse cx="32" cy="38" rx="20" ry="18" fill="#EE4599"/>
+          <path d="M16 30 Q10 18 22 16 Q20 28 22 32 Z" fill="#180F43"/>
+          <path d="M48 30 Q54 18 42 16 Q44 28 42 32 Z" fill="#180F43"/>
+          <ellipse cx="32" cy="42" rx="10" ry="8" fill="#E7C11F"/>
+          <circle cx="28" cy="42" r="1.8" fill="#180F43"/>
+          <circle cx="36" cy="42" r="1.8" fill="#180F43"/>
+          <circle cx="24" cy="32" r="3.2" fill="#ffffff"/>
+          <circle cx="40" cy="32" r="3.2" fill="#ffffff"/>
+          <circle cx="24" cy="32" r="1.4" fill="#180F43"/>
+          <circle cx="40" cy="32" r="1.4" fill="#180F43"/>
+        </svg>
+      </span>
+      <h1>LUKA$H</h1>
+    </div>
+    <div class="header-actions">
+      <button class="icon-btn" id="resetBtn" type="button" aria-label="Nueva conversación" title="Nueva conversación">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>
+      </button>
+      <button class="icon-btn" id="expandBtn" type="button" aria-label="Ampliar chat" title="Cambiar entre chat chiquito y grande">
+        <svg id="expandIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M9 21H3v-6"/><path d="M21 3l-7 7"/><path d="M3 21l7-7"/></svg>
+        <svg id="minimizeIcon" class="hidden" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v3a2 2 0 0 1-2 2H3"/><path d="M21 8h-3a2 2 0 0 1-2-2V3"/><path d="M3 16h3a2 2 0 0 1 2 2v3"/><path d="M16 21v-3a2 2 0 0 1 2-2h3"/></svg>
+      </button>
+      <button class="icon-btn" id="closeBtn" type="button" aria-label="Cerrar chat" title="Cerrar chat">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="chat-area" id="chatArea" aria-live="polite"></main>
+  <div class="suggestions" id="suggestions"></div>
+
+  <footer class="input-bar">
+    <input id="chatInput" type="text" placeholder="Escríbele a Luka$h con tus palabras..." autocomplete="off">
+    <button class="send-btn" id="sendBtn" type="button" aria-label="Enviar">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4 20-7z"/></svg>
+    </button>
+  </footer>
+</div>
+
+<!-- Botón flotante: reabre el chat cuando se cierra con la X -->
+<button class="fab hidden" id="fab" type="button" aria-label="Abrir chat" title="Abrir chat Luka$h">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+</button>
+
+<!-- =============================================================
+     MOTOR DE CHAT LUKA$H  v3
+     Reglas clave (LUKASH_IA.md):
+     1. Hablar lo menos necesario: 1-2 burbujas cortas por respuesta.
+     2. Saludo breve, sin entrevistas largas.
+     3. Sin emojis.
+     4. No abrumar con preguntas predeterminadas: se pregunta
+        progresivamente SOLO cuando el tema lo necesita (ingreso,
+        gastos, deudas, metas) y se responde con los datos de cada
+        usuario.
+     5. Curso rápido de 9 lecciones + libre preguntar lo que quiera.
+     ============================================================= -->
+<script>
+(function () {
+
+  /* ================= 1. UTILIDADES ================= */
+  const $ = (id) => document.getElementById(id);
+  const chatArea = $('chatArea'), sugBox = $('suggestions'), input = $('chatInput');
+  const nf = new Intl.NumberFormat('es-CO');
+  const fmt = (n) => '$' + nf.format(Math.round(n));
+  const round = (n, base) => Math.round(n / base) * base;
+
+  // Normalización: minúsculas, sin tildes, espacios simples
+  const norm = (t) => ('' + t).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, ' ').trim();
+
+  const store = {
+    get(key, fb) { try { const v = localStorage.getItem(key); return v === null ? fb : v; } catch { return fb; } },
+    set(key, val) { try { localStorage.setItem(key, val); } catch {} },
+    del(key) { try { localStorage.removeItem(key); } catch {} }
+  };
+
+  /* --- Números COP --- */
+  // "600.000", "200 mil", "1.5 millones", "60k"
+  const parseMoney = (t) => {
+    let s = ('' + t).toLowerCase().replace(/lucas/g, ' mil ').replace(/,/g, '');
+    s = s.replace(/(\d)\.(?=\d{3}(?!\d))/g, '$1');
+    let m = s.match(/(\d+(?:\.\d+)?)\s*(?:millones|millon|m)\b/);
+    let n = m ? Number(m[1]) * 1000000 : null;
+    if (!n) { m = s.match(/(\d+(?:\.\d+)?)\s*mil\b/); if (m) n = Number(m[1]) * 1000; }
+    if (!n) { m = s.match(/(\d+(?:\.\d+)?)k\b/); if (m) n = Number(m[1]) * 1000; }
+    if (!n) {
+      const md = s.match(/\d(?:[\d.]*\d){0,6}/g) || [];
+      const nums = md.map(z => Number(z)).filter(v => v > 100);
+      if (nums.length) n = Math.max(...nums);
+    }
+    return n && n > 99 ? Math.round(n) : null;
+  };
+  // "6 meses", "2 años", "1 semestre", "5 semanas"
+  const parseMonths = (t) => {
+    const m = ('' + t).toLowerCase().match(/(\d{1,3})\s*(mes|meses|a[ñn]os?|semestre|semanas)/i);
+    if (!m) return null;
+    const n = Number(m[1]);
+    const unit = m[2] || '';
+    if (/seman/.test(unit)) return Math.max(1, Math.min(240, Math.round(n / 4.35)));
+    if (/semestre/.test(unit)) return Math.max(1, Math.min(240, n * 6));
+    if (/a[ñn]os?/.test(unit)) return Math.max(1, Math.min(240, n * 12));
+    return Math.max(1, Math.min(240, n));
+  };
+  const delay = (ms) => new Promise(r => setTimeout(r, ms));
+
+  /* ================= 2. MATCHER DE INTENCIONES ================= */
+  const escRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const phrasePats = (tokens) => tokens.map(tk => {
+    if (/^[a-zñ0-9]+$/.test(tk)) return new RegExp('\\b' + escRe(tk) + '\\b');
+    return new RegExp(escRe(tk).replace(/\s+/g, '\\s+'));
+  });
+
+  const MATCHERS = [
+    { id: 'curso', t: ['curso', 'aprender', 'ensename', 'ensename jugando', 'educame', 'no se nada', 'principiante', 'por donde empiezo'] },
+    { id: 'goalin', t: ['calcular una meta', 'cuanto deberia ahorrar', 'cuanto ahorro', 'que meta'] },
+    { id: 'goal', t: ['meta', 'viaje', 'celular', 'comprar', 'comprarme', 'comprar algo', 'objetivo', 'conseguir', 'quiero comprar', 'para el viaje', 'ahorrar para'] },
+    { id: 'ahorro', t: ['ahorrar', 'ahorro', 'guardar plata', 'guardar', 'mesada', 'juntar', 'alcancia', 'apartar', 'plata guardada'] },
+    { id: 'presupuesto', t: ['presupuesto', 'repartir', 'gastos', 'me llega', 'sueldo', 'ingresos', 'organizar mi plata', 'organizar mi dinero', 'como reparto', 'no me alcanza', 'me alcanza', 'en que se fue', 'en que se va', 'plan de gastos', 'fin de mes', 'gasto mucho'] },
+    { id: 'deudas', t: ['deuda', 'deudas', 'debo', 'me endeude', 'me atrase', 'me atrace', 'debo plata', 'minimos', 'organizar deudas', 'estoy debiendo', 'andin enredadas'] },
+    { id: 'tarjeta', t: ['tarjeta', 'cupo', 'cuotas', 'pago minimo', 'el plastico', 'diferido', 'meses sin interes', 'financiado', 'credito'] },
+    { id: 'invertir', t: ['invertir', 'inversion', 'inverti', 'rendir', 'rentabilidad', 'renta fija', 'cdt', 'acciones', 'fondos', 'diversificar', 'multiplicar', 'hacer crecer la plata', 'rendimiento'] },
+    { id: 'bancos', t: ['banco', 'bancos', 'bancolombia', 'davivienda', 'bbva', 'nequi', 'daviplata', 'lulo', 'uala', 'nu', 'pibank', 'fintech', 'fogafin', 'donde guardar la plata', 'donde guardar', 'cuenta de ahorro'] },
+    { id: 'inflacion', t: ['inflacion', 'sube todo', 'suben los precios', 'precios', 'poder de compra', 'todo sube', 'mas caro', 'carisimo', 'subieron', 'todo caro'] },
+    { id: 'hormiga', t: ['hormiga', 'gastos hormiga', 'un cafe', 'diario', 'pequeños gastos', 'gasto poco'] },
+    { id: 'calcular', t: ['calcula', 'saca la cuenta', 'cuanto seria', 'ayuda con cuentas', 'cuanto necesito', 'matematicas'] },
+    { id: 'reto', t: ['reto', 'ponte a prueba', 'challenge', 'ponme un reto', 'practiquemos', 'juguemos', 'un juego', 'practica'] },
+    { id: 'escenario', t: ['escenario', 'decision', 'decidir', 'comprar o no', 'no se si comprar', 'que hago', 'me compro'] },
+    { id: 'saludo', t: ['hola', 'holi', 'buenas', 'buenos dias', 'hey', 'epa', 'ey', 'que mas', 'quiubo', 'quihubo', 'buen dia'] },
+    { id: 'despedida', t: ['chao', 'adios', 'nos vemos', 'bye', 'hasta luego', 'hasta pronto', 'cuida'] },
+    { id: 'gracias', t: ['gracias', 'genial', 'perfecto', 'excelente', 'bacano', 'de lujo', 'me sirvio', 'me sirve', 'quedo claro', 'entendido', 'anotado', 'exacto'] },
+    { id: 'afirma', t: ['si', 'sip', 'sisi', 'dale', 'de una', 'va', 'ok', 'okey', 'claro que si', 'me parece', 'suena bien', 'hagamos', 'listo'] },
+    { id: 'niega', t: ['no gracias', 'mejor no', 'no quiero', 'creo que no', 'para nada', 'no no'] },
+    { id: 'quien', t: ['quien eres', 'que eres', 'que haces', 'como te llamas', 'eres una ia', 'eres un robot', 'presentate', 'quien sos'] }
+  ];
+  MATCHERS.forEach(it => { it.pats = phrasePats(it.t); });
+
+  function detect(text) {
+    const u = norm(text);
+    // Seguridad ante todo
+    if (/clave|contrasena|pin|password|numero (completo )?de (tarjeta|cuenta)/.test(u)) return 'limite';
+    if (/volver al inicio|otro tema|menu principal|volver al menu|al inicio/.test(u)) return 'hub';
+    if (/empezar de nuevo|empezar de cero|empezar limpio|comenzar de nuevo|comenzar de cero|borrar todo/.test(u)) return 'fresh';
+    if (/tarjeta|cupo|cuota|pago minimo|el plastico|diferido|sin interes/.test(u)) return 'tarjeta';
+    if (/deuda|debo|me endeude|me atrase|me atrace/.test(u)) return 'deudas';
+    let best = { id: 'fallback', score: 0 };
+    for (const it of MATCHERS) {
+      const sc = it.pats.filter(r => r.test(u)).length;
+      if (sc > best.score) best = { id: it.id, score: sc };
+    }
+    return best.id;
+  }
+
+  /* ================= 3. ESTADO Y MEMORIA ================= */
+  const state = {
+    name: store.get('lukash-name', ''),
+    namedFlag: store.get('lukash-named', '') === '1',
+    profile: (() => { try { return JSON.parse(store.get('lukash-profile', '{}')) || {}; } catch { return {}; } })(),
+    convo: [],
+    used: new Set(),
+    pending: null,      // esperando un dato (texto o número)
+    buf: {},            // contexto temporal de la pregunta en curso
+    lastTopic: null,
+    menuFactory: null,
+    curso: { step: 0, active: false, done: false }
+  };
+
+  (function loadMemory() {
+    try {
+      const c = JSON.parse(store.get('lukash-convo', '[]')); state.convo = Array.isArray(c) ? c : [];
+    } catch { state.convo = []; }
+    try {
+      const s = JSON.parse(store.get('lukash-state', '{}')); state.used = new Set(s.used || []);
+      if (s.curso) state.curso = s.curso;
+    } catch { state.used = new Set(); }
+  })();
+
+  const persistState = () => store.set('lukash-state', JSON.stringify({ used: [...state.used], curso: state.curso }));
+  const persistConvo = () => store.set('lukash-convo', JSON.stringify(state.convo.slice(-120)));
+  const saveProfile = () => store.set('lukash-profile', JSON.stringify(state.profile || {}));
+
+  /* ================= 4. RENDERIZADO ================= */
+  function svgFallback() {
+    const NS = 'http://www.w3.org/2000/svg';
+    const svg = document.createElementNS(NS, 'svg');
+    svg.setAttribute('viewBox', '0 0 64 64');
+    svg.classList.add('av-fb');
+    const parts = [
+      ['ellipse', { cx: 32, cy: 38, rx: 20, ry: 18, fill: '#EE4599' }],
+      ['path', { d: 'M16 30 Q10 18 22 16 Q20 28 22 32 Z', fill: '#180F43' }],
+      ['path', { d: 'M48 30 Q54 18 42 16 Q44 28 42 32 Z', fill: '#180F43' }],
+      ['ellipse', { cx: 32, cy: 42, rx: 10, ry: 8, fill: '#E7C11F' }],
+      ['circle', { cx: 28, cy: 42, r: 1.8, fill: '#180F43' }],
+      ['circle', { cx: 36, cy: 42, r: 1.8, fill: '#180F43' }],
+      ['circle', { cx: 24, cy: 32, r: 3.2, fill: '#fff' }],
+      ['circle', { cx: 40, cy: 32, r: 3.2, fill: '#fff' }],
+      ['circle', { cx: 24, cy: 32, r: 1.4, fill: '#180F43' }],
+      ['circle', { cx: 40, cy: 32, r: 1.4, fill: '#180F43' }]
+    ];
+    parts.forEach(([tag, attrs]) => {
+      const el = document.createElementNS(NS, tag);
+      Object.keys(attrs).forEach(k => el.setAttribute(k, attrs[k]));
+      svg.appendChild(el);
+    });
+    return svg;
+  }
+  function avatarEl() {
+    const wrap = document.createElement('div');
+    wrap.className = 'avatar';
+    const img = document.createElement('img');
+    img.src = 'images/Recurso ia.png';
+    img.alt = 'Luka$h';
+    const fb = svgFallback();
+    img.onerror = () => { img.style.display = 'none'; fb.style.display = 'flex'; };
+    wrap.append(img, fb);
+    return wrap;
+  }
+  function scrollDown() { requestAnimationFrame(() => { chatArea.scrollTop = chatArea.scrollHeight; }); }
+
+  function renderRow(type, text) {
+    const row = document.createElement('div');
+    row.className = 'msg msg--' + type;
+    if (type === 'bot') row.appendChild(avatarEl());
+    const bubble = document.createElement('div');
+    bubble.className = 'bubble';
+    bubble.textContent = text;
+    row.appendChild(bubble);
+    chatArea.appendChild(row);
+    scrollDown();
+  }
+  function addMessage(type, text) {
+    renderRow(type, text);
+    state.convo.push({ r: type, t: text });
+    persistConvo();
+  }
+  function setTyping(on) {
+    let t = document.getElementById('typingRow');
+    if (on && !t) {
+      const row = document.createElement('div');
+      row.className = 'msg msg--bot';
+      row.id = 'typingRow';
+      row.appendChild(avatarEl());
+      const b = document.createElement('div');
+      b.className = 'bubble';
+      b.innerHTML = '<span class="typing-dots"><span></span><span></span><span></span></span>';
+      row.appendChild(b);
+      chatArea.appendChild(row);
+      scrollDown();
+    } else if (!on && t) t.remove();
+  }
+
+  // Chips solo en puntos de decisión reales; se quitan al usarse salvo los reutilizables
+  const REUSABLE = new Set(['Volver al inicio', 'Preguntar otra cosa', 'Otro tema', 'Continuar el curso']);
+  function renderChips(labels) {
+    sugBox.innerHTML = '';
+    (labels || []).forEach(label => {
+      const n = norm(label);
+      if (state.used.has(n) && !REUSABLE.has(n)) return;
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.textContent = label;
+      if (REUSABLE.has(n)) b.classList.add('tip--ghost');
+      b.addEventListener('click', () => {
+        if (!REUSABLE.has(n)) state.used.add(n);
+        persistState();
+        sugBox.innerHTML = '';
+        handleUser(label);
+      });
+      sugBox.appendChild(b);
+    });
+  }
+
+  /* ================= 5. LUKA$H HABLA (1-2 burbujas cortas) ================= */
+  let continueMap = Object.create(null);
+  const on = (label, fn) => { continueMap[norm(label)] = fn; };
+  const clearMap = () => { continueMap = Object.create(null); };
+
+  async function botTalk(texts, chips) {
+    texts = (texts || []).slice(0, 2);
+    setTyping(true);
+    for (let i = 0; i < texts.length; i++) {
+      await delay(300 + Math.min(460, texts[i].length * 4));
+      setTyping(false);
+      addMessage('bot', texts[i]);
+      setTyping(i < texts.length - 1);
+    }
+    setTyping(false);
+    if (chips && chips.length) renderChips(chips);
+  }
+
+  /* ================= 6. HUB (temas abiertos) ================= */
+  const HUB_TOPICS = ['Curso rápido', 'Quiero ahorrar', 'No me alcanza la plata', 'Tengo deudas', 'Quiero comprar algo', 'Ponte un reto'];
+  function hubChips() {
+    const rest = HUB_TOPICS.filter(l => !state.used.has(norm(l)));
+    const base = rest.length ? rest : ['Curso rápido'];
+    if (state.curso && state.curso.active && !state.curso.done) base.unshift('Continuar el curso');
+    return base;
+  }
+  function goHub(lead) {
+    clearMap();
+    state.lastTopic = null; state.menuFactory = null;
+    state.pending = null;
+    botTalk([lead || '¿De qué hablamos?'], hubChips());
+  }
+
+  /* ================= 7. PERFIL Y PERSONALIZACIÓN ================= */
+  // Se construye SOLO con preguntas que el tema necesita, una a la vez
+  const hasIncome = () => typeof state.profile.income === 'number';
+  const hasExpenses = () => typeof state.profile.expenses === 'number';
+
+  /* ================= 8. PRESUPUESTO ================= */
+  // Pregunta ingreso -> gastos -> divide y usa los números del usuario
+  function topPresupuesto() {
+    state.lastTopic = 'presupuesto';
+    clearMap();
+    if (hasIncome()) return presupuestoNext();
+    state.pending = 'income-presupuesto';
+    botTalk(['¿Cuánto recibes al mes, más o menos?'], ['200.000', '500.000', '800.000', '1.500.000']);
+  }
+  function presupuestoNext() {
+    state.lastTopic = 'presupuesto';
+    if (!hasExpenses()) {
+      state.pending = 'expenses';
+      botTalk(['Y con eso, ¿te alcanza para el mes o te queda justo?'], ['Me alcanza', 'Me queda justo', 'No me alcanza']);
+      return;
+    }
+    presupuestoResult();
+  }
+  function presupuestoResult() {
+    const inc = state.profile.income;
+    const exp = state.profile.expenses;
+    const nec = round(inc * 0.5, 1000), gust = round(inc * 0.3, 1000), aho = round(inc * 0.2, 1000);
+    const bal = inc - exp;
+    clearMap();
+    const b1 = 'Con ' + fmt(inc) + ' al mes: ' + fmt(nec) + ' a necesarios, ' + fmt(gust) + ' a gustos y ' + fmt(aho) + ' a ahorro.';
+    let b2;
+    if (bal >= 0) {
+      b2 = 'Con tus gastos (' + fmt(exp) + ') te quedan ' + fmt(bal) + ' libres. Aparta el ahorro el día que te llega la plata.';
+    } else {
+      b2 = 'Ojo: gastas ' + fmt(-bal) + ' más de lo que entra. Primero lo fijo no se toca: recorta de gustos y gastos hormiga.';
+    }
+    state.pending = null;
+    on('Ponte un reto', topReto);
+    botTalk([b1, b2], ['Ponte un reto', 'Preguntar otra cosa']);
+  }
+
+  /* ================= 9. METAS Y COMPRAS ================= */
+  // Pregunta cuánto -> en cuánto tiempo -> (ingreso si hace falta) -> plan propio
+  function topMeta(text) {
+    state.lastTopic = 'meta';
+    clearMap();
+    const pm = parseMoney(text), pmo = parseMonths(text);
+    if (pm && pmo) return goalDo(pm, pmo);
+    state.buf = {};
+    state.pending = 'goal-amount';
+    botTalk(['¡Vamos por esa meta! ¿Cuánto necesitas juntar?'], ['600.000', '1.200.000', '2.000.000']);
+  }
+  function goalDo(amount, months) {
+    const monthly = amount / months;
+    state.buf.meta = { amount, months, monthly };
+    // Si no conocemos el ingreso, lo pedimos para hacer el plan personal
+    if (!hasIncome()) {
+      state.pending = 'income-meta';
+      botTalk(['Para mirar que te quepa, ¿cuánto recibes al mes?'], ['300.000', '600.000', '1.000.000']);
+      return;
+    }
+    goalPlan();
+  }
+  function goalPlan() {
+    const m = state.buf.meta;
+    const inc = state.profile.income;
+    const ahorroSug = round(inc * 0.2, 1000);
+    const pct = Math.round(m.monthly / inc * 100);
+    clearMap();
+    state.pending = null;
+    const b1 = 'Para juntar ' + fmt(m.amount) + ' en ' + m.months + ' meses, aparta ' + fmt(m.monthly) + ' al mes.';
+    let b2;
+    if (pct > 20) {
+      b2 = 'Es el ' + pct + '% de tu ingreso, más del 20% sano. Alarga el plazo o bájale a un gasto.';
+    } else {
+      b2 = 'Te cabe en el ahorro (tu 20% sería ' + fmt(ahorroSug) + '). Metálico: apenas llegue la plata, lo apartas.';
+    }
+    on('¿Ya tengo algo ahorrado?', () => askSaved());
+    botTalk([b1, b2], ['¿Ya tengo algo ahorrado?', 'Preguntar otra cosa']);
+  }
+  function askSaved() {
+    state.pending = 'goal-saved';
+    clearMap();
+    botTalk(['¿Cuánto tienes ya apartado para esa meta?'], ['Nada aún', '100.000', '250.000']);
+  }
+
+  /* ================= 10. AHORRO ================= */
+  function topAhorro() {
+    state.lastTopic = 'ahorro';
+    clearMap();
+    on('Ponerle una meta', topMeta);
+    botTalk([
+      'Ahorrar = apartar plata HOY, con un propósito. El truco: apartarla apenas llega, no con lo que "sobra".',
+      'La mejor meta tiene monto y fecha.'
+    ], ['Ponerle una meta', 'Preguntar otra cosa']);
+  }
+
+  /* ================= 11. DEUDAS ================= */
+  function topDeudas() {
+    state.lastTopic = 'deudas';
+    clearMap();
+    state.pending = 'debt-total';
+    botTalk(['Tranqui, con orden se resuelve. ¿Cuánto debes en total?'], ['500.000', '1.500.000', '3.000.000']);
+  }
+  function debtRatio() {
+    const debt = state.profile.debtTotal;
+    const pay = state.profile.debtMonthly;
+    const inc = state.profile.income;
+    const pct = pay && inc ? Math.round(pay / inc * 100) : null;
+    clearMap();
+    state.pending = null;
+    on('Ponte un reto', topReto);
+    let b2;
+    if (pct !== null && pct >= 40) {
+      b2 = 'Tu pago mensual es el ' + pct + '% de tu ingreso. Alto: prioridad es bajarla. Paga mínimo en todas y todo el extra a la de mayor interés (avalancha). Y cero deuda nueva.';
+    } else {
+      b2 = 'Con eso, tu deuda se maneja. Avalancha: mínimo en todas y el extra a la que cobra más interés. Nunca tapes una deuda con otro crédito.';
+    }
+    botTalk([fmt(debt) + ' de deuda, anotada sin juicios.', b2], ['Ponte un reto', 'Preguntar otra cosa']);
+  }
+
+  /* ================= 12. TARJETA ================= */
+  function topTarjeta() {
+    state.lastTopic = 'tarjeta';
+    clearMap();
+    on('Pagar el total', () => {
+      botTalk(['Eso: pagando el total la tarjeta no te cobra interés y es como usar plata tuya con ventajas.', 'Regla: solo lo que sabes que pagarás completo al mes.'], ['Preguntar otra cosa']);
+    });
+    on('Solo el mínimo', () => {
+      botTalk(['Pilas: el mínimo casi no mueve la deuda, deja el resto girando con intereses y pagas casi el doble al final.', 'Ideal: paga el total, o lo máximo que puedas sobre el mínimo.'], ['Preguntar otra cosa']);
+    });
+    on('Me atrasé', () => {
+      clearMap();
+      state.pending = 'card-debt';
+      botTalk(['Va sin bronca. ¿Cuánto debes en la tarjeta?'], ['500.000', '1.500.000', '3.000.000']);
+    });
+    botTalk([
+      'La tarjeta es plata que te prestan, no tu plata. El cupo no es tu sueldo.',
+      '¿Cómo la usas normalmente?'
+    ], ['Pagar el total', 'Solo el mínimo', 'Me atrasé']);
+  }
+
+  /* ================= 13. INVERSIÓN ================= */
+  function topInvertir() {
+    state.lastTopic = 'invertir';
+    clearMap();
+    on('¿Cómo empiezo?', () => {
+      on('Sí', () => {
+        on('Sí', () => {
+          botTalk([
+            'Bien: fondo de emergencia + plata que puede esperar. Un CDT es una puerta simple; compara tasas vigentes.',
+            'Invertir implica riesgo: nadie garantiza rentabilidad. Diversifica: no todo en lo mismo.'
+          ], ['Preguntar otra cosa']);
+        });
+        on('No', () => {
+          botTalk([
+            'Antes de invertir, arma tu fondo de emergencia (1-3 meses de gastos) en cuenta o billetera.',
+            'Ese colchón es lo que te salva el mes malo. Después sí se piensa en hacerla rendir.'
+          ], ['Preguntar otra cosa']);
+        });
+        botTalk(['¿Ya tienes un fondo de emergencia (1-3 meses de tus gastos)?'], ['Sí', 'No']);
+      });
+      on('No', () => {
+        botTalk([
+          'Si esa plata la puedes necesitar pronto, mantenla a la mano: cuenta de ahorro o billetera digital.',
+          'No metas plata que vas a necesitar: las inversiones se deciden con tiempo y cabeza.'
+        ], ['Preguntar otra cosa']);
+      });
+      botTalk(['¿Es plata que puedes dejar quieta por un buen rato (más de un año)?'], ['Sí', 'No']);
+    });
+    on('¿Qué es un CDT?', () => {
+      botTalk([
+        'Un CDT es prestarle tu plata a un banco por un plazo fijo y que te pague un interés acordado.',
+        'La tocas solo al final: si la sacas antes, hay castigo. Las tasas cambian: compara la vigente.'
+      ], ['Preguntar otra cosa']);
+    });
+    botTalk([
+      'Invertir = poner tu plata a trabajar para crecer, asumiendo riesgo. Nadie regala rentabilidad.',
+      '¿Por dónde le entramos?'
+    ], ['¿Cómo empiezo?', '¿Qué es un CDT?', 'Preguntar otra cosa']);
+  }
+
+  /* ================= 14. BANCOS ================= */
+  function topBancos() {
+    state.lastTopic = 'bancos';
+    clearMap();
+    on('¿Nequi o Daviplata?', () => botTalk([
+      'Nequi es de Bancolombia y Daviplata de Davivienda. Ambas se abren gratis con el celular y sin cuota de manejo.',
+      'Cómodas para el día a día, pero no rinden casi nada: lo que vaya a esperar, busca dónde pague mejor.'
+    ], ['Preguntar otra cosa']));
+    on('¿Qué es FOGAFIN?', () => botTalk([
+      'FOGAFIN protege tus depósitos en Colombia: hasta 50 millones por persona y entidad si la entidad quiebra.',
+      'Cubre cuentas de ahorro, corrientes y CDT. Es el respaldo legal de tu plata.'
+    ], ['Preguntar otra cosa']));
+    on('¿Banco o billetera?', () => botTalk([
+      'Banco: más portafolio (crédito, CDT, cuentas). Billetera: todo desde el cel y movimiento barato.',
+      'No compiten, se combinan: lo diario en la billetera y el ahorro de fondo en algo que rinda.'
+    ], ['Preguntar otra cosa']));
+    botTalk([
+      'En Colombia tienes bancos tradicionales (Bancolombia, Davivienda, BBVA), billeteras (Nequi, Daviplata) y fintech (Nu, Lulo, Ualá, Pibank).',
+      '¿Cuál te cuadra?'
+    ], ['¿Nequi o Daviplata?', '¿Banco o billetera?', '¿Qué es FOGAFIN?', 'Preguntar otra cosa']);
+  }
+
+  /* ================= 15. INFLACIÓN ================= */
+  function topInflacion() {
+    state.lastTopic = 'inflacion';
+    clearMap();
+    on('¿Y qué hago?', () => {
+      on('Quiero que rinda', topInvertir);
+      botTalk([
+        'La plata quieta pierde. En el corto plazo una cuenta alcanza; para largo plazo busca que rinda.',
+        'Primero tu fondo de emergencia, y lo demás con cabeza y riesgo asumido.'
+      ], ['Quiero que rinda', 'Preguntar otra cosa']);
+    });
+    botTalk([
+      'Inflación = tu plata pierde poder de compra.',
+      'Hoy $10.000 alcanzan para una hamburguesa; si sube a $12.000, ya no alcanza. La plata se achica quieta.'
+    ], ['¿Y qué hago?', 'Preguntar otra cosa']);
+  }
+
+  /* ================= 16. GASTOS HORMIGA ================= */
+  function topHormiga() {
+    state.lastTopic = 'hormiga';
+    clearMap();
+    state.pending = 'hormiga';
+    botTalk(['Gastos hormiga: compras chiquitas que casi no se sienten (café, dulce, pasaje).', 'Dame cuánto gastas al día:'], ['3.000', '5.000', '8.000']);
+  }
+
+  /* ================= 17. RETO Y ESCENARIO ================= */
+  function topReto() {
+    state.lastTopic = 'reto';
+    clearMap();
+    const base = round(state.profile.income || 600000, 1000);
+    const need = round(base * 0.4, 1000);
+    const rest = base - need;
+    const gA = round(rest * 0.60, 1000), aA = rest - gA;
+    const gB = round(rest * 0.40, 1000), aB = rest - gB;
+    const gC = round(rest * 0.15, 1000), aC = rest - gC;
+    state.reto = { need, aA, aB, aC };
+    const labA = 'A) gustos ' + fmt(gA) + ' y ahorro ' + fmt(aA);
+    const labB = 'B) gustos ' + fmt(gB) + ' y ahorro ' + fmt(aB);
+    const labC = 'C) gustos ' + fmt(gC) + ' y ahorro ' + fmt(aC);
+    on(labA, () => retoFeedback('A'));
+    on(labB, () => retoFeedback('B'));
+    on(labC, () => retoFeedback('C'));
+    botTalk([
+      'Te llegan ' + fmt(base) + ' al mes y ' + fmt(need) + ' son de necesarios.',
+      'El resto (' + fmt(rest) + ') es para gustos y ahorro. ¿Cómo lo repartes?'
+    ], [labA, labB, labC, 'Preguntar otra cosa']);
+  }
+  function retoFeedback(opt) {
+    const v = state.reto;
+    clearMap();
+    on('Otro reto', topReto);
+    let b;
+    if (opt === 'A') b = 'Opción A: los gustos ganan y el ahorro queda flaquito (' + fmt(v.aA) + '). El ahorro no es lo que sobra: se aparta primero.';
+    else if (opt === 'B') b = 'Opción B: pareja. Necesarios cubiertos, gustos disfrutan y ahorras (' + fmt(v.aB) + '). Eso es sostenible.';
+    else b = 'Opción C: ' + fmt(v.aC) + ' de golpe no aguanta ni un mes. Mejor poco y constante que mucho una vez.';
+    botTalk([b], ['Otro reto', 'Preguntar otra cosa']);
+  }
+  function topEscenario() {
+    state.lastTopic = 'escenario';
+    clearMap();
+    state.pending = 'escenario';
+    botTalk([
+      'Escenario: se te antojan unos tenis de $350.000. Ya gastaste gustos y solo queda intacto tu ahorro.',
+      '¿Qué haces?'
+    ], ['Comprarlos ya', 'Esperar 24 horas', 'Revisar mi presupuesto']);
+  }
+
+  /* ================= 18. CURSO RÁPIDO (9 lecciones cortas) ================= */
+  const CURSO = [
+    { n: 1, name: 'Ingresos',
+      text: 'Ingreso es la plata que te llega al mes: trabajo, mesada o negocio. Fijo = siempre igual; variable = cambia. Con lo fijo haces cuentas y lo variable no lo cuentes como seguro.',
+      act: { label: '¿De dónde viene tu plata?', opts: ['Trabajo', 'Mesada', 'Negocio', 'Varias'] } },
+    { n: 2, name: 'Gastos',
+      text: 'Tus gastos son fijos (arriendo, plan), variables (comida, ropa) e impulsivos (lo que compras en caliente). El gasto hormiga es el chiquito de todos los días: no se siente hasta que suma.',
+      act: { label: 'Identificar el impulsivo', opts: ['Café', 'Arriendo', 'Videojuego'] } },
+    { n: 3, name: 'Presupuesto',
+      text: 'Presupuesto = decidir ANTES a dónde va cada peso: cuánto entra, cuánto sale y cuánto queda. Guía 50/30/20: 50% necesarios, 30% gustos, 20% ahorro. Es guía, no ley.',
+      act: { label: 'Calcular cuánto queda', opts: ['$300.000', '$200.000', 'No alcanza'] } },
+    { n: 4, name: 'Ahorro',
+      text: 'Ahorrar = apartar plata ANTES, con un propósito. Una meta y una fecha se dividen en cuotas mensuales. Y siempre un fondo para imprevistos que te salve el mes malo.',
+      act: { label: 'Calcular la cuota', opts: ['$50.000', '$100.000', '$200.000'] } },
+    { n: 5, name: 'Inflación',
+      text: 'Con el tiempo los precios suben y la misma plata alcanza para menos. Hoy un almuerzo cuesta $12.000; si sube y tu plata no, mañana te alcanza para menos. La plata quieta se achica.',
+      act: { label: 'Ver el efecto', opts: ['Compra más', 'Se mantiene igual', 'Compra menos'] } },
+    { n: 6, name: 'Crédito',
+      text: 'Crédito = plata que te prestan y devuelves con intereses. La tarjeta es crédito, no tu plata. Pagar solo el mínimo estira la deuda, y el precio real es la suma de todas las cuotas.',
+      act: { label: 'Comparar contado vs cuotas', opts: ['Nada, es igual', '$250.000', '$600.000'] } },
+    { n: 7, name: 'Deudas',
+      text: 'Deuda = plata que debes devolver con intereses y siempre con condiciones. Con varias deudas: paga el mínimo de todas y el extra a la de mayor interés. Nunca tapes una deuda con otra.',
+      act: { label: '¿Cuál atacas primero?', opts: ['La de $200.000', 'La de $300.000', 'Las dos a medias'] } },
+    { n: 8, name: 'Inversión',
+      text: 'Invertir = poner tu plata a trabajar para crecer, asumiendo un riesgo. Nadie garantiza rentabilidad. Antes: fondo de emergencia, plata que puedas dejar quieta y diversificar.',
+      act: { label: 'Detectar humo', opts: ['Oportunidad', 'Publicidad engañosa', 'Depende del banco'] } },
+    { n: 9, name: 'Decisiones',
+      text: 'Antes de gastar: ¿es necesidad o deseo? ¿Comparé precios? ¿Lo elegiría mañana con cabeza fría? La regla de las 24 horas frena el impulso.',
+      act: { label: 'Un caso real', opts: ['Comprarlos ya', 'Esperar 24 horas', 'Revisar mi presupuesto'] } }
+  ];
+  // Feedback de una línea por cada opción de cada actividad
+  const FEED = {
+    Trabajo: 'Bien: un sueldo es ingreso fijo y con ese sí se planea.',
+    Mesada: 'Bien: la mesada suele ser fija. De ahí se aparta primero y luego se gasta.',
+    Negocio: 'Ojo: el ingreso variable no se gasta completo. Promedia lo que te llega al mes y haz cuentas con eso.',
+    Varias: 'Buena movida tener varias fuentes. Para planear, suma solo los mínimos seguros.',
+    Videojuego: 'Ese: el videojuego fue compra impulsiva. El café es hormiga y el arriendo es necesidad.',
+    Café: 'Casi: el café es gasto hormiga, chiquito y diario. El impulsivo es el que compraste sin planear: el videojuego.',
+    Arriendo: 'Ojo: el arriendo es necesidad, no impulso. El que compraste en caliente fue el videojuego.',
+    '$300.000': 'Exacto: $1.000.000 - $500.000 - $200.000 = $300.000 para gustos. Así se decide antes de gastar.',
+    '$200.000': 'Casi: los $200.000 ya son tu ahorro. Recalcula: 1 millón menos 500 mil y menos 200 mil = 300 mil de gustos.',
+    'No alcanza': 'Sí alcanza: $1.000.000 - $500.000 de necesarios - $200.000 de ahorro = $300.000 de gustos.',
+    '$50.000': 'Casi: 600.000 en 6 meses es 100.000 al mes, no 50.000. Revisa la división.',
+    '$100.000': 'Exacto: 600.000 dividido en 6 meses = 100.000 al mes. Cuota clara y alcanzable.',
+    '$200.000': 'Casi: eso juntaría 1.200.000 en 6 meses. La cuota es 100.000 al mes.',
+    'Compra más': 'Casi: si los precios suben y tu plata no, compras MENOS, no más.',
+    'Se mantiene igual': 'Casi: si sube el precio y tu plata sigue igual, compras menos. Lo que subió fue el precio, no tu plata.',
+    'Compra menos': 'Exacto: con la inflación tu plata quieta compra menos. Por eso conviene hacerla rendir.',
+    'Nada, es igual': 'Casi: 12 cuotas de $250.000 suman $3.000.000 y de contado son $2.400.000. Pagas $600.000 de más.',
+    '$250.000': 'Ojo: $250.000 es una sola cuota. Las 12 suman $3.000.000, que son $600.000 más que el contado.',
+    '$600.000': 'Bien contado: 12 x $250.000 = $3.000.000, o sea $600.000 más que el contado. Ese es el costo del crédito.',
+    'La de $200.000': 'Casi: la de $300.000 cobra 4%, el doble que la otra. Tu extra rinde más atacando la más cara.',
+    'La de $300.000': 'Exacto: el extra va a la de mayor interés (4% mensual). Eso es el método avalancha.',
+    'Las dos a medias': 'Suena justo, pero cuesta más. Mínimo en todas y el extra a la de mayor interés (4%).',
+    'Oportunidad': 'Casi: una promesa de plata fácil y sin riesgo no existe. Cuanto más seguro te lo venden, más desconfía.',
+    'Publicidad engañosa': 'Eso: rentabilidad "segura y garantizada" al 30% mensual es bandera roja clásica. Si no lo entiendes, no lo metas.',
+    'Depende del banco': 'Ojo: ningún banco paga 30% mensual garantizado. Eso es publicidad engañosa, no una opción seria.',
+    'Comprarlos ya': 'Decisión exprés: la emoción dura minutos y el hueco, todo el mes. Los tenis estarán mañana.',
+    'Esperar 24 horas': 'Eso: la regla de las 24 horas. La emoción baja y decides tú, con cabeza fría.',
+    'Revisar mi presupuesto': 'Nivel experto: revisar el presupuesto convierte el impulso en decisión con números.'
+  };
+  // Bastidor de preguntas de cada actividad
+  const ACT_TEXT = {
+    '¿De dónde viene tu plata?': '¿De dónde viene principalmente tu plata?',
+    'Identificar el impulsivo': 'Hoy: café $5.000, arriendo $700.000 y un videojuego que no ibas a comprar. ¿Cuál es el gasto impulsivo?',
+    'Calcular cuánto queda': 'Te llegan $1.000.000, tus necesarios son $500.000 y apartas $200.000 de ahorro. ¿Cuánto te queda para gustos?',
+    'Calcular la cuota': '¿Cuánto apartas al mes para juntar $600.000 en 6 meses?',
+    'Ver el efecto': 'Si mañana todo sube 10% y tu plata no cambia, ¿qué pasa con lo que puedes comprar?',
+    'Comparar contado vs cuotas': 'Un equipo de $2.400.000 de contado, o 12 cuotas de $250.000. ¿Cuánto pagas de más?',
+    '¿Cuál atacas primero?': 'Debes $200.000 al 2% mensual y $300.000 al 4% mensual. ¿Cuál atacas primero?',
+    'Detectar humo': 'Te ofrecen 30% mensual "seguro y garantizado". ¿Qué es?',
+    'Un caso real': 'Se te antojan unos tenis de $350.000 y ya gastaste tus gustos. ¿Qué haces?'
+  };
+
+  function topCurso() {
+    clearMap();
+    state.lastTopic = 'curso';
+    if (!state.curso.active || state.curso.done) { state.curso.step = 0; state.curso.active = true; state.curso.done = false; }
+    cursoRender();
+  }
+  function cursoRender() {
+    const i = Math.min(state.curso.step, CURSO.length - 1);
+    const isLast = i >= CURSO.length - 1;
+    const lec = CURSO[i];
+    const actLabel = lec.act.label;
+    on(actLabel, cursoAct);
+    on('Siguiente', nextCurso);
+    on('Terminar', endCurso);
+    on('Preguntar otra cosa', leaveCurso);
+    const chips = [actLabel, isLast ? 'Terminar' : 'Siguiente', 'Preguntar otra cosa'];
+    state.cursoActiveAct = lec.act;
+    botTalk([lec.text], chips);
+  }
+  function cursoAct() {
+    const act = state.cursoActiveAct;
+    if (!act) return topCurso();
+    clearMap();
+    on('Siguiente', nextCurso);
+    on('Terminar', endCurso);
+    on('Preguntar otra cosa', leaveCurso);
+    act.opts.forEach(o => on(o, () => cursoOption(o)));
+    botTalk([ACT_TEXT[act.label] || act.label], act.opts);
+  }
+  function cursoOption(opt) {
+    const fb = FEED[opt];
+    if (!fb) return cursoAct();
+    const isLast = state.curso.step >= CURSO.length - 1;
+    clearMap();
+    if (isLast) on('Terminar', endCurso);
+    on('Siguiente', nextCurso);
+    on('Continuar el curso', nextCurso);
+    on('Preguntar otra cosa', leaveCurso);
+    botTalk([fb], [isLast ? 'Terminar' : 'Siguiente', 'Preguntar otra cosa']);
+  }
+  function nextCurso() {
+    state.curso.step = Math.min(state.curso.step + 1, CURSO.length - 1);
+    if (state.curso.step >= CURSO.length - 1) state.curso.done = true;
+    persistState();
+    cursoRender();
+  }
+  function endCurso() {
+    state.curso = { step: 0, active: false, done: false };
+    persistState();
+    goHub('¡Completaste el curso rápido! Ya le entiendes un poco más a tu plata.');
+  }
+  function leaveCurso() {
+    state.curso.active = true;
+    persistState();
+    goHub('Tranqui, aquí no hay examen: tú mandas.');
+  }
+
+  /* ================= 19. RESPUESTAS A PREGUNTAS LIBRES ================= */
+  const FAQ = [
+    { p: /que es (una )?(tasa de interes|interes)/, r: ['La tasa de interés es lo que pagas (o recibes) por usar plata que no es tuya.', 'Si es alta, la deuda crece rápido. Si te la ofrecen por invertir, es tu premio por el riesgo.'] },
+    { p: /debito o credito|diferencia entre debito y credito/, r: ['Débito: tu plata, sale al instante. Crédito: plata prestada que devuelves con interés.', 'Para empezar y aprender, débito. El crédito requiere disciplina.'] },
+    { p: /que es (el )?(pago )?minimo/, r: ['Es lo mínimo que deja pagar tu tarjeta para no estar en mora.', 'Pero casi toda la deuda sigue girando con intereses: el total siempre gana.'] },
+    { p: /que es (el )?cupo/, r: ['El cupo es el máximo que la entidad te presta con tu tarjeta.', 'No es tu plata ni tu sueldo: úsalo por debajo del 30% y paga el total.'] },
+    { p: /diversific/, r: ['Diversificar = repartir tu plata en varias opciones para no depender de una sola.', 'Si una va mal, las otras sostienen. En inversión, es regla de oro.'] },
+    { p: /fondo de emergencia|colchon/, r: ['Es plata guardada para imprevistos: entre 1 y 3 meses de tus gastos.', 'A la mano, en cuenta o billetera. Es tu seguro contra el mes malo.'] },
+    { p: /que es (un )?(cdt|cdts|cdt\?)/, r: ['Un CDT es prestarle tu plata a un banco por un plazo fijo por un interés acordado.', 'La tocas solo al final: si la sacas antes, hay castigo.'] }
+  ];
+  function faqAnswer(u) {
+    for (const f of FAQ) {
+      if (f.p.test(u)) return f.r;
+    }
+    return null;
+  }
+
+  /* ================= 20. PERSONALIDAD ================= */
+  function goWho() {
+    clearMap();
+    botTalk([
+      'Soy Luka$h, tu guía de plata. No soy banco ni vendedor: te ayudo a pensar tu dinero, sin juicios.',
+      'De cada charla te llevas algo. ¿De qué hablamos?'
+    ], hubChips());
+  }
+  function goBeforeName() {
+    // Primera vez: saludo breve y nombre (opcional). Sin entrevista larga.
+    state.pending = 'name';
+    botTalk(['¡Hola! Soy Luka$h. ¿Cómo te llamas?'], ['Omitir']);
+  }
+  function goGreeting() {
+    if (state.name) {
+      botTalk(['Hola, ' + state.name + '. ¿De qué hablamos?'], hubChips());
+    } else {
+      botTalk(['¡Hola! Soy Luka$h. ¿De qué hablamos?'], hubChips());
+    }
+  }
+  function goHubFree() {
+    clearMap();
+    botTalk(['¿De qué hablamos?'], hubChips());
+  }
+  function goThanks() {
+    clearMap();
+    botTalk(['A la orden. Cuando tu plata te dé vueltas, aquí estoy.'], hubChips());
+  }
+  function goAfirma() {
+    clearMap();
+    botTalk(['¡Eso! ¿Y ahora qué te cuento?'], hubChips());
+  }
+  function goNiega() {
+    clearMap();
+    botTalk(['Va, sin problema, tu plata, tú mandas.', '¿De qué hablamos entonces?'], hubChips());
+  }
+  function goDespedida() {
+    clearMap();
+    botTalk(['Chao. Cuídate y no dejes que la plata te coma el sueño.', 'Cuando quieras, aquí sigo.']);
+  }
+  function goLimits() {
+    clearMap();
+    botTalk([
+      'Pilas: nunca te pido claves, contraseñas ni números de tarjeta. Eso no lo necesita nadie.',
+      'Hablamos de metas y cantidades, no de cuentas bancarias.'
+    ], hubChips());
+  }
+  function goClarify() {
+    clearMap();
+    botTalk(['Vamos con calma. Cuéntamelo con tus palabras.', 'Si puedes, mete números: montos y plazos me ayudan a ayudarte.'], hubChips());
+  }
+  function goMiedo() {
+    clearMap();
+    on('Ahorrar', topAhorro);
+    on('Deudas', topDeudas);
+    on('Gastar', topPresupuesto);
+    botTalk([
+      'Bacano que lo digas. La plata da susto porque casi nadie la enseña bien.',
+      '¿Qué te da más cosa: gastar, ahorrar o las deudas?'
+    ], ['Ahorrar', 'Gastar', 'Deudas', 'Preguntar otra cosa']);
+  }
+  function goFallback() {
+    clearMap();
+    botTalk([
+      'No tengo una respuesta lista para eso.',
+      'Cuéntamelo con montos y plazos (ej: "juntar 600.000 en 6 meses"), o elige un tema y lo vemos.'
+    ], hubChips());
+  }
+
+  /* ================= 21. PASOS QUE ESPERAN NÚMEROS O TEXTOS ================= */
+  async function handlePending(text, u, pm) {
+    switch (state.pending) {
+      case 'name': {
+        state.pending = null;
+        if (/omitir/i.test(u)) {
+          state.namedFlag = true; store.set('lukash-named', '1');
+          return goGreeting();
+        }
+        state.name = (('' + text).trim().slice(0, 20)) || 'Amigo';
+        store.set('lukash-name', state.name);
+        return goGreeting();
+      }
+      case 'income-presupuesto': {
+        const inc = pm || parseMoney(text);
+        if (!inc) return botTalk(['No capté el monto. Escríbelo así: 500.000 o 2 millones.'], ['500.000']);
+        state.profile.income = inc; saveProfile();
+        state.pending = null;
+        return presupuestoNext();
+      }
+      case 'expenses': {
+        state.pending = null;
+        const inc = state.profile.income;
+        if (/no me alcanza/i.test(u)) state.profile.expenses = Math.round(inc * 1.2);
+        else if (/me queda justo/i.test(u)) state.profile.expenses = inc;
+        else state.profile.expenses = Math.round(inc * 0.8);
+        saveProfile();
+        return presupuestoResult();
+      }
+      case 'goal-amount': {
+        const amount = pm || parseMoney(text);
+        if (!amount) return botTalk(['No capté el valor. Escríbelo como número: 600.000.'], ['600.000']);
+        const months = parseMonths(text);
+        if (months) return goalDo(amount, months);
+        state.pending = 'goal-months';
+        state.buf.goalAmount = amount;
+        botTalk([fmt(amount) + ', anotado. ¿En cuántos meses lo armas?'], ['3 meses', '6 meses', '12 meses']);
+        return;
+      }
+      case 'goal-months': {
+        let months = parseMonths(text);
+        if (!months) { const n = parseInt(text, 10); months = (n > 0 && n <= 240) ? n : null; }
+        if (!months) return botTalk(['Dame un número de meses, ej: 6.'], ['6 meses']);
+        const amount = state.buf.goalAmount || pm;
+        delete state.buf.goalAmount;
+        state.pending = null;
+        return goalDo(amount, months);
+      }
+      case 'income-meta': {
+        const inc = pm || parseMoney(text);
+        if (!inc) return botTalk(['No capté el ingreso. Ej: 500.000.'], ['500.000']);
+        state.profile.income = inc; saveProfile();
+        state.pending = null;
+        return goalPlan();
+      }
+      case 'goal-saved': {
+        state.pending = null;
+        let saved = 0;
+        if (!/nada/i.test(u)) saved = pm || parseMoney(text) || 0;
+        const m = state.buf.meta;
+        const falta = m.amount - saved;
+        clearMap();
+        if (falta <= 0) return botTalk(['Ya tienes cubierta esa meta. O subes la meta o la plata busca otro plan.'], ['Preguntar otra cosa']);
+        const nuevo = falta / m.months;
+        botTalk([
+          'Con ' + fmt(saved) + ' guardados, te faltan ' + fmt(falta) + '.',
+          'Te tocaría apartar ' + fmt(nuevo) + ' al mes en ' + m.months + ' meses.'
+        ], ['Preguntar otra cosa']);
+        return;
+      }
+      case 'debt-total': {
+        const total = pm || parseMoney(text);
+        if (!total) return botTalk(['Dame el total en números, ej: 2.000.000.'], ['2.000.000']);
+        state.profile.debtTotal = total; saveProfile();
+        state.pending = 'debt-month';
+        botTalk(['¿Cuánto pagas al mes por esa deuda?'], ['100.000', '300.000', '500.000']);
+        return;
+      }
+      case 'debt-month': {
+        const pay = pm || parseMoney(text);
+        if (!pay) return botTalk(['Dame el pago mensual en números, ej: 200.000.'], ['200.000']);
+        state.profile.debtMonthly = pay; saveProfile();
+        if (!hasIncome()) {
+          state.pending = 'income-debts';
+          botTalk(['¿Y cuánto recibes al mes, para ver el peso?'], ['300.000', '700.000', '1.200.000']);
+          return;
+        }
+        state.pending = null;
+        return debtRatio();
+      }
+      case 'income-debts': {
+        const inc = pm || parseMoney(text);
+        if (!inc) return botTalk(['No capté el ingreso. Ej: 700.000.'], ['700.000']);
+        state.profile.income = inc; saveProfile();
+        state.pending = null;
+        return debtRatio();
+      }
+      case 'card-debt': {
+        const total = pm || parseMoney(text);
+        clearMap();
+        state.pending = null;
+        if (!total) return botTalk(['Dame el número, ej: 1.500.000.'], ['1.500.000']);
+        const costo = Math.round(total * 1.6);
+        botTalk([
+          'Con ' + fmt(total) + ' de deuda en la tarjeta, pagando solo mínimo puedes terminar alrededor de ' + fmt(costo) + '.',
+          'Prioridad: pagar el total o lo máximo posible, y frenar el uso.'
+        ], ['Preguntar otra cosa']);
+        return;
+      }
+      case 'hormiga': {
+        state.pending = null;
+        const d = pm || parseMoney(text);
+        if (!d || d > 50000) return topHormiga();
+        const mes = d * 30, anio = d * 365;
+        clearMap();
+        botTalk([
+          fmt(d) + ' diarios son ~' + fmt(mes) + ' al mes y ~' + fmt(anio) + ' al año.',
+          'Con eso completas un viajecito. No es dejar de disfrutar: es saber cuánto pesan esos gastitos.'
+        ], ['Preguntar otra cosa']);
+        return;
+      }
+      case 'escenario': {
+        state.pending = null;
+        clearMap();
+        if (/comprar|ya$|si([^\w]|$)/i.test(u)) return escenarioAnswer('Comprarlos ya');
+        if (/esperar|24/i.test(u)) return escenarioAnswer('Esperar 24 horas');
+        if (/revis|presupuesto/i.test(u)) return escenarioAnswer('Revisar mi presupuesto');
+        return escenarioAnswer(null);
+      }
+      default:
+        state.pending = null;
+        return routeFree(text, u);
+    }
+  }
+  function escenarioAnswer(opt) {
+    clearMap();
+    if (!opt) return botTalk(['Tienes 3 caminos: comprarlos, esperar 24h o revisar tu presupuesto.'], []);
+    const b = FEED[opt];
+    botTalk([b], ['Preguntar otra cosa']);
+  }
+
+  /* ================= 22. RUTA PRINCIPAL ================= */
+  async function handleUser(text) {
+    text = ('' + (text || '')).trim();
+    if (!text) return;
+    addMessage('user', text);
+    input.value = '';
+    scrollDown();
+    const u = norm(text);
+    const pm = parseMoney(text);
+
+    // 1) Opciones por paso (chips)
+    if (continueMap[u]) { const fn = continueMap[u]; clearMap(); return fn(text); }
+    // 1b) Salir al hub en cualquier momento: "Preguntar otra cosa"
+    if (/preguntar otra cosa|otra cosa/.test(u)) return goHubFree();
+    // 2) Atajo al curso
+    if (u === norm('Curso rápido')) return topCurso();
+    if (u === norm('Continuar el curso')) return topCurso();
+    // 3) Datos sueltos de una pregunta pendiente
+    if (state.pending) return handlePending(text, u, pm);
+
+    const intent = detect(text);
+
+    // 4) Mismo tema: retoma su menú sin repetir intro
+    if (intent === state.lastTopic && state.lastTopic !== 'curso' && state.lastTopic !== 'hormiga' && state.lastTopic !== 'reto' && state.lastTopic !== 'escenario') {
+      if (intent === 'presupuesto' && hasIncome()) return presupuestoResult();
+      return routeFree(text, u);
+    }
+
+    return routeFree(text, u);
+  }
+
+  async function routeFree(text, u) {
+    const intent = detect(text);
+    const pm = parseMoney(text), pmo = parseMonths(text);
+
+    // Pregunta directa de concepto -> respuesta breve
+    const faq = faqAnswer(u);
+    if (faq) {
+      clearMap();
+      return botTalk(faq, ['Preguntar otra cosa']);
+    }
+
+    switch (intent) {
+      case 'limite':    return goLimits();
+      case 'clarificar': return goClarify();
+      case 'miedo':     return goMiedo();
+      case 'quien':     return goWho();
+      case 'saludo':    return goGreeting();
+      case 'gracias':   return goThanks();
+      case 'afirma':    return goAfirma();
+      case 'niega':     return goNiega();
+      case 'despedida': return goDespedida();
+      case 'fresh': {
+        state.convo = []; state.used = new Set(); state.pending = null;
+        state.lastTopic = null; state.menuFactory = null;
+        state.curso = { step: 0, active: false, done: false };
+        persistConvo(); persistState();
+        chatArea.innerHTML = ''; sugBox.innerHTML = ''; clearMap();
+        return goGreeting();
+      }
+      case 'hub':       return goHubFree();
+      case 'curso':     return topCurso();
+      case 'goalin':    return topAhorro();
+      case 'goal': {
+        if (pm && pmo) return goalDo(pm, pmo);
+        return topMeta(text);
+      }
+      case 'ahorro': {
+        if (pm) {
+          state.lastTopic = 'meta'; clearMap();
+          state.buf = {}; state.pending = 'goal-amount';
+          return botTalk([fmt(pm) + ', anotado. ¿En cuántos meses lo armas?'], ['3 meses', '6 meses', '12 meses']);
+        }
+        return topAhorro();
+      }
+      case 'presupuesto': {
+        if (pm) { state.profile.income = pm; saveProfile(); return presupuestoNext(); }
+        return topPresupuesto();
+      }
+      case 'deudas':    return topDeudas();
+      case 'tarjeta':   return topTarjeta();
+      case 'invertir':  return topInvertir();
+      case 'bancos':    return topBancos();
+      case 'inflacion': return topInflacion();
+      case 'hormiga':   return topHormiga();
+      case 'reto':      return topReto();
+      case 'escenario': return topEscenario();
+      default:          return goFallback();
+    }
+  }
+
+  /* ================= 23. ARRANQUE ================= */
+  async function boot() {
+    state.convo.forEach(m => renderRow(m.r, m.t));
+    if (state.name || state.namedFlag) {
+      return goGreeting();
+    }
+    // Si viene de curso en curso, ofrécele retomarlo
+    if (state.curso && state.curso.active && !state.curso.done) {
+      on('Continuar el curso', topCurso);
+      return botTalk(['¿Retomamos el curso o hablamos de otra cosa?'], ['Continuar el curso'].concat(hubChips()));
+    }
+    goBeforeName();
+  }
+
+  /* ================= 24. EVENTOS ================= */
+  $('sendBtn').addEventListener('click', () => { const t = input.value.trim(); if (t) handleUser(t); });
+  input.addEventListener('keydown', (e) => { if (e.key === 'Enter') { const t = input.value.trim(); if (t) handleUser(t); } });
+
+  $('resetBtn').addEventListener('click', () => {
+    if (!window.confirm('¿Empezar una conversación nueva? Se borra el historial guardado.')) return;
+    ['lukash-name', 'lukash-named', 'lukash-profile', 'lukash-convo', 'lukash-state'].forEach(k => store.del(k));
+    state.name = ''; state.namedFlag = false; state.profile = {}; state.convo = []; state.used = new Set();
+    state.pending = null; state.lastTopic = null; state.menuFactory = null;
+    state.curso = { step: 0, active: false, done: false };
+    chatArea.innerHTML = ''; sugBox.innerHTML = ''; clearMap();
+    boot();
+  });
+
+  $('expandBtn').addEventListener('click', () => {
+    $('expandIcon').classList.toggle('hidden');
+    $('minimizeIcon').classList.toggle('hidden');
+    document.querySelector('.app').classList.toggle('app--full');
+  });
+
+  $('closeBtn').addEventListener('click', () => {
+    document.querySelector('.app').classList.add('app--hidden');
+    $('fab').classList.remove('hidden');
+  });
+  $('fab').addEventListener('click', () => {
+    $('fab').classList.add('hidden');
+    document.querySelector('.app').classList.remove('app--hidden');
+  });
+
+  boot();
+})();
+</script>
+</body>
+</html>
