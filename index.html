@@ -205,6 +205,25 @@
       opacity: 0;
       transform: translateY(10px);
     }
+
+    #chat-frame {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+      background: transparent;
+    }
+
+    .chat-window.chat-fullscreen {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      border: 0;
+      border-radius: 0;
+      z-index: 70;
+    }
+
     @keyframes popIn {
       to {
         opacity: 1;
@@ -784,26 +803,7 @@
 </div>
 <!-- The Chat Window -->
 <div class="chat-window absolute bottom-0 right-0 w-80 h-96 bg-white/90 backdrop-blur-md rounded-2xl shadow-2xl border-2 border-lukash-pink flex flex-col overflow-hidden hidden-chat" id="chat-window">
-<!-- Header -->
-<div class="text-lukash-yellow p-4 flex justify-between items-center border-b-2 border-lukash-pink" style="background-color: #b4d17b;">
-<h3 class="font-fredoka font-bold text-lg" style="color: rgb(33, 25, 65);">Soy LUKASH&nbsp;</h3>
-<button class="text-white hover:text-lukash-pink transition-colors font-bold text-xl" id="close-chat">×</button>
-</div>
-<!-- Messages Area -->
-<div class="flex-1 p-4 flex flex-col space-y-3" id="chat-messages">
-<div class="bg-lukash-bg-modal text-lukash-dark p-3 rounded-lg rounded-tl-none self-start max-w-[80%] shadow-sm chat-msg">
-<p class="text-sm font-roboto">¡Hola! Soy LUKASH tu asistente personal ¿En qué te puedo ayudar hoy con tus finanzas?</p>
-</div>
-</div>
-<!-- Input Area -->
-<div class="p-3 bg-white border-t border-gray-200">
-<form class="flex space-x-2" id="chat-form">
-<input class="flex-1 rounded-full px-4 py-2 border border-gray-300 focus:outline-none focus:border-lukash-pink focus:ring-1 focus:ring-lukash-pink text-sm" placeholder="Escribe un mensaje..." required="" type="text">
-<button class="bg-lukash-pink text-white rounded-full p-2 w-10 h-10 flex items-center justify-center hover:bg-[#d63a8a] transition-colors" type="submit">
-<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-</button>
-</form>
-</div>
+<iframe id="chat-frame" title="Chat de LUKASH" src="lukash-chat.html"></iframe>
 </div>
 </div>
 <!-- END: FloatingActionButton & Chat Window -->
@@ -879,10 +879,8 @@
 <script data-purpose="chat-functionality">
   const fabButton = document.getElementById('fab-button');
   const chatWindow = document.getElementById('chat-window');
-  const closeChat = document.getElementById('close-chat');
   const particleContainer = document.getElementById('particle-container');
-  const chatForm = document.getElementById('chat-form');
-  const chatMessages = document.getElementById('chat-messages');
+  const chatFrame = document.getElementById('chat-frame');
 
   const brandColors = ['#EE4599', '#180F43', '#E7C11F', '#A7EB5D'];
 
@@ -927,41 +925,57 @@
     setTimeout(() => {
       chatWindow.classList.remove('hidden-chat');
       chatWindow.classList.add('active-chat');
+      const frameDocument = chatFrame.contentDocument;
+      const frameApp = frameDocument && frameDocument.querySelector('.app');
+      const frameFab = frameDocument && frameDocument.getElementById('fab');
+      if (frameApp) frameApp.classList.remove('app--hidden', 'app--full');
+      if (frameFab) frameFab.classList.add('hidden');
     }, 200);
   });
 
-  closeChat.addEventListener('click', () => {
+  function closeChatWindow() {
+    chatWindow.classList.remove('chat-fullscreen');
     chatWindow.classList.remove('active-chat');
     chatWindow.classList.add('hidden-chat');
     
     setTimeout(() => {
       fabButton.classList.remove('exploding');
     }, 300);
-  });
+  }
 
-  chatForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const input = chatForm.querySelector('input');
-    const text = input.value.trim();
-    if (!text) return;
+  chatFrame.addEventListener('load', () => {
+    const frameDocument = chatFrame.contentDocument;
+    if (!frameDocument) return;
 
-    // Add user message
-    const userMsg = document.createElement('div');
-    userMsg.className = 'bg-lukash-pink text-white p-3 rounded-lg rounded-tr-none self-end max-w-[80%] shadow-sm chat-msg';
-    userMsg.innerHTML = `<p class="text-sm font-roboto">${text}</p>`;
-    chatMessages.appendChild(userMsg);
-    
-    input.value = '';
-    chatMessages.scrollTop = chatMessages.scrollHeight;
+    const style = frameDocument.createElement('style');
+    style.textContent = `
+      html, body { width: 100%; height: 100%; overflow: hidden; background: transparent; }
+      .app { position: relative; inset: auto; width: 100%; height: 100%; max-width: none; border-radius: 0; box-shadow: none; background: rgba(255,255,255,.94); }
+      .app-header { height: 58px; padding: 0 14px; background: #b4d17b; color: #212121; }
+      .logo-mark { width: 34px; height: 34px; background: #E7C11F; }
+      .header-title h1 { color: #180F43; font-size: 1.15rem; }
+      .chat-area { padding: 14px 10px 12px; gap: 10px; }
+      .avatar { width: 30px; height: 30px; }
+      .bubble { padding: 9px 12px; font-size: .82rem; border-radius: 14px; }
+      .msg--bot .bubble { background: #F9F6F0; color: #180F43; box-shadow: 0 2px 8px rgba(24,15,67,.12); }
+      .msg--user .bubble { background: #EE4599; color: #fff; }
+      .input-bar { position: static; transform: none; width: 100%; max-width: none; padding: 8px; background: #fff; }
+      .input-bar input { min-width: 0; padding: 9px 13px; font-size: .82rem; }
+      .send-btn { width: 38px; height: 38px; background: #EE4599; }
+      .icon-btn { width: 32px; height: 32px; }
+      .app--full { position: relative; inset: auto; width: 100%; max-width: none; height: 100%; transform: none; border-radius: 0; }
+      .fab, .app--full { display: none !important; }
+    `;
+    style.textContent = style.textContent.replace('.fab, .app--full { display: none !important; }', '.fab { display: none !important; }');
+    frameDocument.head.appendChild(style);
 
-    // Simulate response
-    setTimeout(() => {
-      const botMsg = document.createElement('div');
-      botMsg.className = 'bg-lukash-bg-modal text-lukash-dark p-3 rounded-lg rounded-tl-none self-start max-w-[80%] shadow-sm chat-msg';
-      botMsg.innerHTML = `<p class="text-sm font-roboto">Interesante... ¡Seguí contándome!</p>`;
-      chatMessages.appendChild(botMsg);
-      chatMessages.scrollTop = chatMessages.scrollHeight;
-    }, 1000);
+    const frameClose = frameDocument.getElementById('closeBtn');
+    if (frameClose) frameClose.addEventListener('click', closeChatWindow);
+
+    const frameExpand = frameDocument.getElementById('expandBtn');
+    if (frameExpand) frameExpand.addEventListener('click', () => {
+      chatWindow.classList.toggle('chat-fullscreen');
+    });
   });
 </script>
 <script data-purpose="explosion-logic">

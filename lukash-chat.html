@@ -255,23 +255,28 @@ body {
 .send-btn:hover { transform: translateY(-2px); }
 .send-btn:active { transform: scale(.93); box-shadow: 0 3px 8px rgba(238,69,153,.32); }
 
-/* ===== Botón flotante para reabrir el chat (al cerrar con la X) ===== */
+/* ===== Botón flotante FAB (igual que fab-button en otras pantallas) ===== */
 .fab {
   position: fixed;
   right: 16px; bottom: 16px;
-  width: 62px; height: 62px;
+  width: 48px; height: 48px;
   border-radius: 50%;
-  border: none;
+  border: 2px solid var(--color-primary-white);
   background: var(--bg-gradient-warm);
   color: #fff;
+  flex-shrink: 0;
   display: flex; align-items: center; justify-content: center;
   cursor: pointer;
-  box-shadow: 0 10px 22px rgba(238,69,153,.38);
+  box-shadow: 0 4px 15px rgba(0,0,0,.3);
   z-index: 60;
-  transition: transform .15s ease, box-shadow .15s ease;
+  transition: transform .15s ease-in-out, box-shadow .15s ease-in-out;
+  overflow: hidden;
 }
-.fab:hover { transform: translateY(-2px); }
-.fab:active { transform: scale(.93); }
+.fab:hover { transform: scale(1.10); }
+.fab:active { transform: scale(.95); }
+.fab img {
+  width: 24px; height: 24px;
+}
 
 .chat-area::-webkit-scrollbar { width: 8px; }
 .chat-area::-webkit-scrollbar-thumb { background: rgba(24,15,67,.2); border-radius: 999px; }
@@ -289,7 +294,7 @@ body {
   <header class="app-header">
     <div class="header-title">
       <span class="logo-mark">
-        <img src="images/Recurso ia.png" alt="Luka$h"
+        <img src="images/logo ia.png" alt="Luka$h"
              onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
         <svg class="av-fb" viewBox="0 0 64 64" aria-hidden="true">
           <ellipse cx="32" cy="38" rx="20" ry="18" fill="#EE4599"/>
@@ -307,8 +312,8 @@ body {
       <h1>LUKA$H</h1>
     </div>
     <div class="header-actions">
-      <button class="icon-btn" id="resetBtn" type="button" aria-label="Nueva conversación" title="Nueva conversación">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>
+      <button class="icon-btn" id="resetBtn" type="button" aria-label="Borrar conversación" title="Borrar conversación">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v5"/><path d="M14 11v5"/></svg>
       </button>
       <button class="icon-btn" id="expandBtn" type="button" aria-label="Ampliar chat" title="Cambiar entre chat chiquito y grande">
         <svg id="expandIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M9 21H3v-6"/><path d="M21 3l-7 7"/><path d="M3 21l7-7"/></svg>
@@ -331,10 +336,22 @@ body {
   </footer>
 </div>
 
-<!-- Botón flotante: reabre el chat cuando se cierra con la X -->
-<button class="fab hidden" id="fab" type="button" aria-label="Abrir chat" title="Abrir chat Luka$h">
-  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-</button>
+<!-- Botón flotante con icono de ampliar/reducir -->
+<div class="fab hidden" id="fab" type="button" aria-label="Abrir/ampliar chat" title="Abrir o ampliar chat Luka$h">
+  <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="fabExpandIcon">
+    <path d="M15 3h6v6"/>
+    <path d="M9 21H3v-6"/>
+    <path d="M21 3l-7 7"/>
+    <path d="M3 21l7-7"/>
+  </svg>
+  <svg class="w-4 h-4 shrink-0 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="fabMinimizeIcon">
+    <path d="M8 3v3a2 2 0 0 1-2 2H3"/>
+    <path d="M21 8h-3a2 2 0 0 1-2-2V3"/>
+    <path d="M3 16h3a2 2 0 0 1 2 2v3"/>
+    <path d="M16 21v-3a2 2 0 0 1 2-2h3"/>
+  </svg>
+  <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBDTF220oFCcOVaT9lL4UxlAXGO_DfJBNWKVX6HBw2r95HiXb1_WGT1MLpICXO-gRPE3uGBsuILMtGnh7g0jl2LoX3UNrNKBaWzFsuXyCn_6IXwvRCipLu7D3zY4_p-aT_AG6a5qZhf2ESSLRgAT-OlT2c41UsHWmgv15mo8EjXiNfvW-_cFMMk-sO1gpUCZYQFdRp6KRzOCbGGJuTIkPQ0-CDsmmafqh8KTvGUj0Rqrtxk3URnBGFoJIkch_cVq7GwFQ" alt="Piggy Bank Icon" class="w-full h-full object-contain">
+</div>
 
 <!-- =============================================================
      MOTOR DE CHAT LUKA$H  v3
@@ -410,9 +427,9 @@ body {
     { id: 'ahorro', t: ['ahorrar', 'ahorro', 'guardar plata', 'guardar', 'mesada', 'juntar', 'alcancia', 'apartar', 'plata guardada'] },
     { id: 'presupuesto', t: ['presupuesto', 'repartir', 'gastos', 'me llega', 'sueldo', 'ingresos', 'organizar mi plata', 'organizar mi dinero', 'como reparto', 'no me alcanza', 'me alcanza', 'en que se fue', 'en que se va', 'plan de gastos', 'fin de mes', 'gasto mucho'] },
     { id: 'deudas', t: ['deuda', 'deudas', 'debo', 'me endeude', 'me atrase', 'me atrace', 'debo plata', 'minimos', 'organizar deudas', 'estoy debiendo', 'andin enredadas'] },
-    { id: 'tarjeta', t: ['tarjeta', 'cupo', 'cuotas', 'pago minimo', 'el plastico', 'diferido', 'meses sin interes', 'financiado', 'credito'] },
+    { id: 'tarjeta', t: ['tarjeta', 'cupo', 'cuotas', 'pago minimo', 'el plastico', 'diferido', 'meses sin interes', 'financiado', 'credito', 'que tarjeta me conviene', 'que tarjeta me recomiendas'] },
     { id: 'invertir', t: ['invertir', 'inversion', 'inverti', 'rendir', 'rentabilidad', 'renta fija', 'cdt', 'acciones', 'fondos', 'diversificar', 'multiplicar', 'hacer crecer la plata', 'rendimiento'] },
-    { id: 'bancos', t: ['banco', 'bancos', 'bancolombia', 'davivienda', 'bbva', 'nequi', 'daviplata', 'lulo', 'uala', 'nu', 'pibank', 'fintech', 'fogafin', 'donde guardar la plata', 'donde guardar', 'cuenta de ahorro'] },
+    { id: 'bancos', t: ['banco', 'bancos', 'bancolombia', 'davivienda', 'bbva', 'nequi', 'daviplata', 'lulo', 'uala', 'nu', 'pibank', 'fintech', 'fogafin', 'donde guardar la plata', 'donde guardar', 'cuenta de ahorro', 'que banco me conviene', 'que banco me recomiendas', 'producto financiero'] },
     { id: 'inflacion', t: ['inflacion', 'sube todo', 'suben los precios', 'precios', 'poder de compra', 'todo sube', 'mas caro', 'carisimo', 'subieron', 'todo caro'] },
     { id: 'hormiga', t: ['hormiga', 'gastos hormiga', 'un cafe', 'diario', 'pequeños gastos', 'gasto poco'] },
     { id: 'calcular', t: ['calcula', 'saca la cuenta', 'cuanto seria', 'ayuda con cuentas', 'cuanto necesito', 'matematicas'] },
@@ -423,7 +440,8 @@ body {
     { id: 'gracias', t: ['gracias', 'genial', 'perfecto', 'excelente', 'bacano', 'de lujo', 'me sirvio', 'me sirve', 'quedo claro', 'entendido', 'anotado', 'exacto'] },
     { id: 'afirma', t: ['si', 'sip', 'sisi', 'dale', 'de una', 'va', 'ok', 'okey', 'claro que si', 'me parece', 'suena bien', 'hagamos', 'listo'] },
     { id: 'niega', t: ['no gracias', 'mejor no', 'no quiero', 'creo que no', 'para nada', 'no no'] },
-    { id: 'quien', t: ['quien eres', 'que eres', 'que haces', 'como te llamas', 'eres una ia', 'eres un robot', 'presentate', 'quien sos'] }
+    { id: 'quien', t: ['quien eres', 'que eres', 'que haces', 'como te llamas', 'eres una ia', 'eres un robot', 'presentate', 'quien sos'] },
+    { id: 'perfil', t: ['cambiar mis datos', 'actualizar mis datos', 'corregir mis datos', 'cambiar mi ingreso', 'cambiar mis gastos', 'cambiar mi deuda', 'editar mi perfil'] }
   ];
   MATCHERS.forEach(it => { it.pats = phrasePats(it.t); });
 
@@ -432,7 +450,8 @@ body {
     // Seguridad ante todo
     if (/clave|contrasena|pin|password|numero (completo )?de (tarjeta|cuenta)/.test(u)) return 'limite';
     if (/volver al inicio|otro tema|menu principal|volver al menu|al inicio/.test(u)) return 'hub';
-    if (/empezar de nuevo|empezar de cero|empezar limpio|comenzar de nuevo|comenzar de cero|borrar todo/.test(u)) return 'fresh';
+    if (/borrar (la )?conversacion|eliminar (la )?conversacion|borrar historial|borrar todo|empezar de nuevo|empezar de cero|empezar limpio|comenzar de nuevo|comenzar de cero/.test(u)) return 'fresh';
+    if (/vida crediticia|historial crediticio|primer credito|primera tarjeta|crear historial|tarjetas? para empezar|recomiend(a|ame) tarjetas?/.test(u)) return 'credito-inicio';
     if (/tarjeta|cupo|cuota|pago minimo|el plastico|diferido|sin interes/.test(u)) return 'tarjeta';
     if (/deuda|debo|me endeude|me atrase|me atrace/.test(u)) return 'deudas';
     let best = { id: 'fallback', score: 0 };
@@ -454,6 +473,8 @@ body {
     buf: {},            // contexto temporal de la pregunta en curso
     lastTopic: null,
     menuFactory: null,
+    courseOffered: false,
+    purposeShown: false,
     curso: { step: 0, active: false, done: false }
   };
 
@@ -464,10 +485,12 @@ body {
     try {
       const s = JSON.parse(store.get('lukash-state', '{}')); state.used = new Set(s.used || []);
       if (s.curso) state.curso = s.curso;
+      state.courseOffered = s.courseOffered === true;
+      state.purposeShown = s.purposeShown === true;
     } catch { state.used = new Set(); }
   })();
 
-  const persistState = () => store.set('lukash-state', JSON.stringify({ used: [...state.used], curso: state.curso }));
+  const persistState = () => store.set('lukash-state', JSON.stringify({ used: [...state.used], curso: state.curso, courseOffered: state.courseOffered, purposeShown: state.purposeShown }));
   const persistConvo = () => store.set('lukash-convo', JSON.stringify(state.convo.slice(-120)));
   const saveProfile = () => store.set('lukash-profile', JSON.stringify(state.profile || {}));
 
@@ -500,7 +523,7 @@ body {
     const wrap = document.createElement('div');
     wrap.className = 'avatar';
     const img = document.createElement('img');
-    img.src = 'images/Recurso ia.png';
+    img.src = 'images/logo ia.png';
     img.alt = 'Luka$h';
     const fb = svgFallback();
     img.onerror = () => { img.style.display = 'none'; fb.style.display = 'flex'; };
@@ -733,6 +756,18 @@ body {
   function topTarjeta() {
     state.lastTopic = 'tarjeta';
     clearMap();
+    on('Pagar todo', () => botTalk([
+      'Si puedes pagar el total cada mes, busca una tarjeta con cuota de manejo baja y beneficios que sí uses.',
+      'Compara la tarifa oficial y no elijas solo por puntos o millas.'
+    ], ['Preguntar otra cosa']));
+    on('Comprar a cuotas', () => botTalk([
+      'Si necesitas cuotas, compara tasa efectiva anual, valor de cada cuota y costo total. “Sin interés” debe estar escrito en las condiciones.',
+      'No te recomiendo una tarjeta sin saber cuánto puedes pagar al mes.'
+    ], ['Preguntar otra cosa']));
+    on('No estoy seguro', () => botTalk([
+      'Si todavía no tienes presupuesto o fondo de emergencia, no necesitas una tarjeta para empezar.',
+      'Primero ordena tus gastos y luego revisamos si una tarjeta te sirve.'
+    ], ['Preguntar otra cosa']));
     on('Pagar el total', () => {
       botTalk(['Eso: pagando el total la tarjeta no te cobra interés y es como usar plata tuya con ventajas.', 'Regla: solo lo que sabes que pagarás completo al mes.'], ['Preguntar otra cosa']);
     });
@@ -745,9 +780,47 @@ body {
       botTalk(['Va sin bronca. ¿Cuánto debes en la tarjeta?'], ['500.000', '1.500.000', '3.000.000']);
     });
     botTalk([
-      'La tarjeta es plata que te prestan, no tu plata. El cupo no es tu sueldo.',
-      '¿Cómo la usas normalmente?'
-    ], ['Pagar el total', 'Solo el mínimo', 'Me atrasé']);
+      'Te puedo orientar, pero no hay una tarjeta mejor para todos. Depende de si pagas todo, necesitas cuotas o buscas beneficios.',
+      '¿Cuál es tu caso?'
+    ], ['Pagar todo', 'Comprar a cuotas', 'No estoy seguro', 'Pagar el total', 'Solo el mínimo', 'Me atrasé']);
+  }
+
+  function topInicioCrediticio() {
+    state.lastTopic = 'credito-inicio';
+    clearMap();
+    on('Tengo ingresos', () => botTalk([
+      'Puedes empezar con un producto sencillo y un cupo que puedas pagar completo cada mes.',
+      'Para comparar, revisemos opciones de entrada y sus condiciones vigentes. ¿Cuál quieres conocer?'
+    ], ['Nu Abre Caminos', 'Tarjeta Nu', 'RappiCard', 'Comparar opciones', 'Preguntar otra cosa']));
+    on('No tengo ingresos', () => botTalk([
+      'No tienes que endeudarte para empezar. Primero busca ingresos estables y organiza tus gastos.',
+      'Cuando tengas capacidad de pago, revisamos una opción pequeña y clara.'
+    ], ['Preguntar otra cosa']));
+    on('Quiero una tarjeta', topTarjeta);
+    on('Nu Abre Caminos', () => botTalk([
+      'Nu publica Tarjeta Abre Caminos como una opción orientada a impulsar la vida crediticia. Puede ser una alternativa si estás empezando, pero la aprobación y las condiciones dependen de tu perfil.',
+      'Revisa en nu.com.co el cupo, tasa, cuota de manejo, costos y cómo reporta los pagos antes de solicitarla.'
+    ], ['Comparar opciones', 'Preguntar otra cosa']));
+    on('Tarjeta Nu', () => botTalk([
+      'La Tarjeta de Crédito Nu es digital y Nu también publica una tarjeta Abre Caminos y NuControl. La opción adecuada depende de tu perfil y de las condiciones que te ofrezcan.',
+      'Antes de aceptar, revisa tasa, cuota de manejo, costo total y paga el total cada mes si puedes.'
+    ], ['Comparar opciones', 'Preguntar otra cosa']));
+    on('RappiCard', () => botTalk([
+      'RappiCard publica una tarjeta 100% digital y sin cuota de manejo. Puede servir si buscas manejar todo desde la app, pero debes revisar tasa, beneficios y condiciones actuales.',
+      'No la pidas solo por crear historial: úsala poco y paga a tiempo.'
+    ], ['Comparar opciones', 'Preguntar otra cosa']));
+    on('Comparar opciones', () => botTalk([
+      'Para empezar, yo compararía Nu Abre Caminos, Tarjeta Nu y RappiCard por costo total, tasa, cuota de manejo, cupo inicial y reporte de pagos.',
+      'La mejor para ti será la que puedas pagar completa y no te cobre por servicios que no usarás. Verifica siempre la ficha oficial vigente.'
+    ], ['Tengo ingresos', 'Preguntar otra cosa']));
+    on('Quiero un crédito', () => botTalk([
+      'Pide crédito solo para un propósito claro y si la cuota cabe después de tus gastos.',
+      'Compara tasa efectiva anual, costo total, seguros y plazo; pagar a tiempo importa más que pedir mucho.'
+    ], ['Preguntar otra cosa']));
+    botTalk([
+      'Para empezar tu vida crediticia no necesitas endeudarte por obligación. Lo clave es elegir una cuota que puedas pagar a tiempo y completar el pago cuando sea posible.',
+      '¿Tienes ingresos para pagar una cuota mensual?'
+    ], ['Tengo ingresos', 'No tengo ingresos', 'Quiero una tarjeta', 'Quiero un crédito', 'Preguntar otra cosa']);
   }
 
   /* ================= 13. INVERSIÓN ================= */
@@ -794,22 +867,34 @@ body {
   function topBancos() {
     state.lastTopic = 'bancos';
     clearMap();
-    on('¿Nequi o Daviplata?', () => botTalk([
-      'Nequi es de Bancolombia y Daviplata de Davivienda. Ambas se abren gratis con el celular y sin cuota de manejo.',
-      'Cómodas para el día a día, pero no rinden casi nada: lo que vaya a esperar, busca dónde pague mejor.'
+    on('Uso diario', () => botTalk([
+      'Para mover plata todos los días, compara una cuenta o billetera por costos, retiros, transferencias, app y dónde puedes recibir ayuda.',
+      'Nequi y DaviPlata son opciones digitales; revisa sus límites y tarifas oficiales antes de elegir.'
     ], ['Preguntar otra cosa']));
-    on('¿Qué es FOGAFIN?', () => botTalk([
-      'FOGAFIN protege tus depósitos en Colombia: hasta 50 millones por persona y entidad si la entidad quiebra.',
-      'Cubre cuentas de ahorro, corrientes y CDT. Es el respaldo legal de tu plata.'
+    on('Guardar ahorro', () => botTalk([
+      'Para guardar ahorro, no elijas por el nombre: compara tasa efectiva anual, cuota de manejo, disponibilidad y protección del producto.',
+      'Nequi, DaviPlata, Nu, Lulo y Pibank publican productos distintos. La tasa y las condiciones pueden cambiar.'
     ], ['Preguntar otra cosa']));
-    on('¿Banco o billetera?', () => botTalk([
-      'Banco: más portafolio (crédito, CDT, cuentas). Billetera: todo desde el cel y movimiento barato.',
-      'No compiten, se combinan: lo diario en la billetera y el ahorro de fondo en algo que rinda.'
+    on('CDT', () => botTalk([
+      'Para un CDT, compara la tasa efectiva anual, el plazo, el monto mínimo y qué pasa si necesitas la plata antes.',
+      'La mejor opción es la que coincide con tu fecha y no te obliga a romper el CDT.'
+    ], ['Preguntar otra cosa']));
+    on('Crédito', () => botTalk([
+      'Para pedir crédito, compara tasa efectiva anual, cuota, seguros, costo total y penalidades; una cuota bajita puede terminar costando más.',
+      'No te recomiendo una entidad sin conocer tu ingreso, deuda actual y capacidad de pago.'
+    ], ['Preguntar otra cosa']));
+    on('Nequi o DaviPlata', () => botTalk([
+      'Para pagos y movimientos desde el celular, ambas tienen productos digitales. Compara límites, retiros, tarifas y funciones que sí usarás.',
+      'No hay una ganadora universal: revisa la tarifa y los términos oficiales vigentes de cada una.'
+    ], ['Preguntar otra cosa']));
+    on('Verificar información', () => botTalk([
+      'Antes de abrir algo, revisa la entidad en la Superintendencia Financiera y lee la tarifa oficial, los términos y la información de Fogafín.',
+      'Las tasas, límites y cobros cambian: no confíes solo en una publicación o recomendación vieja.'
     ], ['Preguntar otra cosa']));
     botTalk([
-      'En Colombia tienes bancos tradicionales (Bancolombia, Davivienda, BBVA), billeteras (Nequi, Daviplata) y fintech (Nu, Lulo, Ualá, Pibank).',
-      '¿Cuál te cuadra?'
-    ], ['¿Nequi o Daviplata?', '¿Banco o billetera?', '¿Qué es FOGAFIN?', 'Preguntar otra cosa']);
+      'No existe un mejor banco para todo. Depende de si quieres mover plata, ahorrar, abrir un CDT o pedir crédito.',
+      '¿Qué necesitas hacer?'
+    ], ['Uso diario', 'Guardar ahorro', 'CDT', 'Crédito', 'Nequi o DaviPlata', 'Verificar información', 'Preguntar otra cosa']);
   }
 
   /* ================= 15. INFLACIÓN ================= */
@@ -879,33 +964,57 @@ body {
     ], ['Comprarlos ya', 'Esperar 24 horas', 'Revisar mi presupuesto']);
   }
 
-  /* ================= 18. CURSO RÁPIDO (9 lecciones cortas) ================= */
+  /* ================= 18. CURSO RÁPIDO (17 microlecciones) ================= */
   const CURSO = [
     { n: 1, name: 'Ingresos',
-      text: 'Ingreso es la plata que te llega al mes: trabajo, mesada o negocio. Fijo = siempre igual; variable = cambia. Con lo fijo haces cuentas y lo variable no lo cuentes como seguro.',
+      text: 'Ya sabes qué es un ingreso; lo importante es manejarlo. Separa lo fijo de lo variable y arma tus gastos con el mínimo seguro, no con el mejor mes.',
       act: { label: '¿De dónde viene tu plata?', opts: ['Trabajo', 'Mesada', 'Negocio', 'Varias'] } },
     { n: 2, name: 'Gastos',
-      text: 'Tus gastos son fijos (arriendo, plan), variables (comida, ropa) e impulsivos (lo que compras en caliente). El gasto hormiga es el chiquito de todos los días: no se siente hasta que suma.',
+      text: 'No basta con saber qué es un gasto: hay que verlo antes de que se vaya. Separa fijos, variables e impulsivos y mira cuáles pequeños se repiten.',
       act: { label: 'Identificar el impulsivo', opts: ['Café', 'Arriendo', 'Videojuego'] } },
     { n: 3, name: 'Presupuesto',
-      text: 'Presupuesto = decidir ANTES a dónde va cada peso: cuánto entra, cuánto sale y cuánto queda. Guía 50/30/20: 50% necesarios, 30% gustos, 20% ahorro. Es guía, no ley.',
+      text: 'Un presupuesto es un plan para que tu plata tenga destino antes de gastarla. Compara lo que entra con lo que sale y ajusta primero los gustos si no alcanza.',
       act: { label: 'Calcular cuánto queda', opts: ['$300.000', '$200.000', 'No alcanza'] } },
     { n: 4, name: 'Ahorro',
-      text: 'Ahorrar = apartar plata ANTES, con un propósito. Una meta y una fecha se dividen en cuotas mensuales. Y siempre un fondo para imprevistos que te salve el mes malo.',
+      text: 'Ahorrar no es guardar lo que sobra: es apartar primero una cantidad que sí puedas sostener. Ponle una meta y una fecha para saber cuánto separar.',
       act: { label: 'Calcular la cuota', opts: ['$50.000', '$100.000', '$200.000'] } },
-    { n: 5, name: 'Inflación',
+    { n: 5, name: 'Fondo de emergencia',
+      text: 'El fondo de emergencia es plata disponible para un daño, una enfermedad o quedarte sin ingreso. Empieza con una meta pequeña y después busca cubrir entre uno y tres meses de gastos.',
+      act: { label: 'Proteger un imprevisto', opts: ['Usar la tarjeta', 'Usar el fondo', 'Pedir prestado'] } },
+    { n: 6, name: 'Necesidades y deseos',
+      text: 'Una necesidad protege tu vida diaria, como comida o transporte. Un deseo puede esperar, como unos tenis nuevos. Distinguirlos te ayuda a decidir sin quitarte todos los gustos.',
+      act: { label: 'Separar necesidad y deseo', opts: ['Medicinas', 'Audífonos nuevos', 'Plan de datos básico'] } },
+    { n: 7, name: 'Compras y descuentos',
+      text: 'Un descuento no siempre es ahorro: solo ahorras si necesitabas comprar y el precio final conviene. Compara el precio por unidad y espera si la compra es por impulso.',
+      act: { label: 'Evaluar un descuento', opts: ['Comprar porque dice 50%', 'Comparar precio final', 'Comprar dos para aprovechar'] } },
+    { n: 8, name: 'Inflación',
       text: 'Con el tiempo los precios suben y la misma plata alcanza para menos. Hoy un almuerzo cuesta $12.000; si sube y tu plata no, mañana te alcanza para menos. La plata quieta se achica.',
       act: { label: 'Ver el efecto', opts: ['Compra más', 'Se mantiene igual', 'Compra menos'] } },
-    { n: 6, name: 'Crédito',
+    { n: 9, name: 'Interés simple',
+      text: 'El interés simple se calcula siempre sobre el monto inicial. Si prestas $100.000 al 10% anual, suma $10.000 cada año, sin sumar los intereses anteriores.',
+      act: { label: 'Calcular interés simple', opts: ['$10.000 por año', '$11.000 por año', '$100.000 por año'] } },
+    { n: 10, name: 'Interés compuesto',
+      text: 'El interés compuesto también genera interés sobre lo que ya ganó. Puede hacer crecer el ahorro con tiempo, pero también agrandar una deuda si los intereses se acumulan.',
+      act: { label: 'Entender el compuesto', opts: ['Solo crece el monto inicial', 'También crecen los intereses', 'No cambia nada'] } },
+    { n: 11, name: 'Crédito y tarjetas',
       text: 'Crédito = plata que te prestan y devuelves con intereses. La tarjeta es crédito, no tu plata. Pagar solo el mínimo estira la deuda, y el precio real es la suma de todas las cuotas.',
       act: { label: 'Comparar contado vs cuotas', opts: ['Nada, es igual', '$250.000', '$600.000'] } },
-    { n: 7, name: 'Deudas',
+    { n: 12, name: 'Deudas',
       text: 'Deuda = plata que debes devolver con intereses y siempre con condiciones. Con varias deudas: paga el mínimo de todas y el extra a la de mayor interés. Nunca tapes una deuda con otra.',
       act: { label: '¿Cuál atacas primero?', opts: ['La de $200.000', 'La de $300.000', 'Las dos a medias'] } },
-    { n: 8, name: 'Inversión',
+    { n: 13, name: 'Inversión',
       text: 'Invertir = poner tu plata a trabajar para crecer, asumiendo un riesgo. Nadie garantiza rentabilidad. Antes: fondo de emergencia, plata que puedas dejar quieta y diversificar.',
       act: { label: 'Detectar humo', opts: ['Oportunidad', 'Publicidad engañosa', 'Depende del banco'] } },
-    { n: 9, name: 'Decisiones',
+    { n: 14, name: 'Productos financieros',
+      text: 'Una cuenta sirve para mover plata, un CDT la deja quieta por un plazo y un fondo reúne inversiones. Compara costos, disponibilidad, protección y riesgo antes de elegir.',
+      act: { label: 'Elegir dónde guardar', opts: ['Plata para mañana: cuenta', 'Plata que no tocaré: CDT', 'Todo en una sola opción'] } },
+    { n: 15, name: 'Seguridad financiera',
+      text: 'Protege tu plata: usa claves únicas, activa alertas y nunca compartas códigos. Nadie serio te pide la clave ni promete ganancias seguras y rápidas.',
+      act: { label: 'Detectar una estafa', opts: ['Compartir el código', 'Verificar por canal oficial', 'Confiar porque tiene logo'] } },
+    { n: 16, name: 'Metas financieras',
+      text: 'Una meta funciona mejor con monto, fecha y una cuota posible. Divide lo que necesitas entre los meses y revisa el plan si cambia tu ingreso.',
+      act: { label: 'Construir una meta', opts: ['Monto y fecha', 'Solo desearla', 'Endeudarse sin calcular'] } },
+    { n: 17, name: 'Decisiones',
       text: 'Antes de gastar: ¿es necesidad o deseo? ¿Comparé precios? ¿Lo elegiría mañana con cabeza fría? La regla de las 24 horas frena el impulso.',
       act: { label: 'Un caso real', opts: ['Comprarlos ya', 'Esperar 24 horas', 'Revisar mi presupuesto'] } }
   ];
@@ -939,6 +1048,39 @@ body {
     'Comprarlos ya': 'Decisión exprés: la emoción dura minutos y el hueco, todo el mes. Los tenis estarán mañana.',
     'Esperar 24 horas': 'Eso: la regla de las 24 horas. La emoción baja y decides tú, con cabeza fría.',
     'Revisar mi presupuesto': 'Nivel experto: revisar el presupuesto convierte el impulso en decisión con números.'
+    , 'Usar la tarjeta': 'Puede servir, pero te deja una deuda. Primero revisa si puedes pagarla completa.'
+    , 'Usar el fondo': 'Exacto: el fondo existe para imprevistos y evita endeudarte por un problema inesperado.'
+    , 'Pedir prestado': 'Puede ser la salida más cara. Primero revisa si tienes un fondo disponible.'
+    , 'Medicinas': 'Correcto: las medicinas son una necesidad de salud.'
+    , 'Audífonos nuevos': 'Son un deseo: pueden esperar si el presupuesto está apretado.'
+    , 'Plan de datos básico': 'Correcto: si lo necesitas para estudiar o trabajar, es un gasto necesario.'
+    , 'Comprar porque dice 50%': 'Una etiqueta no convierte algo en ahorro. Primero confirma si lo necesitas y compara el precio.'
+    , 'Comparar precio final': 'Eso: compara el valor final y el precio por unidad antes de decidir.'
+    , 'Comprar dos para aprovechar': 'Solo conviene si ya necesitabas los dos y caben en tu presupuesto.'
+    , '$10.000 por año': 'Exacto: el 10% de $100.000 son $10.000 cada año sobre el monto inicial.'
+    , '$11.000 por año': 'Casi: eso no sería interés simple sobre $100.000. El interés anual es $10.000.'
+    , '$100.000 por año': 'Casi: $100.000 es el monto inicial. El interés anual al 10% es $10.000.'
+    , 'Solo crece el monto inicial': 'Casi: en el compuesto también se suman los intereses anteriores.'
+    , 'También crecen los intereses': 'Exacto: el interés se calcula sobre el monto y lo que ya ganó.'
+    , 'No cambia nada': 'Casi: el tiempo hace que el crecimiento se acumule, para bien o para mal.'
+    , 'Gastar todo el cupo': 'El cupo no es ingreso. Comprar todo puede dejarte una deuda difícil de pagar.'
+    , 'Pagar solo el mínimo': 'El mínimo evita el atraso, pero deja deuda girando. Mejor paga el total cuando puedas.'
+    , 'Comprar y pagar el total': 'Esa es la opción más sana: la compra cabe en el presupuesto y no se acumulan intereses.'
+    , 'La de mayor interés': 'Correcto: después de cubrir mínimos, el extra rinde más contra la deuda más cara.'
+    , 'La de menor saldo siempre': 'A veces ayuda a motivarte, pero matemáticamente suele costar menos atacar la de mayor interés.'
+    , 'Pagar todas a medias': 'Cubre el mínimo de todas y concentra el extra en una; así avanzas más rápido.'
+    , 'Invertir el fondo': 'No: el fondo debe estar disponible. Invierte solo la plata que puedas dejar quieta.'
+    , 'Pagar deuda cara primero': 'Correcto: una deuda costosa puede crecer más rápido que una inversión prudente.'
+    , 'Creer en rentabilidad garantizada': 'Alerta: toda inversión tiene riesgo. Una promesa segura y rápida puede ser una estafa.'
+    , 'Plata para mañana: cuenta': 'Correcto: para una necesidad cercana importa poder retirar la plata fácilmente.'
+    , 'Plata que no tocaré: CDT': 'Puede servir: un CDT fija un plazo, pero compara la tasa y las condiciones.'
+    , 'Todo en una sola opción': 'Mejor no: compara y diversifica según el plazo y el riesgo.'
+    , 'Compartir el código': 'Nunca: los códigos y claves son privados, aunque alguien diga ser del banco.'
+    , 'Verificar por canal oficial': 'Correcto: entra por la app o página oficial, no por enlaces que te manden.'
+    , 'Confiar porque tiene logo': 'Un logo se puede copiar. Verifica la entidad y desconfía de promesas urgentes.'
+    , 'Monto y fecha': 'Exacto: con monto y fecha puedes calcular una cuota mensual realista.'
+    , 'Solo desearla': 'Una meta necesita números y una fecha para convertirse en un plan.'
+    , 'Endeudarse sin calcular': 'Primero calcula cuota, costo total e impacto en tus gastos.'
   };
   // Bastidor de preguntas de cada actividad
   const ACT_TEXT = {
@@ -950,13 +1092,52 @@ body {
     'Comparar contado vs cuotas': 'Un equipo de $2.400.000 de contado, o 12 cuotas de $250.000. ¿Cuánto pagas de más?',
     '¿Cuál atacas primero?': 'Debes $200.000 al 2% mensual y $300.000 al 4% mensual. ¿Cuál atacas primero?',
     'Detectar humo': 'Te ofrecen 30% mensual "seguro y garantizado". ¿Qué es?',
-    'Un caso real': 'Se te antojan unos tenis de $350.000 y ya gastaste tus gustos. ¿Qué haces?'
+    'Un caso real': 'Se te antojan unos tenis de $350.000 y ya gastaste tus gustos. ¿Qué haces?',
+    'Proteger un imprevisto': 'Se daña el celular que necesitas para estudiar y no tienes ingreso esta semana. ¿Qué usas?',
+    'Separar necesidad y deseo': 'Tienes plata para una sola cosa: medicinas, audífonos nuevos o plan de datos básico. ¿Cuál es necesidad?',
+    'Evaluar un descuento': 'Ves 50% de descuento en algo que no planeabas comprar. ¿Qué revisas antes?',
+    'Calcular interés simple': 'Prestas $100.000 al 10% anual. ¿Cuánto interés suma cada año?',
+    'Entender el compuesto': 'Si los intereses se quedan invertidos, ¿qué empieza a generar interés después?',
+    'Usar una tarjeta': '¿Cuál uso de tarjeta evita que la deuda se salga de control?',
+    'Priorizar una deuda': 'Tienes dos deudas y ya cubriste los mínimos. ¿A cuál mandas el dinero extra?',
+    'Prepararse para invertir': 'Tienes una deuda cara y tu fondo está vacío. ¿Qué haces antes de invertir?',
+    'Elegir dónde guardar': '¿Dónde pondrías plata que necesitarás mañana y dónde la que no tocarás por un año?',
+    'Detectar una estafa': 'Alguien pide tu código y promete ganancias seguras. ¿Qué haces?',
+    'Construir una meta': 'Quieres reunir $600.000 en 6 meses. ¿Qué necesitas definir primero?'
   };
+
+  const CURSO_TOPICS = [
+    { label: 'Ingresos y gastos', step: 0 },
+    { label: 'Presupuesto y ahorro', step: 2 },
+    { label: 'Compras y decisiones', step: 5 },
+    { label: 'Crédito y deudas', step: 10 },
+    { label: 'Inversión y productos', step: 12 },
+    { label: 'Seguridad y metas', step: 14 }
+  ];
+
+  function cursoMenu() {
+    clearMap();
+    CURSO_TOPICS.forEach(topic => on(topic.label, () => {
+      state.curso.step = topic.step;
+      state.curso.active = true;
+      state.curso.done = false;
+      persistState();
+      cursoRender();
+    }));
+    on('Preguntar otra cosa', goHubFree);
+    botTalk(['Puedo ayudarte a manejar tu plata en varios temas. ¿Cuál quieres trabajar?'], CURSO_TOPICS.map(topic => topic.label).concat('Preguntar otra cosa'));
+  }
 
   function topCurso() {
     clearMap();
     state.lastTopic = 'curso';
     if (!state.curso.active || state.curso.done) { state.curso.step = 0; state.curso.active = true; state.curso.done = false; }
+    cursoMenu();
+  }
+  function resumeCurso() {
+    clearMap();
+    state.lastTopic = 'curso';
+    if (!state.curso.active || state.curso.done) return topCurso();
     cursoRender();
   }
   function cursoRender() {
@@ -989,7 +1170,7 @@ body {
     clearMap();
     if (isLast) on('Terminar', endCurso);
     on('Siguiente', nextCurso);
-    on('Continuar el curso', nextCurso);
+    on('Continuar el curso', resumeCurso);
     on('Preguntar otra cosa', leaveCurso);
     botTalk([fb], [isLast ? 'Terminar' : 'Siguiente', 'Preguntar otra cosa']);
   }
@@ -1018,7 +1199,8 @@ body {
     { p: /que es (el )?cupo/, r: ['El cupo es el máximo que la entidad te presta con tu tarjeta.', 'No es tu plata ni tu sueldo: úsalo por debajo del 30% y paga el total.'] },
     { p: /diversific/, r: ['Diversificar = repartir tu plata en varias opciones para no depender de una sola.', 'Si una va mal, las otras sostienen. En inversión, es regla de oro.'] },
     { p: /fondo de emergencia|colchon/, r: ['Es plata guardada para imprevistos: entre 1 y 3 meses de tus gastos.', 'A la mano, en cuenta o billetera. Es tu seguro contra el mes malo.'] },
-    { p: /que es (un )?(cdt|cdts|cdt\?)/, r: ['Un CDT es prestarle tu plata a un banco por un plazo fijo por un interés acordado.', 'La tocas solo al final: si la sacas antes, hay castigo.'] }
+    { p: /que es (un )?(cdt|cdts|cdt\?)/, r: ['Un CDT es prestarle tu plata a un banco por un plazo fijo por un interés acordado.', 'La tocas solo al final: si la sacas antes, hay castigo.'] },
+    { p: /fogafin|seguro de depositos/, r: ['Fogafín administra el seguro de depósitos para entidades inscritas en Colombia.', 'Antes de confiarte, confirma en fogafin.gov.co si la entidad y el producto están cubiertos y cuál es el límite vigente.'] }
   ];
   function faqAnswer(u) {
     for (const f of FAQ) {
@@ -1036,16 +1218,41 @@ body {
     ], hubChips());
   }
   function goBeforeName() {
-    // Primera vez: saludo brevísimo y nombre (opcional). Sin entrevista larga.
     state.pending = 'name';
-    botTalk(['¡Hola! Soy Luka$h. ¿Nombre?'], ['Omitir']);
+    botTalk(['Hola, soy Luka$h. ¿Y tú cómo te llamas?'], ['Omitir']);
   }
   function goGreeting() {
-    if (state.name) {
-      botTalk(['Hola, ' + state.name + '. ¿Qué hacemos?'], ['Presupuesto', 'Ahorro', 'Meta', 'Curso', 'Preguntar otra cosa']);
-    } else {
-      botTalk(['¡Hola! Soy Luka$h. ¿Qué hacemos?'], ['Presupuesto', 'Ahorro', 'Meta', 'Curso', 'Preguntar otra cosa']);
+    const greeting = state.name ? 'Hola, ' + state.name + '. ¿Qué necesitas hoy?' : 'Hola. ¿Qué necesitas hoy?';
+    if (!state.purposeShown) {
+      state.purposeShown = true;
+      persistState();
+      return botTalk([
+        greeting,
+        'Este chat sirve para resolver tus dudas sobre plata y ayudarte a decidir mejor sobre ingresos, gastos, ahorro, deudas, bancos e inversiones. Pregúntame lo que quieras.'
+      ], state.courseOffered ? [] : ['Curso rápido']);
     }
+    if (!state.courseOffered) {
+      state.courseOffered = true;
+      persistState();
+      return botTalk([greeting], ['Curso rápido']);
+    }
+    botTalk([greeting]);
+  }
+  function goProfileEdit() {
+    clearMap();
+    on('Ingreso', () => {
+      state.pending = 'edit-income';
+      botTalk(['¿Cuál es tu ingreso mensual actual?']);
+    });
+    on('Gastos', () => {
+      state.pending = 'edit-expenses';
+      botTalk(['¿Cuánto gastas al mes, más o menos?']);
+    });
+    on('Deudas', () => {
+      state.pending = 'edit-debt';
+      botTalk(['¿Cuánto debes actualmente?']);
+    });
+    botTalk(['Claro. ¿Qué dato quieres corregir?'], ['Ingreso', 'Gastos', 'Deudas']);
   }
   function goHubFree() {
     clearMap();
@@ -1098,6 +1305,11 @@ body {
 
   /* ================= 21. PASOS QUE ESPERAN NÚMEROS O TEXTOS ================= */
   async function handlePending(text, u, pm) {
+    const canSkip = state.pending !== 'name' && /^(no quiero|prefiero no|no deseo|paso|saltar|no por ahora|no se|no sé|no tengo claro)/.test(u);
+    if (canSkip) {
+      state.pending = null;
+      return botTalk(['Está bien, no tienes que responder. Ese dato me ayuda a personalizar mejor, pero seguimos sin presión.'], ['Preguntar otra cosa']);
+    }
     switch (state.pending) {
       case 'name': {
         state.pending = null;
@@ -1115,6 +1327,24 @@ body {
         state.profile.income = inc; saveProfile();
         state.pending = null;
         return presupuestoNext();
+      }
+      case 'edit-income': {
+        const inc = pm || parseMoney(text);
+        if (!inc) return botTalk(['No capté el monto. Escríbelo así: 500.000 o 2 millones.']);
+        state.profile.income = inc; saveProfile(); state.pending = null;
+        return botTalk(['Listo, actualicé tu ingreso mensual a ' + fmt(inc) + '.'], ['Preguntar otra cosa']);
+      }
+      case 'edit-expenses': {
+        const expenses = pm || parseMoney(text);
+        if (!expenses) return botTalk(['No capté el monto. Escríbelo así: 300.000.']);
+        state.profile.expenses = expenses; saveProfile(); state.pending = null;
+        return botTalk(['Listo, actualicé tus gastos mensuales a ' + fmt(expenses) + '.'], ['Preguntar otra cosa']);
+      }
+      case 'edit-debt': {
+        const debt = pm || parseMoney(text);
+        if (!debt) return botTalk(['No capté el monto. Escríbelo así: 1.500.000.']);
+        state.profile.debtTotal = debt; saveProfile(); state.pending = null;
+        return botTalk(['Listo, actualicé tu deuda total a ' + fmt(debt) + '.'], ['Preguntar otra cosa']);
       }
       case 'expenses': {
         state.pending = null;
@@ -1253,8 +1483,14 @@ body {
     if (/preguntar otra cosa|otra cosa/.test(u)) return goHubFree();
     // 2) Atajo al curso
     if (u === norm('Curso rápido')) return topCurso();
-    if (u === norm('Continuar el curso')) return topCurso();
+    if (u === norm('Continuar el curso')) return resumeCurso();
+    if (detect(text) === 'fresh') return routeFree(text, u);
+
     // 3) Datos sueltos de una pregunta pendiente
+    if (state.pending && detect(text) === 'credito-inicio') {
+      state.pending = null;
+      return topInicioCrediticio();
+    }
     if (state.pending) return handlePending(text, u, pm);
 
     const intent = detect(text);
@@ -1284,14 +1520,17 @@ body {
       case 'clarificar': return goClarify();
       case 'miedo':     return goMiedo();
       case 'quien':     return goWho();
+      case 'perfil':    return goProfileEdit();
       case 'saludo':    return goGreeting();
       case 'gracias':   return goThanks();
       case 'afirma':    return goAfirma();
       case 'niega':     return goNiega();
       case 'despedida': return goDespedida();
       case 'fresh': {
+        ['lukash-name', 'lukash-named', 'lukash-profile', 'lukash-convo', 'lukash-state'].forEach(k => store.del(k));
+        state.name = ''; state.namedFlag = false; state.profile = {};
         state.convo = []; state.used = new Set(); state.pending = null;
-        state.lastTopic = null; state.menuFactory = null;
+        state.lastTopic = null; state.menuFactory = null; state.courseOffered = false; state.purposeShown = false;
         state.curso = { step: 0, active: false, done: false };
         persistConvo(); persistState();
         chatArea.innerHTML = ''; sugBox.innerHTML = ''; clearMap();
@@ -1299,6 +1538,7 @@ body {
       }
       case 'hub':       return goHubFree();
       case 'curso':     return topCurso();
+      case 'credito-inicio': return topInicioCrediticio();
       case 'goalin':    return topAhorro();
       case 'goal': {
         if (pm && pmo) return goalDo(pm, pmo);
@@ -1336,7 +1576,7 @@ body {
     }
     // Si viene de curso en curso, ofrécele retomarlo
     if (state.curso && state.curso.active && !state.curso.done) {
-      on('Continuar el curso', topCurso);
+      on('Continuar el curso', resumeCurso);
       return botTalk(['¿Retomamos el curso o hablamos de otra cosa?'], ['Continuar el curso', 'Preguntar otra cosa']);
     }
     goBeforeName();
@@ -1347,10 +1587,11 @@ body {
   input.addEventListener('keydown', (e) => { if (e.key === 'Enter') { const t = input.value.trim(); if (t) handleUser(t); } });
 
   $('resetBtn').addEventListener('click', () => {
-    if (!window.confirm('¿Empezar una conversación nueva? Se borra el historial guardado.')) return;
+    if (!window.confirm('¿Borrar la conversación? Se eliminarán el historial, el perfil y el progreso guardado.')) return;
     ['lukash-name', 'lukash-named', 'lukash-profile', 'lukash-convo', 'lukash-state'].forEach(k => store.del(k));
     state.name = ''; state.namedFlag = false; state.profile = {}; state.convo = []; state.used = new Set();
     state.pending = null; state.lastTopic = null; state.menuFactory = null;
+    state.courseOffered = false; state.purposeShown = false;
     state.curso = { step: 0, active: false, done: false };
     chatArea.innerHTML = ''; sugBox.innerHTML = ''; clearMap();
     boot();
@@ -1363,12 +1604,34 @@ body {
   });
 
   $('closeBtn').addEventListener('click', () => {
-    document.querySelector('.app').classList.add('app--hidden');
+    const app = document.querySelector('.app');
+    app.classList.add('app--hidden');
     $('fab').classList.remove('hidden');
+    $('fabExpandIcon').classList.remove('hidden');
+    $('fabMinimizeIcon').classList.add('hidden');
   });
   $('fab').addEventListener('click', () => {
-    $('fab').classList.add('hidden');
-    document.querySelector('.app').classList.remove('app--hidden');
+    const app = document.querySelector('.app');
+    const isFull = app.classList.contains('app--full');
+    const isHidden = app.classList.contains('app--hidden');
+    
+    if (isHidden) {
+      // Desde modo oculto: mostrar app en modo normal
+      app.classList.remove('app--hidden');
+      $('fab').classList.add('hidden');
+      $('fabExpandIcon').classList.remove('hidden');
+      $('fabMinimizeIcon').classList.add('hidden');
+    } else if (!isFull) {
+      // Desde modo normal: ampliar a full screen
+      app.classList.add('app--full');
+      $('fabExpandIcon').classList.add('hidden');
+      $('fabMinimizeIcon').classList.remove('hidden');
+    } else {
+      // Desde full screen: reducir a normal
+      app.classList.remove('app--full');
+      $('fabExpandIcon').classList.remove('hidden');
+      $('fabMinimizeIcon').classList.add('hidden');
+    }
   });
 
   boot();
