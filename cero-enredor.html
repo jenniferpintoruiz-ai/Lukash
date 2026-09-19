@@ -50,25 +50,31 @@
       transform: translateY(2px);
       box-shadow: 0 2px 0 #9d1c5b;
     }
-    /* Botón "¡VAMOS!" estilo del sitio (rosa #e43888, como el resto de pantallas) */
+    /* Botón "¡VAMOS!" alineado con el botón CONTINUAR de Registro en estilo
+       (tipografía, radio y presión 3D) pero con el color rosa original
+       del sitio: fondo #e43888 y sombra 3D #ab2a66. */
     .btn-vamos {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      max-width: 300px;
       background-color: #e43888;
       color: #FFFFFF;
       font-family: 'Fredoka', sans-serif;
       font-weight: 700;
       letter-spacing: 0.02em;
       text-transform: uppercase;
-      font-size: clamp(18px, 2.5vw, 24px);
-      padding: clamp(12px, 2vw, 16px) clamp(48px, 8vw, 80px);
-      border-radius: 20px;
-      box-shadow: 0 8px 0 #ab2a66;
+      font-size: clamp(16px, 2vw, 18px);
+      padding: 12px 40px;
+      border-radius: 16px;
+      box-shadow: 0 4px 0 #ab2a66;
       transition: transform 0.1s, box-shadow 0.1s;
     }
     .btn-vamos:hover { filter: brightness(1.05); }
     .btn-vamos:active {
-      transform: translateY(4px);
-      box-shadow: 0 4px 0 #ab2a66;
+      transform: translateY(2px);
+      box-shadow: 0 2px 0 #ab2a66;
     }
     .fab-shadow { box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
     .chat-window { transform-origin: bottom right; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
@@ -112,7 +118,7 @@
 <svg class="icon-moon" fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
 <svg class="icon-sun" fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="5" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></circle><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="black" stroke-linecap="round" stroke-width="2"></path></svg>
 </button>
-<button class="p-2">
+<button class="p-2" onclick="location.href='mi-perfil.html'" aria-label="Ir a Mi Perfil">
 <svg fill="none" height="28" viewBox="0 0 28 28" width="28" xmlns="http://www.w3.org/2000/svg">
 <circle cx="14" cy="14" r="12" stroke="black" stroke-width="2"></circle>
 <circle cx="14" cy="10" r="4" stroke="black" stroke-width="2"></circle>
@@ -137,7 +143,7 @@
  <a href="Registro.html" class="transition-colors hover:text-[#f7efd0]">REGISTRO</a>
  <a href="nosotros.html" class="transition-colors hover:text-[#f7efd0]">NOSOTROS</a>
  <a href="contactanos.html" class="transition-colors hover:text-[#f7efd0]">CONTACTANOS</a>
-</div><div class="flex items-center"><button class="p-2 theme-toggle" type="button" aria-label="Cambiar tema"><svg class="icon-moon" fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg><svg class="icon-sun" fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></circle><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path></svg></button><svg fill="none" height="32" viewBox="0 0 28 28" width="32" xmlns="http://www.w3.org/2000/svg"><circle cx="14" cy="14" r="12" stroke="currentColor" stroke-width="2"></circle><circle cx="14" cy="10" r="4" stroke="currentColor" stroke-width="2"></circle><path d="M6 22C6 18.6863 8.68629 16 12 16H16C19.3137 16 22 18.6863 22 22" stroke="currentColor" stroke-width="2"></path></svg></div></nav></div></header>
+</div><div class="flex items-center"><button class="p-2 theme-toggle" type="button" aria-label="Cambiar tema"><svg class="icon-moon" fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg><svg class="icon-sun" fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></circle><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path></svg></button><a href="mi-perfil.html" aria-label="Mi Perfil"><svg fill="none" height="32" viewBox="0 0 28 28" width="32" xmlns="http://www.w3.org/2000/svg"><circle cx="14" cy="14" r="12" stroke="currentColor" stroke-width="2"></circle><circle cx="14" cy="10" r="4" stroke="currentColor" stroke-width="2"></circle><path d="M6 22C6 18.6863 8.68629 16 12 16H16C19.3137 16 22 18.6863 22 22" stroke="currentColor" stroke-width="2"></path></svg></a></div></nav></div></header>
 <!-- END: MainHeader -->
 <!-- BEGIN: Mobile Menu Drawer -->
 <div class="fixed inset-0 z-[60] pointer-events-none hidden" id="mobileMenu">

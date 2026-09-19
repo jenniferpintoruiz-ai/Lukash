@@ -1,307 +1,570 @@
-<!DOCTYPE html><html class="dark" lang="es" style="width: 390px; height: 804px; overflow: hidden; position: relative;"><head>
+<!DOCTYPE html>
+<html lang="es">
+<head>
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
-<title>Lukash - Presupuesto Mensual</title>
+<title>LUKA$H - Presupuesto Mensual</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;700;900&family=Roboto:wght@400;500&family=Rubik:wght@400;600;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<!-- Tailwind CSS v3 -->
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800;12..96,900&amp;family=Fredoka:wght@900&amp;family=Plus+Jakarta+Sans:wght@500;600;800&amp;display=swap" rel="stylesheet">
-<script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    "colors": {
-                        "inverse-on-surface": "#30295c",
-                        "outline-variant": "#4d4633",
-                        "on-secondary-fixed-variant": "#8c0053",
-                        "surface-bright": "#393266",
-                        "on-primary-fixed-variant": "#554500",
-                        "on-primary-fixed": "#231b00",
-                        "on-secondary-fixed": "#3e0021",
-                        "tertiary-fixed": "#acf845",
-                        "surface-dim": "#13083e",
-                        "on-surface-variant": "#d0c6ad",
-                        "secondary": "#ffb0cd",
-                        "on-tertiary-fixed": "#102000",
-                        "on-error-container": "#ffdad6",
-                        "on-tertiary-fixed-variant": "#304f00",
-                        "surface-variant": "#352d61",
-                        "tertiary-container": "#8fd824",
-                        "error": "#ffb4ab",
-                        "surface": "#13083e",
-                        "primary-fixed": "#ffe178",
-                        "primary": "#ffde68",
-                        "primary-container": "#e7c11f",
-                        "on-secondary-container": "#ffc0d6",
-                        "on-error": "#690005",
-                        "on-background": "#e5deff",
-                        "surface-container-lowest": "#0d0339",
-                        "on-tertiary-container": "#375a00",
-                        "on-tertiary": "#203700",
-                        "surface-container-highest": "#352d61",
-                        "secondary-fixed-dim": "#ffb0cd",
-                        "on-primary-container": "#614f00",
-                        "surface-tint": "#e9c322",
-                        "outline": "#999079",
-                        "surface-container-high": "#2a2255",
-                        "secondary-fixed": "#ffd9e4",
-                        "surface-container-low": "#1b1346",
-                        "on-secondary": "#640039",
-                        "surface-container": "#1f174a",
-                        "tertiary-fixed-dim": "#92db27",
-                        "primary-fixed-dim": "#e9c322",
-                        "inverse-surface": "#e5deff",
-                        "background": "#13083e",
-                        "tertiary": "#aaf543",
-                        "on-surface": "#e5deff",
-                        "error-container": "#93000a",
-                        "inverse-primary": "#715d00",
-                        "secondary-container": "#af0068",
-                        "on-primary": "#3b2f00",
-                        "lukash-card-bg": "#F7F0A3",
-                        "lukash-bg": "#4A2E65",
-                        "lukash-yellow": "#FDE68A"
-                    },
-                    "borderRadius": {
-                        "DEFAULT": "0.25rem",
-                        "lg": "0.5rem",
-                        "xl": "0.75rem",
-                        "full": "9999px",
-                        "lukash-card": "18px"
-                    },
-                    "spacing": {
-                        "base": "8px",
-                        "gutter": "16px",
-                        "card-gap": "12px",
-                        "container-padding": "20px"
-                    },
-                    "fontFamily": {
-                        "label-sm": ["Fredoka", "Plus Jakarta Sans"],
-                        "body-md": ["Plus Jakarta Sans"],
-                        "label-bold": ["Fredoka", "Plus Jakarta Sans"],
-                        "headline-md-mobile": ["Bricolage Grotesque"],
-                        "display-lg": ["Fredoka", "Bricolage Grotesque"],
-                        "headline-md": ["Bricolage Grotesque"],
-                        "body-lg": ["Plus Jakarta Sans"],
-                        "playful": ["Fredoka", "sans-serif"]
-                    },
-                    "fontSize": {
-                        "label-sm": ["12px", { "lineHeight": "1.2", "fontWeight": "600" }],
-                        "body-md": ["16px", { "lineHeight": "1.5", "fontWeight": "500" }],
-                        "label-bold": ["14px", { "lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "900" }],
-                        "headline-md-mobile": ["20px", { "lineHeight": "1.2", "fontWeight": "700" }],
-                        "display-lg": ["32px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "900" }],
-                        "headline-md": ["24px", { "lineHeight": "1.2", "fontWeight": "700" }],
-                        "body-lg": ["18px", { "lineHeight": "1.5", "fontWeight": "600" }]
-                    }
-                }
-            }
+<script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            'lukash-yellow': '#E7C11F',
+            'lukash-pink': '#EE4599',
+            'lukash-bg-modal': '#F9F6F0',
+            'lukash-green': '#A7EB5D',
+            'lukash-dark': '#180F43',
+            'lukash-card-bg': '#F7F0A3',
+          },
+          fontFamily: {
+            fredoka: ['Fredoka', 'sans-serif'],
+            roboto: ['Roboto', 'sans-serif'],
+            rubik: ['Rubik', 'sans-serif'],
+          },
         }
-    </script>
+      }
+    }
+</script>
 <style>
-        body {
-            background-color: #4A2E65; /* Approximate background from image */
-            background-image: radial-gradient(circle at 15% 80%, rgba(53,45,97,1) 0%, rgba(74,46,101,1) 50%, rgba(74,46,101,1) 100%);
-            min-height: 100vh;
-            overflow-x: hidden;
-            position: relative;
-        }
+    body {
+      background: linear-gradient(180deg, #1A0B3B 0%, #B12E7B 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    html body { background-color: #f7efd0 !important; background-image: none !important; }
+    html.dark body { background-image: url("images/fondo_.png") !important; background-size: cover !important; background-position: center !important; background-repeat: no-repeat !important; background-attachment: fixed !important; }
+    html:not(.dark) #main-header { background-color: #211941 !important; color: #EEE8E0; border-color: rgba(231,193,31,0.4); }
+    html:not(.dark) #main-header svg * { stroke: #EEE8E0; }
+    html:not(.dark) #main-header .text-lukash-dark { color: #EEE8E0; }
+    html:not(.dark) #main-header a { color: inherit; }
+    html.dark #main-header { background-color: #E7C11F !important; color: #180F43; border-color: rgba(24,15,67,0.15); }
+    html.dark #main-header svg * { stroke: #180F43; }
+    html.dark #main-header .text-lukash-dark { color: #180F43; }
+    html.dark #main-header a { color: inherit; }
+    html:not(.dark) #desktopCategoriasMenu > div { background-color: #211941 !important; color: #EEE8E0; border-color: rgba(231,193,31,0.6); }
+    html:not(.dark) #desktopCategoriasMenu a { color: #EEE8E0; }
+    html:not(.dark) #main-header .hover\:text-\[\#f7efd0\]:hover { color: #E7C11F !important; }
+    html.dark #desktopCategoriasMenu > div { background-color: rgba(30,20,70,0.95) !important; color: #EEE8E0; }
+    html.dark #desktopCategoriasMenu a { color: #EEE8E0; }
 
-        /* Decorative stars/blobs - Using CSS shapes/gradients to mimic the image without relying on missing assets if possible, but placeholders requested */
-        .decorative-star-tr {
-            position: absolute;
-            top: 4rem;
-            right: 0;
-            width: 150px;
-            height: 150px;
-            background: radial-gradient(circle, #EE4599 0%, transparent 70%);
-            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-            transform: rotate(15deg) scale(1.5);
-            z-index: 0;
-            filter: drop-shadow(0 0 10px rgba(238, 69, 153, 0.5));
-        }
+    .theme-toggle { cursor: pointer; transition: transform 0.15s ease-in-out; }
+    .theme-toggle:active { transform: scale(0.9); }
+    .theme-toggle .icon-moon { display: block; }
+    .theme-toggle .icon-sun { display: none; }
+    html.dark .theme-toggle .icon-moon { display: none; }
+    html.dark .theme-toggle .icon-sun { display: block; }
 
-        .decorative-star-bl {
-             position: absolute;
-             bottom: 0rem;
-             left: -2rem;
-             width: 120px;
-             height: 120px;
-             background: radial-gradient(circle, #ffde68 0%, transparent 70%);
-             clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-             transform: rotate(-15deg) scale(1.5);
-             z-index: 0;
-             filter: drop-shadow(0 0 10px rgba(255, 222, 104, 0.5));
-        }
+    /* ===== Título y monto del presupuesto (adaptados al tema) ===== */
+    .budget-title { color: #180F43; }
+    html.dark .budget-title { color: #EEE8E0; }
+    .budget-subtitle { color: #4d4633; }
+    html.dark .budget-subtitle { color: rgba(238,232,224,0.85); }
+    .budget-input {
+      color: #180F43;
+      border-bottom: 3px solid rgba(24,15,67,0.35);
+      caret-color: #EE4599;
+    }
+    html.dark .budget-input {
+      color: #EEE8E0;
+      border-bottom: 3px solid rgba(231,193,31,0.6);
+    }
+    .budget-input::placeholder { color: rgba(24,15,67,0.45); }
+    html.dark .budget-input::placeholder { color: rgba(238,232,224,0.5); }
+    .budget-input:focus { border-bottom-color: #EE4599; }
 
+    /* ===== Tarjetas de categorías ===== */
+    .budget-card {
+      background-color: #F7F0A3;
+      border-radius: 18px;
+      box-shadow: 0 6px 0 rgba(24,15,67,0.18);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      text-align: center;
+      padding: 10px 6px;
+      min-height: 120px;
+      cursor: pointer;
+      transition: transform 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.15s ease-in-out;
+    }
+    .budget-card:hover { box-shadow: 0 8px 0 rgba(24,15,67,0.22); }
+    .budget-card:active { transform: scale(0.96); }
+    .card-img { height: 60px; width: 100%; display: flex; align-items: center; justify-content: center; }
+    .card-img img, .card-img .material-symbols-outlined {
+      height: 100%;
+      width: auto;
+      max-width: 100%;
+      object-fit: contain;
+    }
+    .card-label {
+      font-family: 'Fredoka', sans-serif;
+      font-weight: 700;
+      font-size: clamp(0.5rem, 1.8vw, 0.8rem);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      line-height: 1.1;
+      color: #352d61;
+    }
+    .card-amount {
+      font-family: 'Fredoka', sans-serif;
+      font-weight: 700;
+      color: #180F43;
+      font-size: clamp(0.7rem, 2.2vw, 1rem);
+      background: rgba(255,255,255,0.55);
+      border-radius: 9999px;
+      padding: 2px 12px;
+      margin-top: 4px;
+      white-space: nowrap;
+    }
+    /* Tarjeta especial de AHORRO (sin borde) */
+    .ahorro-card {
+      background: linear-gradient(135deg, #95EC2F 0%, #8AC346 100%);
+      border: none;
+    }
+    .ahorro-card .card-label { color: #212121; }
+    .ahorro-card .card-amount { background: #FFFFFF; }
 
-        .card-scale-anim {
-            transition: transform 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        
-        .card-scale-anim.active {
-            transform: scale(1.12);
-        }
+    .note-empty {
+      background: rgba(255,255,255,0.75);
+      border: 2px dashed #EE4599;
+      color: #180F43;
+      border-radius: 18px;
+      padding: 18px 16px;
+      text-align: center;
+      font-family: 'Roboto', sans-serif;
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
 
-        @media (min-width: 768px) {
-            .card-hover:hover {
-                transform: scale(1.04);
-            }
-        }
-    </style>
+    /* Nota de recomendación cuando hay un ahorro importante */
+    .note-recomendacion {
+      background: rgba(231,193,31,0.25);
+      border: 2px dashed #E7C11F;
+      color: #180F43;
+      border-radius: 18px;
+      padding: 18px 16px;
+      text-align: center;
+      font-family: 'Roboto', sans-serif;
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+    .note-recomendacion .btn-recomendacion {
+      display: inline-block;
+      margin-top: 12px;
+      background-color: #8AC346;
+      color: #FFFFFF;
+      font-family: 'Fredoka', sans-serif;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      border: none;
+      border-radius: 16px;
+      padding: 12px 40px;
+      font-size: clamp(16px, 2vw, 18px);
+      cursor: pointer;
+      box-shadow: 0 4px 0 #5E8A2E;
+      transition: transform 0.12s ease-in-out, box-shadow 0.12s ease-in-out;
+    }
+    .note-recomendacion .btn-recomendacion:hover { filter: brightness(1.05); }
+    .note-recomendacion .btn-recomendacion:active { transform: translateY(2px); box-shadow: 0 2px 0 #5e8c26; }
+
+    /* ===== Recuadro que envuelve todo el presupuesto =====
+       Color fijo en claro y oscuro: solo cambian el fondo de la página
+       y la barra del header, el contenido se mantiene estable. */
+    .presupuesto-recuadro {
+      background-color: #F9F6F0;
+      border-radius: 28px;
+      padding: clamp(20px, 4vw, 36px) clamp(16px, 4vw, 40px);
+      box-shadow: 0 12px 30px rgba(24,15,67,0.18);
+    }
+    /* El contenido dentro del recuadro conserva sus colores en ambos modos */
+    .presupuesto-recuadro .budget-title,
+    html.dark .presupuesto-recuadro .budget-title { color: #180F43; }
+    .presupuesto-recuadro .budget-subtitle,
+    html.dark .presupuesto-recuadro .budget-subtitle { color: #4d4633; }
+    html.dark .presupuesto-recuadro .budget-input { color: #180F43; border-bottom-color: rgba(24,15,67,0.35); }
+    html.dark .presupuesto-recuadro .budget-input::placeholder { color: rgba(24,15,67,0.45); }
+
+    /* ===== Resumen del reparto ===== */
+    .summary-strip {
+      background: rgba(231,193,31,0.3);
+      border: 2px solid rgba(231,193,31,0.6);
+      color: #180F43;
+      border-radius: 9999px;
+      padding: 8px 18px;
+      font-family: 'Fredoka', sans-serif;
+      font-weight: 700;
+      font-size: clamp(0.85rem, 2vw, 1rem);
+      text-align: center;
+    }
+</style>
 </head>
-<body class="text-on-background font-body-md">
-<!-- Decorative Elements -->
-<div class="decorative-star-tr"></div>
-<div class="decorative-star-bl"></div>
-<!-- TopAppBar JSON Blueprint -->
-<header class="bg-lukash-yellow flex justify-between items-center w-full px-container-padding h-16 fixed top-0 z-50 shadow-md">
-<button class="text-black hover:bg-black/10 transition-colors rounded-full p-2 flex items-center justify-center">
-<span class="material-symbols-outlined text-3xl font-bold">menu</span>
+<body class="font-roboto text-slate-800">
+<!-- BEGIN: MainHeader -->
+<header class="fixed top-0 left-0 right-0 bg-lukash-yellow w-full h-16 flex items-center justify-between px-4 z-50 border-b-4 border-black/10 transition-opacity duration-100" id="main-header">
+<div class="lg:hidden shrink-0">
+<img alt="LUKA$H Logo" class="h-16 w-auto max-w-none shrink-0 drop-shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYRpEfrEAXglfH6g6bdTAiltJsJB-DrFhYXNpv6pCllmuHj7ZTXjF1qy9e06r27C5bLil8PgTWLPE-mWnWPz_8ibC0PbXo0mgx7meRO8nUsUV1qLPggd-nZBPOPjkThKh-Ou-I6nHQkWDHioMR9pUwKGZWmx0Cixdb5lqH1bSqo8ixHeoNWq9_ax4LS-cBhRHRiCd4KtV6Bz9ISa3Kd85RkHKMPOgK3YST2EQZs-TyZzikR3_DpMQVbNJtsVzgzE3r_g">
+</div>
+<div class="flex items-center lg:hidden">
+<button class="p-2 theme-toggle" type="button" aria-label="Cambiar tema">
+<svg class="icon-moon" fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<svg class="icon-sun" fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="5" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></circle><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="black" stroke-linecap="round" stroke-width="2"></path></svg>
 </button>
-<h1 class="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 flex items-center justify-center"><img alt="LUKASH Logo" class="h-8 md:h-10 object-contain block" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA13jtGtoRHGoV0p8sC96x-ExCxDUETJG5sgy3wBVf1_NBGpUR6K3ePVaV26WgMUS4_UqOgzi9rMqo1uvQPe22UEY1XWyM2GSuCbj2GKfPyvygPXLxeDcO6NJmnLpJfaYfeS8nTickblwiYaKuBdFVSid-rf0OfvOaw0MtM0qig3iOT05ADh_zx_UPN_nkbjEdGOdbUnOfvjsGUzaZRU-Lk8QtZxfq96FlgfZ16gdIp4wCVLsghNro3grBVfPygCwxk-GM"></h1>
-<button class="text-black hover:bg-black/10 transition-colors rounded-full p-2 flex items-center justify-center">
-<span class="material-symbols-outlined text-3xl" style="font-variation-settings: &quot;FILL&quot; 1;">account_circle</span>
+<button class="p-2" onclick="location.href='mi-perfil.html'" aria-label="Ir a Mi Perfil">
+<svg fill="none" height="28" viewBox="0 0 28 28" width="28" xmlns="http://www.w3.org/2000/svg">
+<circle cx="14" cy="14" r="12" stroke="black" stroke-width="2"></circle>
+<circle cx="14" cy="10" r="4" stroke="black" stroke-width="2"></circle>
+<path d="M6 22C6 18.6863 8.68629 16 12 16H16C19.3137 16 22 18.6863 22 22" stroke="black" stroke-width="2"></path>
+</svg>
 </button>
-</header>
-<!-- Main Content Canvas -->
-<main class="pt-24 pb-20 px-container-padding max-w-5xl mx-auto flex flex-col items-center relative z-10">
-<!-- Header Section -->
-<div class="text-center mb-8 w-full mt-4">
-<h2 class="text-display-lg md:text-display-lg font-playful font-black text-white uppercase mb-2 drop-shadow-md">
-                PRESUPUESTO MENSUAL
-            </h2>
-<div class="flex items-center justify-center text-display-lg font-playful font-black text-white drop-shadow-md">
-<span class="mr-2 text-primary">$</span>
-<!-- Editable currency input simulating the design -->
-<input class="bg-transparent border-none text-center text-display-lg font-playful font-black text-white focus:ring-0 focus:outline-none p-0 w-64 placeholder-white/50 bg-white/10 border-b-2 border-primary/50 rounded-lg px-4 py-1 focus:bg-white/20 focus:border-primary transition-colors" id="monthly-budget-input" placeholder="0" type="text" value="">
+<button class="p-2 lg:hidden" id="menuBtn"><svg class="hamburger-icon" fill="none" height="24" viewBox="0 0 30 24" width="30" xmlns="http://www.w3.org/2000/svg"><path d="M2 2H28M2 12H28M2 22H28" stroke="black" stroke-linecap="round" stroke-width="4"></path></svg><svg class="close-icon hidden" fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M18 6L6 18M6 6L18 18" stroke="black" stroke-linecap="round" stroke-width="3"></path></svg></button>
+</div>
+<div class="hidden lg:block mx-auto w-full max-w-[1280px] h-full"><nav class="hidden lg:flex items-center w-full h-full px-8 font-fredoka font-bold text-lukash-dark tracking-wider relative justify-between"><div class="flex items-center h-full"><img alt="LUKA$H Logo" class="h-16 drop-shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYRpEfrEAXglfH6g6bdTAiltJsJB-DrFhYXNpv6pCllmuHj7ZTXjF1qy9e06r27C5bLil8PgTWLPE-mWnWPz_8ibC0PbXo0mgx7meRO8nUsUV1qLPggd-nZBPOPjkThKh-Ou-I6nHQkWDHioMR9pUwKGZWmx0Cixdb5lqH1bSqo8ixHeoNWq9_ax4LS-cBhRHRiCd4KtV6Bz9ISa3Kd85RkHKMPOgK3YST2EQZs-TyZzikR3_DpMQVbNJtsVzgzE3r_g"></div><div class="flex items-center justify-center space-x-20 uppercase text-xl w-max flex-1">
+<a href="index.html?intro=1" class="transition-colors hover:text-[#f7efd0]">INICIO</a>
+<div class="relative" id="desktopCategorias">
+ <button class="flex items-center gap-1 transition-colors hover:text-[#f7efd0]" id="desktopCategoriasBtn">CATEGORIAS<svg class="w-4 h-4 transition-transform duration-300" id="desktopCategoriasArrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg></button>
+ <div class="absolute left-1/2 -translate-x-1/2 top-full pt-4 hidden" id="desktopCategoriasMenu">
+ <div class="bg-lukash-bg-modal/95 backdrop-blur-md text-lukash-dark rounded-2xl shadow-2xl border-2 border-lukash-yellow p-4 w-64 flex flex-col space-y-1 font-bold text-lg">
+ <a class="hover:bg-[#eac62f] hover:text-white transition-colors rounded-lg px-4 py-2.5" href="modoAhorrointro.html">MODO AHORRO</a>
+ <a class="hover:bg-[#eac62f] hover:text-white transition-colors rounded-lg px-4 py-2.5" href="invertir.html">RINDIENDO LA MONEY</a>
+ <a class="hover:bg-[#eac62f] hover:text-white transition-colors rounded-lg px-4 py-2.5" href="cuentasclaras.html">CUENTAS CLARAS</a>
+ <a class="hover:bg-[#eac62f] hover:text-white transition-colors rounded-lg px-4 py-2.5" href="cero-enredor.html">CERO ENREDOS</a>
+ </div>
+ </div>
+ </div>
+ <a href="Registro.html" class="transition-colors hover:text-[#f7efd0]">REGISTRO</a>
+ <a href="nosotros.html" class="transition-colors hover:text-[#f7efd0]">NOSOTROS</a>
+ <a href="contactanos.html" class="transition-colors hover:text-[#f7efd0]">CONTACTANOS</a>
+</div><div class="flex items-center"><button class="p-2 theme-toggle" type="button" aria-label="Cambiar tema"><svg class="icon-moon" fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg><svg class="icon-sun" fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></circle><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path></svg></button><a href="mi-perfil.html" aria-label="Mi Perfil"><svg fill="none" height="32" viewBox="0 0 28 28" width="32" xmlns="http://www.w3.org/2000/svg"><circle cx="14" cy="14" r="12" stroke="currentColor" stroke-width="2"></circle><circle cx="14" cy="10" r="4" stroke="currentColor" stroke-width="2"></circle><path d="M6 22C6 18.6863 8.68629 16 12 16H16C19.3137 16 22 18.6863 22 22" stroke="currentColor" stroke-width="2"></path></svg></a></div></nav></div></header>
+<!-- END: MainHeader -->
+<!-- BEGIN: Mobile Menu Drawer -->
+<div class="fixed inset-0 z-[60] pointer-events-none hidden" id="mobileMenu">
+<div class="absolute inset-0 transition-opacity duration-300 bg-black/10 pointer-events-auto backdrop-blur-sm opacity-0" id="mobileMenuOverlay"></div>
+<div class="absolute top-6 right-6 w-64 shadow-2xl transform transition-transform duration-300 flex flex-col rounded-[45px] h-max border-none backdrop-blur-md pointer-events-auto translate-x-[150%]" id="mobileMenuDrawer" style="background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuAeRFCguGmJAP2dmp1aYF4qsTfAyIOscChweRZXRQiHjUN1cBby8JpgZyNxGzAN7YfF65QjDHZHE-hgrwwVMMxD9k4-rpFKL-B_9GqV6IFyUHrQhxHoqlmhkmfI3JecSZ6_LW7x_9hHFFEiC6UR0OP3AGIFy4mSiGm2IddGjFf2S7w8pk5FdW73Z_0v-62A_L14O2JkuwFJodusGDaEsrG00RBvV1BalVc6XuLKTKaFJeZPdQfiEOPR6g6PH_MnnRLp8g&quot;); background-size: cover; background-position: center center; opacity: 0.95;">
+<div class="flex justify-between items-center p-6 h-max">
+<img alt="LUKA$H Logo" class="h-10 drop-shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYRpEfrEAXglfH6g6bdTAiltJsJB-DrFhYXNpv6pCllmuHj7ZTXjF1qy9e06r27C5bLil8PgTWLPE-mWnWPz_8ibC0PbXo0mgx7meRO8nUsUV1qLPggd-nZBPOPjkThKh-Ou-I6nHQkWDHioMR9pUwKGZWmx0Cixdb5lqH1bSqo8ixHeoNWq9_ax4LS-cBhRHRiCd4KtV6Bz9ISa3Kd85RkHKMPOgK3YST2EQZs-TyZzikR3_DpMQVbNJtsVzgzE3r_g">
+<button class="text-2xl font-fredoka font-bold text-lukash-dark p-2 transition-all duration-200" id="closeMenuBtn" style="opacity: 1;">X</button>
+</div>
+<nav class="flex flex-col p-8 pt-0 font-fredoka font-bold text-lukash-dark space-y-5 items-start text-left">
+<a href="index.html?intro=1" class="hover:text-lukash-pink transition-colors text-xl">INICIO</a>
+<div class="w-full">
+ <button class="flex items-center justify-between w-full text-xl hover:text-lukash-pink transition-colors" id="mobileCategoriasBtn" style="color: rgb(24, 15, 67);">CATEGORIAS<svg class="w-5 h-5 transition-transform duration-300" id="mobileCategoriasArrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg></button>
+ <div id="mobileCategoriasMenu" class="hidden mt-4 pl-4 border-l-4 border-lukash-pink/30 space-y-4 flex flex-col">
+ <a class="hover:text-lukash-pink transition-colors text-lg" href="modoAhorrointro.html" style="color: rgb(24, 15, 67);">MODO AHORRO</a>
+ <a class="hover:text-lukash-pink transition-colors text-lg" href="invertir.html" style="color: rgb(24, 15, 67);">RINDIENDO LA MONEY</a>
+ <a class="hover:text-lukash-pink transition-colors text-lg" href="cuentasclaras.html" style="color: rgb(24, 15, 67);">CUENTAS CLARAS</a>
+ <a class="hover:text-lukash-pink transition-colors text-lg" href="cero-enredor.html" style="color: rgb(24, 15, 67);">CERO ENREDOS</a>
+ </div>
+ </div>
+ <a class="hover:text-lukash-pink transition-colors text-xl" href="Registro.html" style="color: rgb(24, 15, 67);">REGISTRO</a>
+ <a class="hover:text-lukash-pink transition-colors text-xl" href="nosotros.html" style="color: rgb(24, 15, 67);">NOSOTROS</a>
+ <a class="hover:text-lukash-pink transition-colors text-xl" href="contactanos.html" style="color: rgb(24, 15, 67);">CONTACTANOS</a>
+</nav>
 </div>
 </div>
-<!-- 3x3 Grid Layout -->
-<div class="grid grid-cols-3 gap-card-gap w-full md:gap-gutter max-w-3xl">
-<!-- Card 1: PASAJES -->
-<div class="bg-lukash-card-bg rounded-lukash-card p-2 md:p-4 flex flex-col items-center justify-between text-center shadow-[0_4px_6px_-1px_rgba(0,0,0,0.15)] shadow-black/20 cursor-pointer card-scale-anim card-hover h-32 md:h-48" onclick="animateCard(this)">
-<div class="h-20 md:h-28 w-full flex items-center justify-center mb-1"><img class="h-full w-full object-contain drop-shadow-lg scale-125 scale-110" data-alt="A 3D stylized pink piggy bank riding a green classic Vespa scooter. The style is cute, playful, and maximalist, matching a gamified financial app UI. Soft studio lighting, yellow background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD7pJuxnAOGuE-12v0sgUa1ckLPEt0xTpoBulxgjFVb8ULH5U5MEcIqmiS3AFMTQggHCpsYEdGvK1xJ-qERugoDaBBSwLYjKlbmr8-TI4s_8Sn7k_esAE0ANeTdlnY-Dg8QF9jhWVW4HfEXGs9z_t4cfELUZP_kHRvAM19IvPtv9xbi8ocuCUUD8YTLhFxfIgO-CPRI4m31RW3ePNnYxNiJ2rGX4kFa5rdVsdIJNO7UjQhrgHLOCRzYQYIa5wqfXsd0a6E"></div>
-<div class="flex flex-col items-center justify-end flex-grow">
-<span class="text-surface-container-highest font-playful text-[10px] md:text-label-bold uppercase leading-tight font-black">PASAJES</span>
+<!-- END: Mobile Menu Drawer -->
+<!-- MainContent -->
+<main class="relative z-10 min-h-[calc(100vh-64px)] flex p-4 pt-20 pb-10 overflow-y-auto">
+<!-- Recuadro centrado en la pantalla (fondo fijo en claro y oscuro) -->
+<div class="presupuesto-recuadro w-full max-w-3xl m-auto">
+<!-- Encabezado: título + monto editable -->
+<div class="text-center mb-5 mt-4">
+<h2 class="budget-title font-fredoka font-black uppercase text-[clamp(1.6rem,4.5vw,2.6rem)] leading-tight">PRESUPUESTO MENSUAL</h2>
+<div class="flex items-center justify-center gap-2 font-fredoka font-black text-[clamp(1.6rem,4.5vw,2.6rem)]">
+<span class="budget-title">$</span>
+<input class="budget-input bg-transparent border-none text-center rounded-lg px-3 py-1 focus:ring-0 focus:outline-none w-48 md:w-64" id="monthly-budget-input" placeholder="0" type="text" value="">
+</div>
+<p class="budget-subtitle font-roboto text-sm md:text-base font-medium mt-3 px-2">Repartimos tu plata a tu medida: tus gastos reales y lo que sobre va al <strong>ahorro</strong>.</p>
+</div>
 
+<!-- Resumen del reparto -->
+<div class="flex justify-center mb-6">
+<div id="summaryStrip" class="summary-strip"></div>
 </div>
-</div>
-<!-- Card 2: ALIMENTACION BASICA -->
-<div class="bg-lukash-card-bg rounded-lukash-card p-2 md:p-4 flex flex-col items-center justify-between text-center shadow-[0_4px_6px_-1px_rgba(0,0,0,0.15)] shadow-black/20 cursor-pointer card-scale-anim card-hover h-32 md:h-48" onclick="animateCard(this)">
-<div class="h-16 md:h-24 w-full flex items-center justify-center mb-2">
-<img class="h-full object-contain drop-shadow-lg scale-110" data-alt="A 3D stylized pink piggy bank pushing a shopping cart full of groceries like bread and vegetables. The style is cute, playful, and maximalist, matching a gamified financial app UI. Soft studio lighting, yellow background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCVl8kGHyU7ZeuJkb4xHilr9KXzd30fuy44MflxdrZlMaqjxbv9R4u2TR_QZGf4AcRP0dagDBApK14n5nouu6g9LnxjBgVECDptUIr2gkMQmNYazjHVSY57u-CGYmKPz_1MkdKvdy8XjXn4-lH7eGo3E1nNmGB2Rf0SVRlUaBFbFuu2C2SG18oDdhJ4J13y2f4tmYbVEHq_bWLC2krPzvadDxy3RxFE1Yd_BUr9Upa2LVVUeSuYtBlhaZIM8CkGjOGTGIc">
-</div>
-<div class="flex flex-col items-center justify-end flex-grow">
-<span class="text-surface-container-highest font-playful text-[10px] md:text-label-bold uppercase leading-tight font-black">ALIMENTACION<br>BASICA</span>
 
-</div>
-</div>
-<!-- Card 3: DATOS -->
-<div class="bg-lukash-card-bg rounded-lukash-card p-2 md:p-4 flex flex-col items-center justify-between text-center shadow-[0_4px_6px_-1px_rgba(0,0,0,0.15)] shadow-black/20 cursor-pointer card-scale-anim card-hover h-32 md:h-48" onclick="animateCard(this)">
-<div class="h-16 md:h-24 w-full flex items-center justify-center mb-2">
-<img alt="DATOS" class="h-full object-contain drop-shadow-lg scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvkESwDDczeuUt_gMfg8ivpChuxyvKSaAWP2KUKXuD_sZ5VN9iiVRJId1ZAUG7a0bxt7N3Lw6jB8LJBVS88OSm39nnQht8UfDSX2Uq8Vx0f4nyHzknK9fIearMyyBelHH6cA7RgNIWH5PXkpYBERkJhFRdQOpn9OrbLmpej-jRH9uX0vnYsssITgXRADeZy1nuMvXNtkYfdiuFJmuYhDH4pPn1rmzmLDAQv184XIwHeMweq0LcNq4ZZZ4ow-90e75oxsk">
-</div>
-<div class="flex flex-col items-center justify-end flex-grow">
-<span class="text-surface-container-highest font-playful text-[10px] md:text-label-bold uppercase leading-tight font-black">DATOS</span>
-
-</div>
-</div>
-<!-- Card 4: ROPA -->
-<div class="bg-lukash-card-bg rounded-lukash-card p-2 md:p-4 flex flex-col items-center justify-between text-center shadow-[0_4px_6px_-1px_rgba(0,0,0,0.15)] shadow-black/20 cursor-pointer card-scale-anim card-hover h-32 md:h-48" onclick="animateCard(this)">
-<div class="h-16 md:h-24 w-full flex items-center justify-center mb-2">
-<img class="h-full object-contain drop-shadow-lg scale-110" data-alt="A 3D stylized pink piggy bank wearing a polo shirt holding several colorful shopping bags. The style is cute, playful, and maximalist, matching a gamified financial app UI. Soft studio lighting, yellow background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPDsJD5VkBSr-lJsjqFyJvo_nD38B5hPE0xJeleBRDRLcHmFV0v5uZzpoyAvHbvcKNC17Ng62r6Z9Ze5tSwfqj8DUMaWYDcNC9xctSjQkXlPYuIEuGkTXfqMQNwNV6b12J3H6XX4sROvERrWHyNZ1vkBCcV4z0UmLK8Q6Dwqvv71tP_rMhv3Mk68rR2mlTmg-nrUUK6ltVmUZH_wMgtRr-jnuNscfvFnjEP1MAhlyYRBxV0JDvNZTdVOTlgY5CiA8-gCE">
-</div>
-<div class="flex flex-col items-center justify-end flex-grow">
-<span class="text-surface-container-highest font-playful text-[10px] md:text-label-bold uppercase leading-tight font-black">ROPA</span>
-
-</div>
-</div>
-<!-- Card 5: SUSCRIPCIONES -->
-<div class="bg-lukash-card-bg rounded-lukash-card p-2 md:p-4 flex flex-col items-center justify-between text-center shadow-[0_4px_6px_-1px_rgba(0,0,0,0.15)] shadow-black/20 cursor-pointer card-scale-anim card-hover h-32 md:h-48" onclick="animateCard(this)">
-<div class="h-16 md:h-24 w-full flex items-center justify-center mb-2 relative">
-<img alt="SUSCRIPCIONES" class="h-full object-contain drop-shadow-lg scale-125" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEoHt8GeyivlV0mFRT9fYcNWE_FNT62Y9IueirZYt2N8QL3AcEOk_CsWpw_q3NwFAlNzGZoiIYUt-ESe-obNQdOIL_O3FNc-wanBuL7VvSy8uQ15oa0wZ7XobUH3OtiD4wMoaJ3TCVI9K5WtksJuXhS2krkrFIexBNQ26MKXVcadKI8gm4-6zqGlweWKD0KAZ4_5aSwPMIOeYJ7xxSTixMqN_DaB4tAjzCBzkFx_7JaM_yCtBrejEg68YnPcfJycQQVjM">
-</div>
-<div class="flex flex-col items-center justify-end flex-grow">
-<span class="text-surface-container-highest font-playful text-[9px] md:text-[12px] uppercase leading-tight font-black">SUSCRIPCIONES</span>
-
-</div>
-</div>
-<!-- Card 6: SALIDAS -->
-<div class="bg-lukash-card-bg rounded-lukash-card p-2 md:p-4 flex flex-col items-center justify-between text-center shadow-[0_4px_6px_-1px_rgba(0,0,0,0.15)] shadow-black/20 cursor-pointer card-scale-anim card-hover h-32 md:h-48" onclick="animateCard(this)">
-<div class="h-16 md:h-24 w-full flex items-center justify-center mb-2">
-<img class="h-full object-contain drop-shadow-lg scale-110" data-alt="A 3D stylized pink piggy bank handing a ticket to another piggy bank inside a vintage theater ticket booth. The style is cute, playful, and maximalist, matching a gamified financial app UI. Soft studio lighting, yellow background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCrndWUY33s3bq-uDX0VkdtFn6d7m7biHbSnYBcGx97H4PrHGQAD47G3_qAkDgpPd5O-kbRH8dt6wOMTMQjKIOfw33h2OGC3HdmvZtv08CGg6KWtJNBm0DvxpvZM9bPFykRiCAlX9wMW2HCn5L-Ak6hsvZnD6iFAUzwYUg0ztwBTlkUHRcbZW2hIvAmszXi3lLiSm1ELlqxjH7p6jmOb9lQcp0Tk6jodyvpUIuCmwelno3rEbcNlajixuUKDSKuQBN65D8">
-</div>
-<div class="flex flex-col items-center justify-end flex-grow">
-<span class="text-surface-container-highest font-playful text-[10px] md:text-label-bold uppercase leading-tight font-black">SALIDAS</span>
-
-</div>
-</div>
-<!-- Card 7: GUSTICOS -->
-<div class="bg-lukash-card-bg rounded-lukash-card p-2 md:p-4 flex flex-col items-center justify-between text-center shadow-[0_4px_6px_-1px_rgba(0,0,0,0.15)] shadow-black/20 cursor-pointer card-scale-anim card-hover h-32 md:h-48" onclick="animateCard(this)">
-<div class="h-16 md:h-24 w-full flex items-center justify-center mb-2">
-<img alt="GUSTICOS" class="h-full object-contain drop-shadow-lg scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAb0C3LGLLfx_F5bfZYdEwdtEjrMgzLG5wMzvph4AwAWYho44pFeO9G84Fr8H-TtOZhQngp413Y75nPojslxY4oX5Fy_z0rF1BimnPjMN-zyO2nzRkN_mjWNjEqFNXIYk4sUa0qUAPtTssXSjjZHOWZsRP_nVGPTB0C5IMfb3nviaNBFFE6CW8GrgOoKxGKBUEvO7IJRvSMFUL_xxwu6ix6amktXSIDO9PY3uFPlDzPujqYFZsklq3Sra4ADn7_YOOoRoE">
-</div>
-<div class="flex flex-col items-center justify-end flex-grow">
-<span class="text-surface-container-highest font-playful text-[10px] md:text-label-bold uppercase leading-tight font-black">GUSTICOS</span>
-
-</div>
-</div>
-<!-- Card 8: APORTE EN CASA -->
-<div class="bg-lukash-card-bg rounded-lukash-card p-2 md:p-4 flex flex-col items-center justify-between text-center shadow-[0_4px_6px_-1px_rgba(0,0,0,0.15)] shadow-black/20 cursor-pointer card-scale-anim card-hover h-32 md:h-48" onclick="animateCard(this)">
-<div class="h-16 md:h-24 w-full flex items-center justify-center mb-2">
-<img class="h-full object-contain drop-shadow-lg scale-110" data-alt="A 3D stylized pink piggy bank standing next to a miniature house, holding a large golden key. The style is cute, playful, and maximalist, matching a gamified financial app UI. Soft studio lighting, yellow background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYNh-_jfXw5yILUoeVTujLt9CTzUakJxAgtOOIIzKmppFF5SUxMjGuoDdf8rFaaTaUryTySa99uc0BqquZl1SeYSXr3MU916_15Z_d1OlKgRIgep5HFvoRR3ExN175NARnyZKSqf-DBaP0xbuMAqItxY-gUQlQ79LMohYWI1E4k7w26brScFLghe_wIOu-o46TlqGNmcA7cptUVnjDPGjCtON6V9d0oTlF1SGhqBzIIAMU4DmIUamLNBaQ2tEjw7b4zb0">
-</div>
-<div class="flex flex-col items-center justify-end flex-grow">
-<span class="text-surface-container-highest font-playful text-[10px] md:text-[12px] uppercase leading-tight font-black">APORTE EN<br>CASA</span>
-
-</div>
-</div>
-<!-- Card 9: MEDICAMENTOS -->
-<div class="bg-lukash-card-bg rounded-lukash-card p-2 md:p-4 flex flex-col items-center justify-between text-center shadow-[0_4px_6px_-1px_rgba(0,0,0,0.15)] shadow-black/20 cursor-pointer card-scale-anim card-hover h-32 md:h-48" onclick="animateCard(this)">
-<div class="h-16 md:h-24 w-full flex items-center justify-center mb-2">
-<img alt="MEDICAMENTOS" class="h-full object-contain drop-shadow-lg scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCK_P6mrnk-Zpw5C2zqBn-fDFLMn7CYr1fXmpSQIYsL4PcVThBYfqmOz6ctJV3PXQsvwxhDwmSMD2R1zUBTvzE5Uw0Zx3eqNZJF0MbGNOhCysUNW6m31WxYS8tuJXFVEjjMuzVSop1aPEI_Or2Xrz-5dJgA945qbAEL9lhuuuKn3yXUlLO2BPdTyX_GQ4E81KL0rUP-t0JtmWl98cefV5kDn4JHDhpPx_qWrdz8Rwxu5qSPbIql2vKJdWOmCVuhtxeVgzw">
-</div>
-<div class="flex flex-col items-center justify-end flex-grow">
-<span class="text-surface-container-highest font-playful text-[9px] md:text-[11px] uppercase leading-tight font-black">MEDICAMENTOS</span>
-
-</div>
-</div>
+<!-- Grid de categorías (se genera con JS según los gastos marcados en la conversación) -->
+<div id="grid" class="grid grid-cols-3 gap-3 md:gap-4 w-full max-w-3xl mx-auto"></div>
 </div>
 </main>
-<!-- FAB for general action (optional, but fits the style) -->
-<button class="fixed bottom-6 right-6 w-14 h-14 bg-secondary rounded-full flex items-center justify-center shadow-lg shadow-black/30 hover:scale-110 transition-transform z-50"><img alt="Savings Icon" class="w-8 h-8 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAIUqybFGtmIegOaZqT-f3_oH5CjiSUcDLF7lvKUwBHEkXmmg3SoHYACvKaW764ds7A3lS4qTZ5l4584o4D6aThngh426Ak1FYFf5gbzsJ0oXlI4CHU0CcTd98yTBj2B6hiF86r_atcByEikV3ikgkGibYy0y7_YcVO17blfraU20niz0QUqAOYk9V_3YRmU2NmDbajrPP-Uz4-CcEx8Imnu7JzFaqOWwCgeL_VTgAO0N3EZ-K9jVCEbi6GNGAFXARiPMU"></button>
-<script>
-        function animateCard(element) {
-            element.classList.add('active');
-            setTimeout(() => {
-                element.classList.remove('active');
-            }, 700);
-        }
-    </script>
-<script>
-(function() {
-    const budgetInput = document.getElementById('monthly-budget-input');
-    if (!budgetInput) return;
 
-    function formatValue(val) {
-        if (!val) return '';
-        return parseInt(val.replace(/\D/g, ''), 10).toLocaleString('es-CO');
+<!-- FAB: alcancía decorativa -->
+<button class="fixed bottom-6 right-6 w-14 h-14 bg-gradient-to-br from-[#EE4599] to-[#DE7A8F] rounded-full flex items-center justify-center shadow-lg shadow-black/30 hover:scale-110 transition-transform z-50">
+<span class="material-symbols-outlined text-[#180F43] text-3xl" style="font-variation-settings: &quot;FILL&quot; 1;">savings</span>
+</button>
+
+<!-- BEGIN: Footer -->
+<footer class="bg-lukash-dark py-8 px-4 z-20 relative" style="color: #E7C11F;">
+<div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex flex-col items-center md:items-start gap-2">
+<img alt="LUKA Logo" class="h-12 drop-shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYRpEfrEAXglfH6g6bdTAiltJsJB-DrFhYXNpv6pCllmuHj7ZTXjF1qy9e06r27C5bLil8PgTWLPE-mWnWPz_8ibC0PbXo0mgx7meRO8nUsUV1qLPggd-nZBPOPjkThKh-Ou-I6nHQkWDHioMR9pUwKGZWmx0Cixdb5lqH1bSqo8ixHeoNWq9_ax4LS-cBhRHRiCd4KtV6Bz9ISa3Kd85RkHKMPOgK3YST2EQZs-TyZzikR3_DpMQVbNJtsVzgzE3r_g">
+<p class="font-rubik text-xs text-white/60 text-center md:text-left">Educaci&#243;n financiera sin morir en el intento.</p>
+</div>
+<nav class="flex flex-wrap justify-center gap-4 font-fredoka font-bold text-sm uppercase">
+<a href="index.html?intro=1" class="hover:text-white transition-colors">Inicio</a>
+<a href="modoAhorrointro.html" class="hover:text-white transition-colors">Modo Ahorro</a>
+<a href="invertir.html" class="hover:text-white transition-colors">Rindiendo la Money</a>
+<a href="cuentasclaras.html" class="hover:text-white transition-colors">Cuentas Claras</a>
+<a href="cero-enredor.html" class="hover:text-white transition-colors">Cero Enredos</a>
+<a href="nosotros.html" class="hover:text-white transition-colors">Nosotros</a>
+<a href="contactanos.html" class="hover:text-white transition-colors">Contacto</a>
+</nav>
+<p class="text-white/40 text-xs font-roboto text-center">&#169; 2026 LUKA. Todos los derechos reservados.</p>
+</div>
+</footer>
+<!-- END: Footer -->
+
+<script data-purpose="menu-functionality">
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+    const mobileMenuDrawer = document.getElementById('mobileMenuDrawer');
+    const closeMenuBtn = document.getElementById('closeMenuBtn');
+    const menuIcon = menuBtn.querySelector('.hamburger-icon');
+
+    function openMenu() {
+      mobileMenu.classList.remove('hidden');
+      if(menuIcon) menuIcon.classList.add('hidden');
+      setTimeout(() => {
+        mobileMenuOverlay.classList.remove('opacity-0');
+        mobileMenuDrawer.classList.remove('translate-x-[150%]');
+      }, 10);
     }
 
-    // Load from localStorage using 'presupuestoMensual' key
-    const savedBudget = localStorage.getItem('presupuestoMensual');
-    if (savedBudget) {
-        budgetInput.value = formatValue(savedBudget);
+    function closeMenu() {
+      closeMenuBtn.style.opacity = '0';
+      mobileMenuOverlay.classList.add('opacity-0');
+      mobileMenuDrawer.classList.add('translate-x-[150%]');
+      setTimeout(() => {
+        mobileMenu.classList.add('hidden');
+        closeMenuBtn.style.opacity = '1';
+        if(menuIcon) menuIcon.classList.remove('hidden');
+      }, 300);
     }
 
-    // Update localStorage on change and keep formatting
-    budgetInput.addEventListener('input', (e) => {
-        let rawValue = e.target.value.replace(/\D/g, '');
-        localStorage.setItem('presupuestoMensual', rawValue);
-        e.target.value = formatValue(rawValue);
+    menuBtn.addEventListener('click', openMenu);
+    closeMenuBtn.addEventListener('click', closeMenu);
+    mobileMenuOverlay.addEventListener('click', closeMenu);
+
+    // Desktop Categorias dropdown
+    const desktopCategorias = document.getElementById('desktopCategorias');
+    const desktopCategoriasBtn = document.getElementById('desktopCategoriasBtn');
+    const desktopCategoriasMenu = document.getElementById('desktopCategoriasMenu');
+    const desktopCategoriasArrow = document.getElementById('desktopCategoriasArrow');
+
+    function toggleDesktopMenu(open) {
+      desktopCategoriasMenu.classList.toggle('hidden', !open);
+      desktopCategoriasArrow.classList.toggle('rotate-180', open);
+    }
+
+    desktopCategoriasBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isHidden = desktopCategoriasMenu.classList.contains('hidden');
+      toggleDesktopMenu(isHidden);
     });
-})();
+    desktopCategorias.addEventListener('mouseenter', () => toggleDesktopMenu(true));
+    desktopCategorias.addEventListener('mouseleave', () => toggleDesktopMenu(false));
+    document.addEventListener('click', (e) => {
+      if (!desktopCategorias.contains(e.target)) toggleDesktopMenu(false);
+    });
+
+    // Mobile Categorias dropdown
+    const mobileCategoriasBtn = document.getElementById('mobileCategoriasBtn');
+    const mobileCategoriasMenu = document.getElementById('mobileCategoriasMenu');
+    const mobileCategoriasArrow = document.getElementById('mobileCategoriasArrow');
+
+    mobileCategoriasBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isHidden = mobileCategoriasMenu.classList.contains('hidden');
+      mobileCategoriasMenu.classList.toggle('hidden', !isHidden);
+      mobileCategoriasArrow.classList.toggle('rotate-180', isHidden);
+    });
+</script>
+<script data-purpose="theme-toggle">
+  (function () {
+    var key = 'lukash-theme';
+    var root = document.documentElement;
+    var apply = function (dark, persist) {
+      root.classList.toggle('dark', dark);
+      if (persist) { try { localStorage.setItem(key, dark ? 'dark' : 'light'); } catch (e) {} }
+    };
+    var toggles = document.querySelectorAll('.theme-toggle');
+    var stored = null;
+    try { stored = localStorage.getItem(key); } catch (e) {}
+    var shouldDark = stored ? (stored === 'dark') : false;
+    apply(shouldDark, false);
+    toggles.forEach(function (t) {
+      t.addEventListener('click', function () { apply(!root.classList.contains('dark'), true); });
+    });
+  })();
+</script>
+<script data-purpose="budget-distribucion">
+  // ============================================================
+  // Reparto del presupuesto según:
+  //   - 'presupuestoMensual'   -> monto que le llega al usuario
+  //   - 'gastosSeleccionados'  -> { clave: false | { monto: X } } de la conversación
+  // El reparto se adapta al usuario: si hay montos escritos en la
+  // conversación, se respetan tal cual y AHORRO = lo que sobra.
+  // Si los gastos superan el ingreso, se ajustan de forma proporcional
+  // para que la suma dé exacta. Sin montos: reparto por pesos con ahorro.
+  // ============================================================
+  (function () {
+    // Mismas claves que se preguntan en conversacion2.html
+    const CATS = {
+      pasajes:       { label: 'PASAJES',        weight: 15, tipo: 'necesidad', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuD7pJuxnAOGuE-12v0sgUa1ckLPEt0xTpoBulxgjFVb8ULH5U5MEcIqmiS3AFMTQggHCpsYEdGvK1xJ-qERugoDaBBSwLYjKlbmr8-TI4s_8Sn7k_esAE0ANeTdlnY-Dg8QF9jhWVW4HfEXGs9z_t4cfELUZP_kHRvAM19IvPtv9xbi8ocuCUUD8YTLhFxfIgO-CPRI4m31RW3ePNnYxNiJ2rGX4kFa5rdVsdIJNO7UjQhrgHLOCRzYQYIa5wqfXsd0a6E' },
+      alimentacion:  { label: 'ALIMENTACI\u00d3N', weight: 30, tipo: 'necesidad', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCVl8kGHyU7ZeuJkb4xHilr9KXzd30fuy44MflxdrZlMaqjxbv9R4u2TR_QZGf4AcRP0dagDBApK14n5nouu6g9LnxjBgVECDptUIr2gkMQmNYazjHVSY57u-CGYmKPz_1MkdKvdy8XjXn4-lH7eGo3E1nNmGB2Rf0SVRlUaBFbFuu2C2SG18oDdhJ4J13y2f4tmYbVEHq_bWLC2krPzvadDxy3RxFE1Yd_BUr9Upa2LVVUeSuYtBlhaZIM8CkGjOGTGIc' },
+      datos:         { label: 'DATOS',          weight: 10, tipo: 'necesidad', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCvkESwDDczeuUt_gMfg8ivpChuxyvKSaAWP2KUKXuD_sZ5VN9iiVRJId1ZAUG7a0bxt7N3Lw6jB8LJBVS88OSm39nnQht8UfDSX2Uq8Vx0f4nyHzknK9fIearMyyBelHH6cA7RgNIWH5PXkpYBERkJhFRdQOpn9OrbLmpej-jRH9uX0vnYsssITgXRADeZy1nuMvXNtkYfdiuFJmuYhDH4pPn1rmzmLDAQv184XIwHeMweq0LcNq4ZZZ4ow-90e75oxsk' },
+      medicamentos:  { label: 'MEDICAMENTOS',   weight: 10, tipo: 'necesidad', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCK_P6mrnk-Zpw5C2zqBn-fDFLMn7CYr1fXmpSQIYsL4PcVThBYfqmOz6ctJV3PXQsvwxhDwmSMD2R1zUBTvzE5Uw0Zx3eqNZJF0MbGNOhCysUNW6m31WxYS8tuJXFVEjjMuzVSop1aPEI_Or2Xrz-5dJgA945qbAEL9lhuuuKn3yXUlLO2BPdTyX_GQ4E81KL0rUP-t0JtmWl98cefV5kDn4JHDhpPx_qWrdz8Rwxu5qSPbIql2vKJdWOmCVuhtxeVgzw' },
+      aporteCasa:    { label: 'APORTE EN CASA', weight: 20, tipo: 'necesidad', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCYNh-_jfXw5yILUoeVTujLt9CTzUakJxAgtOOIIzKmppFF5SUxMjGuoDdf8rFaaTaUryTySa99uc0BqquZl1SeYSXr3MU916_15Z_d1OlKgRIgep5HFvoRR3ExN175NARnyZKSqf-DBaP0xbuMAqItxY-gUQlQ79LMohYWI1E4k7w26brScFLghe_wIOu-o46TlqGNmcA7cptUVnjDPGjCtON6V9d0oTlF1SGhqBzIIAMU4DmIUamLNBaQ2tEjw7b4zb0' },
+      ropa:          { label: 'ROPA',           weight: 10, tipo: 'gusto', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBPDsJD5VkBSr-lJsjqFyJvo_nD38B5hPE0xJeleBRDRLcHmFV0v5uZzpoyAvHbvcKNC17Ng62r6Z9Ze5tSwfqj8DUMaWYDcNC9xctSjQkXlPYuIEuGkTXfqMQNwNV6b12J3H6XX4sROvERrWHyNZ1vkBCcV4z0UmLK8Q6Dwqvv71tP_rMhv3Mk68rR2mlTmg-nrUUK6ltVmUZH_wMgtRr-jnuNscfvFnjEP1MAhlyYRBxV0JDvNZTdVOTlgY5CiA8-gCE' },
+      salidas:       { label: 'SALIDAS',        weight: 10, tipo: 'gusto', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCrndWUY33s3bq-uDX0VkdtFn6d7m7biHbSnYBcGx97H4PrHGQAD47G3_qAkDgpPd5O-kbRH8dt6wOMTMQjKIOfw33h2OGC3HdmvZtv08CGg6KWtJNBm0DvxpvZM9bPFykRiCAlX9wMW2HCn5L-Ak6hsvZnD6iFAUzwYUg0ztwBTlkUHRcbZW2hIvAmszXi3lLiSm1ELlqxjH7p6jmOb9lQcp0Tk6jodyvpUIuCmwelno3rEbcNlajixuUKDSKuQBN65D8' },
+      gusticos:      { label: 'GUSTICOS',       weight: 10, tipo: 'gusto', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAb0C3LGLLfx_F5bfZYdEwdtEjrMgzLG5wMzvph4AwAWYho44pFeO9G84Fr8H-TtOZhQngp413Y75nPojslxY4oX5Fy_z0rF1BimnPjMN-zyO2nzRkN_mjWNjEqFNXIYk4sUa0qUAPtTssXSjjZHOWZsRP_nVGPTB0C5IMfb3nviaNBFFE6CW8GrgOoKxGKBUEvO7IJRvSMFUL_xxwu6ix6amktXSIDO9PY3uFPlDzPujqYFZsklq3Sra4ADn7_YOOoRoE' },
+      suscripciones: { label: 'SUSCRIPCIONES',  weight: 5,  tipo: 'gusto', img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDEoHt8GeyivlV0mFRT9fYcNWE_FNT62Y9IueirZYt2N8QL3AcEOk_CsWpw_q3NwFAlNzGZoiIYUt-ESe-obNQdOIL_O3FNc-wanBuL7VvSy8uQ15oa0wZ7XobUH3OtiD4wMoaJ3TCVI9K5WtksJuXhS2krkrFIexBNQ26MKXVcadKI8gm4-6zqGlweWKD0KAZ4_5aSwPMIOeYJ7xxSTixMqN_DaB4tAjzCBzkFx_7JaM_yCtBrejEg68YnPcfJycQQVjM' },
+    };
+    const CATS_KEYS = Object.keys(CATS);
+    const grid = document.getElementById('grid');
+    const summaryStrip = document.getElementById('summaryStrip');
+    const budgetInput = document.getElementById('monthly-budget-input');
+
+    function money(n) { return '$ ' + (n || 0).toLocaleString('es-CO'); }
+
+    function readBudget() {
+      let raw = '0';
+      try { raw = (localStorage.getItem('presupuestoMensual') || '0').replace(/\D/g, ''); } catch (e) {}
+      return parseInt(raw, 10) || 0;
+    }
+
+    // Datos activos del flujo. Devuelve { mode, answers }:
+    //   mode 'all'  -> no se hizo la conversación, se muestran todas las categorías
+    //   mode 'flow' -> answers son las respuestas de conversacion2.html
+    function selectedData() {
+      try {
+        const stored = localStorage.getItem('gastosSeleccionados');
+        if (stored === null) return { mode: 'all', answers: null };
+        const answers = JSON.parse(stored) || {};
+        const active = {};
+        CATS_KEYS.forEach((k) => {
+          const v = answers[k];
+          if (v === true) active[k] = true;
+          else if (v && typeof v === 'object' && Number.isFinite(v.monto)) active[k] = v;
+        });
+        return { mode: 'flow', answers: active };
+      } catch (e) {
+        return { mode: 'all', answers: null };
+      }
+    }
+
+    // Reparto adaptado al usuario:
+    //   - Con montos reales (Sí + monto): se respetan sus gastos y
+    //     AHORRO = lo que sobra. Si los gastos superan el ingreso, se
+    //     ajustan proporcionalmente para que la suma dé exacta.
+    //   - Sin montos (formato anterior o sin flujo): reparto por pesos
+    //     con 20% ahorro, usando el método del mayor residuo.
+    function distribuir(total, keys, answers) {
+      const hasAmounts = keys.some((k) => answers[k] && Number.isFinite(answers[k].monto));
+
+      // ---- Fallback: reparto por pesos (20% ahorro) ----
+      if (!hasAmounts) {
+        const ahorro = Math.round(total * 0.2);
+        const rest = total - ahorro;
+        const items = keys.map((k) => ({ key: k, weight: CATS[k] ? CATS[k].weight : 1 }));
+        const wsum = items.reduce((s, i) => s + i.weight, 0) || 1;
+        const floors = items.map((i) => Math.floor((rest * i.weight) / wsum));
+        const diffs = items.map((i, ix) => (rest * i.weight) / wsum - floors[ix]);
+        let remaining = rest - floors.reduce((a, b) => a + b, 0);
+        const order = items.map((_, ix) => ix).sort((a, b) => diffs[b] - diffs[a]);
+        for (let i = 0; i < remaining; i++) floors[order[i % order.length]]++;
+        const amounts = {};
+        items.forEach((it, ix) => { amounts[it.key] = floors[ix]; });
+        return { ahorro, amounts, adjust: false };
+      }
+
+      // ---- Reparto a la medida del usuario ----
+      const entries = keys.filter((k) => Number.isFinite(answers[k].monto))
+        .map((k) => ({ key: k, monto: answers[k].monto }));
+      const suma = entries.reduce((s, e) => s + e.monto, 0);
+      const amounts = {};
+      entries.forEach((e) => { amounts[e.key] = e.monto; });
+
+      // Los gastos caben en el ingreso: ahorro = lo que sobra
+      if (suma <= total) {
+        return { ahorro: total - suma, amounts, adjust: false };
+      }
+
+      // Los gastos superan el ingreso: se escalan para cuadrar exacto
+      const floors = entries.map((e) => Math.floor((total * e.monto) / suma));
+      const real = entries.map((e) => (total * e.monto) / suma);
+      let remaining = total - floors.reduce((a, b) => a + b, 0);
+      const order = entries.map((_, ix) => ix).sort((a, b) => (real[b] - floors[b]) - (real[a] - floors[a]));
+      for (let i = 0; i < remaining; i++) floors[order[i % order.length]]++;
+      entries.forEach((e, ix) => { amounts[e.key] = floors[ix]; });
+      return { ahorro: 0, amounts, adjust: true };
+    }
+
+    function cardHTML(cat, amount) {
+      return `
+      <div class="budget-card">
+        <div class="card-img"><img alt="${cat.label}" loading="lazy" src="${cat.img}"></div>
+        <span class="card-label">${cat.label}</span>
+        <span class="card-amount">${money(amount)}</span>
+      </div>`;
+    }
+
+    function ahorroHTML(amount) {
+      return `
+      <div class="budget-card ahorro-card">
+        <div class="card-img"><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1; font-size:2.4rem; color:#180F43;">savings</span></div>
+        <span class="card-label">AHORRO</span>
+        <span class="card-amount">${money(amount)}</span>
+      </div>`;
+    }
+
+    function render() {
+      const total = readBudget();
+      const { mode, answers } = selectedData();
+      const keys = mode === 'all' ? CATS_KEYS.slice() : Object.keys(answers);
+      const distribution = keys.length
+        ? distribuir(total, keys, answers || {})
+        : { ahorro: total, amounts: {}, adjust: false };
+
+      let html = '';
+      if (mode === 'flow' && keys.length === 0) {
+        html += '<div class="col-span-full note-empty">No marcaste gastos en la conversaci\u00f3n. \u00a1Perfecto! Guardamos tu plata completa como ahorro.</div>';
+      }
+      if (distribution.adjust) {
+        html += '<div class="col-span-full note-empty">Tus gastos suman m\u00e1s de lo que recib\u00eds: ajustamos el reparto para que te alcance (ahorro $0 este mes).</div>';
+      }
+      keys.forEach((k) => { if (CATS[k]) html += cardHTML(CATS[k], distribution.amounts[k] || 0); });
+      const ahorro = keys.length ? distribution.ahorro : total;
+      html += ahorroHTML(ahorro);
+      // Recomendación: si el ahorro supera los $50.000, se sugiere dónde ponerlo
+      if (ahorro > 50000) {
+        html += '<div class="col-span-full note-recomendacion">\u00a1Buen laburo! Este mes ten\u00e9s <strong>' + money(ahorro) + '</strong> de ahorro. No lo dejes quieto: pon\u00e9 esa plata a trabajar para que rinda.<br><a class="btn-recomendacion" href="modoAhorrointro.html">IR A MODO AHORRO</a></div>';
+      }
+      grid.innerHTML = html;
+
+      summaryStrip.textContent = keys.length
+        ? 'Reparto total: ' + money(total) + (distribution.adjust ? ' \u00b7 Ajustado a tus gastos' : ' \u00b7 Ahorro: ' + money(distribution.ahorro))
+        : 'Ahorro total: ' + money(total);
+    }
+
+    // Mostrar el monto guardado y mantener el formato de miles
+    const saved = readBudget();
+    if (saved) budgetInput.value = saved.toLocaleString('es-CO');
+
+    budgetInput.addEventListener('input', (e) => {
+      const digits = e.target.value.replace(/\D/g, '');
+      e.target.value = digits ? Number(digits).toLocaleString('es-CO') : '';
+      try { localStorage.setItem('presupuestoMensual', digits); } catch (err) {}
+      render();
+    });
+
+    render();
+  })();
 </script>
 
 </body></html>

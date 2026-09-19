@@ -322,7 +322,7 @@
 <svg class="icon-sun" fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="5" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></circle><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="black" stroke-linecap="round" stroke-width="2"></path></svg>
 </button>
 <!-- User Icon -->
-<button class="p-2">
+<button class="p-2" onclick="location.href='mi-perfil.html'" aria-label="Ir a Mi Perfil">
 <svg fill="none" height="28" viewBox="0 0 28 28" width="28" xmlns="http://www.w3.org/2000/svg">
 <circle cx="14" cy="14" r="12" stroke="black" stroke-width="2"></circle>
 <circle cx="14" cy="10" r="4" stroke="black" stroke-width="2"></circle>
@@ -350,7 +350,7 @@
 </div><div class="flex items-center"><button class="p-2 theme-toggle" type="button" aria-label="Cambiar tema">
 <svg class="icon-moon" fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
 <svg class="icon-sun" fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></circle><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path></svg>
-</button><svg fill="none" height="32" viewBox="0 0 28 28" width="32" xmlns="http://www.w3.org/2000/svg"><circle cx="14" cy="14" r="12" stroke="currentColor" stroke-width="2"></circle><circle cx="14" cy="10" r="4" stroke="currentColor" stroke-width="2"></circle><path d="M6 22C6 18.6863 8.68629 16 12 16H16C19.3137 16 22 18.6863 22 22" stroke="currentColor" stroke-width="2"></path></svg></div></nav></div></header>
+</button><a href="mi-perfil.html" aria-label="Mi Perfil"><svg fill="none" height="32" viewBox="0 0 28 28" width="32" xmlns="http://www.w3.org/2000/svg"><circle cx="14" cy="14" r="12" stroke="currentColor" stroke-width="2"></circle><circle cx="14" cy="10" r="4" stroke="currentColor" stroke-width="2"></circle><path d="M6 22C6 18.6863 8.68629 16 12 16H16C19.3137 16 22 18.6863 22 22" stroke="currentColor" stroke-width="2"></path></svg></a></div></nav></div></header>
 <!-- Navigation Drawer (Hidden by default) -->
 <div class="fixed inset-0 z-[60] pointer-events-none hidden" id="mobileMenu">
 <!-- Overlay -->
@@ -403,11 +403,11 @@
 <div class="fixed bottom-0 left-0 w-full flex justify-center pointer-events-none z-50">
 <div class="w-full max-w-[1200px] relative pb-10 flex justify-center items-end px-6 pointer-events-none">
 <!-- Primary Action Button -->
-<button class="pointer-events-auto bg-primary-container text-on-surface font-label-lg text-[clamp(1rem,1.25vw,1.25rem)] px-12 py-4 rounded-xl uppercase tracking-wider btn-shadow-fuchsia hover:translate-y-1 transition-all active:translate-y-2 active:shadow-[0px_4px_0px_0px_#570032] w-full max-w-[300px] md:max-w-[400px]">
+<button class="pointer-events-auto bg-primary-container text-on-surface font-label-lg text-base md:text-lg px-10 py-3 rounded-2xl uppercase tracking-wider btn-shadow-fuchsia hover:translate-y-1 transition-all active:translate-y-2 active:shadow-[0px_4px_0px_0px_#570032] w-full max-w-[300px]" onclick="location.href='conversacion1.html'" aria-label="Continuar">
                     CONTINUAR
                 </button>
 <!-- Floating Action Button (Piggy Bank) -->
-<button class="pointer-events-auto absolute bottom-8 right-6 md:right-12 w-16 h-16 md:w-20 md:h-20 rounded-full bg-gradient-to-br from-primary to-tertiary flex items-center justify-center shadow-lg border-2 border-[#570032] hover:scale-110 transition-transform">
+<button class="pointer-events-auto absolute bottom-8 right-6 md:right-12 w-16 h-16 md:w-20 md:h-20 rounded-full bg-gradient-to-br from-primary to-tertiary flex items-center justify-center shadow-lg border-2 border-[#570032] hover:scale-110 transition-transform" onclick="location.href='lukash-chat.html'" aria-label="Abrir chat LUKA$H">
 <span class="material-symbols-outlined text-[#570032] text-3xl md:text-4xl" style="font-variation-settings: &quot;FILL&quot; 0;">savings</span>
 </button>
 </div>

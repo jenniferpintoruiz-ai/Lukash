@@ -644,7 +644,7 @@
 <svg class="icon-sun" fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="5" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></circle><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="black" stroke-linecap="round" stroke-width="2"></path></svg>
 </button>
 <!-- User Icon -->
-<button class="p-2">
+<button class="p-2" onclick="location.href='mi-perfil.html'" aria-label="Ir a Mi Perfil">
 <svg fill="none" height="28" viewBox="0 0 28 28" width="28" xmlns="http://www.w3.org/2000/svg">
 <circle cx="14" cy="14" r="12" stroke="black" stroke-width="2"></circle>
 <circle cx="14" cy="10" r="4" stroke="black" stroke-width="2"></circle>
@@ -669,7 +669,7 @@
  <a href="Registro.html" class="transition-colors hover:text-[#f7efd0]">REGISTRO</a>
  <a href="nosotros.html" class="transition-colors hover:text-[#f7efd0]">NOSOTROS</a>
  <a href="contactanos.html" class="transition-colors hover:text-[#f7efd0]">CONTACTANOS</a>
-</div><div class="flex items-center"><button class="p-2 theme-toggle" type="button" aria-label="Cambiar tema"><svg class="icon-moon" fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg><svg class="icon-sun" fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></circle><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path></svg></button><svg fill="none" height="32" viewBox="0 0 28 28" width="32" xmlns="http://www.w3.org/2000/svg"><circle cx="14" cy="14" r="12" stroke="currentColor" stroke-width="2"></circle><circle cx="14" cy="10" r="4" stroke="currentColor" stroke-width="2"></circle><path d="M6 22C6 18.6863 8.68629 16 12 16H16C19.3137 16 22 18.6863 22 22" stroke="currentColor" stroke-width="2"></path></svg></div></nav></div></header>
+</div><div class="flex items-center"><button class="p-2 theme-toggle" type="button" aria-label="Cambiar tema"><svg class="icon-moon" fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg><svg class="icon-sun" fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></circle><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path></svg></button><a href="mi-perfil.html" aria-label="Mi Perfil"><svg fill="none" height="32" viewBox="0 0 28 28" width="32" xmlns="http://www.w3.org/2000/svg"><circle cx="14" cy="14" r="12" stroke="currentColor" stroke-width="2"></circle><circle cx="14" cy="10" r="4" stroke="currentColor" stroke-width="2"></circle><path d="M6 22C6 18.6863 8.68629 16 12 16H16C19.3137 16 22 18.6863 22 22" stroke="currentColor" stroke-width="2"></path></svg></a></div></nav></div></header>
 <!-- END: MainHeader -->
 <!-- BEGIN: Mobile Menu Drawer -->
 <div class="fixed inset-0 z-[60] pointer-events-none hidden" id="mobileMenu">
@@ -790,7 +790,7 @@
       </div>
     </div>
   </div>
-  <p class="text-white/90 font-rubik font-bold mt-12 z-10 text-center text-lg lg:text-xl drop-shadow-md">Toca una categoría para centrarla</p>
+  <p class="text-[#180F43] dark:text-white/90 font-rubik font-bold mt-12 z-10 text-center text-lg lg:text-xl drop-shadow-md">Toca una categoría para centrarla</p>
 </section>
 <!-- END: Categorías Carrusel Section -->
 <!-- END: MainContent -->
@@ -1402,10 +1402,17 @@
               clearTimeout(resumeTimeout);
             }
           } else if (e.target.classList.contains('action-btn')) {
+            const actionRoutes = {
+              'EXPLORAR': { file: 'modoAhorrointro.html', label: 'MODO AHORRO' },
+              'SIMULAR':   { file: 'invertir.html',          label: 'RINDIENDO LA MONEY' },
+              'REVISAR':   { file: 'cuentasclaras.html',     label: 'CUENTAS CLARAS' },
+              'JUGAR':     { file: 'cero-enredor.html',      label: 'CERO ENREDOS' }
+            };
             const selectedAction = currentItem.getAttribute('data-action');
-            if (selectedAction === 'EXPLORAR') {
+            const route = actionRoutes[selectedAction];
+            if (route) {
               stopAutoRotate();
-              localStorage.setItem('lukash_categoria_seleccionada', 'MODO AHORRO');
+              localStorage.setItem('lukash_categoria_seleccionada', route.label);
 
               // Fade out: la pantalla desaparece (desvanece) hacia el degradado del tema
               document.body.classList.add('explore-exit');
@@ -1418,7 +1425,7 @@
               // Navega apenas termina el fade (~300ms)
               setTimeout(() => {
                 flash.remove();
-                window.location.href = 'modoAhorrointro.html';
+                window.location.href = route.file;
               }, 320);
               return;
             }
@@ -1474,7 +1481,9 @@
   // oculto y UI ensamblada, sin reproducir la animacion de la lluvia.
   (function () {
     var params = new URLSearchParams(location.search);
-    if (params.get('intro') === '1') {
+    // ?carrusel=1: tras la explosión salta DIRECTAMENTE al carrusel de categorías
+    var irAlCarrouselDirecto = params.get('carrusel') === '1';
+    if (params.get('intro') === '1' || irAlCarrouselDirecto) {
       autoIntro = true;
       window.addEventListener('load', function () {
         setTimeout(function () {
@@ -1488,6 +1497,19 @@
           // Ensambla la UI (header, tarjeta y scroll hint) como si la
           // explosion ya hubiera terminado.
           document.dispatchEvent(new CustomEvent('onPiggyCatastrophe'));
+          if (irAlCarrouselDirecto) {
+            // Espera a que la intro quede lista y dispara la transición de ondas
+            var intentos = 0;
+            var espera = setInterval(function () {
+              intentos++;
+              if (introReady) {
+                clearInterval(espera);
+                irAlCarrusel();
+              } else if (intentos > 50) {
+                clearInterval(espera);
+              }
+            }, 100);
+          }
         }, 300);
       });
     }

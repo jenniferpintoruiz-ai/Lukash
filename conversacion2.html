@@ -81,14 +81,21 @@
 
     /* ===== Burbujas de mensaje ===== */
     .bubble {
-      max-width: 85%;
+      max-width: 92%;
       border-radius: 22px;
       padding: 12px 18px;
       font-size: clamp(0.95rem, 1.6vw, 1.1rem);
       line-height: 1.45;
       font-weight: 500;
       word-break: break-word;
+      overflow-wrap: anywhere;
+      white-space: normal;
     }
+    /* Evita que el texto largo se salga del recuadro en filas flex */
+    .chat-row { min-width: 0; }
+    .chat-row > * { min-width: 0; }
+
+    /* ===== Tokens de color adaptables a modo claro / oscuro ===== */
     .bubble-lukash {
       background-color: #f7efd0;
       color: #180F43;
@@ -131,6 +138,80 @@
     }
     .btn-continuar:hover { filter: brightness(1.05); }
     .btn-continuar:active { transform: translateY(2px); box-shadow: 0 2px 0 #ab2a66; }
+
+    /* ===== Input de monto (burbuja del usuario, estilo botón blanco) ===== */
+    .amount-bubble { max-width: 100%; }
+    .amount-bubble .amount-flex { display: flex; align-items: center; gap: 8px; min-width: 0; }
+    .amount-currency { color: #180F43; font-weight: 800; font-size: clamp(1.1rem, 2.2vw, 1.4rem); }
+    .amount-input {
+      background: #FFFFFF;
+      color: #180F43;
+      font-weight: 700;
+      font-size: clamp(1.05rem, 2.2vw, 1.35rem);
+      flex: 1 1 auto;
+      min-width: 0;
+      width: auto;
+      max-width: 220px;
+      padding: 9px 18px;
+      border: 2px solid rgba(24,15,67,0.15);
+      border-radius: 20px;
+      outline: none;
+      box-shadow: 0 5px 0 rgba(0,0,0,0.18);
+      transition: transform 0.12s ease-in-out;
+    }
+    .amount-input:focus { box-shadow: 0 5px 0 rgba(0,0,0,0.28); transform: scale(0.98); }
+    .amount-input::placeholder { color: rgba(24,15,67,0.45); }
+    .amount-send {
+      background: #FFFFFF;
+      color: #180F43;
+      border-radius: 9999px;
+      width: 34px;
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      cursor: pointer;
+      transition: transform 0.12s ease-in-out;
+    }
+    .amount-send:active { transform: scale(0.92); }
+
+    /* ===== Botones de respuesta rápida (Sí / No) ===== */
+    .quick-row { display: flex; justify-content: flex-end; gap: 10px; }
+    .quick-btn {
+      font-family: 'Fredoka', sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: #FFFFFF;
+      border: 2px solid rgba(255,255,255,0.65);
+      border-radius: 20px;
+      padding: 10px 26px;
+      font-size: 15px;
+      cursor: pointer;
+      transition: transform 0.12s ease-in-out, opacity 0.12s ease-in-out;
+      box-shadow: 0 5px 0 rgba(0,0,0,0.18);
+    }
+    .quick-btn:active { transform: scale(0.94); }
+    .quick-btn:disabled { opacity: 0.55; pointer-events: none; }
+    .quick-yes { background-color: #88c146; }
+    .quick-no  { background-color: #e43888; }
+
+    /* ===== Chip de salario mínimo ===== */
+    .salary-chip {
+      margin-top: 8px;
+      background: #FFFFFF;
+      color: #180F43;
+      font-family: 'Fredoka', sans-serif;
+      font-weight: 700;
+      font-size: clamp(0.78rem, 1.8vw, 0.9rem);
+      border-radius: 9999px;
+      padding: 8px 16px;
+      cursor: pointer;
+      border: 2px solid rgba(24,15,67,0.15);
+      transition: transform 0.12s ease-in-out;
+    }
+    .salary-chip:active { transform: scale(0.95); }
 </style>
 </head>
 <body class="font-roboto text-slate-800">
@@ -216,7 +297,7 @@
 </div>
 <div class="flex-1 min-w-0">
 <h2 class="font-fredoka font-bold text-lg leading-none">LUKA$H</h2>
-<p class="text-xs mt-1 opacity-80">en línea · Respuesta animada</p>
+<p class="text-xs mt-1 opacity-80">en línea · Conversación interactiva</p>
 </div>
 <div class="flex gap-1">
 <span class="w-2.5 h-2.5 rounded-full bg-[#A7EB5D] inline-block"></span>
@@ -323,19 +404,80 @@ CONTINUAR
   })();
 </script>
 <script data-purpose="chat-animation">
-  // Secuencia de la conversación entre LUKA$H y el usuario
-  const messages = [
-    { from: 'lukash', text: 'Vamos a aprender a organizar tu dinero con un presupuesto sencillo, así sabrás en qué gastas y cuánto puedes usar sin que darte sin plata.' },
-    { from: 'user',   text: 'Quiero comprar algunas cosas, pero no siempre tengo el dinero suficiente. ¿Endeudarme es una buena idea?' },
-    { from: 'lukash', text: 'Depende de la situación. A veces una deuda puede ayudarte a alcanzar una meta, pero otras veces puede retrasar tus planes. Vamos a descubrirlo tomando decisiones reales.' },
-  ];
+  // ============================================================
+  // Flujo interactivo de LUKA$H: presupuesto mensual
+  //  1) Lukash pregunta cuánto gana el usuario -> monto con vista
+  //     previa en vivo y opción de usar el salario mínimo 2026
+  //  2) Lukash pregunta por cada gasto (Sí / No)
+  //  3) Si es "Sí", pregunta cuánto se gasta (reparto a la medida)
+  //  4) Al terminar redirige a dani.html, que arma el reparto
+  //  Datos en localStorage:
+  //    - 'presupuestoMensual'   -> monto ingresado
+  //    - 'gastosSeleccionados'  -> { clave: false | { monto: X }, ... }
+  // ============================================================
 
   const chatBox = document.getElementById('chatBox');
   const continueBtn = document.getElementById('continueBtn');
-  let msgIndex = 0;
 
+  // Categorías de gasto (mismas que se usan en dani.html)
+  const GASTOS = [
+    { key: 'pasajes',       label: 'pasajes' },
+    { key: 'alimentacion',  label: 'alimentación' },
+    { key: 'datos',         label: 'datos' },
+    { key: 'ropa',          label: 'ropa' },
+    { key: 'suscripciones', label: 'suscripciones' },
+    { key: 'salidas',       label: 'salidas' },
+    { key: 'gusticos',      label: 'gusticos' },
+    { key: 'aporteCasa',    label: 'aportes a la casa' },
+    { key: 'medicamentos',  label: 'medicamentos' },
+  ];
+
+  // Respuestas del usuario (borradas al cargar para empezar de cero)
+  let answers = {};
+  try { localStorage.removeItem('gastosSeleccionados'); } catch (e) {}
+
+  // Prellenar el input con el monto guardado previamente (si existe)
+  let prefill = '';
+  try { prefill = (localStorage.getItem('presupuestoMensual') || '').replace(/\D/g, ''); } catch (e) {}
+
+  // Presupuesto mensual del usuario (se captura en askAmount)
+  let budget = 0;
+
+  // Nombres legibles de cada gasto para los mensajes de redistribución
+  const ETIQUETAS = {
+    pasajes: 'Pasajes',
+    alimentacion: 'Alimentaci\u00f3n',
+    datos: 'Datos',
+    ropa: 'Ropa',
+    suscripciones: 'Suscripciones',
+    salidas: 'Salidas',
+    gusticos: 'Gusticos',
+    aporteCasa: 'Aporte en casa',
+    medicamentos: 'Medicamentos',
+  };
+
+  // Orden de prioridad: necesidades primero, gustos al final
+  const NECESIDADES = ['aporteCasa', 'alimentacion', 'pasajes', 'datos', 'medicamentos'];
+  const GUSTOS = ['suscripciones', 'ropa', 'salidas', 'gusticos'];
+
+  function storeBudget(val) {
+    try { localStorage.setItem('presupuestoMensual', val); } catch (e) {}
+  }
+  function storeAnswers() {
+    try { localStorage.setItem('gastosSeleccionados', JSON.stringify(answers)); } catch (e) {}
+  }
+
+  // ------------- Utilidades visuales -------------
   function scrollBottom() {
     chatBox.scrollTop = chatBox.scrollHeight;
+  }
+
+  // Avatar de LUKA$H
+  function lukashAvatar() {
+    const a = document.createElement('div');
+    a.className = 'w-8 h-8 rounded-full bg-white/20 border-2 border-[#E7C11F] overflow-hidden shrink-0 mb-1 hidden sm:block';
+    a.innerHTML = '<img src="images/Recurso%20ia.png" alt="LUKA$H" class="w-full h-full object-cover">';
+    return a;
   }
 
   // Indicador de "escribiendo..." tipo WhatsApp
@@ -347,11 +489,7 @@ CONTINUAR
     bubble.className = 'bubble bubble-lukash';
     bubble.innerHTML = '<span class="typing-dots"><span></span><span></span><span></span></span>';
     row.appendChild(bubble);
-    // Avatar de LUKA$H
-    const avatar = document.createElement('div');
-    avatar.className = 'w-8 h-8 rounded-full bg-white/20 border-2 border-[#E7C11F] overflow-hidden shrink-0 mb-1 hidden sm:block';
-    avatar.innerHTML = '<img src="images/Recurso%20ia.png" alt="LUKA$H" class="w-full h-full object-cover">';
-    row.prepend(avatar);
+    row.prepend(lukashAvatar());
     chatBox.appendChild(row);
     scrollBottom();
     return row;
@@ -373,74 +511,345 @@ CONTINUAR
     step();
   }
 
-  function nextMessage() {
-    if (msgIndex >= messages.length) {
-      // Fin de la conversación: colocar CONTINUAR al final (debajo del último mensaje)
-      chatBox.appendChild(continueBtn);
-      continueBtn.classList.remove('hidden');
-      continueBtn.classList.add('chat-row');
-      scrollBottom();
-      return;
-    }
-    const msg = messages[msgIndex];
-    const isUser = msg.from === 'user';
+  // Burbuja de mensaje con máquina de escribir. Resuelve al terminar.
+  function addBubble(from, text, instant) {
+    return new Promise((resolve) => {
+      const isLukash = from === 'lukash';
+      const typing = isLukash ? addTypingIndicator() : null;
+      const delay = isLukash ? 850 : 250;
 
-    // 1) Indicador de escritura (solo LUKA$H lo muestra)
-    let typing = null;
-    if (!isUser) typing = addTypingIndicator();
+      setTimeout(() => {
+        if (typing) typing.remove();
 
-    // 2) Pequeña pausa para simular la espera real del chat
-    setTimeout(() => {
-      if (typing) typing.remove();
+        const row = document.createElement('div');
+        row.className = `chat-row flex ${isLukash ? 'justify-start' : 'justify-end'} items-end gap-2`;
 
-      // 3) Crear la burbuja del mensaje
-      const row = document.createElement('div');
-      row.className = `chat-row flex ${isUser ? 'justify-end' : 'justify-start'} items-end gap-2`;
+        const bubble = document.createElement('div');
+        bubble.className = `bubble ${isLukash ? 'bubble-lukash' : 'bubble-user'}`;
+        const span = document.createElement('span');
+        span.className = 'typed';
+        bubble.appendChild(span);
 
-      const bubble = document.createElement('div');
-      bubble.className = `bubble ${isUser ? 'bubble-user' : 'bubble-lukash'}`;
-      const span = document.createElement('span');
-      span.className = 'typed';
-      bubble.appendChild(span);
+        if (isLukash) row.appendChild(lukashAvatar());
+        row.appendChild(bubble);
+        chatBox.appendChild(row);
 
-      if (!isUser) {
-        const avatar = document.createElement('div');
-        avatar.className = 'w-8 h-8 rounded-full bg-white/20 border-2 border-[#E7C11F] overflow-hidden shrink-0 mb-1 hidden sm:block';
-        avatar.innerHTML = '<img src="images/Recurso%20ia.png" alt="LUKA$H" class="w-full h-full object-cover">';
-        row.appendChild(avatar);
-      }
-      row.appendChild(bubble);
-      chatBox.appendChild(row);
-      msgIndex++;
+        // Mensaje instantáneo (ej. "Sí" / "No")
+        if (instant) {
+          span.textContent = text;
+          scrollBottom();
+          resolve();
+          return;
+        }
 
-      // 3.1) El recuadro queda FIJO: se inserta el texto completo (oculto)
-      // para medir su tamaño final, se fija ese alto/ancho y luego se escribe
-      span.textContent = msg.text;
-      span.style.visibility = 'hidden';
-      const finalHeight = bubble.offsetHeight;
-      const finalWidth = bubble.offsetWidth;
-      bubble.style.height = finalHeight + 'px';
-      bubble.style.width = finalWidth + 'px';
-      span.textContent = '';
-      span.style.visibility = 'visible';
-      scrollBottom();
+        // Recuadro con tamaño natural: se mide la altura final y se fija
+        // como mínimo para que no salte al escribir. El ancho queda fluido:
+        // si el texto es largo se parte en dos o más renglones dentro del
+        // recuadro (que puede ensancharse hasta el máximo permitido) sin
+        // que el texto se salga de él.
+        span.textContent = text;
+        span.style.visibility = 'hidden';
+        const finalHeight = bubble.offsetHeight;
+        bubble.style.minHeight = finalHeight + 'px';
+        span.textContent = '';
+        span.style.visibility = 'visible';
+        scrollBottom();
 
-      // 4) Escribir el texto poco a poco
-      typeText(span, msg.text, () => {
-        setTimeout(nextMessage, isUser ? 400 : 500);
-      });
-    }, isUser ? 300 : 950);
+        typeText(span, text, () => setTimeout(resolve, 260));
+      }, delay);
+    });
   }
 
-  // Además del texto: si el usuario escribe el mensaje, el indicador debe ser antes que nada
-  // (el indicador solo va con LUKA$H; los mensajes del usuario saltan con un delay corto)
-  nextMessage();
+  // ------------- Editor de monto reutilizable -------------
+  // Burbuja del usuario con input blanco estilo botón y (opcional)
+  // chip de salario mínimo. Sin vista previa del precio debajo del input.
+  function createAmountEditor(showSalary) {
+    const row = document.createElement('div');
+    row.className = 'chat-row flex justify-end items-end gap-2';
 
-  // CONTINUAR se comunica con la ruleta
+    const bubble = document.createElement('div');
+    bubble.className = 'bubble bubble-user amount-bubble';
+    bubble.innerHTML = `
+        <div class="amount-flex">
+          <span class="amount-currency">$</span>
+          <input id="amountInput" class="amount-input" type="tel" inputmode="numeric" placeholder="0.000.000">
+          <button id="amountSend" class="amount-send" aria-label="Enviar monto">
+            <svg fill="none" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" stroke="#180F43" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4"></path></svg>
+          </button>
+        </div>
+        ${showSalary ? '<!-- Opción rápida: repartir el salario mínimo vigente -->\n        <button class="salary-chip" id="salaryMinBtn" type="button">Usar salario mínimo ($1.750.905)</button>' : ''}`;
+    row.appendChild(bubble);
+    chatBox.appendChild(row);
+    scrollBottom();
+
+    const input = bubble.querySelector('#amountInput');
+    const send = bubble.querySelector('#amountSend');
+    const salaryBtn = bubble.querySelector('#salaryMinBtn');
+
+    // Salario Mínimo Legal Vigente 2026 (Colombia)
+    const SALARIO_MINIMO = 1750905;
+
+    const getDigits = () => (input.value || '').replace(/\D/g, '');
+    const getAmount = () => parseInt(getDigits(), 10) || 0;
+
+    // Formateo de miles mientras escribe
+    input.addEventListener('input', () => {
+      const digits = getDigits();
+      input.value = digits ? Number(digits).toLocaleString('es-CO') : '';
+    });
+
+    // Opción rápida: carga el salario mínimo en el input
+    if (salaryBtn) {
+      salaryBtn.addEventListener('click', () => {
+        input.value = SALARIO_MINIMO.toLocaleString('es-CO');
+        input.focus();
+      });
+    }
+
+    return {
+      bubble,
+      input,
+      send,
+      getAmount,
+      replaceWith(text) {
+        bubble.innerHTML = `<span class="font-bold">${text}</span>`;
+        scrollBottom();
+      },
+    };
+  }
+
+  // ------------- Paso 1: cuánto gana el usuario -------------
+  // Lukash pregunta el sueldo ANTES de mostrar el input.
+  async function askAmount() {
+    await addBubble('lukash', '¿Cuánta plata te llega al mes?');
+    return new Promise((resolve) => {
+      const editor = createAmountEditor(true);
+
+      // Prellenar con el monto guardado previamente (si existe)
+      if (prefill) {
+        editor.input.value = Number(prefill).toLocaleString('es-CO');
+      }
+
+      function submit() {
+        const amount = editor.getAmount();
+        if (!amount) { editor.input.focus(); return; }
+
+        storeBudget(String(amount));
+        budget = amount;
+        // Se reemplaza el input por el mensaje final del usuario
+        editor.replaceWith(`Me llegan $${amount.toLocaleString('es-CO')} este mes, pero no sé cómo repartirlo.`);
+        resolve();
+      }
+
+      editor.send.addEventListener('click', submit);
+      editor.input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') submit();
+      });
+      editor.input.focus();
+    });
+  }
+
+  // ------------- Paso 2: gastos con monto -------------
+  // Primero Sí/No; si es "Sí", Lukash pregunta cuánto se gasta
+  // para que el reparto de dani.html se adapte al usuario.
+  async function askGasto(gasto) {
+    // 2a. ¿Gastás en X?
+    const elegido = await new Promise((resolvePregunta) => {
+      addBubble('lukash', `¿Gastás en ${gasto.label}?`).then(() => {
+        const row = document.createElement('div');
+        row.className = 'chat-row quick-row';
+        row.innerHTML = `
+          <button class="quick-btn quick-yes" type="button">Sí</button>
+          <button class="quick-btn quick-no" type="button">No</button>`;
+        chatBox.appendChild(row);
+        scrollBottom();
+
+        const yesBtn = row.querySelector('.quick-yes');
+        const noBtn = row.querySelector('.quick-no');
+
+        const pick = (value) => {
+          yesBtn.disabled = true;
+          noBtn.disabled = true;
+          row.remove();
+          addBubble('user', value === 'yes' ? 'Sí' : 'No', true).then(() => resolvePregunta(value));
+        };
+
+        yesBtn.addEventListener('click', () => pick('yes'));
+        noBtn.addEventListener('click', () => pick('no'));
+      });
+    });
+
+    if (elegido !== 'yes') {
+      answers[gasto.key] = false;
+      storeAnswers();
+      return;
+    }
+
+    // 2b. ¿Cuánto aproximadamente? (reparto a la medida del usuario)
+    await addBubble('lukash', `¿Cuánto aproximadamente gastás en ${gasto.label} al mes?`);
+    const monto = await new Promise((resolveMonto) => {
+      const editor = createAmountEditor(false);
+
+      function submit() {
+        const amount = editor.getAmount();
+        if (!amount) { editor.input.focus(); return; }
+        editor.replaceWith(`Unos $${amount.toLocaleString('es-CO')} al mes en ${gasto.label}`);
+        answers[gasto.key] = { monto: amount };
+        storeAnswers();
+
+        // Aviso inmediato si un solo gasto supera el ingreso del mes
+        if (budget && amount > budget) {
+          addBubble('lukash', `¡Uy, ojo! $${amount.toLocaleString('es-CO')} es más de lo que te llega al mes ($${budget.toLocaleString('es-CO')}). No te rayes: al final te lo redistribuyo priorizando lo más importante.`).then(() => resolveMonto(amount));
+        } else {
+          resolveMonto(amount);
+        }
+      }
+
+      editor.send.addEventListener('click', submit);
+      editor.input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') submit();
+      });
+      editor.input.focus();
+    });
+
+    if (typeof answers[gasto.key] === 'undefined') {
+      answers[gasto.key] = { monto };
+      storeAnswers();
+    }
+  }
+
+  // ------------- Paso 3: verificar presupuesto y redistribuir -------------
+
+  // Total gastado según las respuestas del usuario
+  function totalGastado() {
+    return Object.keys(answers).reduce((s, k) => {
+      const v = answers[k];
+      return s + (v && Number.isFinite(v.monto) && v.monto > 0 ? v.monto : 0);
+    }, 0);
+  }
+
+  // Reparto proporcional de un listado dentro de un monto tope
+  // (mismo método de mayor residuo que usa dani.html)
+  function escalaFlores(items, montoTotal) {
+    const suma = items.reduce((s, e) => s + e.monto, 0);
+    if (!suma) return items.map(() => 0);
+    const floors = items.map((e) => Math.floor((montoTotal * e.monto) / suma));
+    const real = items.map((e) => (montoTotal * e.monto) / suma);
+    let rest = montoTotal - floors.reduce((a, b) => a + b, 0);
+    const order = items.map((_, i) => i).sort((a, b) => (real[b] - floors[b]) - (real[a] - floors[a]));
+    for (let i = 0; i < rest; i++) floors[order[i % order.length]]++;
+    return floors;
+  }
+
+  // Redistribución priorizada:
+  //   1. Se respetan a tope las necesidades (casa, comida, pasajes, datos, salud)
+  //   2. Lo que sobre se reparte entre los gustos
+  //   3. Si las necesidades pasan el ingreso, se escalan para que quepan y los gustos quedan en $0
+  function redistribuirPrioridad(total, respuestas) {
+    const needs = NECESIDADES.filter((k) => respuestas[k] && Number.isFinite(respuestas[k].monto) && respuestas[k].monto > 0)
+      .map((k) => ({ key: k, monto: respuestas[k].monto }));
+    const gustos = GUSTOS.filter((k) => respuestas[k] && Number.isFinite(respuestas[k].monto) && respuestas[k].monto > 0)
+      .map((k) => ({ key: k, monto: respuestas[k].monto }));
+
+    const sumNeeds = needs.reduce((s, e) => s + e.monto, 0);
+    const sumGustos = gustos.reduce((s, e) => s + e.monto, 0);
+    const adjusted = {};
+    const changes = [];
+
+    // Caso feliz: las necesidades caben en el presupuesto
+    if (sumNeeds <= total) {
+      needs.forEach((e) => { adjusted[e.key] = e.monto; });
+      const rest = total - sumNeeds;
+
+      // No hay gustos definidos: el sobrante va al ahorro
+      if (!gustos.length) return { adjusted, ahorro: rest, changes };
+
+      // Los gustos caben completos en lo que sobra
+      if (sumGustos <= rest) {
+        gustos.forEach((e) => { adjusted[e.key] = e.monto; });
+        return { adjusted, ahorro: rest - sumGustos, changes };
+      }
+
+      // Los gustos se recortan proporcionalmente al sobrante
+      const scaled = escalaFlores(gustos, rest);
+      gustos.forEach((e, i) => {
+        adjusted[e.key] = scaled[i];
+        if (scaled[i] !== e.monto) changes.push({ key: e.key, antes: e.monto, despues: scaled[i] });
+      });
+      return { adjusted, ahorro: 0, changes };
+    }
+
+    // Caso crítico: las necesidades superan el ingreso.
+    // Se escalan las necesidades para que quepan y los gustos van a $0.
+    const scaledNeeds = escalaFlores(needs, total);
+    needs.forEach((e, i) => {
+      adjusted[e.key] = scaledNeeds[i];
+      if (scaledNeeds[i] !== e.monto) changes.push({ key: e.key, antes: e.monto, despues: scaledNeeds[i] });
+    });
+    gustos.forEach((e) => {
+      adjusted[e.key] = 0;
+      changes.push({ key: e.key, antes: e.monto, despues: 0 });
+    });
+    return { adjusted, ahorro: 0, changes };
+  }
+
+  // Le avisa al usuario si el presupuesto no alcanza y aplica la
+  // redistribución priorizada guardando el ajuste en localStorage
+  // para que dani.html muestre el reparto corregido.
+  async function verificarYRedistribuir() {
+    const gastado = totalGastado();
+    if (gastado <= budget) return;
+
+    await addBubble('lukash', `¡Ey! Sumé tus gastos: $${gastado.toLocaleString('es-CO')}... pero te llegan $${budget.toLocaleString('es-CO')} al mes. Este presupuesto no te alcanza.`);
+    await addBubble('lukash', 'Tranqui, no es mala noticia. Te lo redistribuyo priorizando lo más importante: el aporte en casa, la comida, el transporte, los datos y la salud van primero.');
+
+    const { adjusted, changes, ahorro } = redistribuirPrioridad(budget, answers);
+
+    // Reemplazar las respuestas por el reparto priorizado
+    Object.keys(adjusted).forEach((k) => {
+      answers[k] = { monto: adjusted[k] };
+    });
+    storeAnswers();
+
+    // Mensaje con los recortes aplicados
+    const recortes = changes.filter((c) => c.despues < c.antes);
+    if (recortes.length) {
+      const detalle = recortes.map((c) => `${ETIQUETAS[c.key]} ($${c.antes.toLocaleString('es-CO')} \u2192 $${c.despues.toLocaleString('es-CO')})`).join(', ');
+      await addBubble('lukash', `Para que te alcance tuve que recortar un poco: ${detalle}.`);
+    }
+
+    await addBubble('lukash', `Quedó ajustado a tu medida: solo incluimos lo que de verdad importa${ahorro ? ` y tenés $${ahorro.toLocaleString('es-CO')} de ahorro este mes` : ''}.`);
+  }
+
+  // ------------- Paso 4: finalizar y continuar -------------
+  function finish() {
+    chatBox.appendChild(continueBtn);
+    continueBtn.classList.remove('hidden');
+    continueBtn.classList.add('chat-row');
+    scrollBottom();
+  }
+
+  // ------------- Arranque de la conversación -------------
+  async function startConversation() {
+    await addBubble('lukash', '¡Hola! Soy LUKA$H. Vamos a armar tu presupuesto mensual para que la plata te alcance y no se te vaya todita sin darte cuenta.');
+    await askAmount();
+    await addBubble('lukash', 'Tranqui. Para repartir tu plata a tu medida, decime apenas en qué gastás y cuánto le destinás a cada cosa:');
+    for (const gasto of GASTOS) {
+      await askGasto(gasto);
+    }
+    await verificarYRedistribuir();
+    await addBubble('lukash', '¡Listo! Ya sé en qué gastás y cuánto le pones a cada cosa. Te muestro el reparto justo para tu caso.');
+    finish();
+  }
+
+  startConversation();
+
+  // CONTINUAR redirige a dani.html (reparto del presupuesto)
   continueBtn.addEventListener('click', () => {
-    window.location.href = 'ruletica.html';
+    window.location.href = 'dani.html';
   });
 </script>
+
 <!-- END: Scripts -->
 </body>
 </html>
