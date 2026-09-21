@@ -249,7 +249,10 @@
 
         /* Ajustes de modo oscuro (tema unificado con tokens de DESIGN.md) */
         html body { background-color: #f7efd0 !important; background-image: none !important; }
-        html.dark body { background-image: url("images/fondo_.png") !important; background-size: cover !important; background-position: center !important; background-repeat: no-repeat !important; background-attachment: fixed !important; }
+        html.dark body { background-image: none !important; background-color: transparent !important; }
+        /* Capa de fondo único en modo oscuro: fija a la pantalla, cubre todo sin cortarse ni repetirse */
+        #darkBgLayer { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; background-image: url("images/fondo_.png"); background-size: cover; background-position: center; background-repeat: no-repeat; }
+        html.dark #darkBgLayer { display: block; }
         html:not(.dark) #main-header { background-color: #211941 !important; color: #EEE8E0; border-color: rgba(231,193,31,0.4); }
         html:not(.dark) #main-header svg * { stroke: #EEE8E0; }
         html:not(.dark) #main-header .text-lukash-dark { color: #EEE8E0; }
@@ -261,11 +264,22 @@
         html:not(.dark) #desktopCategoriasMenu > div { background-color: #211941 !important; color: #EEE8E0; border-color: rgba(231,193,31,0.6); }
         html:not(.dark) #desktopCategoriasMenu a { color: #EEE8E0; }
         html:not(.dark) #main-header .hover\:text-\[\#f7efd0\]:hover { color: #E7C11F !important; }
-        html.dark #desktopCategoriasMenu > div { background-color: rgba(30,20,70,0.95) !important; color: #EEE8E0; }
-        html.dark #desktopCategoriasMenu a { color: #EEE8E0; }
+        html.dark #desktopCategoriasMenu > div { background-color: #E7C11F !important; color: #180F43; }
+        html.dark #desktopCategoriasMenu a { color: #180F43; }
+        /* Categorías del desplegable: al pasar/seleccionar, recuadro azul oscuro y letra amarilla SIEMPRE visibles */
+        html.dark #desktopCategoriasMenu a:hover,
+        html:not(.dark) #desktopCategoriasMenu a:hover,
+        #desktopCategoriasMenu a:hover,
+        html.dark #desktopCategoriasMenu a.categoria-activa,
+        html:not(.dark) #desktopCategoriasMenu a.categoria-activa,
+        #desktopCategoriasMenu a.categoria-activa {
+          background-color: #180F43 !important;
+          color: #E7C11F !important;
+        }
     </style>
 </head>
 <body class="font-roboto text-slate-800 fade-in-page" style="background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuB4JVJyTzjneE9aE-Vs7rBiZPiCkk15uEgf0uNnBHzXRZa7KPyOHWDWnpvbljE0TtF3j3WQgAW_AWHp2CJ2yCNNWL2SK1qOOdixPatdidmLMybfMzdRlSmXapCYiaHHJteQu6SSQ_wO8Hnq3u5r-oiNzDrWAfPxqKLrbljn2cS8BFeaaR2nxXfhKQNmIQhmpg9dxRi792WSyGZR1agf0ZHUf851dJcQbIACKA07NF7YJ5QS3bZhQvVuDolGlLAb_f_95Eln9MeKMtTK_g&quot;); background-size: cover; background-position: center center; background-attachment: fixed; background-repeat: no-repeat; min-height: 100vh;">
+<div id="darkBgLayer" aria-hidden="true"></div>
 <!-- BEGIN: MainHeader -->
 <header class="fixed top-0 left-0 right-0 bg-lukash-yellow w-full h-16 flex items-center justify-between px-4 z-50 border-b-4 border-black/10" id="main-header">
 <!-- Menu Icon: hamburguesa a la derecha junto al resto (móvil) -->
@@ -294,11 +308,11 @@
 <div class="relative" id="desktopCategorias">
  <button class="flex items-center gap-1 transition-colors hover:text-[#f7efd0]" id="desktopCategoriasBtn">CATEGORIAS<svg class="w-4 h-4 transition-transform duration-300" id="desktopCategoriasArrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg></button>
  <div class="absolute left-1/2 -translate-x-1/2 top-full pt-4 hidden" id="desktopCategoriasMenu">
- <div class="bg-lukash-bg-modal/95 backdrop-blur-md text-lukash-dark rounded-2xl shadow-2xl border-2 border-lukash-yellow p-4 w-64 flex flex-col space-y-1 font-bold text-lg">
- <a class="hover:bg-[#eac62f] hover:text-white transition-colors rounded-lg px-4 py-2.5" href="modoAhorrointro.html">MODO AHORRO</a>
- <a class="hover:bg-[#eac62f] hover:text-white transition-colors rounded-lg px-4 py-2.5" href="invertir.html">RINDIENDO LA MONEY</a>
- <a class="hover:bg-[#eac62f] hover:text-white transition-colors rounded-lg px-4 py-2.5" href="cuentasclaras.html">CUENTAS CLARAS</a>
- <a class="hover:bg-[#eac62f] hover:text-white transition-colors rounded-lg px-4 py-2.5" href="cero-enredor.html">CERO ENREDOS</a>
+ <div class="bg-lukash-bg-modal/95 backdrop-blur-md text-lukash-dark rounded-2xl shadow-2xl p-4 w-64 flex flex-col space-y-1 font-bold text-lg">
+ <a class="hover:bg-[#180F43] hover:text-[#E7C11F] transition-colors rounded-lg px-4 py-2.5 categoria-activa" href="modoAhorrointro.html">MODO AHORRO</a>
+ <a class="hover:bg-[#180F43] hover:text-[#E7C11F] transition-colors rounded-lg px-4 py-2.5" href="invertir.html">RINDIENDO LA MONEY</a>
+ <a class="hover:bg-[#180F43] hover:text-[#E7C11F] transition-colors rounded-lg px-4 py-2.5" href="cuentasclaras.html">CUENTAS CLARAS</a>
+ <a class="hover:bg-[#180F43] hover:text-[#E7C11F] transition-colors rounded-lg px-4 py-2.5" href="cero-enredor.html">CERO ENREDOS</a>
  </div>
  </div>
  </div>
@@ -402,7 +416,7 @@
 <!-- The Piggy Button -->
 <div class="w-16 h-16 hover:scale-110 active:scale-95 transition-transform cursor-pointer fab-shadow rounded-full overflow-hidden fab-btn bg-lukash-pink flex items-center justify-center" id="fab-button"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBDTF220oFCcOVaT9lL4UxlAXGO_DfJBNWKVX6HBw2r95HiXb1_WGT1MLpICXO-gRPE3uGBsuILMtGnh7g0jl2LoX3UNrNKBaWzFsuXyCn_6IXwvRCipLu7D3zY4_p-aT_AG6a5qZhf2ESSLRgAT-OlT2c41UsHWmgv15mo8EjXiNfvW-_cFMMk-sO1gpUCZYQFdRp6KRzOCbGGJuTIkPQ0-CDsmmafqh8KTvGUj0Rqrtxk3URnBGFoJIkch_cVq7GwFQ" alt="Piggy Bank Icon" class="w-full h-full object-contain"></div>
 <!-- The Chat Window -->
-<div class="chat-window absolute bottom-0 right-0 w-80 h-96 bg-white/90 backdrop-blur-md rounded-2xl shadow-2xl border-2 border-lukash-pink flex flex-col overflow-hidden hidden-chat" id="chat-window">
+<div class="chat-window absolute bottom-0 right-0 w-[calc(100vw-3rem)] md:w-80 h-96 bg-white/90 backdrop-blur-md rounded-2xl shadow-2xl border-2 border-lukash-pink flex flex-col overflow-hidden hidden-chat" id="chat-window">
 <!-- Header -->
 <div class="text-lukash-yellow p-4 flex justify-between items-center border-b-2 border-lukash-pink" style="background-color: #b4d17b;">
 <h3 class="font-fredoka font-bold text-lg" style="color: rgb(33, 25, 65);">Soy LUKASH&nbsp;</h3>

@@ -302,8 +302,18 @@
         html:not(.dark) #desktopCategoriasMenu > div { background-color: #211941 !important; color: #EEE8E0; border-color: rgba(231,193,31,0.6); }
         html:not(.dark) #desktopCategoriasMenu a { color: #EEE8E0; }
         html:not(.dark) #main-header .hover\:text-\[\#f7efd0\]:hover { color: #E7C11F !important; }
-        html.dark #desktopCategoriasMenu > div { background-color: rgba(30,20,70,0.95) !important; color: #EEE8E0; }
-        html.dark #desktopCategoriasMenu a { color: #EEE8E0; }
+        html.dark #desktopCategoriasMenu > div { background-color: #E7C11F !important; color: #180F43; }
+        html.dark #desktopCategoriasMenu a { color: #180F43; }
+        /* Categorías del desplegable: al pasar/seleccionar, recuadro azul oscuro y letra amarilla SIEMPRE visibles */
+        html.dark #desktopCategoriasMenu a:hover,
+        html:not(.dark) #desktopCategoriasMenu a:hover,
+        #desktopCategoriasMenu a:hover,
+        html.dark #desktopCategoriasMenu a.categoria-activa,
+        html:not(.dark) #desktopCategoriasMenu a.categoria-activa,
+        #desktopCategoriasMenu a.categoria-activa {
+          background-color: #180F43 !important;
+          color: #E7C11F !important;
+        }
     </style>
 </head>
 <body class="font-roboto text-slate-800" style="margin: 0px;">
@@ -335,11 +345,11 @@
 <div class="relative" id="desktopCategorias">
  <button class="flex items-center gap-1 transition-colors hover:text-[#f7efd0]" id="desktopCategoriasBtn">CATEGORIAS<svg class="w-4 h-4 transition-transform duration-300" id="desktopCategoriasArrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg></button>
  <div class="absolute left-1/2 -translate-x-1/2 top-full pt-4 hidden" id="desktopCategoriasMenu">
- <div class="bg-lukash-bg-modal/95 backdrop-blur-md text-lukash-dark rounded-2xl shadow-2xl border-2 border-lukash-yellow p-4 w-64 flex flex-col space-y-1 font-bold text-lg">
- <a class="hover:bg-[#eac62f] hover:text-white transition-colors rounded-lg px-4 py-2.5" href="modoAhorrointro.html">MODO AHORRO</a>
- <a class="hover:bg-[#eac62f] hover:text-white transition-colors rounded-lg px-4 py-2.5" href="invertir.html">RINDIENDO LA MONEY</a>
- <a class="hover:bg-[#eac62f] hover:text-white transition-colors rounded-lg px-4 py-2.5" href="cuentasclaras.html">CUENTAS CLARAS</a>
- <a class="hover:bg-[#eac62f] hover:text-white transition-colors rounded-lg px-4 py-2.5" href="cero-enredor.html">CERO ENREDOS</a>
+ <div class="bg-lukash-bg-modal/95 backdrop-blur-md text-lukash-dark rounded-2xl shadow-2xl p-4 w-64 flex flex-col space-y-1 font-bold text-lg">
+ <a class="hover:bg-[#180F43] hover:text-[#E7C11F] transition-colors rounded-lg px-4 py-2.5" href="modoAhorrointro.html">MODO AHORRO</a>
+ <a class="hover:bg-[#180F43] hover:text-[#E7C11F] transition-colors rounded-lg px-4 py-2.5" href="invertir.html">RINDIENDO LA MONEY</a>
+ <a class="hover:bg-[#180F43] hover:text-[#E7C11F] transition-colors rounded-lg px-4 py-2.5" href="cuentasclaras.html">CUENTAS CLARAS</a>
+ <a class="hover:bg-[#180F43] hover:text-[#E7C11F] transition-colors rounded-lg px-4 py-2.5" href="cero-enredor.html">CERO ENREDOS</a>
  </div>
  </div>
  </div>

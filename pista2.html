@@ -311,8 +311,18 @@
     html:not(.dark) #desktopCategoriasMenu > div { background-color: #211941 !important; color: #EEE8E0; border-color: rgba(231,193,31,0.6); }
     html:not(.dark) #desktopCategoriasMenu a { color: #EEE8E0; }
     html:not(.dark) #main-header .hover\:text-\[\#f7efd0\]:hover { color: #E7C11F !important; }
-    html.dark #desktopCategoriasMenu > div { background-color: rgba(30,20,70,0.95) !important; color: #EEE8E0; }
-    html.dark #desktopCategoriasMenu a { color: #EEE8E0; }
+    html.dark #desktopCategoriasMenu > div { background-color: #E7C11F !important; color: #180F43; }
+    html.dark #desktopCategoriasMenu a { color: #180F43; }
+        /* Categorías del desplegable: al pasar/seleccionar, recuadro azul oscuro y letra amarilla SIEMPRE visibles */
+        html.dark #desktopCategoriasMenu a:hover,
+        html:not(.dark) #desktopCategoriasMenu a:hover,
+        #desktopCategoriasMenu a:hover,
+        html.dark #desktopCategoriasMenu a.categoria-activa,
+        html:not(.dark) #desktopCategoriasMenu a.categoria-activa,
+        #desktopCategoriasMenu a.categoria-activa {
+          background-color: #180F43 !important;
+          color: #E7C11F !important;
+        }
   </style>
 </head>
 <body class="font-roboto text-slate-800" style="min-height: 100vh; overflow-x: hidden; margin: 0;">
@@ -345,11 +355,11 @@
 <div class="relative" id="desktopCategorias">
  <button class="flex items-center gap-1 transition-colors hover:text-[#f7efd0]" id="desktopCategoriasBtn">CATEGORIAS<svg class="w-4 h-4 transition-transform duration-300" id="desktopCategoriasArrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg></button>
  <div class="absolute left-1/2 -translate-x-1/2 top-full pt-4 hidden" id="desktopCategoriasMenu">
- <div class="bg-lukash-bg-modal/95 backdrop-blur-md text-lukash-dark rounded-2xl shadow-2xl border-2 border-lukash-yellow p-4 w-64 flex flex-col space-y-1 font-bold text-lg">
- <a class="hover:bg-[#eac62f] hover:text-white transition-colors rounded-lg px-4 py-2.5" href="modoAhorrointro.html">MODO AHORRO</a>
- <a class="hover:bg-[#eac62f] hover:text-white transition-colors rounded-lg px-4 py-2.5" href="invertir.html">RINDIENDO LA MONEY</a>
- <a class="hover:bg-[#eac62f] hover:text-white transition-colors rounded-lg px-4 py-2.5" href="cuentasclaras.html">CUENTAS CLARAS</a>
- <a class="hover:bg-[#eac62f] hover:text-white transition-colors rounded-lg px-4 py-2.5" href="cero-enredor.html">CERO ENREDOS</a>
+ <div class="bg-lukash-bg-modal/95 backdrop-blur-md text-lukash-dark rounded-2xl shadow-2xl p-4 w-64 flex flex-col space-y-1 font-bold text-lg">
+ <a class="hover:bg-[#180F43] hover:text-[#E7C11F] transition-colors rounded-lg px-4 py-2.5" href="modoAhorrointro.html">MODO AHORRO</a>
+ <a class="hover:bg-[#180F43] hover:text-[#E7C11F] transition-colors rounded-lg px-4 py-2.5" href="invertir.html">RINDIENDO LA MONEY</a>
+ <a class="hover:bg-[#180F43] hover:text-[#E7C11F] transition-colors rounded-lg px-4 py-2.5" href="cuentasclaras.html">CUENTAS CLARAS</a>
+ <a class="hover:bg-[#180F43] hover:text-[#E7C11F] transition-colors rounded-lg px-4 py-2.5" href="cero-enredor.html">CERO ENREDOS</a>
  </div>
  </div>
  </div>
@@ -406,16 +416,16 @@
 <!-- Juego de emparejar -->
 <div class="w-full max-w-[600px] relative flex flex-col items-center mt-4 pb-10 mx-auto">
 <!-- Fila superior: definiciones -->
-<div class="flex justify-between w-full space-x-2 md:space-x-4 relative z-10">
-<div class="matching-card bg-[#f7b73b] p-2.5 w-1/3 flex items-center justify-center text-center shadow-[0_6px_0_0_#d99a12] h-32 md:h-40 border border-orange-200/50 cursor-pointer transition-all duration-200 hover:scale-105 active:scale-95 rounded-lg" data-match="CDT" id="card-cdt"><p class="text-[9px] md:text-[12px] font-bold text-black leading-tight">Soy una inversión donde debes esperar un tiempo determinado para recibir tu dinero con ganancias.</p></div>
-<div class="matching-card bg-[#f7b73b] p-2.5 w-1/3 flex items-center justify-center text-center shadow-[0_6px_0_0_#d99a12] h-32 md:h-40 border border-orange-200/50 cursor-pointer transition-all duration-200 hover:scale-105 active:scale-95 rounded-lg" data-match="FIC" id="card-fic"><p class="text-[9px] md:text-[12px] font-bold text-black leading-tight">Muchas personas confían su dinero a expertos para invertirlo en conjunto.</p></div>
-<div class="matching-card bg-[#f7b73b] p-2.5 w-1/3 flex items-center justify-center text-center shadow-[0_6px_0_0_#d99a12] h-32 md:h-40 border border-orange-200/50 cursor-pointer transition-all duration-200 hover:scale-105 active:scale-95 rounded-lg" data-match="Acciones" id="card-acciones"><p class="text-[9px] md:text-[12px] font-bold text-black leading-tight">Cuando me compras, te conviertes en dueño de una pequeña parte de una empresa.</p></div>
+<div class="flex justify-between w-full space-x-1.5 md:space-x-4 relative z-10">
+<div class="matching-card bg-[#f7b73b] p-1.5 md:p-2.5 w-1/3 flex items-center justify-center text-center shadow-[0_6px_0_0_#d99a12] h-32 md:h-40 border border-orange-200/50 cursor-pointer transition-all duration-200 hover:scale-105 active:scale-95 rounded-lg" data-match="CDT" id="card-cdt"><p class="text-[10px] md:text-[12px] font-bold text-black leading-tight">Soy una inversión donde debes esperar un tiempo determinado para recibir tu dinero con ganancias.</p></div>
+<div class="matching-card bg-[#f7b73b] p-1.5 md:p-2.5 w-1/3 flex items-center justify-center text-center shadow-[0_6px_0_0_#d99a12] h-32 md:h-40 border border-orange-200/50 cursor-pointer transition-all duration-200 hover:scale-105 active:scale-95 rounded-lg" data-match="FIC" id="card-fic"><p class="text-[10px] md:text-[12px] font-bold text-black leading-tight">Muchas personas confían su dinero a expertos para invertirlo en conjunto.</p></div>
+<div class="matching-card bg-[#f7b73b] p-1.5 md:p-2.5 w-1/3 flex items-center justify-center text-center shadow-[0_6px_0_0_#d99a12] h-32 md:h-40 border border-orange-200/50 cursor-pointer transition-all duration-200 hover:scale-105 active:scale-95 rounded-lg" data-match="Acciones" id="card-acciones"><p class="text-[10px] md:text-[12px] font-bold text-black leading-tight">Cuando me compras, te conviertes en dueño de una pequeña parte de una empresa.</p></div>
 </div>
 <!-- Fila inferior: palabras -->
-<div class="flex justify-between w-full px-4 md:px-10 space-x-4 relative z-10 mt-16 md:mt-20">
-<div class="matching-card bg-white py-3 px-4 w-28 md:w-36 text-center cursor-pointer transition-all duration-200 hover:scale-105 active:scale-95 border border-black/10 shadow-[0_8px_0_0_#d1d5db] font-bold rounded-lg" data-match="Acciones" id="label-acciones"><span class="text-[11px] md:text-sm font-bold text-black">Acciones</span></div>
-<div class="matching-card bg-white py-3 px-4 w-28 md:w-36 text-center cursor-pointer transition-all duration-200 hover:scale-105 active:scale-95 border border-black/10 shadow-[0_8px_0_0_#d1d5db] font-bold rounded-lg" data-match="CDT" id="label-cdt"><span class="text-[11px] md:text-sm font-bold text-black">CDT</span></div>
-<div class="matching-card bg-white py-3 px-4 w-28 md:w-36 text-center cursor-pointer transition-all duration-200 hover:scale-105 active:scale-95 border border-black/10 shadow-[0_8px_0_0_#d1d5db] font-bold rounded-lg" data-match="FIC" id="label-fic"><span class="text-[11px] md:text-sm font-bold text-black">FIC</span></div>
+<div class="flex justify-between w-full px-2 md:px-10 space-x-2 md:space-x-4 relative z-10 mt-16 md:mt-20">
+<div class="matching-card bg-white py-3 px-1 md:px-4 flex-1 min-w-0 md:w-36 text-center cursor-pointer transition-all duration-200 hover:scale-105 active:scale-95 border border-black/10 shadow-[0_8px_0_0_#d1d5db] font-bold rounded-lg" data-match="Acciones" id="label-acciones"><span class="text-[11px] md:text-sm font-bold text-black">Acciones</span></div>
+<div class="matching-card bg-white py-3 px-1 md:px-4 flex-1 min-w-0 md:w-36 text-center cursor-pointer transition-all duration-200 hover:scale-105 active:scale-95 border border-black/10 shadow-[0_8px_0_0_#d1d5db] font-bold rounded-lg" data-match="CDT" id="label-cdt"><span class="text-[11px] md:text-sm font-bold text-black">CDT</span></div>
+<div class="matching-card bg-white py-3 px-1 md:px-4 flex-1 min-w-0 md:w-36 text-center cursor-pointer transition-all duration-200 hover:scale-105 active:scale-95 border border-black/10 shadow-[0_8px_0_0_#d1d5db] font-bold rounded-lg" data-match="FIC" id="label-fic"><span class="text-[11px] md:text-sm font-bold text-black">FIC</span></div>
 </div>
 </div>
 <!-- Botón siguiente: visible solo cuando las 3 parejas están resueltas -->
