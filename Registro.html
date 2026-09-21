@@ -421,6 +421,11 @@
           background-color: #180F43 !important;
           color: #E7C11F !important;
         }
+        html:not(.dark) #desktopCategoriasMenu a:hover,
+        html:not(.dark) #desktopCategoriasMenu a.categoria-activa {
+          background-color: #E7C11F !important;
+          color: #180F43 !important;
+        }
     </style>
 
             <style data-purpose="footer-siempre-claro">
@@ -437,6 +442,15 @@
         html footer a:not([aria-label]):hover { color: #EE4599 !important; }
         html footer a[aria-label="TikTok"] svg { fill: #010101 !important; }
     </style>
+    <style data-purpose="logo-nunca-deformar">
+        /* El logo de la marca LUKA$H conserva SIEMPRE su proporción: ancho proporcional automatico
+           en funcion de la altura definida, sin estirar ni aplastar en ninguna pantalla. */
+        img[alt="LUKA$H Logo"] {
+          width: auto;
+          max-width: none;
+          object-fit: contain;
+        }
+    </style>
 </head>
 <body class="font-roboto text-slate-800" style="background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuBlng0frbXYg44b2__Q51ekE-uMKkwZJ9PVv2XRyn3e3Wr5a6BlvuVZrEViBWyM14qGwB-ckIVLSq-qYyGwJfMo58UCHlhdqWeW1OK8yCoSUrhaNSCE6NRwU98e5VBwBJnpeFo1FJoZ-kDCs6Bjf9C-c72Zb0HW_7JK2bIZ3eIfDzysknBQR2XB_ugFSJMzz5PiTIdwAZfk-l-YySjdlpSLzX2kn4wmNRFmGxWMqkh8sGCOrFuTEv0AiQbqZpO9D_IRjdqM8L9UGwD90g&quot;); background-size: cover; background-position: center center; background-attachment: fixed; background-repeat: no-repeat; min-height: 100vh;">
 <!-- BEGIN: MainHeader -->
@@ -444,7 +458,7 @@
 <!-- Menu Icon: hamburguesa a la derecha junto al resto (móvil) -->
 <!-- Logo móvil: siempre a la izquierda -->
 <div class="lg:hidden shrink-0">
-<img alt="LUKA$H Logo" class="h-16 w-auto max-w-none shrink-0 drop-shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYRpEfrEAXglfH6g6bdTAiltJsJB-DrFhYXNpv6pCllmuHj7ZTXjF1qy9e06r27C5bLil8PgTWLPE-mWnWPz_8ibC0PbXo0mgx7meRO8nUsUV1qLPggd-nZBPOPjkThKh-Ou-I6nHQkWDHioMR9pUwKGZWmx0Cixdb5lqH1bSqo8ixHeoNWq9_ax4LS-cBhRHRiCd4KtV6Bz9ISa3Kd85RkHKMPOgK3YST2EQZs-TyZzikR3_DpMQVbNJtsVzgzE3r_g">
+<img alt="LUKA$H Logo" class="h-[clamp(2.25rem,7vw,3.5rem)] w-auto max-w-none shrink-0 drop-shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYRpEfrEAXglfH6g6bdTAiltJsJB-DrFhYXNpv6pCllmuHj7ZTXjF1qy9e06r27C5bLil8PgTWLPE-mWnWPz_8ibC0PbXo0mgx7meRO8nUsUV1qLPggd-nZBPOPjkThKh-Ou-I6nHQkWDHioMR9pUwKGZWmx0Cixdb5lqH1bSqo8ixHeoNWq9_ax4LS-cBhRHRiCd4KtV6Bz9ISa3Kd85RkHKMPOgK3YST2EQZs-TyZzikR3_DpMQVbNJtsVzgzE3r_g">
 </div>
 <div class="flex items-center lg:hidden">
 <!-- Theme Toggle (icono de luna/sol para modo oscuro/claro) -->
@@ -462,7 +476,7 @@
 </button>
 <button class="p-2 lg:hidden" id="menuBtn"><svg class="hamburger-icon" fill="none" height="24" viewBox="0 0 30 24" width="30" xmlns="http://www.w3.org/2000/svg"><path d="M2 2H28M2 12H28M2 22H28" stroke="black" stroke-linecap="round" stroke-width="4"></path></svg><svg class="close-icon hidden" fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M18 6L6 18M6 6L18 18" stroke="black" stroke-linecap="round" stroke-width="3"></path></svg></button>
 </div>
-<div class="hidden lg:block mx-auto w-full max-w-[1280px] h-full"><nav class="hidden lg:flex items-center w-full h-full px-8 font-fredoka font-bold text-lukash-dark tracking-wider relative justify-between"><div class="flex items-center h-full"><img alt="LUKA$H Logo" class="h-16 drop-shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYRpEfrEAXglfH6g6bdTAiltJsJB-DrFhYXNpv6pCllmuHj7ZTXjF1qy9e06r27C5bLil8PgTWLPE-mWnWPz_8ibC0PbXo0mgx7meRO8nUsUV1qLPggd-nZBPOPjkThKh-Ou-I6nHQkWDHioMR9pUwKGZWmx0Cixdb5lqH1bSqo8ixHeoNWq9_ax4LS-cBhRHRiCd4KtV6Bz9ISa3Kd85RkHKMPOgK3YST2EQZs-TyZzikR3_DpMQVbNJtsVzgzE3r_g"></div><div class="flex items-center justify-center space-x-20 uppercase text-xl w-max flex-1">
+<div class="hidden lg:block mx-auto w-full max-w-[1280px] h-full"><nav class="hidden lg:flex items-center w-full h-full px-8 font-fredoka font-bold text-lukash-dark tracking-wider relative justify-between"><div class="flex items-center h-full"><img alt="LUKA$H Logo" class="h-[clamp(2.75rem,4.5vw,4rem)] drop-shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYRpEfrEAXglfH6g6bdTAiltJsJB-DrFhYXNpv6pCllmuHj7ZTXjF1qy9e06r27C5bLil8PgTWLPE-mWnWPz_8ibC0PbXo0mgx7meRO8nUsUV1qLPggd-nZBPOPjkThKh-Ou-I6nHQkWDHioMR9pUwKGZWmx0Cixdb5lqH1bSqo8ixHeoNWq9_ax4LS-cBhRHRiCd4KtV6Bz9ISa3Kd85RkHKMPOgK3YST2EQZs-TyZzikR3_DpMQVbNJtsVzgzE3r_g"></div><div class="flex items-center justify-center space-x-20 uppercase text-xl w-max flex-1">
 <a href="index.html?intro=1" class="transition-colors hover:text-[#f7efd0]">INICIO</a>
 <div class="relative" id="desktopCategorias">
  <button class="flex items-center gap-1 transition-colors hover:text-[#f7efd0]" id="desktopCategoriasBtn">CATEGORIAS<svg class="w-4 h-4 transition-transform duration-300" id="desktopCategoriasArrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg></button>
@@ -487,7 +501,7 @@
 <!-- Drawer -->
 <div class="absolute top-6 right-6 w-64 shadow-2xl transform transition-transform duration-300 flex flex-col rounded-[45px] h-max border-none backdrop-blur-md pointer-events-auto translate-x-[150%]" id="mobileMenuDrawer" style="background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuAeRFCguGmJAP2dmp1aYF4qsTfAyIOscChweRZXRQiHjUN1cBby8JpgZyNxGzAN7YfF65QjDHZHE-hgrwwVMMxD9k4-rpFKL-B_9GqV6IFyUHrQhxHoqlmhkmfI3JecSZ6_LW7x_9hHFFEiC6UR0OP3AGIFy4mSiGm2IddGjFf2S7w8pk5FdW73Z_0v-62A_L14O2JkuwFJodusGDaEsrG00RBvV1BalVc6XuLKTKaFJeZPdQfiEOPR6g6PH_MnnRLp8g&quot;); background-size: cover; background-position: center center; opacity: 0.95;">
 <div class="flex justify-between items-center p-6 h-max">
-<img alt="LUKA$H Logo" class="h-10 drop-shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYRpEfrEAXglfH6g6bdTAiltJsJB-DrFhYXNpv6pCllmuHj7ZTXjF1qy9e06r27C5bLil8PgTWLPE-mWnWPz_8ibC0PbXo0mgx7meRO8nUsUV1qLPggd-nZBPOPjkThKh-Ou-I6nHQkWDHioMR9pUwKGZWmx0Cixdb5lqH1bSqo8ixHeoNWq9_ax4LS-cBhRHRiCd4KtV6Bz9ISa3Kd85RkHKMPOgK3YST2EQZs-TyZzikR3_DpMQVbNJtsVzgzE3r_g">
+<img alt="LUKA$H Logo" class="h-[clamp(1.75rem,4.5vw,2.5rem)] drop-shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYRpEfrEAXglfH6g6bdTAiltJsJB-DrFhYXNpv6pCllmuHj7ZTXjF1qy9e06r27C5bLil8PgTWLPE-mWnWPz_8ibC0PbXo0mgx7meRO8nUsUV1qLPggd-nZBPOPjkThKh-Ou-I6nHQkWDHioMR9pUwKGZWmx0Cixdb5lqH1bSqo8ixHeoNWq9_ax4LS-cBhRHRiCd4KtV6Bz9ISa3Kd85RkHKMPOgK3YST2EQZs-TyZzikR3_DpMQVbNJtsVzgzE3r_g">
 <button class="text-2xl font-fredoka font-bold text-lukash-dark p-2 transition-all duration-200" id="closeMenuBtn" style="opacity: 1;">X</button>
 </div>
 <nav class="flex flex-col p-8 pt-0 font-fredoka font-bold text-lukash-dark space-y-5 items-start text-left">
@@ -532,7 +546,7 @@
 <form class="space-y-2" id="loginForm" novalidate>
 <div data-purpose="input-group">
 <label class="block font-roboto text-sm mb-2 ml-4 font-medium text-lukash-dark">Correo electronico</label>
-<input class="w-full px-4 rounded-full bg-white border-none shadow-inner focus:ring-2 focus:ring-lukash-pink text-gray-800 p-1.5" id="inputEmail" placeholder="ejemplo@correo.com" required="" type="email">
+<input class="w-full px-4 rounded-full bg-white border-none shadow-inner focus:ring-2 focus:ring-lukash-pink text-gray-800 p-1.5" id="inputEmail" placeholder="" required="" type="email">
 </div>
 <div data-purpose="input-group">
 <label class="block font-roboto text-sm mb-2 ml-4 font-medium text-lukash-dark">Contraseña</label>
@@ -540,18 +554,11 @@
 <p class="text-[10px] text-gray-500 mt-2 ml-4">Usa ocho o más letras, números y símbolos</p>
 </div>
 <!-- Toggle: crear cuenta / ya tengo cuenta -->
-<div class="flex items-center justify-center gap-2 pt-1" id="authToggle">
-<button type="submit" data-mode="signup" id="modeSignup" class="px-4 py-1 rounded-full font-fredoka font-bold uppercase tracking-wide text-xs transition-all active:scale-95 bg-lukash-pink text-white shadow">Crear cuenta</button>
-<button type="submit" data-mode="login" id="modeLogin" class="px-4 py-1 rounded-full font-fredoka font-bold uppercase tracking-wide text-xs transition-all active:scale-95 bg-transparent border-2 border-lukash-pink text-lukash-dark">Ya tengo cuenta</button>
+<div class="flex flex-col items-stretch gap-2 pt-1" id="authToggle">
+<button type="submit" data-mode="signup" id="modeSignup" class="w-full px-6 py-3 rounded-full font-fredoka font-bold uppercase tracking-wide text-sm md:text-base transition-all active:scale-95 bg-lukash-pink text-white shadow">Crear cuenta</button>
+<button type="submit" data-mode="login" id="modeLogin" class="w-full px-6 py-3 rounded-full font-fredoka font-bold uppercase tracking-wide text-sm md:text-base transition-all active:scale-95 bg-transparent border-2 border-lukash-pink text-lukash-dark">Ya tengo cuenta</button>
 </div>
 <p class="hidden text-center font-fredoka font-bold text-sm text-[#EE4599] mt-2" id="formError"></p>
-<!-- Submit Button -->
-<div class="flex flex-col items-center pt-2">
-<button class="bg-lukash-pink text-white font-fredoka font-bold text-base px-6 rounded-2xl btn-3d uppercase tracking-wider p-1.5" type="submit">
-            CONTINUAR
-          </button>
-<span class="text-lukash-pink font-fredoka mt-2 text-lg">o</span>
-</div>
 <!-- SSO Section -->
 <div class="border-2 border-lukash-pink rounded-lg p-2 flex items-center justify-between cursor-pointer hover:bg-lukash-pink/5 transition-colors">
 <div class="flex flex-col">
@@ -645,15 +652,16 @@
     const modeLogin = document.getElementById('modeLogin');
     const formError = document.getElementById('formError');
     let authMode = 'signup';
+    let clickedMode = null;
     function setAuthMode(mode) {
       authMode = mode;
       const signupActive = mode === 'signup';
-      modeSignup.className = 'px-4 py-1 rounded-full font-fredoka font-bold uppercase tracking-wide text-xs transition-all active:scale-95 ' + (signupActive ? 'bg-lukash-pink text-white shadow' : 'bg-transparent border-2 border-lukash-pink text-lukash-dark');
-      modeLogin.className = 'px-4 py-1 rounded-full font-fredoka font-bold uppercase tracking-wide text-xs transition-all active:scale-95 ' + (!signupActive ? 'bg-lukash-pink text-white shadow' : 'bg-transparent border-2 border-lukash-pink text-lukash-dark');
+      modeSignup.className = 'w-full px-6 py-3 rounded-full font-fredoka font-bold uppercase tracking-wide text-sm md:text-base transition-all active:scale-95 ' + (signupActive ? 'bg-lukash-pink text-white shadow' : 'bg-transparent border-2 border-lukash-pink text-lukash-dark');
+      modeLogin.className = 'w-full px-6 py-3 rounded-full font-fredoka font-bold uppercase tracking-wide text-sm md:text-base transition-all active:scale-95 ' + (!signupActive ? 'bg-lukash-pink text-white shadow' : 'bg-transparent border-2 border-lukash-pink text-lukash-dark');
       formError.classList.add('hidden');
     }
-    modeSignup.addEventListener('click', function () { setAuthMode('signup'); });
-    modeLogin.addEventListener('click', function () { setAuthMode('login'); });
+    modeSignup.addEventListener('click', function () { setAuthMode('signup'); clickedMode = 'signup'; });
+    modeLogin.addEventListener('click', function () { setAuthMode('login'); clickedMode = 'login'; });
     setAuthMode('signup');
 
     // Handle Submit: registro/login real con Supabase (y respaldo en localStorage)
@@ -665,8 +673,10 @@
       const email = document.getElementById('inputEmail').value.trim();
       const password = document.getElementById('inputPassword').value;
 
-      // Qué acción ejecutar: depende del botón presionado (Crear cuenta / Ya tengo cuenta / CONTINUAR)
-      const mode = (e.submitter && e.submitter.dataset.mode) || authMode;
+      // Qué acción ejecutar: el botón de toggle presionado manda; si no hubo
+      // click (p. ej. Enter en el campo), se usa el modo resaltado (authMode).
+      const mode = clickedMode || authMode;
+      clickedMode = null;
 
       if (!email || !password) {
         formError.textContent = 'Completá tu correo y contraseña para continuar.';
@@ -921,7 +931,7 @@
 <footer class="bg-lukash-dark py-2 px-4 z-20 relative" style="color: #E7C11F;">
 <div class="max-w-4xl mx-auto flex flex-col md:flex-row justify-between items-center gap-2">
 <div class="flex flex-col items-center md:items-start gap-2">
-<img alt="LUKA Logo" class="h-8 drop-shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYRpEfrEAXglfH6g6bdTAiltJsJB-DrFhYXNpv6pCllmuHj7ZTXjF1qy9e06r27C5bLil8PgTWLPE-mWnWPz_8ibC0PbXo0mgx7meRO8nUsUV1qLPggd-nZBPOPjkThKh-Ou-I6nHQkWDHioMR9pUwKGZWmx0Cixdb5lqH1bSqo8ixHeoNWq9_ax4LS-cBhRHRiCd4KtV6Bz9ISa3Kd85RkHKMPOgK3YST2EQZs-TyZzikR3_DpMQVbNJtsVzgzE3r_g">
+<img alt="LUKA Logo" class="h-[clamp(1.25rem,3vw,2rem)] drop-shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYRpEfrEAXglfH6g6bdTAiltJsJB-DrFhYXNpv6pCllmuHj7ZTXjF1qy9e06r27C5bLil8PgTWLPE-mWnWPz_8ibC0PbXo0mgx7meRO8nUsUV1qLPggd-nZBPOPjkThKh-Ou-I6nHQkWDHioMR9pUwKGZWmx0Cixdb5lqH1bSqo8ixHeoNWq9_ax4LS-cBhRHRiCd4KtV6Bz9ISa3Kd85RkHKMPOgK3YST2EQZs-TyZzikR3_DpMQVbNJtsVzgzE3r_g">
 <p class="font-rubik text-[11px] text-white/60 text-center md:text-left">Educaci&#243;n financiera sin morir en el intento.</p>
 </div>
 <div class="flex flex-col items-center gap-4">
