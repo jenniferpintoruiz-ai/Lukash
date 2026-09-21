@@ -423,6 +423,10 @@
     });
   })();
 </script>
+<script data-purpose="categoria-context">
+  /* Asegura el contexto de categoría aunque se entre por menú o URL directa */
+  try { localStorage.setItem('lukash_categoria_seleccionada', 'CERO ENREDOS'); } catch (e) {}
+</script>
 <!-- END: Scripts -->
 </body>
 </html>

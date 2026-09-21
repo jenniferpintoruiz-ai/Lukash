@@ -4,6 +4,198 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
 <title>LUKA$H - Juego de la Ruleta</title>
+<!-- Supabase JS v2 (Auth + sincronización de perfil y progreso) -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script data-purpose="supabase-config">
+  /* ============================================================
+     CONFIGURACIÓN SUPABASE (plan gratuito)
+     1) supabase.com -> New project -> copiar "Project URL" + "anon public key".
+     2) Authentication > Providers > Email -> desactivar "Confirm email".
+     3) Ejecutar UNA vez el script de supabase.sql en el SQL Editor.
+     4) Pegar URL y anon key en las 2 constantes de abajo.
+     El sitio sigue funcionando offline: lee/escribe localStorage siempre
+     y sincroniza con Supabase cuando hay sesión y conexión.
+     ============================================================ */
+  const SUPABASE_URL = 'https://roccgeelgkrgmpmrufwh.supabase.co';
+  const SUPABASE_ANON_KEY = 'sb_publishable__6DyGjeozpTJIFFtc0kv1Q_yeSLabpc';
+
+  window.LUKASH = (() => {
+    function client() {
+      if (!window._lukashSb && typeof supabase !== 'undefined' && SUPABASE_URL.indexOf('PON_AQUI') === -1) {
+        window._lukashSb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      }
+      return window._lukashSb || null;
+    }
+    async function session() {
+      const sb = client();
+      if (!sb) return null;
+      try {
+        const { data } = await sb.auth.getSession();
+        return (data && data.session) ? data.session : null;
+      } catch (e) { return null; }
+    }
+    function safeGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+    function safeSet(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+    function safeRemove(k) { try { localStorage.removeItem(k); } catch (e) {} }
+    function safeParse(k) { try { return JSON.parse(localStorage.getItem(k)) || []; } catch (e) { return []; } }
+    const COMPLETADAS_KEY = 'lukash_categorias_completadas';
+
+    // Registro de cuenta nueva: crea la fila de perfil prellenada con el progreso local
+    async function signUp(email, password) {
+      const sb = client();
+      if (!sb) throw new Error('Supabase aún no está configurado.');
+      const { data, error } = await sb.auth.signUp({ email, password });
+      if (error) throw error;
+      const user = data && data.user;
+      const hasIdentities = user && user.identities && user.identities.length > 0;
+      const alreadyExists = user && !hasIdentities;
+      if (alreadyExists) {
+        throw new Error('Ya existe una cuenta con ese correo. Usá "Ya tengo cuenta".');
+      }
+      if (!data.session && user) {
+        try {
+          const login = await signIn(email, password);
+          if (login && login.session) return login;
+        } catch (e) {}
+        safeSet('user_registered', 'true');
+        safeSet('lukash_user_email', user.email || email);
+        throw new Error('Te enviamos un correo de confirmación. Verificá tu casilla y luego usá "Ya tengo cuenta".');
+      }
+      if (user) {
+        safeSet('user_registered', 'true');
+        safeSet('lukash_user_email', user.email || email);
+        await ensureProfile(user.id);
+      }
+      return data;
+    }
+    // Inicio de sesión de una cuenta existente
+    async function signIn(email, password) {
+      const sb = client();
+      if (!sb) throw new Error('Supabase aún no está configurado.');
+      const { data, error } = await sb.auth.signInWithPassword({ email, password });
+      if (error) throw new Error('Correo o contraseña incorrectos.');
+      if (data && data.user) {
+        safeSet('user_registered', 'true');
+        safeSet('lukash_user_email', data.user.email || email);
+        await syncExisting(data.user.id);
+      }
+      return data;
+    }
+    // Cierre de sesión: limpia la sesión y los datos personales locales (se conserva el tema)
+    async function signOut() {
+      const sb = client();
+      if (sb) { try { await sb.auth.signOut(); } catch (e) {} }
+      ['user_registered','lukash_user_name','lukash_user_email','lukash_user_age','lukash_user_city',
+       'lukash_categoria_seleccionada', COMPLETADAS_KEY].forEach(safeRemove);
+    }
+    // Crea la fila en "perfiles" prellenándola con los datos y progreso locales
+    async function ensureProfile(userId) {
+      const sb = client();
+      if (!sb || !userId) return null;
+      try {
+        const row = {
+          id: userId,
+          nombre: safeGet('lukash_user_name') || '',
+          edad: safeGet('lukash_user_age') ? Number(safeGet('lukash_user_age')) : null,
+          ciudad: safeGet('lukash_user_city') || '',
+          completadas: safeParse(COMPLETADAS_KEY)
+        };
+        const { data, error } = await sb.from('perfiles').upsert(row, { onConflict: 'id' }).select().single();
+        if (error) throw error;
+        return data;
+      } catch (e) { return null; }
+    }
+    // Cuando el usuario ya existía: la nube manda y se refleja en localStorage
+    async function syncExisting(userId) {
+      const sb = client();
+      if (!sb || !userId) return null;
+      try {
+        const { data, error } = await sb.from('perfiles').select('*').eq('id', userId).maybeSingle();
+        if (error) throw error;
+        if (data) return mirrorProfile(data);
+        return await ensureProfile(userId);
+      } catch (e) { return null; }
+    }
+    // Carga el perfil actual desde la nube o lo crea a partir del progreso local
+    async function loadProfile() {
+      const s = await session();
+      if (!s) return null;
+      const sb = client();
+      if (!sb) return null;
+      try {
+        const { data, error } = await sb.from('perfiles').select('*').eq('id', s.user.id).maybeSingle();
+        if (error) throw error;
+        safeSet('lukash_user_email', s.user.email || '');
+        if (data) return mirrorProfile(data);
+        return await ensureProfile(s.user.id);
+      } catch (e) { return null; }
+    }
+    // Refleja la fila de la nube sobre localStorage
+    function mirrorProfile(data) {
+      safeSet('user_registered', 'true');
+      if (data.nombre) safeSet('lukash_user_name', data.nombre); else safeRemove('lukash_user_name');
+      if (data.edad) safeSet('lukash_user_age', String(data.edad)); else safeRemove('lukash_user_age');
+      if (data.ciudad) safeSet('lukash_user_city', data.ciudad); else safeRemove('lukash_user_city');
+      safeSet(COMPLETADAS_KEY, JSON.stringify(data.completadas || []));
+      return data;
+    }
+    // Guarda los datos editados (nombre/apodo, edad, ciudad) en la nube
+    async function saveProfile(fields) {
+      const nombre = (fields.nombre !== undefined) ? String(fields.nombre) : (safeGet('lukash_user_name') || '');
+      const ciudad = (fields.ciudad !== undefined) ? String(fields.ciudad) : (safeGet('lukash_user_city') || '');
+      let edad = null;
+      if (fields.edad !== undefined) {
+        const v = String(fields.edad).trim();
+        edad = (v === '') ? null : (Number(v) || null);
+      } else if (safeGet('lukash_user_age')) {
+        edad = Number(safeGet('lukash_user_age'));
+      }
+      safeSet('lukash_user_name', nombre);
+      safeSet('lukash_user_city', ciudad);
+      if (edad) safeSet('lukash_user_age', String(edad)); else safeRemove('lukash_user_age');
+      const s = await session();
+      if (!s) return null;
+      const sb = client();
+      if (!sb) return null;
+      try {
+        const { data, error } = await sb.from('perfiles').upsert({
+          id: s.user.id, nombre: nombre, edad: edad, ciudad: ciudad,
+          completadas: safeParse(COMPLETADAS_KEY)
+        }, { onConflict: 'id' }).select().single();
+        if (error) throw error;
+        return data;
+      } catch (e) { return null; }
+    }
+    // Agrega una categoría completada a la nube (sin duplicar)
+    async function markCategory(cat) {
+      const s = await session();
+      if (!s || !cat) return;
+      const sb = client();
+      if (!sb) return;
+      try {
+        const { data, error } = await sb.from('perfiles').select('completadas').eq('id', s.user.id).maybeSingle();
+        if (error || !data) return await ensureProfile(s.user.id);
+        const arr = data.completadas || [];
+        if (arr.indexOf(cat) === -1) {
+          arr.push(cat);
+          await sb.from('perfiles').update({ completadas: arr }).eq('id', s.user.id);
+        }
+      } catch (e) {}
+    }
+    // Vacía el perfil y el progreso en la nube (usado por "Limpiar mi progreso")
+    async function resetProfile() {
+      const s = await session();
+      if (!s) return;
+      const sb = client();
+      if (!sb) return;
+      try {
+        await sb.from('perfiles').update({ nombre: '', edad: null, ciudad: '', completadas: [] }).eq('id', s.user.id);
+      } catch (e) {}
+    }
+    return { client, session, signUp, signIn, signOut, loadProfile, saveProfile, markCategory, resetProfile };
+  })();
+</script>
+
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&amp;family=Roboto+Flex:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
@@ -976,4 +1168,22 @@
         });
     </script>
 <button class="fab-btn fixed bottom-8 right-8 w-16 h-16 rounded-full shadow-2xl z-50 overflow-hidden clay-btn flex items-center justify-center bg-white/10 backdrop-blur-sm" id="fab-button"><img alt="Mascota LUKA$H" class="w-4/5 h-4/5 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQ_AEtVRAaESaowtYS8dd6KOctLhtfH9BwWgw2JTmlvp2_6C7YyoPBhStTRAeFb9lZcOqvXQHLnMqXQVnZ9vz9c7Kqwu8_tcIdzflKpAAzL5ltuV_HfqtkqDT7tZmefzWoit6nA7-4ss9nOqs4qVsb2lEXksjgPFdWvgGGpYLvDksfiZ4iZD-m9lFIjq6aDLLmCuFZH8DKOjebYstE2Qy3wDfIDkr_-0-dWPqtNB1zk07UDwgljEK9J3pLSHUxzLMs9g"/></button>
+
+<script data-purpose="completar-categoria">
+  /* Marca la categoria completada (fin del circuito Cero Enredos) SOLO si el contexto lo es */
+  (function () {
+    try {
+      const cat = localStorage.getItem("lukash_categoria_seleccionada");
+      if (cat !== "CERO ENREDOS") return;
+      let completadas = [];
+      try { completadas = JSON.parse(localStorage.getItem("lukash_categorias_completadas")) || []; } catch (e) {}
+      if (completadas.indexOf(cat) === -1) {
+        completadas.push(cat);
+        localStorage.setItem("lukash_categorias_completadas", JSON.stringify(completadas));
+      }
+      if (window.LUKASH && window.LUKASH.markCategory) window.LUKASH.markCategory(cat);
+    } catch (e) {}
+  })();
+</script>
+
 </body></html>

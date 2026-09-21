@@ -2,6 +2,197 @@
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <title>LUKA$H - Mi Perfil</title>
+<!-- Supabase JS v2 (Auth + sincronización de perfil y progreso) -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script data-purpose="supabase-config">
+  /* ============================================================
+     CONFIGURACIÓN SUPABASE (plan gratuito)
+     1) supabase.com -> New project -> copiar "Project URL" + "anon public key".
+     2) Authentication > Providers > Email -> desactivar "Confirm email".
+     3) Ejecutar UNA vez el script de supabase.sql en el SQL Editor.
+     4) Pegar URL y anon key en las 2 constantes de abajo.
+     El sitio sigue funcionando offline: lee/escribe localStorage siempre
+     y sincroniza con Supabase cuando hay sesión y conexión.
+     ============================================================ */
+  const SUPABASE_URL = 'https://roccgeelgkrgmpmrufwh.supabase.co';
+  const SUPABASE_ANON_KEY = 'sb_publishable__6DyGjeozpTJIFFtc0kv1Q_yeSLabpc';
+
+  window.LUKASH = (() => {
+    function client() {
+      if (!window._lukashSb && typeof supabase !== 'undefined' && SUPABASE_URL.indexOf('PON_AQUI') === -1) {
+        window._lukashSb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      }
+      return window._lukashSb || null;
+    }
+    async function session() {
+      const sb = client();
+      if (!sb) return null;
+      try {
+        const { data } = await sb.auth.getSession();
+        return (data && data.session) ? data.session : null;
+      } catch (e) { return null; }
+    }
+    function safeGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+    function safeSet(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+    function safeRemove(k) { try { localStorage.removeItem(k); } catch (e) {} }
+    function safeParse(k) { try { return JSON.parse(localStorage.getItem(k)) || []; } catch (e) { return []; } }
+    const COMPLETADAS_KEY = 'lukash_categorias_completadas';
+
+    // Registro de cuenta nueva: crea la fila de perfil prellenada con el progreso local
+    async function signUp(email, password) {
+      const sb = client();
+      if (!sb) throw new Error('Supabase aún no está configurado.');
+      const { data, error } = await sb.auth.signUp({ email, password });
+      if (error) throw error;
+      const user = data && data.user;
+      const hasIdentities = user && user.identities && user.identities.length > 0;
+      const alreadyExists = user && !hasIdentities;
+      if (alreadyExists) {
+        throw new Error('Ya existe una cuenta con ese correo. Usá "Ya tengo cuenta".');
+      }
+      if (!data.session && user) {
+        try {
+          const login = await signIn(email, password);
+          if (login && login.session) return login;
+        } catch (e) {}
+        safeSet('user_registered', 'true');
+        safeSet('lukash_user_email', user.email || email);
+        throw new Error('Te enviamos un correo de confirmación. Verificá tu casilla y luego usá "Ya tengo cuenta".');
+      }
+      if (user) {
+        safeSet('user_registered', 'true');
+        safeSet('lukash_user_email', user.email || email);
+        await ensureProfile(user.id);
+      }
+      return data;
+    }
+    // Inicio de sesión de una cuenta existente
+    async function signIn(email, password) {
+      const sb = client();
+      if (!sb) throw new Error('Supabase aún no está configurado.');
+      const { data, error } = await sb.auth.signInWithPassword({ email, password });
+      if (error) throw new Error('Correo o contraseña incorrectos.');
+      if (data && data.user) {
+        safeSet('user_registered', 'true');
+        safeSet('lukash_user_email', data.user.email || email);
+        await syncExisting(data.user.id);
+      }
+      return data;
+    }
+    // Cierre de sesión: limpia la sesión y los datos personales locales (se conserva el tema)
+    async function signOut() {
+      const sb = client();
+      if (sb) { try { await sb.auth.signOut(); } catch (e) {} }
+      ['user_registered','lukash_user_name','lukash_user_email','lukash_user_age','lukash_user_city',
+       'lukash_categoria_seleccionada', COMPLETADAS_KEY].forEach(safeRemove);
+    }
+    // Crea la fila en "perfiles" prellenándola con los datos y progreso locales
+    async function ensureProfile(userId) {
+      const sb = client();
+      if (!sb || !userId) return null;
+      try {
+        const row = {
+          id: userId,
+          nombre: safeGet('lukash_user_name') || '',
+          edad: safeGet('lukash_user_age') ? Number(safeGet('lukash_user_age')) : null,
+          ciudad: safeGet('lukash_user_city') || '',
+          completadas: safeParse(COMPLETADAS_KEY)
+        };
+        const { data, error } = await sb.from('perfiles').upsert(row, { onConflict: 'id' }).select().single();
+        if (error) throw error;
+        return data;
+      } catch (e) { return null; }
+    }
+    // Cuando el usuario ya existía: la nube manda y se refleja en localStorage
+    async function syncExisting(userId) {
+      const sb = client();
+      if (!sb || !userId) return null;
+      try {
+        const { data, error } = await sb.from('perfiles').select('*').eq('id', userId).maybeSingle();
+        if (error) throw error;
+        if (data) return mirrorProfile(data);
+        return await ensureProfile(userId);
+      } catch (e) { return null; }
+    }
+    // Carga el perfil actual desde la nube o lo crea a partir del progreso local
+    async function loadProfile() {
+      const s = await session();
+      if (!s) return null;
+      const sb = client();
+      if (!sb) return null;
+      try {
+        const { data, error } = await sb.from('perfiles').select('*').eq('id', s.user.id).maybeSingle();
+        if (error) throw error;
+        safeSet('lukash_user_email', s.user.email || '');
+        if (data) return mirrorProfile(data);
+        return await ensureProfile(s.user.id);
+      } catch (e) { return null; }
+    }
+    // Refleja la fila de la nube sobre localStorage
+    function mirrorProfile(data) {
+      safeSet('user_registered', 'true');
+      if (data.nombre) safeSet('lukash_user_name', data.nombre); else safeRemove('lukash_user_name');
+      if (data.edad) safeSet('lukash_user_age', String(data.edad)); else safeRemove('lukash_user_age');
+      if (data.ciudad) safeSet('lukash_user_city', data.ciudad); else safeRemove('lukash_user_city');
+      safeSet(COMPLETADAS_KEY, JSON.stringify(data.completadas || []));
+      return data;
+    }
+    // Guarda los datos editados (nombre/apodo, edad, ciudad) en la nube
+    async function saveProfile(fields) {
+      const nombre = (fields.nombre !== undefined) ? String(fields.nombre) : (safeGet('lukash_user_name') || '');
+      const ciudad = (fields.ciudad !== undefined) ? String(fields.ciudad) : (safeGet('lukash_user_city') || '');
+      let edad = null;
+      if (fields.edad !== undefined) {
+        const v = String(fields.edad).trim();
+        edad = (v === '') ? null : (Number(v) || null);
+      } else if (safeGet('lukash_user_age')) {
+        edad = Number(safeGet('lukash_user_age'));
+      }
+      safeSet('lukash_user_name', nombre);
+      safeSet('lukash_user_city', ciudad);
+      if (edad) safeSet('lukash_user_age', String(edad)); else safeRemove('lukash_user_age');
+      const s = await session();
+      if (!s) return null;
+      const sb = client();
+      if (!sb) return null;
+      try {
+        const { data, error } = await sb.from('perfiles').upsert({
+          id: s.user.id, nombre: nombre, edad: edad, ciudad: ciudad,
+          completadas: safeParse(COMPLETADAS_KEY)
+        }, { onConflict: 'id' }).select().single();
+        if (error) throw error;
+        return data;
+      } catch (e) { return null; }
+    }
+    // Agrega una categoría completada a la nube (sin duplicar)
+    async function markCategory(cat) {
+      const s = await session();
+      if (!s || !cat) return;
+      const sb = client();
+      if (!sb) return;
+      try {
+        const { data, error } = await sb.from('perfiles').select('completadas').eq('id', s.user.id).maybeSingle();
+        if (error || !data) return await ensureProfile(s.user.id);
+        const arr = data.completadas || [];
+        if (arr.indexOf(cat) === -1) {
+          arr.push(cat);
+          await sb.from('perfiles').update({ completadas: arr }).eq('id', s.user.id);
+        }
+      } catch (e) {}
+    }
+    // Vacía el perfil y el progreso en la nube (usado por "Limpiar mi progreso")
+    async function resetProfile() {
+      const s = await session();
+      if (!s) return;
+      const sb = client();
+      if (!sb) return;
+      try {
+        await sb.from('perfiles').update({ nombre: '', edad: null, ciudad: '', completadas: [] }).eq('id', s.user.id);
+      } catch (e) {}
+    }
+    return { client, session, signUp, signIn, signOut, loadProfile, saveProfile, markCategory, resetProfile };
+  })();
+</script>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;family=Fredoka:wght@400;600;700&amp;family=Roboto:wght@400;500;700&amp;family=Rubik:wght@600;700&amp;display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
@@ -469,11 +660,12 @@
 
 <!-- Limpiar progreso -->
 <button class="bg-transparent border-2 border-[#EE4599] text-[#EE4599] font-fredoka font-bold uppercase rounded-2xl py-3 transition-all active:scale-95 text-sm w-full" id="resetBtn" type="button">LIMPIAR MI PROGRESO</button>
+<button class="bg-transparent border-2 border-[#EE4599] text-[#EE4599] font-fredoka font-bold uppercase rounded-2xl py-3 transition-all active:scale-95 text-sm w-full mt-2" id="signOutBtn" type="button">CERRAR SESIÓN</button>
 </div>
 
 </div>
 </div>
-<p class="text-center text-xs mt-4 opacity-60">Tu progreso se guarda en este navegador (localStorage).</p>
+<p class="text-center text-xs mt-4 opacity-60">Tu progreso se guarda en este navegador y se sincroniza con tu cuenta LUKA$H.</p>
 </div>
 </main>
 
@@ -643,7 +835,7 @@
       applyName(inputName.value);
     }
 
-    // Guarda los datos editados en localStorage
+    // Guarda los datos editados en localStorage y los sincroniza con Supabase
     function saveProfile(e) {
       e.preventDefault();
       const inputName = document.getElementById('inputName');
@@ -656,6 +848,10 @@
       safeSet(KEYS.city, inputCity.value.trim());
       applyName(inputName.value);
       renderProgress();
+      // Guardado en la nube en segundo plano (no bloquea el prototipo offline)
+      if (window.LUKASH && window.LUKASH.saveProfile) {
+        window.LUKASH.saveProfile({ name: inputName.value, age: inputAge.value, city: inputCity.value });
+      }
       const fb = document.getElementById('saveFeedback');
       fb.classList.remove('hidden');
       setTimeout(() => fb.classList.add('hidden'), 2000);
@@ -692,11 +888,12 @@
       renderCategoryBar();
     }
 
-    // Limpia todo el progreso local (con confirmación)
+    // Limpia todo el progreso local y, si hay sesión, también la fila en Supabase
     function resetProgress() {
       if (!confirm('¿Seguro que querés borrar TODO tu progreso y perfil?')) return;
       const keys = Object.values(KEYS);
       keys.forEach(function (k) { try { localStorage.removeItem(k); } catch (e) {} });
+      if (window.LUKASH && window.LUKASH.resetProfile) window.LUKASH.resetProfile();
       loadProfile();
       renderProgress();
       const fb = document.getElementById('saveFeedback');
@@ -705,10 +902,28 @@
       setTimeout(() => { fb.textContent = '¡Datos guardados!'; fb.classList.add('hidden'); }, 2000);
     }
 
+    // Cierra la sesión de LUKA$H y limpia los datos locales (se conserva el tema)
+    function signOut() {
+      if (!confirm('¿Querés cerrar tu sesión? Tu progreso queda guardado en la nube.')) return;
+      const done = window.LUKASH && window.LUKASH.signOut ? window.LUKASH.signOut() : Promise.resolve();
+      done.then(function () {
+        loadProfile();
+        renderProgress();
+      });
+    }
+
     document.getElementById('profileForm').addEventListener('submit', saveProfile);
     document.getElementById('resetBtn').addEventListener('click', resetProgress);
+    document.getElementById('signOutBtn').addEventListener('click', signOut);
     loadProfile();
     renderProgress();
+    // Sincroniza primero con la nube (si hay sesión) y luego re-renderiza todo
+    if (window.LUKASH && window.LUKASH.loadProfile) {
+      window.LUKASH.loadProfile().then(function () {
+        loadProfile();
+        renderProgress();
+      });
+    }
 </script>
 </body>
 </html>
