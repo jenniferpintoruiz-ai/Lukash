@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="es" style=""><head>
+﻿<!DOCTYPE html><html lang="es" style=""><head>
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <title>Login Modal LUKA$H - Doble Cinta Cruzada</title>
@@ -219,6 +219,12 @@
     }
   </script>
 <style data-purpose="background-styles">
+    /* Evita desbordes horizontales: las cintas decorativas usan width:200vw,
+       así que html debe recortar el scroll horizontal en pantallas móviles
+       para que el layout viewport permanezca en el ancho real del dispositivo */
+    html {
+      overflow-x: hidden;
+    }
     body {
       background: linear-gradient(180deg, #1A0B3B 0%, #B12E7B 100%);
       min-height: 100vh;
@@ -298,6 +304,15 @@
       height: 2rem;
       width: auto;
       flex-shrink: 0;
+    }
+
+    /* Estrella 3D flotante del feedback de registro exitoso */
+    .levitate {
+      animation: float 3s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) scale(1); }
+      50% { transform: translateY(-12px) scale(1.03); }
     }
 
     /* Responsive: mismas medidas móviles que "Nosotros" */
@@ -454,6 +469,47 @@
     </style>
 </head>
 <body class="font-roboto text-slate-800" style="background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuBlng0frbXYg44b2__Q51ekE-uMKkwZJ9PVv2XRyn3e3Wr5a6BlvuVZrEViBWyM14qGwB-ckIVLSq-qYyGwJfMo58UCHlhdqWeW1OK8yCoSUrhaNSCE6NRwU98e5VBwBJnpeFo1FJoZ-kDCs6Bjf9C-c72Zb0HW_7JK2bIZ3eIfDzysknBQR2XB_ugFSJMzz5PiTIdwAZfk-l-YySjdlpSLzX2kn4wmNRFmGxWMqkh8sGCOrFuTEv0AiQbqZpO9D_IRjdqM8L9UGwD90g&quot;); background-size: cover; background-position: center center; background-attachment: fixed; background-repeat: no-repeat; min-height: 100vh;">
+<!-- BEGIN: Estrellas 3D decorativas distribuidas (1-2 por pantalla) -->
+<style data-purpose="decorative-stars">
+  .deco-stars {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+  }
+  .deco-star {
+    position: absolute;
+    width: clamp(1.9rem, 7vw, 3.4rem);
+    height: auto;
+    opacity: 0.6;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+    animation: decoStarFloat 4s ease-in-out infinite;
+    will-change: transform;
+  }
+  .deco-stars .deco-star:nth-child(1) { top: 4%;  left: 4%; animation-delay: 0s; }
+  .deco-stars .deco-star:nth-child(2) { top: 30%; right: 3%; width: clamp(1.5rem, 5vw, 2.6rem); animation-delay: 0.9s; }
+  .deco-stars .deco-star:nth-child(3) { top: 56%; left: 5%; width: clamp(1.6rem, 6vw, 3rem); animation-delay: 1.8s; }
+  .deco-stars .deco-star:nth-child(4) { top: 82%; right: 4%; animation-delay: 2.6s; }
+  @keyframes decoStarFloat {
+    0%, 100% { transform: translateY(0) rotate(-6deg); }
+    50% { transform: translateY(-12px) rotate(8deg); }
+  }
+  @media (max-width: 640px) {
+    .deco-stars .deco-star:nth-child(2) { right: 6%; }
+    .deco-stars .deco-star:nth-child(4) { right: 6%; }
+  }
+</style>
+<div class="deco-stars" aria-hidden="true">
+  <img class="deco-star" src="images/SVG/estrella%203d.svg" alt="">
+  <img class="deco-star" src="images/SVG/estrella%203d.svg" alt="">
+  <img class="deco-star" src="images/SVG/estrella%203d.svg" alt="">
+  <img class="deco-star" src="images/SVG/estrella%203d.svg" alt="">
+</div>
+<!-- END: Estrellas 3D decorativas distribuidas -->
 <!-- BEGIN: MainHeader -->
 <header class="fixed top-0 left-0 right-0 bg-lukash-yellow w-full h-16 flex items-center justify-between px-4 z-50 border-b-4 border-black/10" id="main-header">
 <!-- Menu Icon: hamburguesa a la derecha junto al resto (móvil) -->
@@ -564,13 +620,23 @@
           Si continúas, indicas que aceptas las Condiciones de servicio de Pinterest y reconoces que leíste nuestra Política de privacidad. Aviso de recopilación de información.
         </p>
 </form>
-<!-- Feedback Message (Hidden) -->
-<div class="hidden absolute inset-0 bg-white/90 rounded-[45px] flex flex-col items-center justify-center text-center p-6 mb-4" id="feedback">
-<div class="w-16 h-16 bg-lukash-green rounded-full flex items-center justify-center mb-4">
-<svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></path></svg>
+<!-- Feedback Message (Hidden): celebración estilo sticker según el diseño LUKA$H -->
+<div class="hidden absolute inset-0 rounded-[45px] overflow-hidden bg-[#FDF5D8] flex flex-col items-center justify-center text-center px-6 pb-4 z-10" id="feedback">
+<!-- Cinta superior amarilla con textura marquee -->
+<div class="absolute top-0 left-0 right-0 pointer-events-none">
+<div class="bg-lukash-yellow w-full py-2 flex items-center justify-center gap-2 shadow-md">
+<img class="star-tape h-6 w-auto" alt="" src="images/estrella.png">
+<span class="font-fredoka font-bold text-lukash-dark text-sm md:text-base uppercase tracking-widest">¡Registro Exitoso!</span>
+<img class="star-tape h-6 w-auto" alt="" src="images/estrella.png">
 </div>
-<h2 class="font-fredoka text-lukash-dark text-xl">¡Registro Exitoso!</h2>
-<p class="text-xs font-roboto text-gray-700">Bienvenido a la comunidad LUKA$H</p>
+</div>
+<!-- Estrella 3D flotante + mensaje -->
+<div class="flex flex-col items-center pt-10">
+<img src="images/SVG/estrella%203d.svg" alt="Estrella 3D LUKA$H" class="levitate w-24 h-24 md:w-28 md:h-28 object-contain drop-shadow-lg">
+<h2 class="font-fredoka text-lukash-dark text-2xl md:text-3xl font-bold uppercase mt-3 leading-tight">¡Bienvenido a la comunidad LUKA$H!</h2>
+<p class="text-sm font-roboto text-gray-700 mt-2 max-w-[260px] leading-relaxed">Tu cuenta se creó correctamente. Guardamos tu progreso y seguimos aprendiendo sobre el dinero.</p>
+<span id="feedbackStatus" class="mt-4 text-xs font-fredoka font-bold text-lukash-pink animate-pulse">Redirigiendo a tu perfil...</span>
+</div>
 </div>
 </div>
 <!-- END: LoginModal -->
@@ -680,7 +746,9 @@
 
         // Optional: Auto-close after 2 seconds
         setTimeout(() => {
-          feedback.innerHTML += `<p class="mt-4 text-lukash-pink animate-pulse">Redirigiendo...</p>`;
+          const status = document.getElementById('feedbackStatus');
+          if (status) status.textContent = 'Redirigiendo...';
+          else feedback.innerHTML += `<p class="mt-4 text-lukash-pink animate-pulse">Redirigiendo...</p>`;
         }, 1500);
         setTimeout(() => { location.href = 'mi-perfil.html'; }, 2800);
       } catch (err) {
@@ -973,3 +1041,4 @@
 </footer>
 <!-- END: Footer -->
 </body></html>
+

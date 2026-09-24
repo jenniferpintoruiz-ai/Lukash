@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="es"><head>
+﻿<!DOCTYPE html><html lang="es"><head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LUKA$H - Nosotros</title>
@@ -47,6 +47,12 @@
       --sticker-bg: #FFFFFF;
       --chip-bg: #EAE6DF;
       --pink-accent: #E84C89;
+    }
+
+    /* Evita desbordes horizontales en móviles: los marquees decorativos
+       no deben expandir el layout viewport por encima del ancho real */
+    html {
+      overflow-x: hidden;
     }
 
     body {
@@ -325,6 +331,47 @@
     </style>
 </head>
 <body class="min-h-screen flex flex-col items-center">
+<!-- BEGIN: Estrellas 3D decorativas distribuidas (1-2 por pantalla) -->
+<style data-purpose="decorative-stars">
+  .deco-stars {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+  }
+  .deco-star {
+    position: absolute;
+    width: clamp(1.9rem, 7vw, 3.4rem);
+    height: auto;
+    opacity: 0.6;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+    animation: decoStarFloat 4s ease-in-out infinite;
+    will-change: transform;
+  }
+  .deco-stars .deco-star:nth-child(1) { top: 4%;  left: 4%; animation-delay: 0s; }
+  .deco-stars .deco-star:nth-child(2) { top: 30%; right: 3%; width: clamp(1.5rem, 5vw, 2.6rem); animation-delay: 0.9s; }
+  .deco-stars .deco-star:nth-child(3) { top: 56%; left: 5%; width: clamp(1.6rem, 6vw, 3rem); animation-delay: 1.8s; }
+  .deco-stars .deco-star:nth-child(4) { top: 82%; right: 4%; animation-delay: 2.6s; }
+  @keyframes decoStarFloat {
+    0%, 100% { transform: translateY(0) rotate(-6deg); }
+    50% { transform: translateY(-12px) rotate(8deg); }
+  }
+  @media (max-width: 640px) {
+    .deco-stars .deco-star:nth-child(2) { right: 6%; }
+    .deco-stars .deco-star:nth-child(4) { right: 6%; }
+  }
+</style>
+<div class="deco-stars" aria-hidden="true">
+  <img class="deco-star" src="images/SVG/estrella%203d.svg" alt="">
+  <img class="deco-star" src="images/SVG/estrella%203d.svg" alt="">
+  <img class="deco-star" src="images/SVG/estrella%203d.svg" alt="">
+  <img class="deco-star" src="images/SVG/estrella%203d.svg" alt="">
+</div>
+<!-- END: Estrellas 3D decorativas distribuidas -->
 
 <!-- BEGIN: MainHeader -->
   <header class="fixed top-0 left-0 right-0 bg-lukash-yellow w-full h-16 flex items-center justify-between px-4 z-50 border-b-4 border-black/10" id="main-header">
@@ -476,28 +523,28 @@
     <h2 class="typewriter-title typewriter-title-corto font-display text-[clamp(1.6rem,7vw,4.5rem)] font-bold text-text-dark-blue">SOMOS</h2>
   </section>
 
-  <!-- BEGIN: Personajes LUKA$H (los 4 assets SVG en fila) -->
+  <!-- BEGIN: Personajes LUKA$H (los 4 assets SVG, 2×2 en móvil y fila en pantallas grandes) -->
   <section class="w-full px-6 pt-2 pb-20" aria-label="Personajes de LUKA$H">
-    <div class="mx-auto flex max-w-5xl items-end justify-center gap-1 md:gap-3">
-      <div class="flex flex-col items-center w-1/4 min-w-0 gap-2">
+    <div class="mx-auto grid max-w-5xl grid-cols-2 items-end justify-items-center gap-2 gap-y-6 md:grid-cols-4 md:gap-3">
+      <div class="flex w-full flex-col items-center gap-2">
         <img class="w-full h-[clamp(6rem,22vw,15rem)] object-contain" src="images/SVG/Asset%201.svg" alt="Jenny">
         <span class="character-name font-display font-bold text-[clamp(1rem,3vw,1.6rem)] text-text-dark-blue">
           J<span>e</span><span>n</span><span>n</span><span>y</span><span class="character-name-star" aria-hidden="true">✦</span>
         </span>
       </div>
-      <div class="flex flex-col items-center w-1/4 min-w-0 gap-2">
+      <div class="flex w-full flex-col items-center gap-2">
         <img class="w-full h-[clamp(6rem,22vw,15rem)] object-contain" src="images/SVG/Asset%202.svg" alt="Ashly">
         <span class="character-name font-display font-bold text-[clamp(1rem,3vw,1.6rem)] text-text-dark-blue">
           A<span>s</span><span>h</span><span>l</span><span>y</span><span class="character-name-star" aria-hidden="true">✦</span>
         </span>
       </div>
-      <div class="flex flex-col items-center w-1/4 min-w-0 gap-2">
+      <div class="flex w-full flex-col items-center gap-2">
         <img class="w-full h-[clamp(6rem,22vw,15rem)] object-contain" src="images/SVG/Asset%203.svg" alt="Samu">
         <span class="character-name font-display font-bold text-[clamp(1rem,3vw,1.6rem)] text-text-dark-blue">
           S<span>a</span><span>m</span><span>u</span><span class="character-name-star" aria-hidden="true">✦</span>
         </span>
       </div>
-      <div class="flex flex-col items-center w-1/4 min-w-0 gap-2">
+      <div class="flex w-full flex-col items-center gap-2">
         <img class="w-full h-[clamp(6rem,22vw,15rem)] object-contain" src="images/SVG/Asset%204.svg" alt="Dany">
         <span class="character-name font-display font-bold text-[clamp(1rem,3vw,1.6rem)] text-text-dark-blue">
           D<span>a</span><span>n</span><span>y</span><span class="character-name-star" aria-hidden="true">✦</span>
@@ -795,3 +842,4 @@
 <!-- END: Boton redondo de chat -->
 
 </body></html>
+

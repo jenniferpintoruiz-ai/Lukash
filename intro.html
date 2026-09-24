@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="es" style=""><head>
+﻿<!DOCTYPE html><html lang="es" style=""><head>
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <title>Logins Modal LUKA$H - Doble Cinta Cruzada</title>
@@ -246,6 +246,47 @@
     </style>
 </head>
 <body class="font-roboto text-slate-800" style="min-height: 100vh; margin: 0px;">
+<!-- BEGIN: Estrellas 3D decorativas distribuidas (1-2 por pantalla) -->
+<style data-purpose="decorative-stars">
+  .deco-stars {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+  }
+  .deco-star {
+    position: absolute;
+    width: clamp(1.9rem, 7vw, 3.4rem);
+    height: auto;
+    opacity: 0.6;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+    animation: decoStarFloat 4s ease-in-out infinite;
+    will-change: transform;
+  }
+  .deco-stars .deco-star:nth-child(1) { top: 4%;  left: 4%; animation-delay: 0s; }
+  .deco-stars .deco-star:nth-child(2) { top: 30%; right: 3%; width: clamp(1.5rem, 5vw, 2.6rem); animation-delay: 0.9s; }
+  .deco-stars .deco-star:nth-child(3) { top: 56%; left: 5%; width: clamp(1.6rem, 6vw, 3rem); animation-delay: 1.8s; }
+  .deco-stars .deco-star:nth-child(4) { top: 82%; right: 4%; animation-delay: 2.6s; }
+  @keyframes decoStarFloat {
+    0%, 100% { transform: translateY(0) rotate(-6deg); }
+    50% { transform: translateY(-12px) rotate(8deg); }
+  }
+  @media (max-width: 640px) {
+    .deco-stars .deco-star:nth-child(2) { right: 6%; }
+    .deco-stars .deco-star:nth-child(4) { right: 6%; }
+  }
+</style>
+<div class="deco-stars" aria-hidden="true">
+  <img class="deco-star" src="images/SVG/estrella%203d.svg" alt="">
+  <img class="deco-star" src="images/SVG/estrella%203d.svg" alt="">
+  <img class="deco-star" src="images/SVG/estrella%203d.svg" alt="">
+  <img class="deco-star" src="images/SVG/estrella%203d.svg" alt="">
+</div>
+<!-- END: Estrellas 3D decorativas distribuidas -->
 <!-- BEGIN: MainHeader -->
 <header class="fixed top-0 left-0 right-0 bg-lukash-yellow w-full h-16 flex items-center justify-between px-4 z-50 border-b-4 border-black/10" id="main-header">
 <!-- Menu Icon: hamburguesa a la derecha junto al resto (móvil) -->
@@ -607,3 +648,4 @@
 </footer>
 <!-- END: Footer -->
 </body></html>
+

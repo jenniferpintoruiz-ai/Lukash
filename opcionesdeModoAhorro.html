@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="es" style=""><head>
+﻿<!DOCTYPE html><html lang="es" style=""><head>
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <title>LUKA$H - Modo Ahorro</title>
@@ -300,6 +300,47 @@
     </style>
 </head>
 <body class="font-rubik text-slate-800 fade-in-page" style="min-height: 100vh; background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuB4JVJyTzjneE9aE-Vs7rBiZPiCkk15uEgf0uNnBHzXRZa7KPyOHWDWnpvbljE0TtF3j3WQgAW_AWHp2CJ2yCNNWL2SK1qOOdixPatdidmLMybfMzdRlSmXapCYiaHHJteQu6SSQ_wO8Hnq3u5r-oiNzDrWAfPxqKLrbljn2cS8BFeaaR2nxXfhKQNmIQhmpg9dxRi792WSyGZR1agf0ZHUf851dJcQbIACKA07NF7YJ5QS3bZhQvVuDolGlLAb_f_95Eln9MeKMtTK_g&quot;); background-size: cover; background-position: center center; background-repeat: no-repeat; background-attachment: fixed; overflow-y: auto;">
+<!-- BEGIN: Estrellas 3D decorativas distribuidas (1-2 por pantalla) -->
+<style data-purpose="decorative-stars">
+  .deco-stars {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+  }
+  .deco-star {
+    position: absolute;
+    width: clamp(1.9rem, 7vw, 3.4rem);
+    height: auto;
+    opacity: 0.6;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+    animation: decoStarFloat 4s ease-in-out infinite;
+    will-change: transform;
+  }
+  .deco-stars .deco-star:nth-child(1) { top: 4%;  left: 4%; animation-delay: 0s; }
+  .deco-stars .deco-star:nth-child(2) { top: 30%; right: 3%; width: clamp(1.5rem, 5vw, 2.6rem); animation-delay: 0.9s; }
+  .deco-stars .deco-star:nth-child(3) { top: 56%; left: 5%; width: clamp(1.6rem, 6vw, 3rem); animation-delay: 1.8s; }
+  .deco-stars .deco-star:nth-child(4) { top: 82%; right: 4%; animation-delay: 2.6s; }
+  @keyframes decoStarFloat {
+    0%, 100% { transform: translateY(0) rotate(-6deg); }
+    50% { transform: translateY(-12px) rotate(8deg); }
+  }
+  @media (max-width: 640px) {
+    .deco-stars .deco-star:nth-child(2) { right: 6%; }
+    .deco-stars .deco-star:nth-child(4) { right: 6%; }
+  }
+</style>
+<div class="deco-stars" aria-hidden="true">
+  <img class="deco-star" src="images/SVG/estrella%203d.svg" alt="">
+  <img class="deco-star" src="images/SVG/estrella%203d.svg" alt="">
+  <img class="deco-star" src="images/SVG/estrella%203d.svg" alt="">
+  <img class="deco-star" src="images/SVG/estrella%203d.svg" alt="">
+</div>
+<!-- END: Estrellas 3D decorativas distribuidas -->
 <div id="darkBgLayer" aria-hidden="true"></div>
 <script>if (new URLSearchParams(location.search).get('embed') === '1') document.body.classList.add('embedded');</script>
 <!-- BEGIN: MainHeader -->
@@ -840,3 +881,4 @@ Veamos las maneras en que estemos en <strong class="font-bold">modo ahorro</stro
 </footer>
 <!-- END: Footer -->
 </body></html>
+
