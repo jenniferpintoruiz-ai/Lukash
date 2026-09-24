@@ -454,13 +454,11 @@
 <iframe src="opcionesdeModoAhorro.html?embed=1" title="Opciones de Modo Ahorro" loading="lazy" class="w-full h-[600px] md:h-[700px]"></iframe>
 
 </section>
-<!-- Pantalla 3: Tarjeta de transición "Vamos a probar el simulador" -->
+<!-- Pantalla 3: Texto "Vamos a probar el simulador" -->
 <section class="screen relative z-10 pb-0" id="screen-simulador-intro">
 <div class="w-full px-6 text-center relative z-10">
-<div class="typewriter-card mx-auto w-fit max-w-[90%] md:max-w-md rounded-[28px] px-6 py-5 md:px-8 md:py-6" style="background: linear-gradient(180deg, #FFFDF6 0%, #F1EDE3 100%); border: 2px solid rgba(24, 15, 67, 0.15); box-shadow: 0 4px 0 rgba(148, 148, 148, 0.35), 0 10px 16px rgba(0, 0, 0, 0.15)" id="simulator-intro-card">
-<p class="font-fredoka font-bold text-xl md:text-2xl leading-snug" style="color:#180F43"><span class="typewriter-line" id="simulator-intro-title"></span></p>
-<p class="simulator-intro-copy font-roboto font-medium text-xs md:text-sm leading-snug max-w-[36ch] mx-auto mt-1" style="color:#4A4A4A" id="simulator-intro-copy">Mira qué pasa con tu plata según cómo la ahorres.<br>No se trata de ganar mucho, sino de <strong>evitar que la inflación se coma tu dinero.</strong></p>
-</div>
+<p class="font-fredoka font-bold text-xl md:text-2xl leading-snug text-[#180F43] drop-shadow-md" id="simulator-intro-title">Vamos a probar el simulador</p>
+<p class="font-roboto font-medium text-xs md:text-sm leading-snug max-w-[36ch] mx-auto mt-1 text-[#4A4A4A]">Mira qué pasa con tu plata según cómo la ahorres.<br>No se trata de ganar mucho, sino de <strong>evitar que la inflación se coma tu dinero.</strong></p>
 </div>
 </section>
 <!-- Pantalla 4: Simulador (Rindiendo la Money) -->
@@ -740,50 +738,6 @@
     }, { passive: true });
     window.addEventListener('resize', update);
     update();
-  })();
-</script>
-<script data-purpose="simulator-intro-typewriter">
-  (function () {
-    var card = document.getElementById('simulator-intro-card');
-    var copy = document.getElementById('simulator-intro-copy');
-    if (!card) return;
-
-    var lines = [
-      [document.getElementById('simulator-intro-title'), 'Vamos a probar el simulador']
-    ];
-
-    function typeLine(element, text, speed) {
-      return new Promise(function (resolve) {
-        element.classList.add('is-typing');
-        var index = 0;
-        var timer = setInterval(function () {
-          element.textContent += text.charAt(index++);
-          if (index >= text.length) {
-            clearInterval(timer);
-            element.classList.remove('is-typing');
-            resolve();
-          }
-        }, speed);
-      });
-    }
-
-    function startTypewriter() {
-      if (card.dataset.animated) return;
-      card.dataset.animated = 'true';
-      lines.reduce(function (chain, line) {
-        return chain.then(function () { return typeLine(line[0], line[1], 32); });
-      }, Promise.resolve()).then(function () {
-        if (copy) copy.classList.add('is-visible');
-      });
-    }
-
-    var observer = new IntersectionObserver(function (entries) {
-      if (entries.some(function (entry) { return entry.isIntersecting; })) {
-        startTypewriter();
-        observer.disconnect();
-      }
-    }, { threshold: 0.35 });
-    observer.observe(card);
   })();
 </script>
 <script data-purpose="categoria-context">
