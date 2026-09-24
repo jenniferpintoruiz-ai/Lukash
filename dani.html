@@ -855,7 +855,6 @@
     .chat-window { transform-origin: bottom right; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
     .chat-window.hidden-chat { transform: scale(0); opacity: 0; pointer-events: none; }
     .chat-window.active-chat { transform: scale(1); opacity: 1; pointer-events: auto; }
-    .chat-window.chat-fullscreen { position: fixed; inset: 0; width: 100vw; height: 100vh; border: 0; border-radius: 0; z-index: 70; }
     #chat-frame { width: 100%; height: 100%; border: 0; display: block; }
 </style>
 <div class="fixed inset-0 pointer-events-none z-[60]" id="particle-container"></div>
@@ -864,7 +863,7 @@
 <img alt="Savings" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCpMupF3DRCHRmsBS_rUtkT1-WqHypjupX8R9iQvvGi3EG3ViEzcMziqN99zpl_HUd8NO5sDhby4NXetH82hfeb3_0-l8aro1geLpXun5UxmrxVsX3q7b8NIVzD3gDapNi5D8LUzZurdxGH51BErQKKw3E7Anf7ZhckVJailmRMUOfbepFnoCb73ze5E6xgcuwy29GeoOKK4oHK_-1D2uFGdXfFF3eU0TgY92E-fwmM2UPCqdLhfUvlgGLshBv0973Ghg">
 </div>
 <div class="chat-window absolute bottom-0 right-0 w-[calc(100vw-3rem)] md:w-80 h-96 bg-white/90 backdrop-blur-md rounded-2xl shadow-2xl border-2 border-lukash-pink flex flex-col overflow-hidden hidden-chat" id="chat-window">
-<iframe id="chat-frame" title="Chat de LUKASH" src="lukash-chat.html"></iframe>
+<iframe id="chat-frame" title="Chat de LUKASH" src="lukash-chat.html?nueva=1"></iframe>
 </div>
 </div>
 <script data-purpose="chat-functionality">
@@ -872,7 +871,13 @@
     const fabButton = document.getElementById("fab-button");
     const chatWindow = document.getElementById("chat-window");
     const particleContainer = document.getElementById("particle-container");
-    const chatFrame = document.getElementById("chat-frame");
+    const chatFrame = document.getElementById('chat-frame');
+  const fullscreenCss = document.createElement('style');
+  fullscreenCss.id = 'lukash-chat-fullscreen-css';
+  if (!document.getElementById('lukash-chat-fullscreen-css')) {
+    fullscreenCss.textContent = '#chat-window.chat-fullscreen{position:fixed;inset:0 auto 0 50%;transform:translateX(-50%);width:100%;height:100vh;max-width:780px;margin:0 auto;border:none;border-radius:0;box-shadow:none;z-index:999;}';
+    document.head.appendChild(fullscreenCss);
+  }
     const uiFabContainer = document.getElementById("ui-fab-container");
 
     // Muestra el boton redondo de chat (arranca oculto, igual que en el index)
@@ -909,6 +914,8 @@
       setTimeout(function () {
         chatWindow.classList.remove("hidden-chat");
         chatWindow.classList.add("active-chat");
+      const chatBodyReset = chatFrame.contentDocument && chatFrame.contentDocument.body;
+      if (chatBodyReset) chatBodyReset.classList.remove('chat-lg');
         const frameDocument = chatFrame.contentDocument;
         const frameApp = frameDocument && frameDocument.querySelector(".app");
         const frameFab = frameDocument && frameDocument.getElementById("fab");
@@ -931,20 +938,31 @@
       style.textContent = [
         "html, body { width: 100%; height: 100%; overflow: hidden; background: transparent; }",
         ".app { position: relative; inset: auto; width: 100%; height: 100%; max-width: none; border-radius: 0; box-shadow: none; background: rgba(255,255,255,.94); }",
-        ".app-header { height: 58px; padding: 0 14px; background: #b4d17b; color: #212121; }",
+        ".app-header { height: 58px; padding: 0 14px; background: #180F43; color: #EEE8E0; }",
         ".logo-mark { width: 34px; height: 34px; background: #E7C11F; }",
         ".header-title h1 { color: #180F43; font-size: 1.15rem; }",
         ".chat-area { padding: 14px 10px 12px; gap: 10px; }",
         ".avatar { width: 30px; height: 30px; }",
         ".bubble { padding: 9px 12px; font-size: .82rem; border-radius: 14px; }",
-        ".msg--bot .bubble { background: #F9F6F0; color: #180F43; box-shadow: 0 2px 8px rgba(24,15,67,.12); }",
+        ".msg--bot .bubble { background: #180F43; color: #EEE8E0; box-shadow: 0 6px 14px rgba(24,15,67,.12); }",
         ".msg--user .bubble { background: #EE4599; color: #fff; }",
         ".input-bar { position: static; transform: none; width: 100%; max-width: none; padding: 8px; background: #fff; }",
         ".input-bar input { min-width: 0; padding: 9px 13px; font-size: .82rem; }",
         ".send-btn { width: 38px; height: 38px; background: #EE4599; }",
         ".icon-btn { width: 32px; height: 32px; }",
         ".app--full { position: relative; inset: auto; width: 100%; max-width: none; height: 100%; transform: none; border-radius: 0; }",
-        ".fab { display: none !important; }"
+        ".fab { display: none !important; }",
+        "body.chat-lg .app-header { height: 64px; padding: 0 16px; background: #180F43; color: #EEE8E0; }",
+        "body.chat-lg .logo-mark { width: 40px; height: 40px; }",
+        "body.chat-lg .header-title h1 { font-size: clamp(1.15rem, 3vw, 1.45rem); letter-spacing: .05em; }",
+        "body.chat-lg .chat-area { padding: 22px 14px 12px; gap: 16px; }",
+        "body.chat-lg .avatar { width: 42px; height: 42px; }",
+        "body.chat-lg .bubble { padding: 13px 17px; border-radius: 22px; font-size: clamp(0.95rem, 1.6vw, 1.02rem); }",
+        "body.chat-lg .msg--bot .bubble { background: #180F43; color: #EEE8E0; border-bottom-left-radius: 8px; box-shadow: 0 6px 14px rgba(24,15,67,.12); }",
+        "body.chat-lg .msg--user .bubble { background: #EE4599; color: #fff; border-bottom-right-radius: 8px; box-shadow: 0 6px 14px rgba(238,69,153,.25); }",
+        "body.chat-lg .input-bar { padding: 12px 14px; background: rgba(247,239,208,.94); }",
+        "body.chat-lg .input-bar input { padding: 12px 18px; font-size: 1rem; }",
+        "body.chat-lg .send-btn { width: 50px; height: 50px; }"
       ].join("\n");
       frameDocument.head.appendChild(style);
 
@@ -952,7 +970,9 @@
       if (frameClose) frameClose.addEventListener("click", closeChatWindow);
       const frameExpand = frameDocument.getElementById("expandBtn");
       if (frameExpand) frameExpand.addEventListener("click", function () {
-        chatWindow.classList.toggle("chat-fullscreen");
+        const isFull = chatWindow.classList.toggle('chat-fullscreen');
+        const chatBodyLg = chatFrame.contentDocument && chatFrame.contentDocument.body;
+        if (chatBodyLg) chatBodyLg.classList.toggle('chat-lg', isFull);
       });
     });
   })();

@@ -346,7 +346,7 @@
             transform: scale(1) translateY(0);
             pointer-events: auto;
         }
-        
+
         .chat-msg {
             animation: slideIn 0.3s ease forwards;
         }
@@ -744,42 +744,9 @@
 </div>
 </main>
 <!-- Bottom Decorative Wave -->
-<!-- Floating Action Button (Mascot) -->
-<div class="fixed bottom-24 right-4 w-[calc(100%-2rem)] md:w-80 h-96 bg-surface-container rounded-2xl z-40 chat-window hidden-chat flex flex-col border border-outline/20" id="chat-container">
-<!-- Chat Header -->
-<div class="bg-fuchsia-btn p-4 rounded-t-2xl flex justify-between items-center text-white shrink-0">
-<div class="flex items-center gap-3">
-<div class="w-10 h-10 rounded-full bg-white/20 p-1">
-<img alt="Mascot avatar" class="w-full h-full object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQ_AEtVRAaESaowtYS8dd6KOctLhtfH9BwWgw2JTmlvp2_6C7YyoPBhStTRAeFb9lZcOqvXQHLnMqXQVnZ9vz9c7Kqwu8_tcIdzflKpAAzL5ltuV_HfqtkqDT7tZmefzWoit6nA7-4ss9nOqs4qVsb2lEXksjgPFdWvgGGpYLvDksfiZ4iZD-m9lFIjq6aDLLmCuFZH8DKOjebYstE2Qy3wDfIDkr_-0-dWPqtNB1zk07UDwgljEK9J3pLSHUxzLMs9g"/>
-</div>
-<div>
-<h3 class="font-headline-lg-mobile text-lg">Soy LUKASH</h3>
-<p class="text-xs opacity-80">En línea</p>
-</div>
-</div>
-<button class="p-2 hover:bg-white/20 rounded-full transition-colors" id="close-chat">
-<span class="material-symbols-outlined">close</span>
-</button>
-</div>
-<!-- Chat Messages -->
-<div class="flex-grow p-4 overflow-y-auto flex flex-col gap-4 bg-background" id="chat-messages">
-<!-- Bot Message -->
-<div class="flex gap-2 max-w-[85%] chat-msg">
-<div class="w-8 h-8 rounded-full bg-surface-container-high p-1 shrink-0 mt-auto">
-<img alt="Bot" class="w-full h-full object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQ_AEtVRAaESaowtYS8dd6KOctLhtfH9BwWgw2JTmlvp2_6C7YyoPBhStTRAeFb9lZcOqvXQHLnMqXQVnZ9vz9c7Kqwu8_tcIdzflKpAAzL5ltuV_HfqtkqDT7tZmefzWoit6nA7-4ss9nOqs4qVsb2lEXksjgPFdWvgGGpYLvDksfiZ4iZD-m9lFIjq6aDLLmCuFZH8DKOjebYstE2Qy3wDfIDkr_-0-dWPqtNB1zk07UDwgljEK9J3pLSHUxzLMs9g"/>
-</div>
-<div class="bg-surface-container-high p-3 rounded-2xl rounded-bl-sm text-sm text-on-surface">
-                ¡Hola! ¿En qué te puedo ayudar hoy con tus ahorros e inversiones?
-            </div>
-</div>
-</div>
-<!-- Chat Input -->
-<form class="p-3 bg-surface-container border-t border-outline/20 rounded-b-2xl flex gap-2 shrink-0" id="chat-form">
-<input class="flex-grow bg-background border border-outline/30 rounded-full px-4 py-2 text-sm text-on-surface focus:outline-none focus:border-fuchsia-btn focus:ring-1 focus:ring-fuchsia-btn transition-colors" id="chat-input" placeholder="Escribe un mensaje..." type="text"/>
-<button class="w-10 h-10 rounded-full bg-fuchsia-btn text-white flex items-center justify-center shrink-0 hover:bg-fuchsia-btn/90 transition-colors" type="submit">
-<span class="material-symbols-outlined text-lg">send</span>
-</button>
-</form>
+<!-- Floating Action Button (Mascot) -- Abre chat real LUKA$H -->
+<div class="fixed bottom-24 right-4 w-[calc(100%-2rem)] md:w-80 h-96 bg-surface-container rounded-2xl z-40 chat-window hidden-chat flex flex-col border border-outline/20" id="chat-window">
+<iframe id="chat-frame" title="Chat de LUKASH" src="lukash-chat.html?nueva=1" style="width:100%;height:100%;border:0;display:block;background:rgba(255,255,255,0.94);"></iframe>
 </div>
 <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -1084,14 +1051,17 @@
                 });
             })();
 
-            // Chat Functionality
+            // Chat Functionality (popup real con lukash-chat.html vía iframe)
             const fabButton = document.getElementById('fab-button');
-            const chatContainer = document.getElementById('chat-container');
-            const closeChatBtn = document.getElementById('close-chat');
+            const chatWindow = document.getElementById('chat-window');
+            const chatFrame = document.getElementById('chat-frame');
+  const fullscreenCss = document.createElement('style');
+  fullscreenCss.id = 'lukash-chat-fullscreen-css';
+  if (!document.getElementById('lukash-chat-fullscreen-css')) {
+    fullscreenCss.textContent = '#chat-window.chat-fullscreen{position:fixed;inset:0 auto 0 50%;transform:translateX(-50%);width:100%;height:100vh;max-width:780px;margin:0 auto;border:none;border-radius:0;box-shadow:none;z-index:999;}';
+    document.head.appendChild(fullscreenCss);
+  }
             const particleContainer = document.getElementById('particle-container');
-            const chatForm = document.getElementById('chat-form');
-            const chatInput = document.getElementById('chat-input');
-            const chatMessages = document.getElementById('chat-messages');
 
             function createParticles(x, y) {
                 for (let i = 0; i < 20; i++) {
@@ -1122,6 +1092,11 @@
                 }
             }
 
+            function hideChatWindow() {
+                chatWindow.classList.remove('active-chat');
+                chatWindow.classList.add('hidden-chat');
+            }
+
             fabButton.addEventListener('click', (e) => {
                 const rect = fabButton.getBoundingClientRect();
                 const centerX = rect.left + rect.width / 2;
@@ -1132,52 +1107,62 @@
                 fabButton.classList.add('exploding');
                 
                 setTimeout(() => {
-                    chatContainer.classList.remove('hidden-chat');
-                    chatContainer.classList.add('active-chat');
+                    chatWindow.classList.remove('hidden-chat');
+                    chatWindow.classList.add('active-chat');
+      const chatBodyReset = chatFrame.contentDocument && chatFrame.contentDocument.body;
+      if (chatBodyReset) chatBodyReset.classList.remove('chat-lg');
+                    const fd = chatFrame.contentDocument;
+                    const frameApp = fd && fd.querySelector('.app');
+                    const frameFab = fd && fd.getElementById('fab');
+                    if (frameApp) frameApp.classList.remove('app--hidden', 'app--full');
+                    if (frameFab) frameFab.classList.add('hidden');
+                    setTimeout(() => fabButton.classList.remove('exploding'), 400);
                 }, 100);
             });
 
-            closeChatBtn.addEventListener('click', () => {
-                chatContainer.classList.remove('active-chat');
-                chatContainer.classList.add('hidden-chat');
-                
-                setTimeout(() => {
-                    fabButton.classList.remove('exploding');
-                }, 300);
-            });
+            chatFrame.addEventListener('load', () => {
+                const fd = chatFrame.contentDocument;
+                if (!fd) return;
+                const style = fd.createElement('style');
+                style.textContent = [
+                    'html, body { width: 100%; height: 100%; overflow: hidden; background: transparent; }',
+                    '.app { position: relative; inset: auto; width: 100%; height: 100%; max-width: none; border-radius: 0; box-shadow: none; background: rgba(255,255,255,.94); }',
+                    '.app-header { height: 58px; padding: 0 14px; background: #180F43; color: #EEE8E0; }',
+                    '.logo-mark { width: 34px; height: 34px; background: #E7C11F; }',
+                    '.header-title h1 { color: #180F43; font-size: 1.15rem; }',
+                    '.chat-area { padding: 14px 10px 12px; gap: 10px; }',
+                    '.avatar { width: 30px; height: 30px; }',
+                    '.bubble { padding: 9px 12px; font-size: .82rem; border-radius: 14px; }',
+                    '.msg--bot .bubble { background: #180F43; color: #EEE8E0; box-shadow: 0 6px 14px rgba(24,15,67,.12); }',
+                    '.msg--user .bubble { background: #EE4599; color: #fff; }',
+                    '.input-bar { position: static; transform: none; width: 100%; max-width: none; padding: 8px; background: #fff; }',
+                    '.input-bar input { min-width: 0; padding: 9px 13px; font-size: .82rem; }',
+                    '.send-btn { width: 38px; height: 38px; background: #EE4599; }',
+                    '.icon-btn { width: 32px; height: 32px; }',
+                    '.app--full { position: relative; inset: auto; width: 100%; max-width: none; height: 100%; transform: none; border-radius: 0; }',
+                    '.fab { display: none !important; }',
+        'body.chat-lg .app-header { height: 64px; padding: 0 16px; background: #180F43; color: #EEE8E0; }',
+        'body.chat-lg .logo-mark { width: 40px; height: 40px; }',
+        'body.chat-lg .header-title h1 { font-size: clamp(1.15rem, 3vw, 1.45rem); letter-spacing: .05em; }',
+        'body.chat-lg .chat-area { padding: 22px 14px 12px; gap: 16px; }',
+        'body.chat-lg .avatar { width: 42px; height: 42px; }',
+        'body.chat-lg .bubble { padding: 13px 17px; border-radius: 22px; font-size: clamp(0.95rem, 1.6vw, 1.02rem); }',
+        'body.chat-lg .msg--bot .bubble { background: #180F43; color: #EEE8E0; border-bottom-left-radius: 8px; box-shadow: 0 6px 14px rgba(24,15,67,.12); }',
+        'body.chat-lg .msg--user .bubble { background: #EE4599; color: #fff; border-bottom-right-radius: 8px; box-shadow: 0 6px 14px rgba(238,69,153,.25); }',
+        'body.chat-lg .input-bar { padding: 12px 14px; background: rgba(247,239,208,.94); }',
+        'body.chat-lg .input-bar input { padding: 12px 18px; font-size: 1rem; }',
+        'body.chat-lg .send-btn { width: 50px; height: 50px; }'
+                ].join('\n');
+                fd.head.appendChild(style);
 
-            chatForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const msg = chatInput.value.trim();
-                if (!msg) return;
-
-                // Add User Message
-                const userMsgHtml = `
-                    <div class="flex gap-2 max-w-[85%] self-end chat-msg">
-                        <div class="bg-primary p-3 rounded-2xl rounded-br-sm text-sm text-on-primary">
-                            ${msg}
-                        </div>
-                    </div>
-                `;
-                chatMessages.insertAdjacentHTML('beforeend', userMsgHtml);
-                chatInput.value = '';
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-
-                // Simulate Bot Response
-                setTimeout(() => {
-                    const botMsgHtml = `
-                        <div class="flex gap-2 max-w-[85%] chat-msg">
-                            <div class="w-8 h-8 rounded-full bg-surface-container-high p-1 shrink-0 mt-auto">
-                                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQ_AEtVRAaESaowtYS8dd6KOctLhtfH9BwWgw2JTmlvp2_6C7YyoPBhStTRAeFb9lZcOqvXQHLnMqXQVnZ9vz9c7Kqwu8_tcIdzflKpAAzL5ltuV_HfqtkqDT7tZmefzWoit6nA7-4ss9nOqs4qVsb2lEXksjgPFdWvgGGpYLvDksfiZ4iZD-m9lFIjq6aDLLmCuFZH8DKOjebYstE2Qy3wDfIDkr_-0-dWPqtNB1zk07UDwgljEK9J3pLSHUxzLMs9g" alt="Bot" class="w-full h-full object-contain">
-                            </div>
-                            <div class="bg-surface-container-high p-3 rounded-2xl rounded-bl-sm text-sm text-on-surface">
-                                Interesante... ¡Seguí contándome!
-                            </div>
-                        </div>
-                    `;
-                    chatMessages.insertAdjacentHTML('beforeend', botMsgHtml);
-                    chatMessages.scrollTop = chatMessages.scrollHeight;
-                }, 1000);
+                const frameClose = fd.getElementById('closeBtn');
+                if (frameClose) frameClose.addEventListener('click', hideChatWindow);
+                const frameExpand = fd.getElementById('expandBtn');
+                if (frameExpand) frameExpand.addEventListener('click', function () {
+        const isFull = chatWindow.classList.toggle('chat-fullscreen');
+        const chatBodyLg = chatFrame.contentDocument && chatFrame.contentDocument.body;
+        if (chatBodyLg) chatBodyLg.classList.toggle('chat-lg', isFull);
+      });
             });
         });
     </script>

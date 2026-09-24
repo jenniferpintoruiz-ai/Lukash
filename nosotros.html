@@ -166,6 +166,46 @@
       height: 2rem;
       flex-shrink: 0;
     }
+    /* Nombres de personajes: animación de entrada por letras con retardo escalonado */
+    .character-name {
+      display: inline-block;
+      will-change: transform;
+      transition: color 0.2s ease-in-out, transform 0.15s ease-in-out;
+      animation: name-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
+    .character-name span {
+      display: inline-block;
+      transition: color 0.2s ease-in-out, transform 0.15s ease-in-out;
+    }
+    .character-name:hover span {
+      color: var(--color-primary-fuchsia, #EE4599);
+      transform: translateY(-3px) scale(1.1);
+    }
+    .character-name:active {
+      transform: scale(0.9);
+    }
+    @keyframes name-pop {
+      from { opacity: 0; transform: translateY(12px) scale(0.8); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    /* Rebote de cada letra (entrada y al hacer click) */
+    @keyframes letter-bounce {
+      0% { opacity: 0; transform: translateY(14px) scale(0.6) rotate(-8deg); }
+      60% { opacity: 1; transform: translateY(-6px) scale(1.15) rotate(4deg); }
+      100% { opacity: 1; transform: translateY(0) scale(1) rotate(0deg); }
+    }
+    /* Estrella decorativa que acompaña el nombre al hacer hover */
+    .character-name-star {
+      display: inline-block;
+      margin-left: 0.25rem;
+      opacity: 0;
+      transform: scale(0) rotate(-30deg);
+      transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+    }
+    .character-name:hover .character-name-star {
+      opacity: 1;
+      transform: scale(1) rotate(0deg);
+    }
     .typewriter-title {
       display: inline-block;
       width: 100%;
@@ -176,7 +216,14 @@
       overflow: hidden;
       white-space: nowrap;
       border-right: 3px solid #180F43;
-      animation: typewriter 2.4s steps(16, end) forwards, caret-off 0s 2.4s forwards;
+    }
+    /* NOSOTROS (8 letras): duración acorde a la palabra */
+    .typewriter-title-largo {
+      animation: typewriter 2s steps(8, end) forwards, caret-off 0s 2s forwards;
+    }
+    /* SOMOS (5 letras): animación más corta, acorde a la palabra */
+    .typewriter-title-corto {
+      animation: typewriter 1.2s steps(5, end) forwards, caret-off 0s 1.2s forwards;
     }
     @keyframes typewriter {
       from { width: 0; }
@@ -355,7 +402,7 @@
 
     <!-- Chip Nosotros -->
     <div class="w-full flex justify-center">
-        <h2 class="typewriter-title font-display text-[clamp(1.6rem,7vw,4.5rem)] font-bold text-text-dark-blue tracking-tight text-center">NOSOTROS</h2>
+        <h2 class="typewriter-title typewriter-title-largo font-display text-[clamp(1.6rem,7vw,4.5rem)] font-bold text-text-dark-blue tracking-tight text-center">NOSOTROS</h2>
       </div>
     </div>
 
@@ -425,9 +472,71 @@
     </div>
   </div>
 
-  <section class="w-full max-w-2xl min-h-[34rem] px-6 mt-16 mb-8 text-center">
-    <h2 class="typewriter-title font-display text-[clamp(1.6rem,7vw,4.5rem)] font-bold text-text-dark-blue">¿QUIÉNES SOMOS?</h2>
+  <section class="w-full max-w-2xl px-6 mt-16 mb-2 text-center">
+    <h2 class="typewriter-title typewriter-title-corto font-display text-[clamp(1.6rem,7vw,4.5rem)] font-bold text-text-dark-blue">SOMOS</h2>
   </section>
+
+  <!-- BEGIN: Personajes LUKA$H (los 4 assets SVG en fila) -->
+  <section class="w-full px-6 pt-2 pb-20" aria-label="Personajes de LUKA$H">
+    <div class="mx-auto flex max-w-5xl items-end justify-center gap-1 md:gap-3">
+      <div class="flex flex-col items-center w-1/4 min-w-0 gap-2">
+        <img class="w-full h-[clamp(6rem,22vw,15rem)] object-contain" src="images/SVG/Asset%201.svg" alt="Jenny">
+        <span class="character-name font-display font-bold text-[clamp(1rem,3vw,1.6rem)] text-text-dark-blue">
+          J<span>e</span><span>n</span><span>n</span><span>y</span><span class="character-name-star" aria-hidden="true">✦</span>
+        </span>
+      </div>
+      <div class="flex flex-col items-center w-1/4 min-w-0 gap-2">
+        <img class="w-full h-[clamp(6rem,22vw,15rem)] object-contain" src="images/SVG/Asset%202.svg" alt="Ashly">
+        <span class="character-name font-display font-bold text-[clamp(1rem,3vw,1.6rem)] text-text-dark-blue">
+          A<span>s</span><span>h</span><span>l</span><span>y</span><span class="character-name-star" aria-hidden="true">✦</span>
+        </span>
+      </div>
+      <div class="flex flex-col items-center w-1/4 min-w-0 gap-2">
+        <img class="w-full h-[clamp(6rem,22vw,15rem)] object-contain" src="images/SVG/Asset%203.svg" alt="Samu">
+        <span class="character-name font-display font-bold text-[clamp(1rem,3vw,1.6rem)] text-text-dark-blue">
+          S<span>a</span><span>m</span><span>u</span><span class="character-name-star" aria-hidden="true">✦</span>
+        </span>
+      </div>
+      <div class="flex flex-col items-center w-1/4 min-w-0 gap-2">
+        <img class="w-full h-[clamp(6rem,22vw,15rem)] object-contain" src="images/SVG/Asset%204.svg" alt="Dany">
+        <span class="character-name font-display font-bold text-[clamp(1rem,3vw,1.6rem)] text-text-dark-blue">
+          D<span>a</span><span>n</span><span>y</span><span class="character-name-star" aria-hidden="true">✦</span>
+        </span>
+      </div>
+    </div>
+  </section>
+  <!-- END: Personajes LUKA$H -->
+
+  <script data-purpose="character-names">
+    (function () {
+      // Anima cada letra de los nombres con un retardo escalonado al entrar, y
+      // reproduce la animación al hacer click en cada nombre (feedback interactivo).
+      var names = document.querySelectorAll('.character-name');
+      names.forEach(function (el, i) {
+        var letters = el.querySelectorAll('span:not(.character-name-star)');
+        letters.forEach(function (span, j) {
+          span.style.opacity = '0';
+          span.style.animationName = 'letter-bounce';
+          span.style.animationDuration = '0.4s';
+          span.style.animationTimingFunction = 'cubic-bezier(0.34,1.56,0.64,1)';
+          span.style.animationFillMode = 'both';
+          span.style.animationDelay = (0.4 + i * 0.12 + j * 0.05) + 's';
+          span.addEventListener('animationend', function () {
+            span.style.opacity = '1';
+            span.style.animationName = 'none';
+          });
+        });
+        el.addEventListener('click', function () {
+          letters.forEach(function (span, j) {
+            span.style.animationName = 'none';
+            void span.offsetWidth; // reinicia la animación
+            span.style.animationName = 'letter-bounce';
+            span.style.animationDelay = (j * 0.06) + 's';
+          });
+        });
+      });
+    })();
+  </script>
 
 
 
@@ -561,7 +670,6 @@
     .chat-window { transform-origin: bottom right; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
     .chat-window.hidden-chat { transform: scale(0); opacity: 0; pointer-events: none; }
     .chat-window.active-chat { transform: scale(1); opacity: 1; pointer-events: auto; }
-    .chat-window.chat-fullscreen { position: fixed; inset: 0; width: 100vw; height: 100vh; border: 0; border-radius: 0; z-index: 70; }
     #chat-frame { width: 100%; height: 100%; border: 0; display: block; }
 </style>
 <div class="fixed inset-0 pointer-events-none z-[60]" id="particle-container"></div>
@@ -570,7 +678,7 @@
 <img alt="Savings" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCpMupF3DRCHRmsBS_rUtkT1-WqHypjupX8R9iQvvGi3EG3ViEzcMziqN99zpl_HUd8NO5sDhby4NXetH82hfeb3_0-l8aro1geLpXun5UxmrxVsX3q7b8NIVzD3gDapNi5D8LUzZurdxGH51BErQKKw3E7Anf7ZhckVJailmRMUOfbepFnoCb73ze5E6xgcuwy29GeoOKK4oHK_-1D2uFGdXfFF3eU0TgY92E-fwmM2UPCqdLhfUvlgGLshBv0973Ghg">
 </div>
 <div class="chat-window absolute bottom-0 right-0 w-[calc(100vw-3rem)] md:w-80 h-96 bg-white/90 backdrop-blur-md rounded-2xl shadow-2xl border-2 border-lukash-pink flex flex-col overflow-hidden hidden-chat" id="chat-window">
-<iframe id="chat-frame" title="Chat de LUKASH" src="lukash-chat.html"></iframe>
+<iframe id="chat-frame" title="Chat de LUKASH" src="lukash-chat.html?nueva=1"></iframe>
 </div>
 </div>
 <script data-purpose="chat-functionality">
@@ -578,7 +686,13 @@
     const fabButton = document.getElementById("fab-button");
     const chatWindow = document.getElementById("chat-window");
     const particleContainer = document.getElementById("particle-container");
-    const chatFrame = document.getElementById("chat-frame");
+    const chatFrame = document.getElementById('chat-frame');
+  const fullscreenCss = document.createElement('style');
+  fullscreenCss.id = 'lukash-chat-fullscreen-css';
+  if (!document.getElementById('lukash-chat-fullscreen-css')) {
+    fullscreenCss.textContent = '#chat-window.chat-fullscreen{position:fixed;inset:0 auto 0 50%;transform:translateX(-50%);width:100%;height:100vh;max-width:780px;margin:0 auto;border:none;border-radius:0;box-shadow:none;z-index:999;}';
+    document.head.appendChild(fullscreenCss);
+  }
     const uiFabContainer = document.getElementById("ui-fab-container");
 
     // Muestra el boton redondo de chat (arranca oculto, igual que en el index)
@@ -615,6 +729,8 @@
       setTimeout(function () {
         chatWindow.classList.remove("hidden-chat");
         chatWindow.classList.add("active-chat");
+      const chatBodyReset = chatFrame.contentDocument && chatFrame.contentDocument.body;
+      if (chatBodyReset) chatBodyReset.classList.remove('chat-lg');
         const frameDocument = chatFrame.contentDocument;
         const frameApp = frameDocument && frameDocument.querySelector(".app");
         const frameFab = frameDocument && frameDocument.getElementById("fab");
@@ -637,20 +753,31 @@
       style.textContent = [
         "html, body { width: 100%; height: 100%; overflow: hidden; background: transparent; }",
         ".app { position: relative; inset: auto; width: 100%; height: 100%; max-width: none; border-radius: 0; box-shadow: none; background: rgba(255,255,255,.94); }",
-        ".app-header { height: 58px; padding: 0 14px; background: #b4d17b; color: #212121; }",
+        ".app-header { height: 58px; padding: 0 14px; background: #180F43; color: #EEE8E0; }",
         ".logo-mark { width: 34px; height: 34px; background: #E7C11F; }",
         ".header-title h1 { color: #180F43; font-size: 1.15rem; }",
         ".chat-area { padding: 14px 10px 12px; gap: 10px; }",
         ".avatar { width: 30px; height: 30px; }",
         ".bubble { padding: 9px 12px; font-size: .82rem; border-radius: 14px; }",
-        ".msg--bot .bubble { background: #F9F6F0; color: #180F43; box-shadow: 0 2px 8px rgba(24,15,67,.12); }",
+        ".msg--bot .bubble { background: #180F43; color: #EEE8E0; box-shadow: 0 6px 14px rgba(24,15,67,.12); }",
         ".msg--user .bubble { background: #EE4599; color: #fff; }",
         ".input-bar { position: static; transform: none; width: 100%; max-width: none; padding: 8px; background: #fff; }",
         ".input-bar input { min-width: 0; padding: 9px 13px; font-size: .82rem; }",
         ".send-btn { width: 38px; height: 38px; background: #EE4599; }",
         ".icon-btn { width: 32px; height: 32px; }",
         ".app--full { position: relative; inset: auto; width: 100%; max-width: none; height: 100%; transform: none; border-radius: 0; }",
-        ".fab { display: none !important; }"
+        ".fab { display: none !important; }",
+        "body.chat-lg .app-header { height: 64px; padding: 0 16px; background: #180F43; color: #EEE8E0; }",
+        "body.chat-lg .logo-mark { width: 40px; height: 40px; }",
+        "body.chat-lg .header-title h1 { font-size: clamp(1.15rem, 3vw, 1.45rem); letter-spacing: .05em; }",
+        "body.chat-lg .chat-area { padding: 22px 14px 12px; gap: 16px; }",
+        "body.chat-lg .avatar { width: 42px; height: 42px; }",
+        "body.chat-lg .bubble { padding: 13px 17px; border-radius: 22px; font-size: clamp(0.95rem, 1.6vw, 1.02rem); }",
+        "body.chat-lg .msg--bot .bubble { background: #180F43; color: #EEE8E0; border-bottom-left-radius: 8px; box-shadow: 0 6px 14px rgba(24,15,67,.12); }",
+        "body.chat-lg .msg--user .bubble { background: #EE4599; color: #fff; border-bottom-right-radius: 8px; box-shadow: 0 6px 14px rgba(238,69,153,.25); }",
+        "body.chat-lg .input-bar { padding: 12px 14px; background: rgba(247,239,208,.94); }",
+        "body.chat-lg .input-bar input { padding: 12px 18px; font-size: 1rem; }",
+        "body.chat-lg .send-btn { width: 50px; height: 50px; }"
       ].join("\n");
       frameDocument.head.appendChild(style);
 
@@ -658,7 +785,9 @@
       if (frameClose) frameClose.addEventListener("click", closeChatWindow);
       const frameExpand = frameDocument.getElementById("expandBtn");
       if (frameExpand) frameExpand.addEventListener("click", function () {
-        chatWindow.classList.toggle("chat-fullscreen");
+        const isFull = chatWindow.classList.toggle('chat-fullscreen');
+        const chatBodyLg = chatFrame.contentDocument && chatFrame.contentDocument.body;
+        if (chatBodyLg) chatBodyLg.classList.toggle('chat-lg', isFull);
       });
     });
   })();
